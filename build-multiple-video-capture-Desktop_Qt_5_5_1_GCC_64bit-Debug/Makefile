@@ -50,13 +50,17 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../multiple-video-capture/main.cpp \
 		../multiple-video-capture/mainwindow.cpp \
-		../multiple-video-capture/player.cpp moc_mainwindow.cpp \
-		moc_player.cpp
+		../multiple-video-capture/player.cpp \
+		../multiple-video-capture/maskingwindow.cpp moc_mainwindow.cpp \
+		moc_player.cpp \
+		moc_maskingwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		player.o \
+		maskingwindow.o \
 		moc_mainwindow.o \
-		moc_player.o
+		moc_player.o \
+		moc_maskingwindow.o
 DIST          = /home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/common/unix.conf \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/common/linux.conf \
@@ -192,9 +196,11 @@ DIST          = /home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/features/yacc.prf \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/features/lex.prf \
 		../multiple-video-capture/multiple-video-capture.pro ../multiple-video-capture/mainwindow.h \
-		../multiple-video-capture/player.h ../multiple-video-capture/main.cpp \
+		../multiple-video-capture/player.h \
+		../multiple-video-capture/maskingwindow.h ../multiple-video-capture/main.cpp \
 		../multiple-video-capture/mainwindow.cpp \
-		../multiple-video-capture/player.cpp
+		../multiple-video-capture/player.cpp \
+		../multiple-video-capture/maskingwindow.cpp
 QMAKE_TARGET  = multiple-video-capture
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = multiple-video-capture
@@ -222,7 +228,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_maskingwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../multiple-video-capture/multiple-video-capture.pro /home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++/qmake.conf /home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
@@ -516,9 +522,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../multiple-video-capture/mainwindow.h ../multiple-video-capture/player.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../multiple-video-capture/main.cpp ../multiple-video-capture/mainwindow.cpp ../multiple-video-capture/player.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../multiple-video-capture/mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../multiple-video-capture/mainwindow.h ../multiple-video-capture/player.h ../multiple-video-capture/maskingwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../multiple-video-capture/main.cpp ../multiple-video-capture/mainwindow.cpp ../multiple-video-capture/player.cpp ../multiple-video-capture/maskingwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../multiple-video-capture/mainwindow.ui ../multiple-video-capture/maskingwindow.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -541,9 +547,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_player.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_player.cpp moc_maskingwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_player.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_player.cpp moc_maskingwindow.cpp
 moc_mainwindow.cpp: /home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
@@ -747,13 +753,122 @@ moc_player.cpp: /home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
 		../multiple-video-capture/player.h
 	/home/hammas/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/media/data/dev/code/tugasakhir/multiple-video-capture -I/usr/local/include/opencv -I/home/hammas/Qt5.5.1/5.5/gcc_64/include -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore -I. ../multiple-video-capture/player.h -o moc_player.cpp
 
+moc_maskingwindow.cpp: /home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		../multiple-video-capture/maskingwindow.h
+	/home/hammas/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/media/data/dev/code/tugasakhir/multiple-video-capture -I/usr/local/include/opencv -I/home/hammas/Qt5.5.1/5.5/gcc_64/include -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore -I. ../multiple-video-capture/maskingwindow.h -o moc_maskingwindow.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_maskingwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_maskingwindow.h
 ui_mainwindow.h: ../multiple-video-capture/mainwindow.ui
 	/home/hammas/Qt5.5.1/5.5/gcc_64/bin/uic ../multiple-video-capture/mainwindow.ui -o ui_mainwindow.h
+
+ui_maskingwindow.h: ../multiple-video-capture/maskingwindow.ui
+	/home/hammas/Qt5.5.1/5.5/gcc_64/bin/uic ../multiple-video-capture/maskingwindow.ui -o ui_maskingwindow.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -925,10 +1040,9 @@ main.o: ../multiple-video-capture/main.cpp ../multiple-video-capture/mainwindow.
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QPushButton \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qpushbutton.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QSlider \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QStatusBar \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstatusbar.h \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QToolBar \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtoolbar.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../multiple-video-capture/main.cpp
 
@@ -1092,15 +1206,16 @@ mainwindow.o: ../multiple-video-capture/mainwindow.cpp ../multiple-video-capture
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QPushButton \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qpushbutton.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QSlider \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QStatusBar \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstatusbar.h \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QToolBar \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtoolbar.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/QPainter \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpainter.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtextoption.h \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QTime \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../multiple-video-capture/mainwindow.cpp
 
 player.o: ../multiple-video-capture/player.cpp ../multiple-video-capture/mainwindow.h \
@@ -1263,10 +1378,9 @@ player.o: ../multiple-video-capture/player.cpp ../multiple-video-capture/mainwin
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QPushButton \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qpushbutton.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QSlider \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QStatusBar \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstatusbar.h \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QToolBar \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtoolbar.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/QPainter \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpainter.h \
@@ -1274,11 +1388,121 @@ player.o: ../multiple-video-capture/player.cpp ../multiple-video-capture/mainwin
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o player.o ../multiple-video-capture/player.cpp
 
+maskingwindow.o: ../multiple-video-capture/maskingwindow.cpp ../multiple-video-capture/maskingwindow.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		ui_maskingwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o maskingwindow.o ../multiple-video-capture/maskingwindow.cpp
+
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
 moc_player.o: moc_player.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_player.o moc_player.cpp
+
+moc_maskingwindow.o: moc_maskingwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_maskingwindow.o moc_maskingwindow.cpp
 
 ####### Install
 

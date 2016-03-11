@@ -16,9 +16,12 @@ LIBS += -L/usr/local/lib -lopencv_calib3d -lopencv_contrib -lopencv_core -lopenc
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    player.cpp
+    player.cpp \
+    maskingwindow.cpp
 
 HEADERS  += mainwindow.h \
-    player.h
+    player.h \
+    maskingwindow.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    maskingwindow.ui

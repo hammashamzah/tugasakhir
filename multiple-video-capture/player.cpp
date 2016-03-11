@@ -13,15 +13,18 @@ using namespace cv;
 Player::Player(QObject *parent): QThread(parent)
 {
     stop = true;
-    pMOG = new BackgroundSubtractorMOG2();
+    pMOG = new BackgroundSubtractorMOG();
 }
 
 
 bool Player::loadVideo(String filename) {
-    capture.open(filename);
-    if (capture.isOpened())
+    capture = new cv::VideoCapture(filename);
+    if (capture->isOpened())
     {
-        frameRate = (int) capture.get(CV_CAP_PROP_FPS);
+        frameRate = (int) capture->get(CV_CAP_PROP_FPS);
+        if(frameRate < 1){
+            frameRate = 24;
+        }
         return true;
     }
     else
@@ -32,7 +35,7 @@ bool Player::loadVideo(String filename) {
 void Player::Play()
 {
     if (!isRunning()) {
-        if (isStopped()){
+        if (isStopped()) {
             stop = false;
         }
         start(NormalPriority);
@@ -41,47 +44,63 @@ void Player::Play()
 
 void Player::run()
 {
-    int delay = (1000/frameRate);
-    while(!stop){
-        if (!capture.read(frame))
+    int delay = (1000 / frameRate);
+    while (!stop) {
+        if (!capture->read(frame))
         {
             stop = true;
         }
 
-        pMOG->operator()(frame,fgMaskMOG);
+        pMOG->operator()(frame, fgMaskMOG);
 
-        if (fgMaskMOG.channels()== 3){
+        if (fgMaskMOG.channels() == 3) {
             cv::cvtColor(fgMaskMOG, RGBframe, CV_BGR2RGB);
             img = QImage((const unsigned char*)(RGBframe.data),
-                              RGBframe.cols,RGBframe.rows,QImage::Format_RGB888);
+                         RGBframe.cols, RGBframe.rows, QImage::Format_RGB888);
         }
         else
         {
             img = QImage((const unsigned char*)(fgMaskMOG.data),
-                                 fgMaskMOG.cols,fgMaskMOG.rows,QImage::Format_Indexed8);
+                         fgMaskMOG.cols, fgMaskMOG.rows, QImage::Format_Indexed8);
         }
         emit processedImage(img);
         this->msleep(delay);
     }
 }
 
-Player::~Player()
-{
-    mutex.lock();
-    stop = true;
-    capture.release();
-    condition.wakeOne();
-    mutex.unlock();
-    wait();
-}
 void Player::Stop()
 {
     stop = true;
 }
-void Player::msleep(int ms){
+void Player::msleep(int ms) {
     struct timespec ts = { ms / 1000, (ms % 1000) * 1000 * 1000 };
     nanosleep(&ts, NULL);
 }
-bool Player::isStopped() const{
+bool Player::isStopped() const {
     return this->stop;
+}
+
+double Player::getCurrentFrame() {
+    return capture->get(CV_CAP_PROP_POS_FRAMES);
+}
+double Player::getNumberOfFrames() {
+    return capture->get(CV_CAP_PROP_FRAME_COUNT);
+}
+double Player::getFrameRate() {
+    return frameRate;
+}
+void Player::setCurrentFrame( int frameNumber )
+{
+    capture->set(CV_CAP_PROP_POS_FRAMES, frameNumber);
+}
+
+Player::~Player()
+{
+    mutex.lock();
+    stop = true;
+    capture->release();
+    delete capture;
+    condition.wakeOne();
+    mutex.unlock();
+    wait();
 }

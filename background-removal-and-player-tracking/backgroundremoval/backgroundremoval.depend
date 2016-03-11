@@ -363,3 +363,13 @@
 	<iostream>
 	<sstream>
 
+1456133886 source:/media/data/dev/code/tugasakhir/background-removal-and-player-tracking/backgroundremoval/backgroundremoval.cpp
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<opencv2/video/background_segm.hpp>
+	<opencv2/imgproc/imgproc.hpp>
+	<opencv2/features2d/features2d.hpp>
+	<stdio.h>
+	<iostream>
+	<sstream>
+

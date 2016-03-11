@@ -13,25 +13,25 @@
 using namespace cv;
 
 class Player : public QThread
-{    Q_OBJECT
- private:
+{   Q_OBJECT
+private:
     bool stop;
     QMutex mutex;
     QWaitCondition condition;
     Mat frame;
     int frameRate;
-    VideoCapture capture;
+    VideoCapture *capture;
     Mat RGBframe;
     QImage img;
     Mat fgMaskMOG;
     Ptr<BackgroundSubtractor> pMOG;
- signals:
- //Signal to output frame to be displayed
-      void processedImage(const QImage &image);
- protected:
-     void run();
-     void msleep(int ms);
- public:
+signals:
+//Signal to output frame to be displayed
+    void processedImage(const QImage &image);
+protected:
+    void run();
+    void msleep(int ms);
+public:
     //Constructor
     Player(QObject *parent = 0);
     //Destructor
@@ -44,5 +44,14 @@ class Player : public QThread
     void Stop();
     //check if the player has been stopped
     bool isStopped() const;
+
+    //set video properties
+    void setCurrentFrame( int frameNumber);
+
+    //Get video properties
+    double getFrameRate();
+    double getCurrentFrame();
+    double getNumberOfFrames();
+
 };
 #endif // VIDEOPLAYER_H

@@ -7,6 +7,10 @@
 namespace Ui {
 class MainWindow;
 }
+namespace Ui2{
+    class MaskingWindow;
+}
+
 class MainWindow : public QMainWindow //inherite QMainWindow
 {
     Q_OBJECT
@@ -22,6 +26,13 @@ private slots:
     void on_pushButton_clicked();
     // Slot for the play push button.
     void on_pushButton_2_clicked();
+    
+    QString getFormattedTime(int timeInSeconds);
+    void on_horizontalSlider_sliderPressed();
+    void on_horizontalSlider_sliderReleased();
+    void on_horizontalSlider_sliderMoved(int position);
+    void on_pushButton_3_released();
+
 private:
     Ui::MainWindow *ui;
     Player* myPlayer;
