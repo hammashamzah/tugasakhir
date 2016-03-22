@@ -2,12 +2,27 @@
 #define DEBUG
 
 Kalmanobj::Kalmanobj(int camera_id,int start,int Num_Obj){
+    int i,j;
     frame_start = start;
     camera = camera_id;
     intervals = 1/FrPs;
     Object_Number = Num_Obj;
     if(frame_start == 1){
         Isinit = true;
+        for(i=0;i<23;i++){
+            post_pos[i].x=0.00;
+            post_pos3d[i].x=0.00;
+            pre_velocity[i].x=0.00;
+            pre_velocity3d[i].x=0.00;
+            accel[i].x=0.00;
+            accel3d[i].x=0.00;
+            post_pos[i].y=0.00;
+            post_pos3d[i].y=0.00;
+            pre_velocity[i].y=0.00;
+            pre_velocity3d[i].y=0.00;
+            accel[i].y=0.00;
+            accel3d[i].y =0.00;
+        }
     }
     else{
         Isinit = false;
@@ -17,7 +32,6 @@ Kalmanobj::Kalmanobj(int camera_id,int start,int Num_Obj){
 Kalmanobj::~Kalmanobj(){
     
 }
-
 
 void Kalmanobj::multitrackObj(struct Node* init_symp, struct Node* current_symp, struct Node** predict_track){
     Node *list_curr = current_symp;
@@ -92,40 +106,34 @@ Point Kalmanobj::getAccMot() const{
     return (state_pos);
 }
 
-Point Kalmanobj::extract_actual_v(struct Node* current_symp){
-    Point state_pos;
-    double bef_px,bef_py,curr_px,curr_py;
-    if(Isinit){
-        bef_px = current_symp->val_x;
-        bef_py = current_symp->val_y;
+void Kalmanobj::extract_actual_v(double curr_posx,double curr_posy,int idx,int rep){
+    if(rep==1){/*untuk 3d coordinate*/
+        post_pos3d[idx]= curr_pos3d[idx];
+        curr_pos3d[idx].x= curr_posx;
+        curr_pos3d[idx].y= curr_posy;
+        post_velocity3d[idx] = pre_velocity3d[idx];
+        pre_velocity3d[idx].x = (curr_pos3d[idx].x-post_pos3d[idx].x)/intervals;
+        pre_velocity3d[idx].y = (curr_pos3d[idx].y-post_pos3d[idx].y)/intervals;
     }
-    bef_px = curr_px;
-    curr_px = current_symp-> val_x;
-    bef_py = curr_py;
-    curr_py = current_symp-> val_y;
-    state_pos.x = (curr_px - bef_px)/intervals;
-    state_pos.y = (curr_py - bef_py)/intervals;
-    return(state_pos);
+    else{/*untuk 2d coordinate*/
+        post_pos[idx]= curr_pos[idx];
+        curr_pos[idx].x= curr_posx;
+        curr_pos[idx].y= curr_posy;
+        post_velocity[idx] = pre_velocity[idx];
+        pre_velocity[idx].x = (curr_pos[idx].x-post_pos[idx].x)/intervals;
+        pre_velocity[idx].y = (curr_pos[idx].y-post_pos[idx].y)/intervals;
+    }
 }
 
-Point Kalmanobj::extract_actual_a(double curr_vx, double curr_vy){
-    double a_x,a_y;
-    Point state_pos;
-    double bef_px,bef_py,curr_px,curr_py;
-    
-    if(Isinit){
-        a_x = 0;
-        a_y = 0;
-        bef_px = curr_vx;
-        bef_py = curr_vy;
+void Kalmanobj::extract_actual_a(int idx,int rep){
+    if(rep==1){/*untuk 3d coordinate*/
+        accel3d[idx].x = (pre_velocity3d[idx].x-post_velocity3d[idx].x)/intervals;
+        accel3d[idx].y = (pre_velocity3d[idx].y-post_velocity3d[idx].y)/intervals;
     }
-    bef_px = curr_px;
-    curr_px = curr_vx;
-    bef_py = curr_py;
-    curr_py = curr_vy;
-    state_pos.x = (curr_px - bef_px)/intervals;
-    state_pos.y = (curr_py - bef_py)/intervals;
-    return(state_pos);
+    else{/*untuk 2d coordinate*/
+        accel[idx].x = (pre_velocity[idx].x-post_velocity[idx].x)/intervals; 
+        accel[idx].y = (pre_velocity[idx].y-post_velocity[idx].y)/intervals;    
+    }
 }
 
 void track_size(double *pred_w, double *pred_h,struct Node* init_matric,struct Node* curr_matric){
@@ -140,8 +148,8 @@ void track_size(double *pred_w, double *pred_h,struct Node* init_matric,struct N
 }
 
 void Kalmanobj::track_ind2Dmotion(struct Node* curr_cond, Point *pre_position,Point *pre_velocity,Point *pre_Accelerate,Point *post_position,Point *post_velocity,Point *post_Accelerate){
-    Point *vcc_p,*acc_p;
-    initKalmanMOt((double)curr_cond->val_x, (double)curr_cond->val_y,(double)vcc_p->x,(double)vcc_p->y,(double)acc_p->x, (double)acc_p->y);
+    int rep = 1;
+    initKalmanMOt((double)curr_cond->val_x, (double)curr_cond->val_y,(double)pre_velocity[curr_cond->data_id].x,(double)pre_velocity[curr_cond->data_id].y,(double)accel[curr_cond->data_id].x, (double)accel[curr_cond->data_id].y);
     KF_Mot.predict();
     *pre_position = getCurrentStateMot();
     *pre_velocity = getVelocityMot();
@@ -150,13 +158,13 @@ void Kalmanobj::track_ind2Dmotion(struct Node* curr_cond, Point *pre_position,Po
     *post_position = getCurrentStateMot();
     *post_velocity = getVelocityMot();
     *post_Accelerate = getAccMot();
-    *vcc_p = extract_actual_v(curr_cond);
-    *acc_p = extract_actual_a((double)vcc_p->x,(double)vcc_p->y);
+    extract_actual_v((double)curr_cond->val_x,(double)curr_cond->val_y,curr_cond->data_id,rep);
+    extract_actual_a(curr_cond->data_id,rep);
 }
 
-void Kalmanobj::track_ind3Dmotion(struct Node* curr_cond, Point *pre_position,Point *pre_velocity,Point *pre_Accelerate,Point *post_position,Point *post_velocity,Point *post_Accelerate){
-    Point *vcc,*acc;
-    initKalmanMOt((double)curr_cond->val_x, (double)curr_cond->val_y,(double)vcc->x,(double)vcc->y,(double)acc->x, (double)acc->y);
+void Kalmanobj::track_ind3Dmotion(struct Node* curr_cond, Point *pre_position,Point *pre_velocity,Point *pre_Accelerate,Point*post_position,Point *post_velocity,Point *post_Accelerate){
+    int rep = 2;
+    initKalmanMOt((double)curr_cond->val_x, (double)curr_cond->val_y,(double)pre_velocity3d[curr_cond->data_id].x,(double)pre_velocity3d[curr_cond->data_id].y,(double)accel3d[curr_cond->data_id].x, (double)accel3d[curr_cond->data_id].y);
     KF_Mot.predict();
     *pre_position = getCurrentStateMot();
     *pre_velocity = getVelocityMot();
@@ -165,7 +173,8 @@ void Kalmanobj::track_ind3Dmotion(struct Node* curr_cond, Point *pre_position,Po
     *post_position = getCurrentStateMot();
     *post_velocity = getVelocityMot();
     *post_Accelerate = getAccMot();
-    *vcc = extract_actual_v(curr_cond);
-    *acc = extract_actual_a((double)vcc->x,(double)vcc->y);
+    
+    extract_actual_v((double)curr_cond->val_x,(double)curr_cond->val_y,curr_cond->data_id,rep);
+    extract_actual_a(curr_cond->data_id,rep);
 }
 

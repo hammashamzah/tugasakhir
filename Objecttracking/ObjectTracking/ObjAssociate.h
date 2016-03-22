@@ -1,5 +1,6 @@
 #ifndef OBJASSOCIATE_H_INCLUDED
 #define OBJASSOCIATE_H_INCLUDED
+#include "opencv/ml.h"
 #include "LinkedList.h"
 #include "opencv2/legacy/legacy.hpp"
 #include <opencv/cv.h>
@@ -22,9 +23,23 @@
 #define yur 511
 #define ydr 1000
 #define ydl 1003
+#define camera_max 3
 
 using namespace cv;
 using namespace std;
+CvEM empredict;
+CvEMParams parameter;
+
+parameter.covs      = NULL;
+parameter.means     = NULL;
+parameter.weights   = NULL;
+parameter.probs     = NULL;
+parameter.nclusters = N;
+parameter.cov_mat_type       = CvEM::COV_MAT_SPHERICAL;
+parameter.start_step         = CvEM::START_AUTO_STEP;
+parameter.term_crit.max_iter = 1000;
+parameter.term_crit.epsilon  = 0.005;
+parameter.term_crit.type     = CV_TERMCRIT_ITER|CV_TERMCRIT_EPS;
 
 
 double basic_threshold = theta;
@@ -35,20 +50,23 @@ int num_measurement;
 
 LinkedList listgen;
 
+
 struct Node *predictor;
 struct Node *measurement;
+int association[23][23];
+
+
 
 class associate{
     public:
         associate(int num_p,int num_m,struct Node *p,struct Node *m,int assoc[][23]);
         ~associate();
-        void link_theid(int assoc[][23]);
-        void init_matrices_assoc(int assoc[][23]);
+        void link_theid();
+        void init_matrices_assoc();
     private:
         double threshold_coef(double y);
         void find_threshold_x(double *x_kanan,double *x_kiri,double y,double x,double y_m);
         double find_threshold_y(double y);
-   
 };
 
 

@@ -32,8 +32,19 @@
 		<Linker>
 			<Add option="`opencv-config --ldstaticflags`" />
 		</Linker>
+		<Unit filename="KalmanObj.cpp" />
+		<Unit filename="KalmanObj.h" />
+		<Unit filename="LinkedList.cpp" />
+		<Unit filename="LinkedList.h" />
+		<Unit filename="ObjAssociate.cpp" />
+		<Unit filename="ObjAssociate.h" />
+		<Unit filename="Occlusiondetector.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="lena.jpg" />
 		<Unit filename="main.cpp" />
+		<Unit filename="preprocessing.cpp" />
+		<Unit filename="preprocessing.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

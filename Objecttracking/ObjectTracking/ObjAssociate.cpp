@@ -1,22 +1,33 @@
 #include "ObjAssociate.h"
 
-associate::associate(int num_p,int num_m,struct Node *p,struct Node *m,int assoc[][23]){
+associate::associate(int cam,int num_p,int num_m,struct Node *p,struct Node *m,int assoc[][23]){
+    int i,j;
     num_predictor = num_p;
     num_measurement = num_m;
+    num_samples = num_p;
     listgen.copyLinkedList(p,&predictor);
     listgen.copyLinkedList(m,&measurement);
     if(ydl>yul && ydr>yur && xdr>xur && xdl<xur){
         yo =((xdr-xdl)/(((-xdl+xul)/(ydl-yul))+((xdr-xur)/(ydr-yur))))-((ydl+ydr)/2);
     }
     xo =(((((yo*(-xdl+xul))/(ydl-yul))+xdl)+(((yo*(xdr-xur))/(ydr-yur))+(xdr)))/2);
-    link_theid(assoc);
+    link_theid();
+    if(cam ==camera_max){
+        occlusiob_handler();
+        in_out_handler();
+    }
+    for(i=0;i<23;i++){
+        for(j=0;j<23;j++){
+            assoc[i][j]= association[i][j];
+        }
+    }
 }
 
-void init_matrices_assoc(int assoc[][23]){
+void init_matrices_assoc(){
     int i,j;
     for(i=0;i<23;i++){
         for(j=0;j<23;j++){
-            assoc[i][j]= 0;
+            association[i][j]= 0;
         }
     }
 }
@@ -53,7 +64,7 @@ double associate::find_threshold_y(double y){
 
 
 /**Hungarian Algorithms**/
-void associate::link_theid(int assoc[][23]){
+void associate::link_theid(){
     double Euclid_x;
     double Euclid_y;
     int i=0;int j = 0;
@@ -67,16 +78,29 @@ void associate::link_theid(int assoc[][23]){
             th_y=find_threshold_y(predictor->val_y);
             if(Euclid_y < th_y){
                 if((Euclid_x< 0 && Euclid_x> th_xki)||(Euclid_x> 0 && Euclid_x< th_xka)){
-                    assoc[predictor->data_id][measurement->data_id] = 1;
+                    association[predictor->data_id][measurement->data_id] = 1;
                 }
             }
             else{
                 predictor->data_id = 30;
             }
             predictor = predictor->next;
-            predictor = predictor->next;
+            measurement = measurement->next;
             j++;
         }
         i++;
     }      
 }
+
+void associate::occlusion_handler(){
+    empredict.train();
+
+
+}
+
+void associate::in_out_handler(){
+
+
+
+}
+
