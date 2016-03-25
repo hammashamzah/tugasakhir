@@ -7,6 +7,9 @@
 #include <QImage>
 #include <QPainter>
 #include <QTime>
+#include <QLabel>
+#include <string>
+#include <iostream>
 #include "videoprocessor.h"
 #include "backgroundmodeltuningdialog.h"
 #include "cameraviewdialog.h"
@@ -14,6 +17,18 @@
 #include "fieldselectiondialog.h"
 #include "systemperformancedialog.h"
 #include "trackingviewdialog.h"
+
+#define JUMLAH_PLAYER 25
+using namespace std;
+
+struct player_visual{
+    int id;
+    char tim;
+    int pos_x;
+    int pos_y;
+};
+
+
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +41,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void GameVisual();
 
 
 

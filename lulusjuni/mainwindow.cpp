@@ -39,23 +39,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_3(int)), myStream_3, SLOT(updateValueGaussianSize(int)));
     QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myCVDialog, SLOT(updateLabel(int)));
 
-	if (!myStream_1->loadVideo("/media/data/dev/Projects/TA/edited-03-02-2016/lurus1.mp4")) {
-		QMessageBox msgBox;
-		msgBox.setText("The selected video could not be opened!");
-		msgBox.exec();
-	}
+    GameVisual();
 
-	if (!myStream_2->loadVideo("/media/data/dev/Projects/TA/edited-03-02-2016/lurus2.mp4")) {
-		QMessageBox msgBox;
-		msgBox.setText("The selected video could not be opened!");
-		msgBox.exec();
-	}
-
-	if (!myStream_3->loadVideo("/media/data/dev/Projects/TA/edited-03-02-2016/lurus2-edited.mp4")) {
-		QMessageBox msgBox;
-		msgBox.setText("The selected video could not be opened!");
-		msgBox.exec();
-	}
 }
 
 MainWindow::~MainWindow()
@@ -169,6 +154,46 @@ void MainWindow::on_pushButton_play_released()
 		myStream_2->Stop();
 		myStream_3->Stop();
 	}
+}
+
+void MainWindow::GameVisual()
+{
+    int i;
+    QPixmap pm(800,400);    //ukuran pixmap
+    QPainter p(&pm);
+    QPen pen(Qt::blue, 1);        //warna dan tebal garis lingkaran
+    QBrush brush(Qt::white);
+    QString id;
+    player_visual pemain[JUMLAH_PLAYER];
+
+      //pm.fill();
+      //pm.load("lapangan.jpg");
+       ui->label_game_visual->setPixmap (pm);
+       //cout<< l.width();
+    //set random value of player
+        for(i=0; i<JUMLAH_PLAYER; i++)
+        {
+            pemain[i].id=rand()%JUMLAH_PLAYER;
+            if(i<=12) pemain[i].tim='A';
+            else pemain[i].tim='B';
+            pemain[i].pos_x=rand()% pm.width();
+            pemain[i].pos_y=rand()% pm.height();
+        }
+
+          p.setRenderHint(QPainter::Antialiasing, true);
+          p.setPen(pen);
+          for(i=0;i<JUMLAH_PLAYER; i++)
+          {
+          if(pemain[i].tim=='A') brush.setColor(Qt::yellow);      //warna pengisi lingkaran pemain
+          else if(pemain[i].tim=='B') brush.setColor(Qt::red);
+          p.setBrush(brush);
+
+          p.drawEllipse(pemain[i].pos_x, pemain[i].pos_y, 20, 20);  //posisi x, y, dan ukuran elips
+            p.setFont(QFont ("Arial"));
+            id = QString::number(pemain[i].id);
+          p.drawText(QPoint(pemain[i].pos_x, pemain[i].pos_y), id); //posisi x, y, dan ukuran elips
+      }
+      ui->label_game_visual->setPixmap (pm);
 }
 
 /*QString MainWindow::getFormattedTime(int timeInSeconds){
