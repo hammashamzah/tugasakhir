@@ -40,9 +40,6 @@ KalmanFilter KF_Mot;
 LinkedList list1;
 bool Isinit;
 double intervals;
-int Object_Number;
-int camera;
-int frame_start;
 Mat_<float> measurement_pos;
 Point curr_pos         [23];
 Point post_pos         [23];
@@ -72,6 +69,10 @@ class Kalmanobj{
         void track_size(double *pred_w, double *pred_h,struct Node* init_matric,struct Node* curr_matric);
         void track_ind2Dmotion(struct Node* curr_cond, Point *pre_position,Point *pre_velocity,Point *pre_Accelerate,Point *post_position,Point *post_velocity,Point *post_Accelerate);
         void track_ind3Dmotion(struct Node* curr_cond, Point *pre_position,Point *pre_velocity,Point *pre_Accelerate,Point *post_position,Point *post_velocity,Point *post_Accelerate);
+        int Object_Number;
+        int camera;
+        int frame_start;
+
 };
 
 #endif // KALMANOBJ_H_INCLUDED

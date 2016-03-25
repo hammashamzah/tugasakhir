@@ -53,6 +53,8 @@ void Kalmanobj::multitrackObj(struct Node* init_symp, struct Node* current_symp,
         (*predict_track)->y_trans = (double)post_pos.y;
         (*predict_track)->val_w = pred_w;
         (*predict_track)->val_h = pred_h;
+        (*predict_track)->vx_trans = (double)post_vels.x;
+        (*predict_track)->vy_trans = (double)post_vels.y;
         (*predict_track)->flag = list_curr->flag;
         (*predict_track)->flago = list_curr->flago;
         (*predict_track)->next = NULL;
@@ -173,7 +175,6 @@ void Kalmanobj::track_ind3Dmotion(struct Node* curr_cond, Point *pre_position,Po
     *post_position = getCurrentStateMot();
     *post_velocity = getVelocityMot();
     *post_Accelerate = getAccMot();
-    
     extract_actual_v((double)curr_cond->val_x,(double)curr_cond->val_y,curr_cond->data_id,rep);
     extract_actual_a(curr_cond->data_id,rep);
 }

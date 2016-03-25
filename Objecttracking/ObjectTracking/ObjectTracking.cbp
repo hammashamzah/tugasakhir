@@ -38,7 +38,7 @@
 		<Unit filename="LinkedList.h" />
 		<Unit filename="ObjAssociate.cpp" />
 		<Unit filename="ObjAssociate.h" />
-		<Unit filename="Occlusiondetector.cpp">
+		<Unit filename="head_objectassociate">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="lena.jpg" />
