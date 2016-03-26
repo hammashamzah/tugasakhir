@@ -1,83 +1,5 @@
 #include "ObjAssociate.h"
 
-
-
-
-associate::associate(bool isInit,struct Node* predictor1,struct Node* predictor2,struct Node* predictor3,struct Node* measurement1,struct Node* measurement2,struct Node* measurement3,int num_p1,int num_p2,int num_p3,int num_m1,int num_m2,int num_m3,int assoc[][23]){
-    Inits = isInit;
-    nump1 = num_p1;
-    nump2 = num_p2;
-    nump3 = num_p3;
-    numm1 = num_m1;
-    numm2 = num_m2;
-    numm3 = num_m3;
-    (*predic1) = predictor1;
-    (*predic2) = predictor2;
-    (*predic3) = predictor3;
-    (*measure1) = measurement1;
-    (*measure2) = measurement2;
-    (*measure3) = measurement3;
-    cam_associate( 1, nump1,numm1,predic1,measure1);
-    cam_associate( 2, nump2,numm2,predic2,measure2);
-    cam_associate( 3, nump3,numm3,predic3,measure3);
-    
-}
-
-void associate::single_camera_checking(int cam,struct Node*measure,struct Node**res,int hypothesis_id){
-    Node* res_New;
-    switch(cam){
-        case(1):{
-                    if(numm1 > nump1){
-                        check_hypothesis(cam,measure);
-                    }
-                    if(numm1 =< nump1){
-                        check_occlusion(measure);
-                        check_transform_cam(measure);
-                    }
-        }
-        case(2):{
-                    if(numm2 > nump2){
-                        check_hypothesis(cam,measure);
-                    }
-                    if(numm2 =< nump2){
-                        check_occlusion(measure);
-                        check_transform_cam(measure);
-                    }
-        }
-                    
-        case(3):{
-                    if(numm3 > nump3){
-                        check_hypothesis(cam,measure);
-                    }
-                    if(numm3 =< nump3){
-                        check_occlusion(measure);
-                        check_transform_cam(measure);
-                    }        
-        }
-    }
-}
-
-
-void associate::check_hypothesis(int cmr,struct Node* meas,bool* is_hypothesis, int id_dummy){
-    switch(cmr){
-        case(1):{
-                *is_hypothesis=(accumulate_col1[meas->data_id]==0)
-                break;}
-        case(2):{
-                *is_hypothesis=(accumulate_col2[meas->data_id]==0)
-                break;}
-        case(3):{
-                *is_hypothesis=(accumulate_col3[meas->data_id]==0)
-                break;}
-        default:break;
-    }
-    if(is_hypothesis == true){
-        meas->state = state_hipothetic;
-        id_dummy = meas->data_id;
-    }
-}
-
-
 void associate::init_multicamassoc(){
     int i;
     for(i=0;i<23;i++){
@@ -87,6 +9,127 @@ void associate::init_multicamassoc(){
         accumulate_row1[i]=0;
         accumulate_row2[i]=0;
         accumulate_row3[i]=0;
+        id_obj_occluded1[i].x=0;
+        id_obj_occluded1[i].y=0;
+        id_obj_occluded2[i].x=0;
+        id_obj_occluded2[i].y=0;
+        id_obj_occluded3[i].x=0;
+        id_obj_occluded3[i].y=0;
+        hypothest[i].x = 0 ;
+        hypothest[i].y = 0 ;
+        Potentially_out[i].x =0;
+        Potentially_out[i].y =0;
+    }
+}
+
+associate::associate(bool isInit,struct Node* predictor1,struct Node* predictor2,struct Node* predictor3,struct Node* measurement1,struct Node* measurement2,struct Node* measurement3,int num_p1,int num_p2,int num_p3,int num_m1,int num_m2,int num_m3,int assoc[][23]){
+    int ntoone1=0,ntoone2=0,ntoone3=0,ousted=0,hypo=0,cntoone1=0,cntoone2=0,cntoone3=0,validate =0;
+    int f_1=0,f_2=0,f_3=0;
+    int l_1=0,l_2=0,l_3=0;    
+    Inits = isInit;
+    nump1 = num_p1;
+    nump2 = num_p2;
+    nump3 = num_p3;
+    numm1 = num_m1;
+    numm2 = num_m2;
+    numm3 = num_m3;
+    predic1 = predictor1;
+    predic2 = predictor2;
+    predic3 = predictor3;
+    measure1 = measurement1;
+    measure2 = measurement2;
+    measure3 = measurement3;
+    cam_associate( 1, nump1,numm1,predic1,measure1);
+    cam_associate( 2, nump2,numm2,predic2,measure2);
+    cam_associate( 3, nump3,numm3,predic3,measure3);
+    /**Membuat array jumlah collumn dan row untuk melakukan pengecekan N-> 1, 1-> 1, camera transition**/    
+    update_arracc();
+    /**melakukan pencacahan kejadian**/
+    /**untuk sementara tidak ada feedback jika jumlah validate lebih besar dari 23 atau kurang dari 23**/
+    /**Jadi asumsi validate selalu sama dengan 23**/
+    /*for N->1 assoc*/
+    set_Ntoone(&ntoone1,&ntoone2,&ntoone3,&cntoone1,&cntoone2,&cntoone3);
+    /*menghandle predicted id yang keluar dari kamera*/
+    pot_ousted(0,1,&l_1);
+    pot_ousted(l_1,2,&l_2);
+    pot_ousted(l_2,3,&l_3);
+    /*menghandle id yang baru masuk ke kamera*/
+    update_hypothesis(0,1,&f_1);
+    update_hypothesis(f_1,2,&f_2);
+    update_hypothesis(f_2,3,&f_3);
+    validate = (nump1+nump2+nump3)-(ousted)+(hypo)+(ntoone1+ntoone2+ntoone3)-(cntoone1+cntoone2+cntoone3);
+    /**melakukan assosiasi array yang terbentuk pada hypothesis terhadap id yang hilang pada salah satu kamera**/
+    /**Setelah kondisi ini ketiga assosiacion matrices telah menghandle masalah camera transition**/
+    associate_losthyp(l_3,f_3);
+    /**Membentuk matrik assosiasi agregat dari ketiga kamera ini yang digunakan untuk mapping**/
+    sum_updated_mat();
+    
+    /**Tahapan terakhir dari assosiasi ialah mapping data measurement ke object yang terdefinisi**/
+    mapping(&mapping_result);
+}
+
+
+associate::~associate(){
+
+}
+
+
+void associate::sum_updated_mat(){
+    int i,j;
+    for(i=0;i<23;i++){
+        for(j=0;j<23;j++){
+            association_agrr[i][j] = association1p[i][j]+association2p[i][j]+association3p[i][j];
+        }
+    }
+}
+
+void associate::mapping(struct Node** Res){
+    int i,j;
+    Node* getbuf;
+    for(i=0;i<23;i++){
+        for(j=0;j<23;j++){
+            *Res = new Node;
+            if(association_agrr[i][j]==1){
+                if(j<numm1){
+                    getbuf = listgen.searchNode(measure1,j);
+                }
+                else if((j>=numm1) && j<(numm1+numm2)){
+                    getbuf = listgen.searchNode(measure2,j);
+                }
+                else if((j<23)&&(j>=(numm1+numm2))){
+                    getbuf = listgen.searchNode(measure3,j);
+                }
+                (*Res)->data_id = i;
+                (*Res)->val_x = getbuf->val_x;
+                (*Res)->val_y = getbuf->val_y;
+                (*Res)->x_trans = getbuf->x_trans;
+                (*Res)->y_trans = getbuf->y_trans;
+                (*Res)->vx_trans = getbuf->vx_trans;
+                (*Res)->vy_trans = getbuf->vy_trans;
+                (*Res)->cam = getbuf->cam;
+                (*Res)->next = getbuf->next;
+            }
+        }
+    
+    }
+}
+
+void associate::associate_losthyp(int number_lost,int number_found){
+    int i,j;
+    for(i=0;i<number_lost;i++){
+        for(j=0;j<number_found;j++){
+            if(association_globe[(int)Potentially_out[i].y][(int)hypothest[j].y]==1){
+                if(hypothest[j].x==1.00){
+                    association1p[(int)Potentially_out[i].y][(int)hypothest[j].y]=1;
+                }
+                else if(hypothest[j].x==2.00){
+                    association2p[(int)Potentially_out[i].y][(int)hypothest[j].y]=1;                        
+                }
+                else if(hypothest[j].x==3.00){
+                    association3p[(int)Potentially_out[i].y][(int)hypothest[j].y]=1;
+                }
+            }
+        }
     }
 }
 
@@ -104,76 +147,151 @@ void associate::update_arracc(){
     }
 }
 
-bool associate::Isemptyrow(struct Node* predict){
-    switch(predict->cam){
-        case(1):return(accumulate_row1[predict->data_id]==0);break;
-        case(2):return(accumulate_row2[predict->data_id]==0);break;
-        case(3):return(accumulate_row3[predict->data_id]==0);break;
+void associate::set_Ntoone(int* occ1,int* occ2,int* occ3,int* clus_occ1,int* clus_occ2,int* clus_occ3){
+    int i,j,k,l,m,n,o,p;
+    i=0;l=0;m=0;
+    n =0;o=0;p=0;
+    while(j<23){
+        if(accumulate_col1[j]>1){
+            for(k=0;k<23;k++){
+                if(association1p[k][j]==1){
+                    id_obj_occluded1[i].x = (double)j;
+                    id_obj_occluded1[i].y = (double)k;
+                    i++;
+                    }
+                }
+                n++;
+            }
+        if(accumulate_col2[j]>1){
+            for(k=0;k<23;k++){
+                if(association2p[k][j]==1){
+                    id_obj_occluded2[l].x = (double)j;
+                    id_obj_occluded2[l].y = (double)k;
+                    l++;
+                    }
+                }
+            o++;
+            }
+        if(accumulate_col3[j]>1){
+            for(k=0;k<23;k++){
+                if(association3p[k][j]==1){
+                    id_obj_occluded3[m].x = (double)j;
+                    id_obj_occluded3[m].y = (double)k;
+                    m++;
+                    }
+                }
+            p++;
+        }
+    j++;            
     }
+    *occ1 = i;
+    *occ2 = l;
+    *occ3 = m;
+    *clus_occ1 = n;
+    *clus_occ2 = o;
+    *clus_occ3 = p;
 }
 
-bool associate::Isonetoone(struct Node* predict){
-    switch(predict->cam){
-        case(1):return(accumulate_row1[predict->data_id]==1);break;
-        case(2):return(accumulate_row2[predict->data_id]==1);break;
-        case(3):return(accumulate_row3[predict->data_id]==1);break;
-    }
-}
-
-
-
-
-void associate::IsNtoone(bool *Ntone,struct Node* measuree){
-    int i,j;
-    j=0;
-    switch(measuree->cam){
+void associate::pot_ousted(int init,int camr,int* fin){
+    int i =0;
+    int j =init;
+    Node* curr1 = predic1;
+    Node* curr2 = predic2;
+    Node* curr3 = predic3;
+    switch(camr){
         case(1):{
-                    Ntone = (accumulate_col1[measuree->data_id]>1);
-                    while((i<accumulate_col1[measuree->data_id])||(j<23)){
-                        if(association1p[j][measuree->data_id]==1){
-                            id_obj_occluded[i] = j;
-                            i++;
-                        }
-                        j++;
-                    }
-                    break;}
+            while(i<nump1){
+                if(accumulate_row1[curr1->data_id]==0){
+                    Potentially_out[j].x==1.00;
+                    Potentially_out[j].y==(double)curr1->data_id;
+                    j++;
+                }
+                curr1 = curr1->next;
+                i++;
+            }
+            break;
+        }
         case(2):{
-                    Ntone = (accumulate_col2[measuree->data_id]>1);
-                    while((i<accumulate_col2[measuree->data_id])||(j<23)){
-                        if(association2p[j][measuree->data_id]==1){
-                            id_obj_occluded[i] = j;
-                            i++;
-                        }
-                        j++;
-                    }
-                    break;}
+            while(i<nump2){
+                if(accumulate_row1[curr2->data_id]==0){
+                    Potentially_out[j].x==2.00;
+                    Potentially_out[j].y==(double)curr2->data_id;
+                    j++;
+                }
+                curr2 = curr2->next;
+                i++;
+            }
+            break;
+        }
         case(3):{
-                    Ntone = (accumulate_col3[measuree->data_id]>1);
-                    while((i<accumulate_col3[measuree->data_id])||(j<23)){
-                        if(association3p[j][measuree->data_id]==1){
-                            id_obj_occluded[i] = j;
-                            i++;
-                        }
-                        j++;
-                    }
-                    break;}
+            while(i<nump3){
+                if(accumulate_row3[curr3->data_id]==0){
+                    Potentially_out[j].x==3.00;
+                    Potentially_out[j].y==(double)curr3->data_id;
+                    j++;
+                }
+                curr3 = curr3->next;
+                i++;
+            }
+            break;
+        }
+        default:break;
     }
+    *fin = j;
 }
 
 
-void associate::setting_id(Node* measuree){
-    switch(measuree->cam){
-        case(1):;break;
-            
-        case(2):;break;
-        case(3):;break;
-    
-    
-    }
 
+void associate::update_hypothesis(int init,int camr,int* fin){
+    int i=0;
+    int j=init;
+    Node* meas1 = measure1;
+    Node* meas2 = measure2;
+    Node* meas3 = measure3;
+    switch(camr){
+        case(1):{
+            while(i<numm1){
+                if(accumulate_col1[meas1->data_id]==0){
+                    hypothest[j].x = 1.00;
+                    hypothest[j].y = meas1->data_id; 
+                j++;
+                }
+            i++;
+            meas1 = meas1->next;
+            }
+            break;
+        }
+        case(2):{
+            while(i<numm2){
+                if(accumulate_col2[meas2->data_id]==0){
+                    hypothest[j].x = 2.00;
+                    hypothest[j].y = meas2->data_id; 
+                j++;
+                }
+            i++;
+            meas2 = meas2->next;
+            }
+            break;
+        }
+        case(3):{
+            while(i<numm3){
+                if(accumulate_col3[meas3->data_id]==0){
+                    hypothest[j].x = 3.00;
+                    hypothest[j].y = meas3->data_id; 
+                j++;
+                }
+            i++;
+            meas3 = meas3->next;
+            }
+            break;
+        }
+        default:break;
+    }
+    *fin = j;
 }
 
 
+/**FSM ini dibuat hanya untuk algoritma yang masih dalam pengembangan jadi sampai sekarang masih belum diperlukan**/
 
 int associate::FSM(int prev_state,bool Isinit,bool set_id,bool onetoN,bool Ntoone,bool onetoone,int flag,bool emptyrow){
     switch(prev_state){
@@ -194,7 +312,7 @@ int associate::FSM(int prev_state,bool Isinit,bool set_id,bool onetoN,bool Ntoon
                 return(state_group);
             }
             if(onetoone){
-                return(state_Normal)
+                return(state_Normal);
             }
             break;
         }
@@ -219,6 +337,8 @@ int associate::FSM(int prev_state,bool Isinit,bool set_id,bool onetoN,bool Ntoon
     }
 }
 
+/*****************************************************************************************************************************************/
+
 void associate::cam_associate(int cam,int num_p,int num_m,struct Node *p,struct Node *m){
     int i,j;
     init_matrices_assoc();
@@ -234,23 +354,18 @@ void associate::cam_associate(int cam,int num_p,int num_m,struct Node *p,struct 
     link_theid(cameras);
 }
 
-void init_matrices_assoc(){
+void associate::init_matrices_assoc(){
     int i,j;
     num_trans1 = 0;
     num_trans2 = 0;
     for(i=0;i<23;i++){
         for(j=0;j<23;j++){
-            association1[i][j]= 0;
-            association2[i][j]= 0;
-            association3[i][j]= 0;
             association1p[i][j]= 0;
             association2p[i][j]= 0;
             association3p[i][j]= 0;
             association_globe[i][j]= 0;
+            association_agrr[i][j]=0;
         }
-        accumulation_row    [i]=0;
-        accumulation_column [i]=0;
-        Isocclusion_valid   [i]=false;
     }
     for(i-0;i<3;i++){
         obj_cam[i]=0;
@@ -259,12 +374,7 @@ void init_matrices_assoc(){
 }
 
 
-associate::~associate(){
-
-}
-
-
-double eigen_distance_transform(double x_m, double y_m, double x_obj, double y_obj){
+double associate::eigen_distance_transform(double x_m, double y_m, double x_obj, double y_obj){
     return(sqrt(((x_m-x_obj)*(x_m-x_obj))+((y_m-y_obj)*(y_m-y_obj))));
 }
 
@@ -315,7 +425,7 @@ void associate::link_theid(int cam){
                         }
                     }
                     if(euclid_r < threshold_glob){
-                        association1[predictor->data_id][measurement->data_id] = 1;
+                        association_globe[predictor->data_id][measurement->data_id] = 1;
                     }
                     predictor = predictor->next;
                     measurement = measurement->next;
@@ -339,7 +449,7 @@ void associate::link_theid(int cam){
                         }
                     }
                     if(euclid_r < threshold_glob){
-                        association2[predictor->data_id][measurement->data_id] = 1;
+                        association_globe[predictor->data_id][measurement->data_id] = 1;
                     }                    predictor = predictor->next;
                     measurement = measurement->next;
                     j++;
@@ -363,7 +473,7 @@ void associate::link_theid(int cam){
                     }
                     
                     if(euclid_r < threshold_glob){
-                        association3[predictor->data_id][measurement->data_id] = 1;
+                        association_globe[predictor->data_id][measurement->data_id] = 1;
                     }
                     predictor = predictor->next;
                     measurement = measurement->next;
@@ -373,12 +483,8 @@ void associate::link_theid(int cam){
             }
             break;
          }
-    default:{;break;}
+    default:break;
     }
-}
-
-double associate::eigen_distance(double x_measure, double x_obj, double y_measure, double y_obj){
-    return(sqrt(((x_measure-x_obj)*(x_measure-x_obj))+((y_measure-y_obj)*(y_measure-y_obj))));
 }
 
 

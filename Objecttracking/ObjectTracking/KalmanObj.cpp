@@ -56,7 +56,6 @@ void Kalmanobj::multitrackObj(struct Node* init_symp, struct Node* current_symp,
         (*predict_track)->vx_trans = (double)post_vels.x;
         (*predict_track)->vy_trans = (double)post_vels.y;
         (*predict_track)->flag = list_curr->flag;
-        (*predict_track)->flago = list_curr->flago;
         (*predict_track)->next = NULL;
         list_curr = list_curr->next;
     }

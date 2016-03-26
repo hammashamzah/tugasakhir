@@ -35,9 +35,8 @@
 
 using namespace cv;
 using namespace std;
+struct Node* mapping_result;
 
-
-struct Node* result;
 
 
 /**
@@ -93,7 +92,11 @@ int accumulate_col3[23];
 
 bool Inits;
 
-int id_obj_occluded[23];
+Point id_obj_occluded1  [23];
+Point id_obj_occluded2  [23];
+Point id_obj_occluded3  [23];
+Point hypothest        [23];
+Point Potentially_out   [23];
 
 
 /**
@@ -109,28 +112,37 @@ int id_obj_occluded[23];
 
 
 class associate{
-    public:        
-        void cam_associate(int cam,int num_p,int num_m,struct Node *p,struct Node *m,int assoc[][23]);
+    public: 
+        void init_multicamassoc();
+        associate(bool isInit,struct Node* predictor1,struct Node* predictor2,struct Node* predictor3,struct Node* measurement1,struct Node* measurement2,struct Node* measurement3,int num_p1,int num_p2,int num_p3,int num_m1,int num_m2,int num_m3,int assoc[][23]);
         ~associate();
         void link_theid(int cam);
         void init_matrices_assoc();
     private:
+        void mapping(struct Node** Res);
+        void sum_updated_mat();
+        void mapping();
+        void associate_losthyp(int number_lost,int number_found);
+        void set_Ntoone(int* occ1,int* occ2,int* occ3,int* clus_occ1,int* clus_occ2,int* clus_occ3);
+        void pot_ousted(int init,int camr,int* fin);
+        void update_hypothesis(int init,int camr,int* fin);
+        void update_arracc();
+        int FSM(int prev_state,bool Isinit,bool set_id,bool onetoN,bool Ntoone,bool onetoone,int flag,bool emptyrow);
+        void cam_associate(int cam,int num_p,int num_m,struct Node *p,struct Node *m);
         double threshold_coef(double y);
         void find_threshold_x(double *x_kanan,double *x_kiri,double y,double x,double y_m);
         double find_threshold_y(double y);
         int num_predictor;
         int num_measurement;
         int cameras;
-        double eigen_distance(double x_measure, double x_obj, double y_measure, double y_obj);
+        double eigen_distance_transform(double x_m, double y_m, double x_obj, double y_obj);
         struct Node *predictor;
         struct Node *measurement;
-        int association1        [23][23];
-        int association2        [23][23];
-        int association3        [23][23];
         int association1p       [23][23];
         int association2p       [23][23];
         int association3p       [23][23];
         int association_globe   [23][23];
+        int association_agrr    [23][23];
 };
 
 

@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1458548235 source:/home/bima/tugasakhir/Objecttracking/ObjectTracking/KalmanObj.cpp
+1458878582 source:/home/bima/tugasakhir/Objecttracking/ObjectTracking/KalmanObj.cpp
 	"KalmanObj.h"
 
-1458610861 /home/bima/tugasakhir/Objecttracking/ObjectTracking/KalmanObj.h
+1458878355 /home/bima/tugasakhir/Objecttracking/ObjectTracking/KalmanObj.h
 	"LinkedList.h"
 	"opencv2/legacy/legacy.hpp"
 	<opencv/cv.h>
@@ -17,8 +17,30 @@
 	<fstream>
 	<stdlib.h>
 
-1458409285 /home/bima/tugasakhir/Objecttracking/ObjectTracking/LinkedList.h
+1458888390 /home/bima/tugasakhir/Objecttracking/ObjectTracking/LinkedList.h
 	<iostream>
 	<cstddef>
+	<stdlib.h>
+
+1458888416 source:/home/bima/tugasakhir/Objecttracking/ObjectTracking/LinkedList.cpp
+	"LinkedList.h"
+
+1458988910 source:/home/bima/tugasakhir/Objecttracking/ObjectTracking/ObjAssociate.cpp
+	"ObjAssociate.h"
+
+1458988536 /home/bima/tugasakhir/Objecttracking/ObjectTracking/ObjAssociate.h
+	"opencv/ml.h"
+	"LinkedList.h"
+	"opencv2/legacy/legacy.hpp"
+	<opencv/cv.h>
+	<opencv2/video/tracking.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<stdio.h>
+	<cmath>
+	<string>
+	<sstream>
+	<iostream>
+	<stdlib.h>
+	<fstream>
 	<stdlib.h>
 
