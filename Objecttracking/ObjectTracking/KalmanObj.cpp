@@ -33,13 +33,13 @@ Kalmanobj::~Kalmanobj(){
     
 }
 
-void Kalmanobj::multitrackObj(struct Node* init_symp, struct Node* current_symp, struct Node** predict_track){
+void Kalmanobj::multitrackObj(bool IsInit,struct Node* init_symp, struct Node* current_symp, struct Node** predict_track,Point accel_3d[23],Point velo3d[23],Point accels[23],Point velo[23]){
     Node *list_curr = current_symp;
     Node *list_init = init_symp;
     Point priory_pos,priory_vels,priory_acc,post_pos,post_vels,post_acc;
     Point priory_posp,priory_velsp,priory_accp,post_posp,post_velsp,post_accp;
     double pred_h,pred_w;
-    
+    int i;
     while(list_curr!=NULL){
         *predict_track = new Node;
         track_ind3Dmotion(list_curr,&priory_pos,&priory_vels,&priory_acc,&post_pos,&post_vels,&post_acc);
@@ -58,6 +58,12 @@ void Kalmanobj::multitrackObj(struct Node* init_symp, struct Node* current_symp,
         (*predict_track)->flag = list_curr->flag;
         (*predict_track)->next = NULL;
         list_curr = list_curr->next;
+    }
+    for(i=0;i<23;i++){
+        accel_3d[i] = accel3d[i];
+        velo3d  [i] = post_velocity3d[i];
+        accels  [i] = accel[i];
+        velo    [i] = post_velocity[i];
     }
 }
 
@@ -177,4 +183,3 @@ void Kalmanobj::track_ind3Dmotion(struct Node* curr_cond, Point *pre_position,Po
     extract_actual_v((double)curr_cond->val_x,(double)curr_cond->val_y,curr_cond->data_id,rep);
     extract_actual_a(curr_cond->data_id,rep);
 }
-

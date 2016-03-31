@@ -106,7 +106,7 @@ void associate::mapping(struct Node** Res){
                 (*Res)->y_trans = getbuf->y_trans;
                 (*Res)->vx_trans = getbuf->vx_trans;
                 (*Res)->vy_trans = getbuf->vy_trans;
-                (*Res)->cam = getbuf->cam;
+                (*Res)->camera = getbuf->camera;
                 (*Res)->next = getbuf->next;
             }
         }

@@ -58,7 +58,7 @@ class Kalmanobj{
     public:
         Kalmanobj(int camera_id,int start,int Num_Obj);
         ~Kalmanobj();
-        void multitrackObj(struct Node* init_symp, struct Node* current_symp, struct Node** predict_track);
+        void multitrackObj(bool IsInit,struct Node* init_symp, struct Node* current_symp, struct Node** predict_track,Point accel_3d[23],Point velo3d[23],Point accels[23],Point velo[23]);
     private:
         void initKalmanMOt(double pos_x, double pos_y,double v_x,double v_y,double a_x, double a_y);
         Point getCurrentStateMot() const;

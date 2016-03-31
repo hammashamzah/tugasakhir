@@ -32,6 +32,10 @@
 		<Linker>
 			<Add option="`opencv-config --ldstaticflags`" />
 		</Linker>
+		<Unit filename="Highlevel.cpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="Highlevel.h" />
 		<Unit filename="KalmanObj.cpp" />
 		<Unit filename="KalmanObj.h" />
 		<Unit filename="LinkedList.cpp" />

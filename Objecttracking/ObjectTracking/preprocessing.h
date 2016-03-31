@@ -22,6 +22,10 @@ using namespace cv;
 
 
 LinkedList list1;
+Node *pNew  = new Node;
+Node *buff1 = new Node;
+Node *buff2 = new Node;
+
 int clusters;
 int clusters1;
 int cam;
@@ -32,11 +36,11 @@ typedef struct{int id; Rect play_dat;char state;bool fo;}player;
 typedef struct{int id; double x_trans;double y_trans;bool fl;}play_transform;
 
 
-class preproc{
+class preprocess{
     private:
-        void extract_data(struct Node **pNew, player* plays, play_transform* played);
+        void extract_data(player* plays, play_transform* played);
     public:
-        void preprocess(bool start,int num_cluster_k,int num_cluster_k1, int cameras,player* plays, play_transform* played, struct Node **buffer1,struct Node **buffer2);   
+        preprocess(bool start,int num_cluster,int* num_cluster_k1, int cameras,player* plays, play_transform* played,struct Node**current_dat,struct Node** prev_dat); 
 
 };
 

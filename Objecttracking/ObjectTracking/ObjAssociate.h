@@ -27,11 +27,6 @@
 /**#define w_lapangan 70/**lebar lapangan 70 m**/
 /**#define l_lapangan 100/**panjang lapangan 100 m**/
 
-#define state_hipothetic    1
-#define state_Normal        2
-#define state_pottrans      3
-#define state_group         4
-#define state_camtrans      5
 
 using namespace cv;
 using namespace std;
