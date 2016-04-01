@@ -73,7 +73,7 @@ public:
 	double getFrameRate();
 	double getCurrentFrame();
 	double getNumberOfFrames();
-
+	QImage getFirstFrame();
 
 };
 

@@ -50,6 +50,11 @@ private slots:
 
     void on_pushButton_play_released();
 
+signals:
+    void firstFrame_1(const QImage &image);
+    void firstFrame_2(const QImage &image);
+    void firstFrame_3(const QImage &image);
+
 private:
     Ui::MainWindow *ui;
     CameraViewDialog *myCVDialog;
@@ -67,6 +72,9 @@ private:
     VideoProcessor *myStream_2;
     VideoProcessor *myStream_3;
 
+    QImage myFirstFrame_1;
+    QImage myFirstFrame_2;
+    QImage myFirstFrame_3;
 };
 
 #endif // MAINWINDOW_H
