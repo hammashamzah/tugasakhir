@@ -16,7 +16,6 @@ public:
     ~BackgroundModelTuningDialog();
 
 public slots:
-    void on_comboBox_activated(int index);
 
     void on_slider_morp_element_size_1_valueChanged(int value);
 

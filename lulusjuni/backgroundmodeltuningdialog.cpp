@@ -13,11 +13,6 @@ BackgroundModelTuningDialog::~BackgroundModelTuningDialog()
     delete ui;
 }
 
-void BackgroundModelTuningDialog::on_comboBox_activated(int index)
-{
-	
-}
-
 void BackgroundModelTuningDialog::on_slider_min_area_1_valueChanged(int value)
 {
 	emit valueMinArea_1(value);
