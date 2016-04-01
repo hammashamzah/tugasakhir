@@ -37,10 +37,25 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myStream_1, SLOT(updateValueGaussianSize(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_2(int)), myStream_2, SLOT(updateValueGaussianSize(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_3(int)), myStream_3, SLOT(updateValueGaussianSize(int)));
+    QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myCVDialog, SLOT(updateLabel(int)));
 
-    QObject::connect(this, SIGNAL(firstFrame_1(QImage)), myFSDialog, SLOT(setFirstFrame_1(QImage)));
-    QObject::connect(this, SIGNAL(firstFrame_2(QImage)), myFSDialog, SLOT(setFirstFrame_2(QImage)));
-    QObject::connect(this, SIGNAL(firstFrame_3(QImage)), myFSDialog, SLOT(setFirstFrame_3(QImage)));
+	if (!myStream_1->loadVideo("/media/data/dev/Projects/TA/edited-03-02-2016/lurus1.mp4")) {
+		QMessageBox msgBox;
+		msgBox.setText("The selected video could not be opened!");
+		msgBox.exec();
+	}
+
+	if (!myStream_2->loadVideo("/media/data/dev/Projects/TA/edited-03-02-2016/lurus2.mp4")) {
+		QMessageBox msgBox;
+		msgBox.setText("The selected video could not be opened!");
+		msgBox.exec();
+	}
+
+	if (!myStream_3->loadVideo("/media/data/dev/Projects/TA/edited-03-02-2016/lurus2-edited.mp4")) {
+		QMessageBox msgBox;
+		msgBox.setText("The selected video could not be opened!");
+		msgBox.exec();
+	}
 }
 
 MainWindow::~MainWindow()
@@ -97,10 +112,7 @@ void MainWindow::on_actionVideo_1_triggered()
 			msgBox.exec();
 		} else {
 			ui->label_videostream_1->setText("Video Stream 1:" +  filename_1);
-             //emit signal of first frame
-            myFirstFrame_1 = myStream_1->getFirstFrame();
-            emit firstFrame_1(myFirstFrame_1);
-        }
+		}
 	}
 	
 
@@ -118,10 +130,7 @@ void MainWindow::on_actionVideo_2_triggered()
 			msgBox.exec();
 		} else {
 			ui->label_videostream_2->setText("Video Stream 2:" +  filename_2);
-             //emit signal of first frame
-            myFirstFrame_2 = myStream_2->getFirstFrame();
-            emit firstFrame_2(myFirstFrame_2);
-        }
+		}
 	}
 	
 
@@ -140,10 +149,7 @@ void MainWindow::on_actionVideo_3_triggered()
 			msgBox.exec();
 		} else {
 			ui->label_videostream_3->setText("Video Stream 3:" +  filename_3);
-             //emit signal of first frame
-            myFirstFrame_3 = myStream_3->getFirstFrame();
-            emit firstFrame_3(myFirstFrame_3);
-        }
+		}
 	}
 	
 

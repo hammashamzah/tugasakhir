@@ -72,9 +72,6 @@ private:
     VideoProcessor *myStream_2;
     VideoProcessor *myStream_3;
 
-    QImage myFirstFrame_1;
-    QImage myFirstFrame_2;
-    QImage myFirstFrame_3;
 };
 
 #endif // MAINWINDOW_H

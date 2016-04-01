@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>902</width>
-    <height>630</height>
+    <width>848</width>
+    <height>583</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QComboBox" name="cameraSelectCombo">
+      <widget class="QComboBox" name="comboBox">
        <item>
         <property name="text">
          <string>Camera 1</string>
@@ -38,17 +38,17 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QLabel" name="imageview">
+        <widget class="QLabel" name="label">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>640</width>
-           <height>480</height>
+           <width>320</width>
+           <height>240</height>
           </size>
          </property>
          <property name="styleSheet">

@@ -119,7 +119,7 @@ void VideoProcessor::setCurrentFrame( int frameNumber )
 }
 
 void VideoProcessor::updateValueMinArea(int value) {
-	minArea = value;
+	minArea = value; 
 }
 void VideoProcessor::updateValueMaxArea(int value) {
 	maxArea = value;
@@ -129,18 +129,4 @@ void VideoProcessor::updateValueMorphElementSize(int value) {
 }
 void VideoProcessor::updateValueGaussianSize(int value) {
 	gaussianSize = value;
-}
-
-QImage VideoProcessor::getFirstFrame() {
-	Mat myFirstFrame;
-	QImage qMyFirstFrame;
-    Mat temp;
-    if(capture->read(myFirstFrame)){
-        //convert Mat to QImage
-        cv::cvtColor(myFirstFrame, temp, CV_BGR2RGB);
-        qMyFirstFrame = QImage((const unsigned char*)(temp.data),
-                                 temp.cols, temp.rows, QImage::Format_RGB888);
-    }
-
-	return qMyFirstFrame;
 }
