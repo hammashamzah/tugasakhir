@@ -41,10 +41,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myStream_1, SLOT(updateValueGaussianSize(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_2(int)), myStream_2, SLOT(updateValueGaussianSize(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_3(int)), myStream_3, SLOT(updateValueGaussianSize(int)));
-<<<<<<< Updated upstream
-    GameVisual();
-=======
-    QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myCVDialog, SLOT(updateLabel(int)));
+
 
     connect(ui->label_game_visual, SIGNAL(sendMousePosition(QPoint&)),this, SLOT(showMousePosition(QPoint&)));
     connect(ui->label_game_visual, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(showClickPosition(QPoint&)));
@@ -52,8 +49,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     setRandomPlayerProperties();
     updateGameVisual();
 
-
->>>>>>> Stashed changes
 
 }
 

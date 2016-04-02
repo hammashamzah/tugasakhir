@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_BackgroundModelTuningDialog_t {
-    QByteArrayData data[30];
-    char stringdata0[760];
+    QByteArrayData data[28];
+    char stringdata0[732];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,21 +44,19 @@ QT_MOC_LITERAL(11, 171, 22), // "valueMorpElementSize_3"
 QT_MOC_LITERAL(12, 194, 19), // "valueGaussianSize_1"
 QT_MOC_LITERAL(13, 214, 19), // "valueGaussianSize_2"
 QT_MOC_LITERAL(14, 234, 19), // "valueGaussianSize_3"
-QT_MOC_LITERAL(15, 254, 21), // "on_comboBox_activated"
-QT_MOC_LITERAL(16, 276, 5), // "index"
-QT_MOC_LITERAL(17, 282, 42), // "on_slider_morp_element_size_1..."
-QT_MOC_LITERAL(18, 325, 38), // "on_slider_gaussian_size_1_val..."
-QT_MOC_LITERAL(19, 364, 33), // "on_slider_min_area_2_valueCha..."
-QT_MOC_LITERAL(20, 398, 33), // "on_slider_max_area_2_valueCha..."
-QT_MOC_LITERAL(21, 432, 42), // "on_slider_morp_element_size_2..."
-QT_MOC_LITERAL(22, 475, 38), // "on_slider_gaussian_size_2_val..."
-QT_MOC_LITERAL(23, 514, 33), // "on_slider_min_area_3_valueCha..."
-QT_MOC_LITERAL(24, 548, 33), // "on_slider_max_area_3_valueCha..."
-QT_MOC_LITERAL(25, 582, 42), // "on_slider_morp_element_size_3..."
-QT_MOC_LITERAL(26, 625, 38), // "on_slider_gaussian_size_3_val..."
-QT_MOC_LITERAL(27, 664, 27), // "on_pushButton_load_released"
-QT_MOC_LITERAL(28, 692, 33), // "on_slider_min_area_1_valueCha..."
-QT_MOC_LITERAL(29, 726, 33) // "on_slider_max_area_1_valueCha..."
+QT_MOC_LITERAL(15, 254, 42), // "on_slider_morp_element_size_1..."
+QT_MOC_LITERAL(16, 297, 38), // "on_slider_gaussian_size_1_val..."
+QT_MOC_LITERAL(17, 336, 33), // "on_slider_min_area_2_valueCha..."
+QT_MOC_LITERAL(18, 370, 33), // "on_slider_max_area_2_valueCha..."
+QT_MOC_LITERAL(19, 404, 42), // "on_slider_morp_element_size_2..."
+QT_MOC_LITERAL(20, 447, 38), // "on_slider_gaussian_size_2_val..."
+QT_MOC_LITERAL(21, 486, 33), // "on_slider_min_area_3_valueCha..."
+QT_MOC_LITERAL(22, 520, 33), // "on_slider_max_area_3_valueCha..."
+QT_MOC_LITERAL(23, 554, 42), // "on_slider_morp_element_size_3..."
+QT_MOC_LITERAL(24, 597, 38), // "on_slider_gaussian_size_3_val..."
+QT_MOC_LITERAL(25, 636, 27), // "on_pushButton_load_released"
+QT_MOC_LITERAL(26, 664, 33), // "on_slider_min_area_1_valueCha..."
+QT_MOC_LITERAL(27, 698, 33) // "on_slider_max_area_1_valueCha..."
 
     },
     "BackgroundModelTuningDialog\0valueMinArea_1\0"
@@ -67,8 +65,8 @@ QT_MOC_LITERAL(29, 726, 33) // "on_slider_max_area_1_valueCha..."
     "valueMaxArea_3\0valueMorpElementSize_1\0"
     "valueMorpElementSize_2\0valueMorpElementSize_3\0"
     "valueGaussianSize_1\0valueGaussianSize_2\0"
-    "valueGaussianSize_3\0on_comboBox_activated\0"
-    "index\0on_slider_morp_element_size_1_valueChanged\0"
+    "valueGaussianSize_3\0"
+    "on_slider_morp_element_size_1_valueChanged\0"
     "on_slider_gaussian_size_1_valueChanged\0"
     "on_slider_min_area_2_valueChanged\0"
     "on_slider_max_area_2_valueChanged\0"
@@ -90,7 +88,7 @@ static const uint qt_meta_data_BackgroundModelTuningDialog[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      26,   14, // methods
+      25,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -98,34 +96,33 @@ static const uint qt_meta_data_BackgroundModelTuningDialog[] = {
       12,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  144,    2, 0x06 /* Public */,
-       4,    1,  147,    2, 0x06 /* Public */,
-       5,    1,  150,    2, 0x06 /* Public */,
-       6,    1,  153,    2, 0x06 /* Public */,
-       7,    1,  156,    2, 0x06 /* Public */,
-       8,    1,  159,    2, 0x06 /* Public */,
-       9,    1,  162,    2, 0x06 /* Public */,
-      10,    1,  165,    2, 0x06 /* Public */,
-      11,    1,  168,    2, 0x06 /* Public */,
-      12,    1,  171,    2, 0x06 /* Public */,
-      13,    1,  174,    2, 0x06 /* Public */,
-      14,    1,  177,    2, 0x06 /* Public */,
+       1,    1,  139,    2, 0x06 /* Public */,
+       4,    1,  142,    2, 0x06 /* Public */,
+       5,    1,  145,    2, 0x06 /* Public */,
+       6,    1,  148,    2, 0x06 /* Public */,
+       7,    1,  151,    2, 0x06 /* Public */,
+       8,    1,  154,    2, 0x06 /* Public */,
+       9,    1,  157,    2, 0x06 /* Public */,
+      10,    1,  160,    2, 0x06 /* Public */,
+      11,    1,  163,    2, 0x06 /* Public */,
+      12,    1,  166,    2, 0x06 /* Public */,
+      13,    1,  169,    2, 0x06 /* Public */,
+      14,    1,  172,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      15,    1,  180,    2, 0x0a /* Public */,
-      17,    1,  183,    2, 0x0a /* Public */,
-      18,    1,  186,    2, 0x0a /* Public */,
-      19,    1,  189,    2, 0x0a /* Public */,
-      20,    1,  192,    2, 0x0a /* Public */,
-      21,    1,  195,    2, 0x0a /* Public */,
-      22,    1,  198,    2, 0x0a /* Public */,
-      23,    1,  201,    2, 0x0a /* Public */,
-      24,    1,  204,    2, 0x0a /* Public */,
-      25,    1,  207,    2, 0x0a /* Public */,
-      26,    1,  210,    2, 0x0a /* Public */,
-      27,    0,  213,    2, 0x0a /* Public */,
-      28,    1,  214,    2, 0x0a /* Public */,
-      29,    1,  217,    2, 0x0a /* Public */,
+      15,    1,  175,    2, 0x0a /* Public */,
+      16,    1,  178,    2, 0x0a /* Public */,
+      17,    1,  181,    2, 0x0a /* Public */,
+      18,    1,  184,    2, 0x0a /* Public */,
+      19,    1,  187,    2, 0x0a /* Public */,
+      20,    1,  190,    2, 0x0a /* Public */,
+      21,    1,  193,    2, 0x0a /* Public */,
+      22,    1,  196,    2, 0x0a /* Public */,
+      23,    1,  199,    2, 0x0a /* Public */,
+      24,    1,  202,    2, 0x0a /* Public */,
+      25,    0,  205,    2, 0x0a /* Public */,
+      26,    1,  206,    2, 0x0a /* Public */,
+      27,    1,  209,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -142,7 +139,6 @@ static const uint qt_meta_data_BackgroundModelTuningDialog[] = {
     QMetaType::Void, QMetaType::Int,    3,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Int,   16,
     QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void, QMetaType::Int,    3,
@@ -178,20 +174,19 @@ void BackgroundModelTuningDialog::qt_static_metacall(QObject *_o, QMetaObject::C
         case 9: _t->valueGaussianSize_1((*reinterpret_cast< const int(*)>(_a[1]))); break;
         case 10: _t->valueGaussianSize_2((*reinterpret_cast< const int(*)>(_a[1]))); break;
         case 11: _t->valueGaussianSize_3((*reinterpret_cast< const int(*)>(_a[1]))); break;
-        case 12: _t->on_comboBox_activated((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 13: _t->on_slider_morp_element_size_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 14: _t->on_slider_gaussian_size_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 15: _t->on_slider_min_area_2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 16: _t->on_slider_max_area_2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 17: _t->on_slider_morp_element_size_2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 18: _t->on_slider_gaussian_size_2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 19: _t->on_slider_min_area_3_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 20: _t->on_slider_max_area_3_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 21: _t->on_slider_morp_element_size_3_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 22: _t->on_slider_gaussian_size_3_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 23: _t->on_pushButton_load_released(); break;
-        case 24: _t->on_slider_min_area_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 25: _t->on_slider_max_area_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 12: _t->on_slider_morp_element_size_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 13: _t->on_slider_gaussian_size_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 14: _t->on_slider_min_area_2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 15: _t->on_slider_max_area_2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 16: _t->on_slider_morp_element_size_2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 17: _t->on_slider_gaussian_size_2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 18: _t->on_slider_min_area_3_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 19: _t->on_slider_max_area_3_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 20: _t->on_slider_morp_element_size_3_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 21: _t->on_slider_gaussian_size_3_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 22: _t->on_pushButton_load_released(); break;
+        case 23: _t->on_slider_min_area_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 24: _t->on_slider_max_area_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -297,13 +292,13 @@ int BackgroundModelTuningDialog::qt_metacall(QMetaObject::Call _c, int _id, void
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 26)
+        if (_id < 25)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 26;
+        _id -= 25;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 26)
+        if (_id < 25)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 26;
+        _id -= 25;
     }
     return _id;
 }

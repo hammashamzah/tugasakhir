@@ -141,6 +141,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 9: _t->on_actionVideo_2_triggered(); break;
         case 10: _t->on_actionVideo_3_triggered(); break;
         case 11: _t->on_pushButton_play_released(); break;
+
         case 15: _t->on_pushButton_clicked(); break;
         default: ;
         }
