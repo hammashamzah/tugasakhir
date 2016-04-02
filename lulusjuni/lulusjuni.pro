@@ -22,7 +22,10 @@ SOURCES += main.cpp\
     systemperformancedialog.cpp \
     errorcalculationdialog.cpp \
     cameraviewdialog.cpp \
-    videoprocessor.cpp
+    videoprocessor.cpp \
+    matdisplay.cpp \
+    playervisual.cpp \
+    objectvariable.cpp
 
 HEADERS  += mainwindow.h \
     backgroundmodeltuningdialog.h \
@@ -31,7 +34,10 @@ HEADERS  += mainwindow.h \
     systemperformancedialog.h \
     errorcalculationdialog.h \
     cameraviewdialog.h \
-    videoprocessor.h
+    videoprocessor.h \
+    matdisplay.h \
+    playervisual.h \
+    objectvariable.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

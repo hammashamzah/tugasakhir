@@ -10,25 +10,12 @@
 #include <QLabel>
 #include <string>
 #include <iostream>
-#include "videoprocessor.h"
-#include "backgroundmodeltuningdialog.h"
-#include "cameraviewdialog.h"
-#include "errorcalculationdialog.h"
-#include "fieldselectiondialog.h"
-#include "systemperformancedialog.h"
-#include "trackingviewdialog.h"
+#include "objectvariable.h"
 
-#define JUMLAH_PLAYER 25
+
+
+
 using namespace std;
-
-struct player_visual{
-    int id;
-    char tim;
-    int pos_x;
-    int pos_y;
-};
-
-
 
 namespace Ui {
 class MainWindow;
@@ -41,9 +28,13 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void GameVisual();
 
 
+
+
+public slots:
+    void showMousePosition(QPoint& pos);
+    void showClickPosition(QPoint& pos);
 
 private slots:
     void on_actionTuning_Background_Model_triggered();
@@ -66,6 +57,14 @@ private slots:
 
     void on_pushButton_play_released();
 
+    void on_lineEdit_setIDplayer_textChanged(const QString &arg1);
+
+    void on_lineEdit_setIDplayer_textEdited(const QString &arg1);
+
+    void on_lineEdit_setIDplayer_returnPressed();
+
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     CameraViewDialog *myCVDialog;
@@ -82,6 +81,13 @@ private:
     VideoProcessor *myStream_1;
     VideoProcessor *myStream_2;
     VideoProcessor *myStream_3;
+
+
+
+    void updateGameVisual();
+    void setRandomPlayerProperties();
+    void setIDplayer();
+
 
 };
 

@@ -16,6 +16,7 @@
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
@@ -25,6 +26,7 @@
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <matdisplay.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -42,7 +44,7 @@ public:
     QAction *actionTracking_View;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
-    QLabel *label_game_visual;
+    matDisplay *label_game_visual;
     QPushButton *pushButton_play;
     QHBoxLayout *horizontalLayout;
     QLabel *current_time_1;
@@ -59,6 +61,9 @@ public:
     QLabel *label_videostream_1;
     QLabel *label_videostream_2;
     QLabel *label_videostream_3;
+    QLabel *label;
+    QLineEdit *lineEdit_setIDplayer;
+    QPushButton *pushButton;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuLoad_Video;
@@ -99,8 +104,9 @@ public:
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        label_game_visual = new QLabel(centralWidget);
+        label_game_visual = new matDisplay(centralWidget);
         label_game_visual->setObjectName(QStringLiteral("label_game_visual"));
+        label_game_visual->setEnabled(true);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -218,6 +224,21 @@ public:
 
         verticalLayout->addWidget(label_videostream_3);
 
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+
+        verticalLayout->addWidget(label);
+
+        lineEdit_setIDplayer = new QLineEdit(centralWidget);
+        lineEdit_setIDplayer->setObjectName(QStringLiteral("lineEdit_setIDplayer"));
+
+        verticalLayout->addWidget(lineEdit_setIDplayer);
+
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+
+        verticalLayout->addWidget(pushButton);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -286,6 +307,8 @@ public:
         label_videostream_1->setText(QApplication::translate("MainWindow", "Video Stream 1: Unknown", 0));
         label_videostream_2->setText(QApplication::translate("MainWindow", "Video Stream 2: Unknown", 0));
         label_videostream_3->setText(QApplication::translate("MainWindow", "Video Stream 3: Unknown", 0));
+        label->setText(QApplication::translate("MainWindow", "Set ID :", 0));
+        pushButton->setText(QApplication::translate("MainWindow", "Apply ID", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuLoad_Video->setTitle(QApplication::translate("MainWindow", "Load Video", 0));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Setting", 0));

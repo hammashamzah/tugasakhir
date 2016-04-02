@@ -1,5 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "objectvariable.h"
+#include <string>
+#include <iostream>
+
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -37,7 +41,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myStream_1, SLOT(updateValueGaussianSize(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_2(int)), myStream_2, SLOT(updateValueGaussianSize(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_3(int)), myStream_3, SLOT(updateValueGaussianSize(int)));
+<<<<<<< Updated upstream
     GameVisual();
+=======
+    QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myCVDialog, SLOT(updateLabel(int)));
+
+    connect(ui->label_game_visual, SIGNAL(sendMousePosition(QPoint&)),this, SLOT(showMousePosition(QPoint&)));
+    connect(ui->label_game_visual, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(showClickPosition(QPoint&)));
+
+    setRandomPlayerProperties();
+    updateGameVisual();
+
+
+>>>>>>> Stashed changes
 
 }
 
@@ -154,44 +170,89 @@ void MainWindow::on_pushButton_play_released()
 	}
 }
 
-void MainWindow::GameVisual()
+void MainWindow::showMousePosition(QPoint &pos)
+{
+    //ui->label_mouse_pos->setText("x: "+ QString::number(pos.x())+",y: "+QString::number(pos.y()));
+
+}
+
+void MainWindow::showClickPosition(QPoint &pos)
+{
+    int isPlayer=false;
+
+    for(int i=0;i<JUMLAH_PLAYER;i++)
+    {
+        if((pos.x()>=player_visual[i].Position.x() && pos.x()<=player_visual[i].Position.x()+10) && (pos.y()>=player_visual[i].Position.y() && pos.y()<=player_visual[i].Position.y()+10))
+        {
+            playerIdSelected = player_visual[i].id;
+            isPlayer = true;
+            if(player_visual[i].id<900)
+            {
+                ui->lineEdit_setIDplayer->setText(QString::number(playerIdSelected));
+            }
+            else ui->lineEdit_setIDplayer->setText("???");
+
+
+        }
+    }
+    if(!isPlayer)
+    {
+        playerIdSelected = 999;
+        setRandomPlayerProperties();
+        updateGameVisual();
+    }
+
+}
+
+void MainWindow::updateGameVisual()
 {
     int i;
-    QPixmap pm(800,400);    //ukuran pixmap
-    QPainter p(&pm);
-    QPen pen(Qt::blue, 1);        //warna dan tebal garis lingkaran
+    QPixmap pixmapField("lapangan.png");   //ukuran pixmap
+    QPainter painterField(&pixmapField);
+    QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
     QBrush brush(Qt::white);
     QString id;
-    player_visual pemain[JUMLAH_PLAYER];
+    QPoint batas_lapang_kiri_atas(34, 28);
+    QPoint batas_lapang_kiri_bawah(34, pixmapField.height()-28);
+    QPoint batas_lapang_kanan_atas(pixmapField.width()-34, 28);
+    QPoint batas_lapang_kanan_bawah(pixmapField.width()-34, pixmapField.height()-28);
 
-      //pm.fill();
-      //pm.load("lapangan.jpg");
-       ui->label_game_visual->setPixmap (pm);
-       //cout<< l.width();
+    painterField.setRenderHint(QPainter::Antialiasing, true);
+    painterField.setPen(pen);
+    for(i=0;i<JUMLAH_PLAYER; i++)
+    {
+          if(player_visual[i].TeamSide=='A') brush.setColor(Qt::yellow);      //warna pengisi lingkaran player_visual
+          else if(player_visual[i].TeamSide=='B') brush.setColor(Qt::red);
+          painterField.setBrush(brush);
+
+          painterField.drawRect(player_visual[i].Position.x(), player_visual[i].Position.y(), rect_player_size, rect_player_size);  //posisi x, y, dan ukuran elips
+          painterField.setFont(QFont ("Arial"));
+            id = QString::number(player_visual[i].id);
+          if(player_visual[i].id<900) painterField.drawText(QPoint(player_visual[i].Position.x(), player_visual[i].Position.y()), id); //posisi x, y, dan ukuran elips
+          else painterField.drawText(QPoint(player_visual[i].Position.x(), player_visual[i].Position.y()), "??");
+
+     }
+      ui->label_game_visual->setPixmap (pixmapField);
+
+}
+
+void MainWindow::setRandomPlayerProperties()
+{
     //set random value of player
-        for(i=0; i<JUMLAH_PLAYER; i++)
+    for(int i=0; i<JUMLAH_PLAYER; i++)
         {
-            pemain[i].id=rand()%JUMLAH_PLAYER;
-            if(i<=12) pemain[i].tim='A';
-            else pemain[i].tim='B';
-            pemain[i].pos_x=rand()% pm.width();
-            pemain[i].pos_y=rand()% pm.height();
+            player_visual[i].id=i+999;
+            if(i<=12) player_visual[i].TeamSide='A';
+            else player_visual[i].TeamSide='B';
+            player_visual[i].Position.setX(qrand() % (640-68)+34);
+            //cout<<player_visual[i].pos_x<<" ";
+            player_visual[i].Position.setY(qrand() % (434-56) + 28);
         }
+}
 
-          p.setRenderHint(QPainter::Antialiasing, true);
-          p.setPen(pen);
-          for(i=0;i<JUMLAH_PLAYER; i++)
-          {
-          if(pemain[i].tim=='A') brush.setColor(Qt::yellow);      //warna pengisi lingkaran pemain
-          else if(pemain[i].tim=='B') brush.setColor(Qt::red);
-          p.setBrush(brush);
+void MainWindow::setIDplayer()
+{
 
-          p.drawEllipse(pemain[i].pos_x, pemain[i].pos_y, 20, 20);  //posisi x, y, dan ukuran elips
-            p.setFont(QFont ("Arial"));
-            id = QString::number(pemain[i].id);
-          p.drawText(QPoint(pemain[i].pos_x, pemain[i].pos_y), id); //posisi x, y, dan ukuran elips
-      }
-      ui->label_game_visual->setPixmap (pm);
 }
 
 /*QString MainWindow::getFormattedTime(int timeInSeconds){
@@ -247,3 +308,15 @@ void MainWindow::on_time_slider_3_sliderMoved(int position)
     ui->current_time_3->setText( getFormattedTime( position/(int)myStream_3->getFrameRate()) );
 }
 */
+
+void MainWindow::on_pushButton_clicked()
+{
+    for(int i=0; i<JUMLAH_PLAYER;i++)
+    {
+        if (player_visual[i].id==playerIdSelected)
+        {
+            player_visual[i].id= ui->lineEdit_setIDplayer->text().toInt();
+            updateGameVisual();
+        }
+    }
+}
