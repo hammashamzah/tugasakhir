@@ -1,4 +1,5 @@
 #include "KalmanObj.h"
+
 #define DEBUG
 
 Kalmanobj::Kalmanobj(int camera_id,bool start,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr){
@@ -42,7 +43,7 @@ Kalmanobj::~Kalmanobj(){
     
 }
 
-void Kalmanobj::multitrackObj(struct Node* init_symp, Node* current_symp){
+void Kalmanobj::multitrackObj(Node* init_symp, Node* current_symp){
     Node *list_curr = current_symp;
     Node *list_init = init_symp;
     Point2f priory_pos,priory_vels,priory_acc,post_pos,post_vels,post_acc;
@@ -144,7 +145,7 @@ void Kalmanobj::extract_actual_a(int idx,int rep){
     }
 }
 
-void Kalmanobj::track_size(double &pred_w, double &pred_h,struct Node* init_matric,struct Node* curr_matric){
+void Kalmanobj::track_size(double &pred_w, double &pred_h,Node* init_matric,Node* curr_matric){
     /*koordinate titik hilang*/
     double yo =((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))-((YDL+YDR)/2);
     double perb_init = (-(init_matric->val_y)+((YDL+YDR)/2))/((init_matric->val_y)-yo);
@@ -155,7 +156,7 @@ void Kalmanobj::track_size(double &pred_w, double &pred_h,struct Node* init_matr
     pred_h = height_pres * perb_act;
 }
 
-void Kalmanobj::track_ind2Dmotion(struct Node* curr_cond, Point pre_pos,Point pre_veloc,Point pre_Acce,Point post_pos,Point post_veloc,Point post_Acce){
+void Kalmanobj::track_ind2Dmotion(Node* curr_cond, Point pre_pos,Point pre_veloc,Point pre_Acce,Point post_pos,Point post_veloc,Point post_Acce){
     int rep = 1;
     initKalmanMOt((double)curr_cond->val_x, (double)curr_cond->val_y,(double)pre_velocity[curr_cond->data_id].x,(double)pre_velocity[curr_cond->data_id].y,(double)accel[curr_cond->data_id].x, (double)accel[curr_cond->data_id].y);
     KF_Mot.predict();
@@ -170,7 +171,7 @@ void Kalmanobj::track_ind2Dmotion(struct Node* curr_cond, Point pre_pos,Point pr
     extract_actual_a(curr_cond->data_id,rep);
 }
 
-void Kalmanobj::track_ind3Dmotion(struct Node* curr_cond, Point pre_pos,Point pre_veloc,Point pre_Acce,Point post_pos,Point post_veloc,Point post_Acce){
+void Kalmanobj::track_ind3Dmotion(Node* curr_cond, Point pre_pos,Point pre_veloc,Point pre_Acce,Point post_pos,Point post_veloc,Point post_Acce){
     int rep = 2;
     initKalmanMOt((double)curr_cond->val_x, (double)curr_cond->val_y,(double)pre_velocity3d[curr_cond->data_id].x,(double)pre_velocity3d[curr_cond->data_id].y,(double)accel3d[curr_cond->data_id].x, (double)accel3d[curr_cond->data_id].y);
     KF_Mot.predict();

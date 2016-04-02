@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include <stdlib.h>
-
+#include "node.h"
 using namespace std;
 using namespace cv;
 
@@ -31,18 +31,19 @@ typedef struct{int id; double x_trans;double y_trans;bool fl;}play_transform;
 class Preprocess{
     private:
         void extract_data(player* plays, play_transform* played);
-        Node *pNew  = new Node;
-        Node *buff1 = new Node;
-        Node *buff2 = new Node;
+        Node *pNew  ;
+        Node *buff1 ;
+        Node *buff2 ;
         int clusters;
         int clusters1;
         int cam;
-        bool proc_start;
     public:
-        Preprocess(bool start, int cameras);
+        bool proc_start;
+        Preprocess(bool start);
         ~Preprocess();
-        void accum_preprocess(int num_cluster,int &num_cluster_k1, int cameras,player* plays, play_transform* played,struct Node**current_dat,struct Node** prev_dat); 
+        void accum_preprocess(int num_cluster,int &num_cluster_k1, int cameras,player* plays, play_transform* played);
         LinkedList list1;
+        Node* current_dat1; Node* prev_dat1;
 };
 
 #endif // PREPROCESSING_H_INCLUDED

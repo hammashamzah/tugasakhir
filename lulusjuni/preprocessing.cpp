@@ -11,16 +11,15 @@ void Preprocess::extract_data(player* plays, play_transform* played){
 }
 
 
-Preprocess::Preprocess(bool start,int cameras){
+Preprocess::Preprocess(bool start){
     proc_start = start;
-    cam = cameras;
 }
 
 Preprocess::~Preprocess(){
 
 }
 
-void Preprocess::accum_preprocess(int num_cluster,int &num_cluster_k1, int cameras,player* plays, play_transform* played,struct Node**current_dat,struct Node** prev_dat){
+void Preprocess::accum_preprocess(int num_cluster,int &num_cluster_k1, int cameras,player* plays, play_transform* played){
     clusters1 = clusters;
     clusters = num_cluster;
     if(proc_start){
@@ -31,36 +30,36 @@ void Preprocess::accum_preprocess(int num_cluster,int &num_cluster_k1, int camer
         num_cluster_k1 = clusters1;
         list1.deleteLinkedList(&pNew);
         while(buff1 != NULL) {
-            *current_dat = new Node;
-            (*current_dat)->data_id = buff1->data_id;
-            (*current_dat)->val_x= buff1->val_x;
-            (*current_dat)->val_y = buff1->val_y;
-            (*current_dat)->val_h= buff1->val_h;
-            (*current_dat)->val_w = buff1->val_w;
-            (*current_dat)->x_trans= buff1->x_trans;
-            (*current_dat)->y_trans= buff1->y_trans;
-            (*current_dat)->vx_trans= buff1->vx_trans;
-            (*current_dat)->vy_trans= buff1->vy_trans;
-            (*current_dat)->flag= buff1->flag;
-            (*current_dat)->camera= cameras;
-            (*current_dat)->state= buff1->state;
-            (*current_dat)->next = buff1->next;            
-        }
-        while(buff2 != NULL) {
-            *prev_dat = new Node;
-            (*prev_dat)->data_id = buff2->data_id;
-            (*prev_dat)->val_x= buff2->val_x;
-            (*prev_dat)->val_y = buff2->val_y;
-            (*prev_dat)->val_h= buff2->val_h;
-            (*prev_dat)->val_w = buff2->val_w;
-            (*prev_dat)->x_trans= buff2->x_trans;
-            (*prev_dat)->y_trans= buff2->y_trans;
-            (*prev_dat)->vx_trans= buff2->vx_trans;
-            (*prev_dat)->vy_trans= buff2->vy_trans;
-            (*prev_dat)->flag= buff2->flag;
-            (*prev_dat)->camera= cameras;
-            (*prev_dat)->state= buff2->state;
-            (*prev_dat)->next = buff2->next;
-        }  
-    }
+                    current_dat1 = new Node;
+                    current_dat1->data_id = buff1->data_id;
+                    current_dat1->val_x= buff1->val_x;
+                    current_dat1->val_y = buff1->val_y;
+                    current_dat1->val_h= buff1->val_h;
+                    current_dat1->val_w = buff1->val_w;
+                    current_dat1->x_trans= buff1->x_trans;
+                    current_dat1->y_trans= buff1->y_trans;
+                    current_dat1->vx_trans= buff1->vx_trans;
+                    current_dat1->vy_trans= buff1->vy_trans;
+                    current_dat1->flag= buff1->flag;
+                    current_dat1->camera= cameras;
+                    current_dat1->state= buff1->state;
+                    current_dat1->next = buff1->next;
+                }
+                while(buff2 != NULL) {
+                    prev_dat1 = new Node;
+                    prev_dat1->data_id = buff2->data_id;
+                    prev_dat1->val_x= buff2->val_x;
+                    prev_dat1->val_y = buff2->val_y;
+                    prev_dat1->val_h= buff2->val_h;
+                    prev_dat1->val_w = buff2->val_w;
+                    prev_dat1->x_trans= buff2->x_trans;
+                    prev_dat1->y_trans= buff2->y_trans;
+                    prev_dat1->vx_trans= buff2->vx_trans;
+                    prev_dat1->vy_trans= buff2->vy_trans;
+                    prev_dat1->flag= buff2->flag;
+                    prev_dat1->camera= cameras;
+                    prev_dat1->state= buff2->state;
+                    prev_dat1->next = buff2->next;
+                }
+      }
 }

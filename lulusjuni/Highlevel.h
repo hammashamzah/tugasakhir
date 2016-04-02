@@ -53,6 +53,7 @@ class HighLevel{
         Point accel_3d1[NUM_PLAYER];Point velo3d1[NUM_PLAYER];Point accels1[NUM_PLAYER];Point velo1[NUM_PLAYER];
         int assoc_mat[NUM_PLAYER][NUM_PLAYER];
         void get_matricesAssociate();
+        bool Isvalid;
     private:
         bool start;
         void update_player();

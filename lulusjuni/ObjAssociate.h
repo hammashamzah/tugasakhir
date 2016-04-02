@@ -14,28 +14,29 @@
 #include <stdlib.h>
 #include <fstream>
 #include <stdlib.h>
-/**#define camera_max 3
-/**#define w_lapangan 70/**lebar lapangan 70 m**/
-/**#define l_lapangan 100/**panjang lapangan 100 m**/
+#include "node.h"
 
 
 using namespace cv;
 using namespace std;
+const double threshold_glob = 1.50;
 
 
 class Associate{
     public: 
+        int validate;
         Associate(bool start,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double pixel_th);
         ~Associate();
         void init_multicamassoc();
-        void accum_assoc(bool Isinit,struct Node* predictor1,struct Node* predictor2,struct Node* predictor3,struct Node* measurement1,struct Node* measurement2,struct Node* measurement3,int num_p1,int num_p2,int num_p3,int num_m1,int num_m2,int num_m3);
+        void accum_assoc(bool Isinit,Node* predictor1,struct Node* predictor2, Node* predictor3, Node* measurement1, Node* measurement2, Node* measurement3,int num_p1,int num_p2,int num_p3,int num_m1,int num_m2,int num_m3);
         void link_theid(int cam);
         void init_matrices_assoc();
         int  association_agrr    [23][23];
-        struct Node* mapping_result;
+        Node* mapping_result;
     private:
+
         double XUL,XUR,XDR,XDL,YUL,YUR,YDR,YDL;
-        void mapping(struct Node** Res);
+        void mapping(Node** Res);
         void sum_updated_mat();
         void mapping();
         void associate_losthyp(int number_lost,int number_found);
@@ -44,7 +45,7 @@ class Associate{
         void update_hypothesis(int init,int camr,int &fin);
         void update_arracc();
         //int FSM(int prev_state,bool Isinit,bool set_id,bool onetoN,bool Ntoone,bool onetoone,int flag,bool emptyrow);
-        void cam_associate(int cam,int num_p,int num_m,struct Node *p,struct Node *m);
+        void cam_associate(int cam,int num_p,int num_m,Node *p,struct Node *m);
         double threshold_coef(double y);
         void find_threshold_x(double &x_kanan,double &x_kiri,double y,double x,double y_m);
         double find_threshold_y(double y);
@@ -52,18 +53,18 @@ class Associate{
         int num_measurement;
         int cameras;
         double eigen_distance_transform(double x_m, double y_m, double x_obj, double y_obj);
-        struct Node *predictor;
-        struct Node *measurement;
+        Node *predictor;
+        Node *measurement;
         int association1p       [23][23];
         int association2p       [23][23];
         int association3p       [23][23];
         int association_globe   [23][23];
-        struct Node* predic1;
-        struct Node* predic2;
-        struct Node* predic3;
-        struct Node* measure1;
-        struct Node* measure2;
-        struct Node* measure3;
+        Node* predic1;
+        Node* predic2;
+        Node* predic3;
+        Node* measure1;
+        Node* measure2;
+        Node* measure3;
 
         double THETA;
         double yo;
@@ -77,7 +78,7 @@ class Associate{
         int num_trans2;
         int numm1,numm2,numm3,nump1,nump2,nump3;
 
-        const double threshold_glob = 1.50;
+        //const double threshold_glob = 1.50;
         int obj_cam[3];
         int meas_cam[3];
         LinkedList listgen;

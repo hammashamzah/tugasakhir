@@ -40,8 +40,8 @@ Associate::~Associate(){
 }
 
 
-void Associate::accum_assoc(bool Isinit,struct Node* predictor1,struct Node* predictor2,struct Node* predictor3,struct Node* measurement1,struct Node* measurement2,struct Node* measurement3,int num_p1,int num_p2,int num_p3,int num_m1,int num_m2,int num_m3){
-    int ntoone1=0,ntoone2=0,ntoone3=0,ousted=0,hypo=0,cntoone1=0,cntoone2=0,cntoone3=0,validate=0;
+void Associate::accum_assoc(bool Isinit,Node* predictor1, Node* predictor2, Node* predictor3, Node* measurement1, Node* measurement2, Node* measurement3,int num_p1,int num_p2,int num_p3,int num_m1,int num_m2,int num_m3){
+    int ntoone1=0,ntoone2=0,ntoone3=0,ousted=0,hypo=0,cntoone1=0,cntoone2=0,cntoone3=0;
     int f_1=0,f_2=0,f_3=0;
     int l_1=0,l_2=0,l_3=0;
     Inits = Isinit;    
@@ -349,7 +349,7 @@ int Associate::FSM(int prev_state,bool Isinit,bool set_id,bool onetoN,bool Ntoon
 
 *****************************************************************************************************************************************/
 
-void Associate::cam_associate(int cam,int num_p,int num_m,struct Node *p,struct Node *m){
+void Associate::cam_associate(int cam,int num_p,int num_m, Node *p, Node *m){
     num_predictor = num_p;
     num_measurement = num_m;
     cameras = cam;

@@ -5,9 +5,9 @@ LinkedList hlevel;
 
 HighLevel::HighLevel(bool process_on,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double hung_th,double fr){
     start = process_on;
-    preproc1 = new Preprocess(process_on,1);
-    preproc2 = new Preprocess(process_on,2);
-    preproc3 = new Preprocess (process_on,3);
+    preproc1 = new Preprocess(process_on);
+    preproc2 = new Preprocess(process_on);
+    preproc3 = new Preprocess(process_on);
     kalman1 = new Kalmanobj(1,process_on,xdl,xdr,xul,xur,ydl,ydr,yul,yur,fr);
     kalman2 = new Kalmanobj(2,process_on,xdl,xdr,xul,xur,ydl,ydr,yul,yur,fr);
     kalman3 = new Kalmanobj(3,process_on,xdl,xdr,xul,xur,ydl,ydr,yul,yur,fr);
@@ -28,7 +28,7 @@ HighLevel::HighLevel(bool process_on,double xdl,double xdr,double xul,double xur
 }
 
 void HighLevel::Highlevel_proc(int frame,bool init,int num_cluster1,int num_cluster2,int num_cluster3,player plays1[],player plays2[],player plays3[],play_transform played1[],play_transform played2[],play_transform played3[]){
-    int i,j;
+    int i;
     if(start){
         /**init all parameter**/
         for(i=0;i<23;i++){
@@ -40,18 +40,30 @@ void HighLevel::Highlevel_proc(int frame,bool init,int num_cluster1,int num_clus
             accel_3d1[i].y=0,velo3d1[i].y=0,accels1[i].y=0,velo1[i].y=0;
         }
         /**extract data**/
-        preproc1->accum_preprocess(num_cluster1,prev_num1, 1,plays1,played1,&New_dat1,&prev_dat1);
-        preproc2->accum_preprocess(num_cluster2,prev_num2, 2,plays2,played2,&New_dat2,&prev_dat2);
-        preproc3->accum_preprocess(num_cluster3,prev_num3, 3,plays3,played3,&New_dat3,&prev_dat3);
+        preproc1->accum_preprocess(num_cluster1,prev_num1, 1,plays1,played1);
+        preproc1->accum_preprocess(num_cluster2,prev_num2, 2,plays2,played2);
+        preproc1->accum_preprocess(num_cluster3,prev_num3, 3,plays3,played3);
         if(init){
-            hlevel.copyLinkedList(New_dat1,&init1);
-            hlevel.copyLinkedList(New_dat2,&init2);
-            hlevel.copyLinkedList(New_dat3,&init3);
+            hlevel.copyLinkedList(preproc1->current_dat1,&init1);
+            hlevel.copyLinkedList(preproc2->current_dat1,&init2);
+            hlevel.copyLinkedList(preproc3->current_dat1,&init3);
+        }
+        else{
+            hlevel.copyLinkedList(preproc1->current_dat1,&New_dat1);
+            hlevel.copyLinkedList(preproc2->current_dat1,&New_dat2);
+            hlevel.copyLinkedList(preproc3->current_dat1,&New_dat3);
+            hlevel.copyLinkedList(preproc1->prev_dat1,&prev_dat1);
+            hlevel.copyLinkedList(preproc2->prev_dat1,&prev_dat2);
+            hlevel.copyLinkedList(preproc3->prev_dat1,&prev_dat3);
         }
         /**object association**/
+        hlevel.deleteLinkedList(&map_res);
         assoccie->init_multicamassoc();
         assoccie->accum_assoc(init,pred_dat1,pred_dat2,pred_dat3,New_dat1,New_dat2,New_dat3,prev_num1,prev_num2,prev_num3,num_cluster1,num_cluster2,num_cluster3);
-        hlevel.deleteLinkedList(&map_res);
+        if(assoccie->validate==NUM_PLAYER)
+            Isvalid = true;
+        else
+            Isvalid =false;
         map_res = new Node;
         hlevel.copyLinkedList(assoccie->mapping_result,&map_res);
         update_player();

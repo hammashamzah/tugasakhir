@@ -1,7 +1,8 @@
 #include "LinkedList.h"
 
+
 // only for the 1st Node
-void LinkedList::initNode(struct Node *head,int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag, int status){
+void LinkedList::initNode( Node *head,int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag, int status){
 	head->data_id = n;
     head->camera = cam;
 	head->val_x = x;
@@ -18,7 +19,7 @@ void LinkedList::initNode(struct Node *head,int n,int cam,double x,double y,doub
 }
 
 // apending
-void LinkedList::addNode(struct Node *head, int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag,int status) {
+void LinkedList::addNode( Node *head, int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag,int status) {
 	Node *newNode = new Node;
 	newNode->data_id = n;
 	newNode->camera = cam;
@@ -43,7 +44,7 @@ void LinkedList::addNode(struct Node *head, int n,int cam,double x,double y,doub
 	}
 }
 
-void LinkedList::insertFront(struct Node **head, int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag,int status) {
+void LinkedList::insertFront(Node **head, int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag,int status) {
 	Node *newNode = new Node;
 	newNode->data_id = n;
 	newNode->camera = cam;
@@ -62,7 +63,7 @@ void LinkedList::insertFront(struct Node **head, int n,int cam,double x,double y
 }
 
 
-struct Node*LinkedList::searchNode(struct Node *head, int n) {
+struct Node*LinkedList::searchNode(Node *head, int n) {
 	Node *cur = head;
 	while(cur) {
 		if(cur->data_id == n) return cur;
@@ -71,7 +72,7 @@ struct Node*LinkedList::searchNode(struct Node *head, int n) {
 	//cout << "No Node " << n << " in list.\n";
 }
 
-bool LinkedList::deleteNode(struct Node **head, Node *ptrDel) {
+bool LinkedList::deleteNode(Node **head, Node *ptrDel) {
 	Node *cur = *head;
 	if(ptrDel == *head) {
 		*head = cur->next;
@@ -91,7 +92,7 @@ bool LinkedList::deleteNode(struct Node **head, Node *ptrDel) {
 }
 
 /* reverse the list */
-struct Node* LinkedList::reverse(struct Node** head)
+Node* LinkedList::reverse(Node** head)
 {
 	Node *parent = *head;
 	Node *me = parent->next;
@@ -111,7 +112,7 @@ struct Node* LinkedList::reverse(struct Node** head)
 }
 
 /* Creating a copy of a linked list */
-void LinkedList::copyLinkedList(struct Node *node, struct Node **pNew)
+void LinkedList::copyLinkedList(Node *node,Node **pNew)
 {
 	if(node != NULL) {
 		*pNew = new Node;
@@ -154,7 +155,7 @@ void LinkedList::copyLinkedList(struct Node *node, struct Node **pNew)
 	return flag;
 }**/
 
-void LinkedList::deleteLinkedList(struct Node **node)
+void LinkedList::deleteLinkedList(Node **node)
 {
 	struct Node *tmpNode;
 	while(*node) {
