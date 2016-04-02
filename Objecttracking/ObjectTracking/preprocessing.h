@@ -20,28 +20,28 @@
 using namespace std;
 using namespace cv;
 
-
-LinkedList list1;
-Node *pNew  = new Node;
-Node *buff1 = new Node;
-Node *buff2 = new Node;
-
-int clusters;
-int clusters1;
-int cam;
         
 /**Data from multiple object detector unit**/
 typedef struct{int id; Rect play_dat;char state;bool fo;}player;
 /**Data from 2D transformation unit**/
 typedef struct{int id; double x_trans;double y_trans;bool fl;}play_transform;
 
+LinkedList list1;
+    Node *pNew  = new Node;
+    Node *buff1 = new Node;
+    Node *buff2 = new Node;
+    int clusters;
+    int clusters1;
+    int cam;
+    bool proc_start;
 
-class preprocess{
+class Preprocess{
     private:
         void extract_data(player* plays, play_transform* played);
     public:
-        preprocess(bool start,int num_cluster,int* num_cluster_k1, int cameras,player* plays, play_transform* played,struct Node**current_dat,struct Node** prev_dat); 
-
+        Preprocess(bool start, int cameras);
+        ~Preprocess();
+        void accum_preprocess(int num_cluster,int &num_cluster_k1, int cameras,player* plays, play_transform* played,struct Node**current_dat,struct Node** prev_dat); 
 };
 
 #endif // PREPROCESSING_H_INCLUDED

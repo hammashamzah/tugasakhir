@@ -1,7 +1,7 @@
 #include "preprocessing.h"
 
 
-void preprocess::extract_data(player* plays, play_transform* played){
+void Preprocess::extract_data(player* plays, play_transform* played){
     int i;    
     //Node *pNew = new Node;
     list1.initNode(pNew,plays[0].id,cam,(double)plays[0].play_dat.x,(double)plays[0].play_dat.y,(double)plays[0].play_dat.width, (double)plays[0].play_dat.height,(double)played[0].x_trans,(double)played[0].y_trans,0,0,played[0].fl,state_hipothetic);
@@ -11,12 +11,20 @@ void preprocess::extract_data(player* plays, play_transform* played){
 }
 
 
-preprocess::preprocess(bool start,int num_cluster,int* num_cluster_k1, int cameras,player* plays, play_transform* played,struct Node**current_dat,struct Node** prev_dat){
+Preprocess::Preprocess(bool start,int cameras){
+    proc_start = start;
+    cam = cameras;
+}
+
+Preprocess::~Preprocess(){
+
+}
+
+void Preprocess::accum_preprocess(int num_cluster,int &num_cluster_k1, int cameras,player* plays, play_transform* played,struct Node**current_dat,struct Node** prev_dat){
     clusters1 = clusters;
     clusters = num_cluster;
-    cam = cameras;
     Node *buffer = new Node;
-    if(start){
+    if(proc_start){
         extract_data(plays,played);
         list1.copyLinkedList(buff2,&buff1);
         list1.deleteLinkedList(&buff2);
@@ -55,4 +63,3 @@ preprocess::preprocess(bool start,int num_cluster,int* num_cluster_k1, int camer
         }  
     }
 }
-
