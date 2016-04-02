@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	myECDialog = new ErrorCalculationDialog(this);
 	mySPDialog = new SystemPerformanceDialog(this);
 	myTVDialog = new TrackingViewDialog(this);
-	myBMTDialog = new BackgroundModelTuningDialog(this);
+//	myBMTDialog = new BackgroundModelTuningDialog(this);
 	myFSDialog = new FieldSelectionDialog(this);
 
 	//connect slot
@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QObject::connect(myStream_3, SIGNAL(rawImage(QImage)), myCVDialog, SLOT(updateRawPlayerUI_3(QImage)));
 
 	//connect slot from
-	QObject::connect(myBMTDialog, SIGNAL(valueMinArea_1(int)), myStream_1, SLOT(updateValueMinArea(int)));
+/*	QObject::connect(myBMTDialog, SIGNAL(valueMinArea_1(int)), myStream_1, SLOT(updateValueMinArea(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueMinArea_2(int)), myStream_2, SLOT(updateValueMinArea(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueMinArea_3(int)), myStream_3, SLOT(updateValueMinArea(int)));
 
@@ -41,20 +41,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myStream_1, SLOT(updateValueGaussianSize(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_2(int)), myStream_2, SLOT(updateValueGaussianSize(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_3(int)), myStream_3, SLOT(updateValueGaussianSize(int)));
-<<<<<<< Updated upstream
-    GameVisual();
-=======
     QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myCVDialog, SLOT(updateLabel(int)));
-
+*/
     connect(ui->label_game_visual, SIGNAL(sendMousePosition(QPoint&)),this, SLOT(showMousePosition(QPoint&)));
     connect(ui->label_game_visual, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(showClickPosition(QPoint&)));
 
     setRandomPlayerProperties();
     updateGameVisual();
-
-
->>>>>>> Stashed changes
-
 }
 
 MainWindow::~MainWindow()

@@ -3,10 +3,10 @@
 
 void Preprocess::extract_data(player* plays, play_transform* played){
     int i;    
-    //Node *pNew = new Node;
-    list1.initNode(pNew,plays[0].id,cam,(double)plays[0].play_dat.x,(double)plays[0].play_dat.y,(double)plays[0].play_dat.width, (double)plays[0].play_dat.height,(double)played[0].x_trans,(double)played[0].y_trans,0,0,played[0].fl,state_hipothetic);
+    Node *pNew = new Node;
+    list1.initNode(pNew,plays[0].id,cam,(double)plays[0].play_dat.x,(double)plays[0].play_dat.y,(double)plays[0].play_dat.width, (double)plays[0].play_dat.height,(double)played[0].x_trans,(double)played[0].y_trans,0,0,played[0].fl,1);
     for(i=1;i<clusters;i++){
-        list1.addNode(pNew,plays[i].id,cam,(double)plays[i].play_dat.x,(double)plays[i].play_dat.y,(double)plays[i].play_dat.width, (double)plays[i].play_dat.height,(double)played[i].x_trans,(double)played[i].y_trans,0,0,played[0].fl,state_hipothetic);      
+        list1.addNode(pNew,plays[i].id,cam,(double)plays[i].play_dat.x,(double)plays[i].play_dat.y,(double)plays[i].play_dat.width, (double)plays[i].play_dat.height,(double)played[i].x_trans,(double)played[i].y_trans,0,0,played[0].fl,1);
     }
 }
 
@@ -23,7 +23,6 @@ Preprocess::~Preprocess(){
 void Preprocess::accum_preprocess(int num_cluster,int &num_cluster_k1, int cameras,player* plays, play_transform* played,struct Node**current_dat,struct Node** prev_dat){
     clusters1 = clusters;
     clusters = num_cluster;
-    Node *buffer = new Node;
     if(proc_start){
         extract_data(plays,played);
         list1.copyLinkedList(buff2,&buff1);
@@ -43,6 +42,7 @@ void Preprocess::accum_preprocess(int num_cluster,int &num_cluster_k1, int camer
             (*current_dat)->vx_trans= buff1->vx_trans;
             (*current_dat)->vy_trans= buff1->vy_trans;
             (*current_dat)->flag= buff1->flag;
+            (*current_dat)->camera= cameras;
             (*current_dat)->state= buff1->state;
             (*current_dat)->next = buff1->next;            
         }
@@ -58,6 +58,7 @@ void Preprocess::accum_preprocess(int num_cluster,int &num_cluster_k1, int camer
             (*prev_dat)->vx_trans= buff2->vx_trans;
             (*prev_dat)->vy_trans= buff2->vy_trans;
             (*prev_dat)->flag= buff2->flag;
+            (*prev_dat)->camera= cameras;
             (*prev_dat)->state= buff2->state;
             (*prev_dat)->next = buff2->next;
         }  

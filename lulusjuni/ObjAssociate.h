@@ -43,7 +43,7 @@ class Associate{
         void pot_ousted(int init,int camr,int &fin);
         void update_hypothesis(int init,int camr,int &fin);
         void update_arracc();
-        int FSM(int prev_state,bool Isinit,bool set_id,bool onetoN,bool Ntoone,bool onetoone,int flag,bool emptyrow);
+        //int FSM(int prev_state,bool Isinit,bool set_id,bool onetoN,bool Ntoone,bool onetoone,int flag,bool emptyrow);
         void cam_associate(int cam,int num_p,int num_m,struct Node *p,struct Node *m);
         double threshold_coef(double y);
         void find_threshold_x(double &x_kanan,double &x_kiri,double y,double x,double y_m);
@@ -77,7 +77,7 @@ class Associate{
         int num_trans2;
         int numm1,numm2,numm3,nump1,nump2,nump3;
 
-
+        const double threshold_glob = 1.50;
         int obj_cam[3];
         int meas_cam[3];
         LinkedList listgen;

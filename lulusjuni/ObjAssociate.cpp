@@ -3,22 +3,22 @@
 void Associate::init_multicamassoc(){
     int i;
     for(i=0;i<23;i++){
-        accumulate_col1[i]=0;
-        accumulate_col2[i]=0;
-        accumulate_col3[i]=0;
-        accumulate_row1[i]=0;
-        accumulate_row2[i]=0;
-        accumulate_row3[i]=0;
-        id_obj_occluded1[i].x=0;
-        id_obj_occluded1[i].y=0;
-        id_obj_occluded2[i].x=0;
-        id_obj_occluded2[i].y=0;
-        id_obj_occluded3[i].x=0;
-        id_obj_occluded3[i].y=0;
-        hypothest[i].x = 0 ;
-        hypothest[i].y = 0 ;
-        Potentially_out[i].x =0;
-        Potentially_out[i].y =0;
+        accumulate_col1[i]      =0;
+        accumulate_col2[i]      =0;
+        accumulate_col3[i]      =0;
+        accumulate_row1[i]      =0;
+        accumulate_row2[i]      =0;
+        accumulate_row3[i]      =0;
+        id_obj_occluded1[i].x   =0;
+        id_obj_occluded1[i].y   =0;
+        id_obj_occluded2[i].x   =0;
+        id_obj_occluded2[i].y   =0;
+        id_obj_occluded3[i].x   =0;
+        id_obj_occluded3[i].y   =0;
+        hypothest[i].x          =0;
+        hypothest[i].y          =0;
+        Potentially_out[i].x    =0;
+        Potentially_out[i].y    =0;
     }
 }
 
@@ -35,8 +35,13 @@ Associate::Associate(bool start,double xdl,double xdr,double xul,double xur,doub
     THETA = pixel_th;
 }
 
+Associate::~Associate(){
+
+}
+
+
 void Associate::accum_assoc(bool Isinit,struct Node* predictor1,struct Node* predictor2,struct Node* predictor3,struct Node* measurement1,struct Node* measurement2,struct Node* measurement3,int num_p1,int num_p2,int num_p3,int num_m1,int num_m2,int num_m3){
-    int ntoone1=0,ntoone2=0,ntoone3=0,ousted=0,hypo=0,cntoone1=0,cntoone2=0,cntoone3=0,validate =0;
+    int ntoone1=0,ntoone2=0,ntoone3=0,ousted=0,hypo=0,cntoone1=0,cntoone2=0,cntoone3=0,validate=0;
     int f_1=0,f_2=0,f_3=0;
     int l_1=0,l_2=0,l_3=0;
     Inits = Isinit;    
@@ -80,14 +85,11 @@ void Associate::accum_assoc(bool Isinit,struct Node* predictor1,struct Node* pre
         sum_updated_mat();
         
         /**Tahapan terakhir dari assosiasi ialah mapping data measurement ke object yang terdefinisi**/
-        mapping(&mapping_result);
+        mapping();
     }
 }
 
 
-Associate::~Associate(){
-
-}
 
 
 void Associate::sum_updated_mat(){
@@ -99,31 +101,23 @@ void Associate::sum_updated_mat(){
     }
 }
 
-void Associate::mapping(struct Node** Res){
+void Associate::mapping(){
     int i,j;
     Node* getbuf;
     for(i=0;i<23;i++){
         for(j=0;j<23;j++){
-            *Res = new Node;
+            mapping_result = new Node;
             if(association_agrr[i][j]==1){
-                if(j<numm1){
-                    getbuf = listgen.searchNode(measure1,j);
-                }
-                else if((j>=numm1) && j<(numm1+numm2)){
-                    getbuf = listgen.searchNode(measure2,j);
-                }
-                else if((j<23)&&(j>=(numm1+numm2))){
-                    getbuf = listgen.searchNode(measure3,j);
-                }
-                (*Res)->data_id = i;
-                (*Res)->val_x = getbuf->val_x;
-                (*Res)->val_y = getbuf->val_y;
-                (*Res)->x_trans = getbuf->x_trans;
-                (*Res)->y_trans = getbuf->y_trans;
-                (*Res)->vx_trans = getbuf->vx_trans;
-                (*Res)->vy_trans = getbuf->vy_trans;
-                (*Res)->camera = getbuf->camera;
-                (*Res)->next = getbuf->next;
+                getbuf = listgen.searchNode(measure1,j);
+                mapping_result->data_id = i;
+                mapping_result->val_x = getbuf->val_x;
+                mapping_result->val_y = getbuf->val_y;
+                mapping_result->x_trans = getbuf->x_trans;
+                mapping_result->y_trans = getbuf->y_trans;
+                mapping_result->vx_trans = getbuf->vx_trans;
+                mapping_result->vy_trans = getbuf->vy_trans;
+                mapping_result->camera = getbuf->camera;
+                mapping_result->next = getbuf->next;
             }
         }
     
@@ -218,8 +212,8 @@ void Associate::pot_ousted(int init,int camr,int &fin){
         case(1):{
             while(i<nump1){
                 if(accumulate_row1[curr1->data_id]==0){
-                    Potentially_out[j].x==1.00;
-                    Potentially_out[j].y==(double)curr1->data_id;
+                    Potentially_out[j].x = 1.00;
+                    Potentially_out[j].y = (double)curr1->data_id;
                     j++;
                 }
                 curr1 = curr1->next;
@@ -230,8 +224,8 @@ void Associate::pot_ousted(int init,int camr,int &fin){
         case(2):{
             while(i<nump2){
                 if(accumulate_row1[curr2->data_id]==0){
-                    Potentially_out[j].x==2.00;
-                    Potentially_out[j].y==(double)curr2->data_id;
+                    Potentially_out[j].x = 2.00;
+                    Potentially_out[j].y = (double)curr2->data_id;
                     j++;
                 }
                 curr2 = curr2->next;
@@ -242,8 +236,8 @@ void Associate::pot_ousted(int init,int camr,int &fin){
         case(3):{
             while(i<nump3){
                 if(accumulate_row3[curr3->data_id]==0){
-                    Potentially_out[j].x==3.00;
-                    Potentially_out[j].y==(double)curr3->data_id;
+                    Potentially_out[j].x = 3.00;
+                    Potentially_out[j].y = (double)curr3->data_id;
                     j++;
                 }
                 curr3 = curr3->next;
@@ -307,7 +301,7 @@ void Associate::update_hypothesis(int init,int camr,int &fin){
 }
 
 
-/**FSM ini dibuat hanya untuk algoritma yang masih dalam pengembangan jadi sampai sekarang masih belum diperlukan**/
+/**FSM ini dibuat hanya untuk algoritma yang masih dalam pengembangan jadi sampai sekarang masih belum diperlukan**
 
 int Associate::FSM(int prev_state,bool Isinit,bool set_id,bool onetoN,bool Ntoone,bool onetoone,int flag,bool emptyrow){
     switch(prev_state){
@@ -353,10 +347,9 @@ int Associate::FSM(int prev_state,bool Isinit,bool set_id,bool onetoN,bool Ntoon
     }
 }
 
-/*****************************************************************************************************************************************/
+*****************************************************************************************************************************************/
 
 void Associate::cam_associate(int cam,int num_p,int num_m,struct Node *p,struct Node *m){
-    int i,j;
     num_predictor = num_p;
     num_measurement = num_m;
     cameras = cam;
@@ -383,7 +376,7 @@ void Associate::init_matrices_assoc(){
             association_agrr[i][j]=0;
         }
     }
-    for(i-0;i<3;i++){
+    for(i=0;i<23;i++){
         obj_cam[i]=0;
         meas_cam[i]=0;    
     }
@@ -423,8 +416,7 @@ double Associate::find_threshold_y(double y){
 void Associate::link_theid(int cam){
     double Euclid_x;
     double Euclid_y;
-    int i=0;int j = 0;
-    int k = 0;
+    int i=0, j = 0;
     double th_xka,th_xki,th_y;
     switch(cam){
      case(1):{

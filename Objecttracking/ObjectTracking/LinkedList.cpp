@@ -1,7 +1,7 @@
 #include "LinkedList.h"
 
 // only for the 1st Node
-void initNode(struct Node *head,int n,int cam,double x,double y,double w, double h,double x_t, double y_t,bool flag,bool flago){
+void initNode(struct Node *head,int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag, int state){
 	head->data_id = n;
     head->camera = cam;
 	head->val_x = x;
@@ -10,13 +10,15 @@ void initNode(struct Node *head,int n,int cam,double x,double y,double w, double
 	head->val_h = h;
     head->x_trans = x_t;
     head->y_trans = y_t;
+    head->vx_trans = vx;
+    head->vx_trans = vy;
     head->flag = flag;
-    head->flago = flago;
+	head->state = state;
 	head->next =NULL;
 }
 
 // apending
-void addNode(struct Node *head, int n,int cam,double x,double y,double w, double h,double x_t, double y_t,bool flag,bool flago) {
+void addNode(struct Node *head, int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag,int state) {
 	Node *newNode = new Node;
 	newNode->data_id = n;
 	newNode->camera = cam;
@@ -26,10 +28,11 @@ void addNode(struct Node *head, int n,int cam,double x,double y,double w, double
 	newNode->val_h = h;
     newNode->x_trans = x_t;
     newNode->y_trans = y_t;
+	newNode->vx_trans = vx;
+    newNode->vx_trans = vy;
     newNode->flag = flag;
-    newNode->flago = flago;
+	newNode->state = state;	
 	newNode->next = NULL;
-
 	Node *cur = head;
 	while(cur) {
 		if(cur->next == NULL) {
@@ -40,7 +43,7 @@ void addNode(struct Node *head, int n,int cam,double x,double y,double w, double
 	}
 }
 
-void insertFront(struct Node **head, int n,int cam,double x,double y,double w, double h,double x_t, double y_t,bool flag,bool flago) {
+void insertFront(struct Node **head, int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag,int state) {
 	Node *newNode = new Node;
 	newNode->data_id = n;
 	newNode->camera = cam;
@@ -50,8 +53,10 @@ void insertFront(struct Node **head, int n,int cam,double x,double y,double w, d
 	newNode->val_h = h;
     newNode->x_trans = x_t;
     newNode->y_trans = y_t;
+    newNode->vx_trans = vx;
+    newNode->vx_trans = vy;
     newNode->flag = flag;
-	newNode->flago = flago;
+	newNode->state = state;	
     newNode->next = *head;
 	*head = newNode;
 }
@@ -118,8 +123,10 @@ void copyLinkedList(struct Node *node, struct Node **pNew)
 		(*pNew)->val_h = node->val_h;
         (*pNew)->x_trans = node->x_trans;
         (*pNew)->y_trans = node->y_trans;
+        (*pNew)->vx_trans = node->vx_trans;
+		(*pNew)->vx_trans = node->vy_trans;
         (*pNew)->flag = node->flag;
-        (*pNew)->flago = node->flago;
+		(*pNew)->state = node->state;	
 		(*pNew)->next = NULL;
 		copyLinkedList(node->next, &((*pNew)->next));
 	}

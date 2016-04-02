@@ -16,7 +16,6 @@ LIBS += -L/usr/local/lib -lopencv_calib3d -lopencv_contrib -lopencv_core -lopenc
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    backgroundmodeltuningdialog.cpp \
     fieldselectiondialog.cpp \
     trackingviewdialog.cpp \
     systemperformancedialog.cpp \
@@ -25,10 +24,15 @@ SOURCES += main.cpp\
     videoprocessor.cpp \
     matdisplay.cpp \
     playervisual.cpp \
-    objectvariable.cpp
+    objectvariable.cpp \
+    Highlevel.cpp \
+    KalmanObj.cpp \
+    LinkedList.cpp \
+    ObjAssociate.cpp \
+    preprocessing.cpp \
+    node.cpp
 
 HEADERS  += mainwindow.h \
-    backgroundmodeltuningdialog.h \
     fieldselectiondialog.h \
     trackingviewdialog.h \
     systemperformancedialog.h \
@@ -37,7 +41,13 @@ HEADERS  += mainwindow.h \
     videoprocessor.h \
     matdisplay.h \
     playervisual.h \
-    objectvariable.h
+    objectvariable.h \
+    Highlevel.h \
+    KalmanObj.h \
+    LinkedList.h \
+    ObjAssociate.h \
+    preprocessing.h \
+    node.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

@@ -1,7 +1,7 @@
 #include "LinkedList.h"
 
 // only for the 1st Node
-void initNode(struct Node *head,int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag, int state){
+void LinkedList::initNode(struct Node *head,int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag, int status){
 	head->data_id = n;
     head->camera = cam;
 	head->val_x = x;
@@ -13,12 +13,12 @@ void initNode(struct Node *head,int n,int cam,double x,double y,double w, double
     head->vx_trans = vx;
     head->vx_trans = vy;
     head->flag = flag;
-	head->state = state;
+    head->state = status;
 	head->next =NULL;
 }
 
 // apending
-void addNode(struct Node *head, int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag,int state) {
+void LinkedList::addNode(struct Node *head, int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag,int status) {
 	Node *newNode = new Node;
 	newNode->data_id = n;
 	newNode->camera = cam;
@@ -31,7 +31,7 @@ void addNode(struct Node *head, int n,int cam,double x,double y,double w, double
 	newNode->vx_trans = vx;
     newNode->vx_trans = vy;
     newNode->flag = flag;
-	newNode->state = state;	
+    newNode->state = status;
 	newNode->next = NULL;
 	Node *cur = head;
 	while(cur) {
@@ -43,7 +43,7 @@ void addNode(struct Node *head, int n,int cam,double x,double y,double w, double
 	}
 }
 
-void insertFront(struct Node **head, int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag,int state) {
+void LinkedList::insertFront(struct Node **head, int n,int cam,double x,double y,double w, double h,double x_t, double y_t,double vx,double vy,int flag,int status) {
 	Node *newNode = new Node;
 	newNode->data_id = n;
 	newNode->camera = cam;
@@ -56,13 +56,13 @@ void insertFront(struct Node **head, int n,int cam,double x,double y,double w, d
     newNode->vx_trans = vx;
     newNode->vx_trans = vy;
     newNode->flag = flag;
-	newNode->state = state;	
+    newNode->state = status;
     newNode->next = *head;
 	*head = newNode;
 }
 
 
-struct Node *searchNode(struct Node *head, int n) {
+struct Node*LinkedList::searchNode(struct Node *head, int n) {
 	Node *cur = head;
 	while(cur) {
 		if(cur->data_id == n) return cur;
@@ -71,7 +71,7 @@ struct Node *searchNode(struct Node *head, int n) {
 	//cout << "No Node " << n << " in list.\n";
 }
 
-bool deleteNode(struct Node **head, Node *ptrDel) {
+bool LinkedList::deleteNode(struct Node **head, Node *ptrDel) {
 	Node *cur = *head;
 	if(ptrDel == *head) {
 		*head = cur->next;
@@ -91,7 +91,7 @@ bool deleteNode(struct Node **head, Node *ptrDel) {
 }
 
 /* reverse the list */
-struct Node* reverse(struct Node** head) 
+struct Node* LinkedList::reverse(struct Node** head)
 {
 	Node *parent = *head;
 	Node *me = parent->next;
@@ -111,7 +111,7 @@ struct Node* reverse(struct Node** head)
 }
 
 /* Creating a copy of a linked list */
-void copyLinkedList(struct Node *node, struct Node **pNew)
+void LinkedList::copyLinkedList(struct Node *node, struct Node **pNew)
 {
 	if(node != NULL) {
 		*pNew = new Node;
@@ -154,7 +154,7 @@ void copyLinkedList(struct Node *node, struct Node **pNew)
 	return flag;
 }**/
 
-void deleteLinkedList(struct Node **node)
+void LinkedList::deleteLinkedList(struct Node **node)
 {
 	struct Node *tmpNode;
 	while(*node) {
