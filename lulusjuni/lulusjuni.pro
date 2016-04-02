@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     systemperformancedialog.cpp \
     errorcalculationdialog.cpp \
     cameraviewdialog.cpp \
-    videoprocessor.cpp
+    videoprocessor.cpp \
+    clickdisplay.cpp
 
 HEADERS  += mainwindow.h \
     backgroundmodeltuningdialog.h \
@@ -31,7 +32,8 @@ HEADERS  += mainwindow.h \
     systemperformancedialog.h \
     errorcalculationdialog.h \
     cameraviewdialog.h \
-    videoprocessor.h
+    videoprocessor.h \
+    clickdisplay.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

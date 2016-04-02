@@ -12,9 +12,9 @@ class FieldSelectionDialog : public QDialog
     Q_OBJECT
 
 public slots:
-    void setFirstFrame_1(QImage img);
-    void setFirstFrame_2(QImage img);
-    void setFirstFrame_3(QImage img);
+    void setFrame_1(QImage img);
+    void setFrame_2(QImage img);
+    void setFrame_3(QImage img);
 
 public:
     explicit FieldSelectionDialog(QWidget *parent = 0);
@@ -25,9 +25,9 @@ private slots:
 
 private:
     Ui::FieldSelectionDialog *ui;
-    QImage firstFrameCamera_1;
-    QImage firstFrameCamera_2;
-    QImage firstFrameCamera_3;
+    QImage frameCamera_1;
+    QImage frameCamera_2;
+    QImage frameCamera_3;
 };
 
 #endif // FIELDSELECTIONDIALOG_H

@@ -37,25 +37,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myStream_1, SLOT(updateValueGaussianSize(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_2(int)), myStream_2, SLOT(updateValueGaussianSize(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_3(int)), myStream_3, SLOT(updateValueGaussianSize(int)));
-    QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myCVDialog, SLOT(updateLabel(int)));
 
-	if (!myStream_1->loadVideo("/media/data/dev/Projects/TA/edited-03-02-2016/lurus1.mp4")) {
-		QMessageBox msgBox;
-		msgBox.setText("The selected video could not be opened!");
-		msgBox.exec();
-	}
+    QObject::connect(myStream_1, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_1(QImage)));
+    QObject::connect(myStream_2, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_2(QImage)));
+    QObject::connect(myStream_3, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_3(QImage)));
 
-	if (!myStream_2->loadVideo("/media/data/dev/Projects/TA/edited-03-02-2016/lurus2.mp4")) {
-		QMessageBox msgBox;
-		msgBox.setText("The selected video could not be opened!");
-		msgBox.exec();
-	}
-
-	if (!myStream_3->loadVideo("/media/data/dev/Projects/TA/edited-03-02-2016/lurus2-edited.mp4")) {
-		QMessageBox msgBox;
-		msgBox.setText("The selected video could not be opened!");
-		msgBox.exec();
-	}
 }
 
 MainWindow::~MainWindow()
@@ -93,6 +79,17 @@ void MainWindow::on_actionSystem_Performance_Testing_Metrics_triggered()
 void MainWindow::on_actionField_Selection_triggered()
 {
 	myFSDialog->show();
+    if(!myStream_1->isStopped()){
+        myStream_1->Stop();
+	}
+	myFSDialog->show();
+    if(!myStream_2->isStopped()){
+        myStream_2->Stop();
+	}
+	myFSDialog->show();
+    if(!myStream_3->isStopped()){
+        myStream_3->Stop();
+	}
 }
 
 void MainWindow::on_actionTracking_View_triggered()
