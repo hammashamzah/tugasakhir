@@ -6,6 +6,10 @@ FieldSelectionDialog::FieldSelectionDialog(QWidget *parent) :
     ui(new Ui::FieldSelectionDialog)
 {
     ui->setupUi(this);
+    QObject::connect(ui->imageView, SIGNAL(sendMousePosition(QPoint&)), this, SLOT(processMouse(QPoint&)));
+    QObject::connect(ui->imageView, SIGNAL(sendClickPosition(QPoint&)), this, SLOT(processClick(QPoint&)));
+    entryMode = 0;
+    currentCameraIndex = 0;
 }
 
 FieldSelectionDialog::~FieldSelectionDialog()
@@ -30,14 +34,14 @@ void FieldSelectionDialog::on_cameraSelectCombo_currentIndexChanged(int index)
     currentCameraIndex = index;
     switch (index) {
     case 0:
-        if (!frameCamera_1.isNull()){
+        if (!frameCamera_1.isNull()) {
             ui->imageView->setAlignment(Qt::AlignCenter);
             ui->imageView->setPixmap(QPixmap::fromImage(frameCamera_1).scaled(ui->imageView->size(),
-                         Qt::KeepAspectRatio, Qt::FastTransformation));
+                                     Qt::KeepAspectRatio, Qt::FastTransformation));
         }
         break;
     case 1:
-        if (!frameCamera_2.isNull()){
+        if (!frameCamera_2.isNull()) {
             ui->imageView->setAlignment(Qt::AlignCenter);
             ui->imageView->setPixmap(QPixmap::fromImage(frameCamera_2).scaled(ui->imageView->size(),
                                      Qt::KeepAspectRatio, Qt::FastTransformation));
@@ -45,7 +49,7 @@ void FieldSelectionDialog::on_cameraSelectCombo_currentIndexChanged(int index)
         }
         break;
     case 2:
-        if (!frameCamera_3.isNull()){
+        if (!frameCamera_3.isNull()) {
             ui->imageView->setAlignment(Qt::AlignCenter);
             ui->imageView->setPixmap(QPixmap::fromImage(frameCamera_3).scaled(ui->imageView->size(),
                                      Qt::KeepAspectRatio, Qt::FastTransformation));
@@ -56,7 +60,44 @@ void FieldSelectionDialog::on_cameraSelectCombo_currentIndexChanged(int index)
 
 }
 
+void FieldSelectionDialog::processMouse(QPoint &pos) {
+    //for display. not really necessary
+}
+
+void FieldSelectionDialog::processClick(QPoint &pos) {
+    if (entryMode == 1) {
+        clickCoordinate[entryCounter].setX = pos.x;
+        clickCoordinate[entryCounter].setY = pos.y;
+        if (entryCounter < 3) {
+            entryCounter++;
+        } else {
+            entryCounter = 0;
+            entryMode = 0;
+
+            //assign data then emit
+            MaskCoordinate myCoordinate(clickCoordinates);
+            switch (currentCameraIndex + 1) {
+            case 1:
+                emit maskCoordinates_1(myCoordinate);
+                break;
+            case 2:
+                emit maskCoordinates_2(myCoordinate);
+                break;
+            case 3:
+                emit maskCoordinates_3(myCoordinate);
+            }
+
+        }
+    }
+}
+
 void FieldSelectionDialog::on_pushButton_set_released()
 {
-    
+    entryMode = 1;
+    entryCounter = 0;
+    //clean up coordinate of mask
+    for (int i = 0; i < 4; i++) {
+        clickCoordinates[i].setX(0);
+        clickCoordinates[i].setY(0);
+    }
 }

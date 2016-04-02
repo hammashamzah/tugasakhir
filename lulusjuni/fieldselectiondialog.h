@@ -15,6 +15,8 @@ public slots:
     void setFrame_1(QImage img);
     void setFrame_2(QImage img);
     void setFrame_3(QImage img);
+    void processMouse(QPoint& pos);
+    void processClick(QPoint& pos);
 
 public:
     explicit FieldSelectionDialog(QWidget *parent = 0);
@@ -28,6 +30,10 @@ private:
     QImage frameCamera_1;
     QImage frameCamera_2;
     QImage frameCamera_3;
+    QPoint clickCoordinates[4];
+    int currentCameraIndex;
+    int entryMode;
+    int entryCounter;
 };
 
 #endif // FIELDSELECTIONDIALOG_H
