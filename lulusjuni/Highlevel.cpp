@@ -55,11 +55,7 @@ void HighLevel::Highlevel_proc(int frame,bool init,int num_cluster1,int num_clus
         map_res = new Node;
         hlevel.copyLinkedList(assoccie->mapping_result,&map_res);
         update_player();
-        for(i=0;i<23;i++){
-            for(j=0;j<23;j++){
-              glob_association[i][j]=assoccie->association_agrr[i][j];  
-            }
-        }
+        get_matricesAssociate();
         /**kalman tracking**/
         hlevel.deleteLinkedList(&pred_dat1);
         hlevel.deleteLinkedList(&pred_dat2);
@@ -80,6 +76,15 @@ void HighLevel::Highlevel_proc(int frame,bool init,int num_cluster1,int num_clus
 }
 
 
+void HighLevel::get_matricesAssociate(){
+    int i,j;
+    for(i=0;i<NUM_PLAYER;i++){
+        for(j=0;j<NUM_PLAYER;j++){
+            assoc_mat[i][j]= assoccie->association_agrr[i][j];
+        }
+
+    }
+}
 
 
 
@@ -94,5 +99,3 @@ void HighLevel::update_player(){
         bufferfin = bufferfin->next;
     }
 }
-
-
