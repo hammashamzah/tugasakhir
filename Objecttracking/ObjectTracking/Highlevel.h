@@ -39,6 +39,7 @@ class HighLevel{
         Point accel_3d1[NUM_PLAYER];Point velo3d1[NUM_PLAYER];Point accels1[NUM_PLAYER];Point velo1[NUM_PLAYER];
     private:
         bool start;
+        int bima;
         
 }
 ;
