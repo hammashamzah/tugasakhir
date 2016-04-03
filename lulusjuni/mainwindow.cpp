@@ -181,9 +181,9 @@ void MainWindow::showClickPosition(QPoint &pos)
             isPlayer = true;
             if(player_visual[i].id<900)
             {
-                ui->lineEdit_setIDplayer->setText(QString::number(playerIdSelected));
+                //ui->lineEdit_setIDplayer->setText(QString::number(playerIdSelected));
             }
-            else ui->lineEdit_setIDplayer->setText("???");
+            //else ui->lineEdit_setIDplayer->setText("???");
 
 
         }
@@ -247,68 +247,13 @@ void MainWindow::setIDplayer()
 {
 
 }
-
-/*QString MainWindow::getFormattedTime(int timeInSeconds){
-    int seconds = (int) (timeInSeconds) % 60 ;
-    int minutes = (int) ((timeInSeconds / 60) % 60);
-    int hours   = (int) ((timeInSeconds / (60*60)) % 24);
-    QTime t(hours, minutes, seconds);
-    if (hours == 0 )
-        return t.toString("mm:ss");
-    else
-        return t.toString("h:mm:ss");
-}
-
-void MainWindow::on_time_slider_1_sliderPressed()
-{
-    myStream_1->Stop();
-}
-void MainWindow::on_time_slider_1_sliderReleased()
-{
-    myStream_1->Play();
-}
-void MainWindow::on_time_slider_1_sliderMoved(int position)
-{
-    myStream_1->setCurrentFrame(position);
-    ui->current_time_1->setText( getFormattedTime( position/(int)myStream_1->getFrameRate()) );
-}
-
-void MainWindow::on_time_slider_2_sliderPressed()
-{
-    myStream_2->Stop();
-}
-void MainWindow::on_time_slider_2_sliderReleased()
-{
-    myStream_2->Play();
-}
-void MainWindow::on_time_slider_2_sliderMoved(int position)
-{
-    myStream_2->setCurrentFrame(position);
-    ui->current_time_2->setText( getFormattedTime( position/(int)myStream_2->getFrameRate()) );
-}
-
-void MainWindow::on_time_slider_3_sliderPressed()
-{
-    myStream_3->Stop();
-}
-void MainWindow::on_time_slider_3_sliderReleased()
-{
-    myStream_3->Play();
-}
-void MainWindow::on_time_slider_3_sliderMoved(int position)
-{
-    myStream_3->setCurrentFrame(position);
-    ui->current_time_3->setText( getFormattedTime( position/(int)myStream_3->getFrameRate()) );
-}
-*/
-
 void MainWindow::on_pushButton_clicked()
 {
     for(int i=0; i<JUMLAH_PLAYER;i++)
     {
         if (player_visual[i].id==playerIdSelected)
         {
-            player_visual[i].id= ui->lineEdit_setIDplayer->text().toInt();
+            //player_visual[i].id= ui->lineEdit_setIDplayer->text().toInt();
             updateGameVisual();
         }
     }
