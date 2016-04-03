@@ -17,7 +17,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="cameraSelectCombo">
        <item>
         <property name="text">
          <string>Camera 1</string>
@@ -38,7 +38,7 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="ClickDisplay" name="imageView">
+        <widget class="ClickDisplay" name="imageView" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -54,10 +54,10 @@
          <property name="styleSheet">
           <string notr="true">Background-color: #000;</string>
          </property>
-         <property name="text">
+         <property name="text" stdset="0">
           <string/>
          </property>
-         <property name="scaledContents">
+         <property name="scaledContents" stdset="0">
           <bool>false</bool>
          </property>
         </widget>
@@ -65,7 +65,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="pushButton_set">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -78,7 +78,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_2">
+          <widget class="QPushButton" name="pushButton_apply">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -91,7 +91,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_3">
+          <widget class="QPushButton" name="pushButton_ok">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -111,6 +111,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ClickDisplay</class>
+   <extends>QWidget</extends>
+   <header>clickdisplay.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

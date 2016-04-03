@@ -17,7 +17,6 @@ FieldSelectionDialog::~FieldSelectionDialog()
     delete ui;
 }
 
-
 void FieldSelectionDialog::setFrame_1(QImage img) {
     frameCamera_1 = img;
 }
@@ -66,8 +65,8 @@ void FieldSelectionDialog::processMouse(QPoint &pos) {
 
 void FieldSelectionDialog::processClick(QPoint &pos) {
     if (entryMode == 1) {
-        clickCoordinate[entryCounter].setX = pos.x;
-        clickCoordinate[entryCounter].setY = pos.y;
+        clickCoordinates[entryCounter].setX(pos.x());
+        clickCoordinates[entryCounter].setY(pos.y());
         if (entryCounter < 3) {
             entryCounter++;
         } else {
@@ -75,16 +74,24 @@ void FieldSelectionDialog::processClick(QPoint &pos) {
             entryMode = 0;
 
             //assign data then emit
-            MaskCoordinate myCoordinate(clickCoordinates);
             switch (currentCameraIndex + 1) {
             case 1:
-                emit maskCoordinates_1(myCoordinate);
+                emit maskCoordinates_1_a(clickCoordinates[0]);
+                emit maskCoordinates_1_b(clickCoordinates[1]);
+                emit maskCoordinates_1_c(clickCoordinates[2]);
+                emit maskCoordinates_1_d(clickCoordinates[3]);
                 break;
             case 2:
-                emit maskCoordinates_2(myCoordinate);
+                emit maskCoordinates_2_a(clickCoordinates[0]);
+                emit maskCoordinates_2_b(clickCoordinates[1]);
+                emit maskCoordinates_2_c(clickCoordinates[2]);
+                emit maskCoordinates_2_d(clickCoordinates[3]);
                 break;
             case 3:
-                emit maskCoordinates_3(myCoordinate);
+                emit maskCoordinates_3_a(clickCoordinates[0]);
+                emit maskCoordinates_3_b(clickCoordinates[1]);
+                emit maskCoordinates_3_c(clickCoordinates[2]);
+                emit maskCoordinates_3_d(clickCoordinates[3]);
             }
 
         }
@@ -101,3 +108,4 @@ void FieldSelectionDialog::on_pushButton_set_released()
         clickCoordinates[i].setY(0);
     }
 }
+

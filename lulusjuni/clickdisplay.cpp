@@ -6,6 +6,9 @@ using namespace std;
 ClickDisplay::ClickDisplay(QWidget* parent): QLabel(parent)
 {
     this->setMouseTracking(true);
+    QPixmap pixmap;
+    pixmap = pixmap.scaled(QSize(800,600), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    this->setPixmap(pixmap);
 }
 
 void ClickDisplay::mouseMoveEvent(QMouseEvent *mouse_event)
@@ -18,7 +21,6 @@ void ClickDisplay::mouseMoveEvent(QMouseEvent *mouse_event)
         mouse_pos.setY(mouse_pos_label.y() * this->pixmap()->height() / this->size().height());
 
         if (mouse_pos.x() >= 0 && mouse_pos.y() >= 0) {
-            cout << mouse_pos.x() << "-" << mouse_pos.y() << "\n";
             emit sendMousePosition(mouse_pos);
         }
     }

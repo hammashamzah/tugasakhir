@@ -41,7 +41,6 @@ bool VideoProcessor::loadVideo(String filename) {
 		return false;
 }
 
-
 void VideoProcessor::Play()
 {
 	if (!isRunning()) {
@@ -60,6 +59,13 @@ void VideoProcessor::run()
 		{
 			stop = true;
 		}
+
+		//emit raw image
+		cv::cvtColor(frame, RGBframe, CV_BGR2RGB);
+		qRawImage = QImage((const unsigned char*)(RGBframe.data),
+		                   RGBframe.cols, RGBframe.rows, QImage::Format_RGB888);
+		emit rawImage(qRawImage);
+
 		//set parameters based on tuning from background model tuning window
 		params.filterByArea = true;
 		params.filterByInertia = false;
@@ -84,10 +90,7 @@ void VideoProcessor::run()
 		blob_detector.detect(bluredFrame, keypoints);
 
 		drawKeypoints(objectFrame, keypoints, objectFrame, Scalar(0, 0, 255), DrawMatchesFlags::DEFAULT);
-		cv::cvtColor(objectFrame, RGBframe, CV_BGR2RGB);
-		qRawImage = QImage((const unsigned char*)(RGBframe.data),
-		                   RGBframe.cols, RGBframe.rows, QImage::Format_RGB888);
-		emit rawImage(qRawImage);
+		
 		this->msleep(delay);
 	}
 }
@@ -129,4 +132,23 @@ void VideoProcessor::updateValueMorphElementSize(int value) {
 }
 void VideoProcessor::updateValueGaussianSize(int value) {
 	gaussianSize = value;
+}
+
+void VideoProcessor::getMaskCoordinate_a(QPoint &pos){
+    std::cout << "coordinate a: " << pos.x() << "," << pos.y() << "\n";
+    
+}
+
+void VideoProcessor::getMaskCoordinate_b(QPoint &pos){
+    std::cout << "coordinate b: " << pos.x() << "," << pos.y() << "\n";
+
+}
+
+void VideoProcessor::getMaskCoordinate_c(QPoint &pos){
+    std::cout << "coordinate c: " << pos.x() << "," << pos.y() << "\n";
+
+}
+
+void VideoProcessor::getMaskCoordinate_d(QPoint &pos){
+    std::cout << "coordinate d: " << pos.x() << "," << pos.y() << "\n";
 }

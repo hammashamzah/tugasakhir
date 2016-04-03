@@ -42,6 +42,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(myStream_2, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_2(QImage)));
     QObject::connect(myStream_3, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_3(QImage)));
 
+    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_1_a(QPoint&)), myStream_1, SLOT(getMaskCoordinate_a(QPoint&)));
+    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_1_b(QPoint&)), myStream_1, SLOT(getMaskCoordinate_b(QPoint&)));
+    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_1_c(QPoint&)), myStream_1, SLOT(getMaskCoordinate_c(QPoint&)));
+    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_1_d(QPoint&)), myStream_1, SLOT(getMaskCoordinate_d(QPoint&)));
+	
+	QObject::connect(myFSDialog, SIGNAL(maskCoordinates_2_a(QPoint&)), myStream_2, SLOT(getMaskCoordinate_a(QPoint&)));
+    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_2_b(QPoint&)), myStream_2, SLOT(getMaskCoordinate_b(QPoint&)));
+    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_2_c(QPoint&)), myStream_2, SLOT(getMaskCoordinate_c(QPoint&)));
+    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_2_d(QPoint&)), myStream_2, SLOT(getMaskCoordinate_d(QPoint&)));
+    
+    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_3_a(QPoint&)), myStream_3, SLOT(getMaskCoordinate_a(QPoint&)));
+    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_3_b(QPoint&)), myStream_3, SLOT(getMaskCoordinate_b(QPoint&)));
+    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_3_c(QPoint&)), myStream_3, SLOT(getMaskCoordinate_c(QPoint&)));
+    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_3_d(QPoint&)), myStream_3, SLOT(getMaskCoordinate_d(QPoint&)));
+   
+
+
 }
 
 MainWindow::~MainWindow()
@@ -82,11 +99,9 @@ void MainWindow::on_actionField_Selection_triggered()
     if(!myStream_1->isStopped()){
         myStream_1->Stop();
 	}
-	myFSDialog->show();
     if(!myStream_2->isStopped()){
         myStream_2->Stop();
 	}
-	myFSDialog->show();
     if(!myStream_3->isStopped()){
         myStream_3->Stop();
 	}

@@ -11,7 +11,7 @@
 #include <opencv2/video/background_segm.hpp>
 #include <opencv2/video/video.hpp>
 #include <opencv2/features2d/features2d.hpp>
-
+#include <iostream>
 
 using namespace cv;
 
@@ -48,6 +48,15 @@ public slots:
 	void updateValueMaxArea(int value);
 	void updateValueMorphElementSize(int value);
 	void updateValueGaussianSize(int value);
+	//get mask coordinate with order like below:
+	//a->left-below
+	//b->left-top
+	//c->right-top
+	//d->right-below
+	void getMaskCoordinate_a(QPoint& pos);
+	void getMaskCoordinate_b(QPoint& pos);
+	void getMaskCoordinate_c(QPoint& pos);
+	void getMaskCoordinate_d(QPoint& pos);
 protected:
 	void run();
 	void msleep(int ms);
