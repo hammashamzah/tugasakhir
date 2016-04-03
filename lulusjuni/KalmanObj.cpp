@@ -16,11 +16,9 @@ Kalmanobj::Kalmanobj(int camera_id,bool start,double xdl,double xdr,double xul,d
     FrPs = fr;
 }
 
-void Kalmanobj::accum_kalmanobj(int start,int Num_Obj){
+void Kalmanobj::accum_kalmanobj(){
     int i;
-    frame_start = start;
     intervals = 1/FrPs;
-    Object_Number = Num_Obj;
     if(frame_start == 1){
         for(i=0;i<23;i++){
             post_pos[i].x=0.00;
@@ -43,9 +41,7 @@ Kalmanobj::~Kalmanobj(){
     
 }
 
-void Kalmanobj::multitrackObj(Node* init_symp, Node* current_symp){
-    Node *list_curr = current_symp;
-    Node *list_init = init_symp;
+void Kalmanobj::multitrackObj(){
     Point2f priory_pos,priory_vels,priory_acc,post_pos,post_vels,post_acc;
     Point2f priory_posp,priory_velsp,priory_accp,post_posp,post_velsp,post_accp;
     double pred_h,pred_w;
@@ -185,3 +181,17 @@ void Kalmanobj::track_ind3Dmotion(Node* curr_cond, Point pre_pos,Point pre_veloc
     extract_actual_v((double)curr_cond->val_x,(double)curr_cond->val_y,curr_cond->data_id,rep);
     extract_actual_a(curr_cond->data_id,rep);
 }
+
+void Kalmanobj::set_Value(int start,int Num_Obj,Node* init_symp, Node* current_symp,bool set_input){
+    if(frame_start !=start){
+        frame_start = start;
+    }
+    if(Object_Number != Num_Obj){
+        Object_Number = Num_Obj;
+    }
+    if(set_input){
+        list1.copyLinkedList(current_symp,&list_curr);
+        list1.copyLinkedList(init_symp,&list_init);
+    }
+}
+

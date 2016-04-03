@@ -33,8 +33,8 @@ class Associate{
         void init_matrices_assoc();
         int  association_agrr    [23][23];
         Node* mapping_result;
+        bool Ismapped,Issetmat;
     private:
-
         double XUL,XUR,XDR,XDL,YUL,YUR,YDR,YDL;
         void mapping(Node** Res);
         void sum_updated_mat();
@@ -98,6 +98,11 @@ class Associate{
         Point id_obj_occluded3  [23];
         Point hypothest        [23];
         Point Potentially_out   [23];
+   public slots:
+        void setInput(bool stIn);
+   signals:
+        void valueChanged(Node* mappedList);
+        void valueChanged(int assMat[][23]);
 };
 
 

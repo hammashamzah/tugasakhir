@@ -50,6 +50,8 @@ class Kalmanobj{
         void multitrackObj(Node* init_symp, Node* current_symp);
         Node* predict_track;
     private:
+        Node *list_curr;
+        Node *list_init;
         double XUL,XUR,XDR,XDL,YUL,YUR,YDR,YDL;
         void initKalmanMOt(double pos_x, double pos_y,double v_x,double v_y,double a_x, double a_y);
         Point2f getCurrentStateMot() const;
@@ -81,6 +83,10 @@ class Kalmanobj{
         Point pre_velocity3d   [23];
         Point post_velocity3d  [23];
         Point accel3d          [23];
+   public slots:
+        void set_Value(int start,int Num_Obj,Node* init_symp, Node* current_symp,bool set_input);
+   signals:
+        void valuechanged(Node* predics);
 };
 
 #endif // KALMANOBJ_H_INCLUDED
