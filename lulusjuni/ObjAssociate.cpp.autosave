@@ -24,7 +24,6 @@ void Associate::init_multicamassoc(){
 
 Associate::Associate(bool start){
     mulai = start;
-    
 }
 
 Associate::~Associate(){

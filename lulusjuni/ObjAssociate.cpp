@@ -22,17 +22,9 @@ void Associate::init_multicamassoc(){
     }
 }
 
-Associate::Associate(bool start,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double pixel_th){
+Associate::Associate(bool start){
     mulai = start;
-    XDL = xdl;
-    XDR = xdr;
-    XUL = xul;
-    XUR = xur;
-    YDL = ydl;
-    YDR = ydr;
-    YUL = yul;
-    YUR = yur;
-    THETA = pixel_th;
+
 }
 
 Associate::~Associate(){
@@ -92,6 +84,7 @@ bool Associate::sum_updated_mat(){
 bool Associate::mapping(Node* measure){
     int i,j;
     Node* getbuf;
+    switch(cameras)
     for(i=0;i<23;i++){
         for(j=0;j<23;j++){
             mapping_result = new Node;
@@ -338,19 +331,6 @@ int Associate::FSM(int prev_state,bool Isinit,bool set_id,bool onetoN,bool Ntoon
 
 *****************************************************************************************************************************************/
 
-void Associate::cam_associate(int cam,int num_p,int num_m, Node *p, Node *m){
-    num_predictor = num_p;
-    num_measurement = num_m;
-    cameras = cam;
-    listgen.copyLinkedList(p,&predictor);
-    listgen.copyLinkedList(m,&measurement);
-    
-    if(YDL>YUL && YDR>YUR && XDR>XUR && XDL<XUR){
-        yo =((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))-((YDL+YDR)/2);
-    }
-    xo =(((((yo*(-XDL+XUL))/(YDL-YUL))+XDL)+(((yo*(XDR-XUR))/(YDR-YUR))+(XDR)))/2);
-    link_theid(cameras);
-}
 
 void Associate::init_matrices_assoc(){
     int i,j;
@@ -372,127 +352,6 @@ void Associate::init_matrices_assoc(){
 }
 
 
-double Associate::eigen_distance_transform(double x_m, double y_m, double x_obj, double y_obj){
-    return(sqrt(((x_m-x_obj)*(x_m-x_obj))+((y_m-y_obj)*(y_m-y_obj))));
-}
-
-
-double Associate::threshold_coef(double y){
-    double threshold_k;
-    double konst = (YDL+YDR)/2;
-    if(y!=konst){
-        threshold_k  = ((y-yo)/(y-konst));
-    }
-    return (threshold_k);
-}
-
-void Associate::find_threshold_x(double &x_kanan,double &x_kiri,double y,double x,double y_m){
-    double k = threshold_coef(y);
-    double th = k*THETA;
-    if(y > yo){
-        x_kanan = x+(th/2)-(((x-xo)/(y-yo))*(y_m-y));
-        x_kiri = x-(th/2)-(((x-xo)/(y-yo))*(y_m-y));
-    }
-}
-
-double Associate::find_threshold_y(double y){
-    double k = threshold_coef(y);
-    double th = k*THETA;
-    return th/2;
-}
-
-/**Hungarian Algorithms**/
-void Associate::link_theid(int cam){
-    double Euclid_x;
-    double Euclid_y;
-    int i=0, j = 0;
-    double th_xka,th_xki,th_y;
-    switch(cam){
-     case(1):{
-            while(i<num_measurement){
-                Node* buffer = new Node;
-                listgen.copyLinkedList(predictor,&buffer);
-                while(j<num_predictor && buffer->next != NULL){
-                    Euclid_x = buffer->val_x-measurement->val_x;
-                    Euclid_y = abs(buffer->val_y-measurement->val_y);
-                    find_threshold_x(th_xka,th_xki,measurement->val_y,measurement->val_x,buffer->val_y);
-                    th_y=find_threshold_y(buffer->val_y);
-                    double euclid_r = eigen_distance_transform(measurement->x_trans, measurement->y_trans, buffer->x_trans, buffer->y_trans);
-                    if(Euclid_y < th_y){
-                        if((Euclid_x< 0 && Euclid_x> th_xki)||(Euclid_x> 0 && Euclid_x< th_xka)){
-                            association1p[buffer->data_id][measurement->data_id] = 1;
-                        }
-                    }
-                    if(euclid_r < threshold_glob){
-                        association_globe[buffer->data_id][measurement->data_id] = 1;
-                    }
-                    buffer = buffer->next;
-                    j++;
-                }
-                listgen.deleteLinkedList(&buffer);
-                measurement = measurement->next;
-                i++;
-            }
-            break;
-         }
-     case(2):{
-            while(i<num_measurement){
-                Node* buffer = new Node;
-                listgen.copyLinkedList(predictor,&buffer);
-                while(j<num_predictor&& buffer->next != NULL){
-                    Euclid_x = buffer->val_x-measurement->val_x;
-                    Euclid_y = abs(buffer->val_y-measurement->val_y);
-                    find_threshold_x(th_xka,th_xki,measurement->val_y,measurement->val_x,buffer->val_y);
-                    th_y=find_threshold_y(predictor->val_y);
-                    double euclid_r = eigen_distance_transform(measurement->x_trans, measurement->y_trans, buffer->x_trans, buffer->y_trans);
-                    if(Euclid_y < th_y){
-                        if((Euclid_x< 0 && Euclid_x> th_xki)||(Euclid_x> 0 && Euclid_x< th_xka)){
-                            association2p[buffer->data_id][measurement->data_id] = 1;
-                        }
-                    }
-                    if(euclid_r < threshold_glob){
-                        association_globe[buffer->data_id][measurement->data_id] = 1;
-                    }                    
-                    buffer = buffer->next;
-                    j++;
-                }
-                listgen.deleteLinkedList(&buffer);
-                measurement = measurement->next;
-                i++;
-            }
-            break;
-         }
-     case(3):{
-            while(i<num_measurement){
-                Node* buffer = new Node;
-                listgen.copyLinkedList(predictor,&buffer);
-                while(j<num_predictor&& buffer->next != NULL){
-                    Euclid_x = buffer->val_x-measurement->val_x;
-                    Euclid_y = abs(predictor->val_y-measurement->val_y);
-                    find_threshold_x(th_xka,th_xki,measurement->val_y,measurement->val_x,buffer->val_y);
-                    th_y=find_threshold_y(predictor->val_y);
-                    double euclid_r = eigen_distance_transform(measurement->x_trans, measurement->y_trans, buffer->x_trans, buffer->y_trans);
-                    if(Euclid_y < th_y){
-                        if((Euclid_x< 0 && Euclid_x> th_xki)||(Euclid_x> 0 && Euclid_x< th_xka)){
-                            association3p[buffer->data_id][measurement->data_id] = 1;
-                        }
-                    }
-                    
-                    if(euclid_r < threshold_glob){
-                        association_globe[buffer->data_id][measurement->data_id] = 1;
-                    }
-                    buffer = buffer->next;
-                    j++;
-                }
-                listgen.deleteLinkedList(&buffer);
-                measurement = measurement->next;
-                i++;
-            }
-            break;
-         }
-    default:break;
-    }
-}
 
 
 

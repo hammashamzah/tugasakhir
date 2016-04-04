@@ -1,7 +1,6 @@
 #ifndef OBJASSOCIATE_H_INCLUDED
 #define OBJASSOCIATE_H_INCLUDED
 #include "opencv/ml.h"
-#include "LinkedList.h"
 #include "opencv2/legacy/legacy.hpp"
 #include <opencv/cv.h>
 #include <opencv2/video/tracking.hpp>

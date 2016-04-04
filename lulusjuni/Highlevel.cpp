@@ -57,8 +57,12 @@ void HighLevel::Highlevel_proc(int frame,bool init,int num_cluster1,int num_clus
             hlevel.copyLinkedList(preproc3->prev_dat1,&prev_dat3);
         }
         /**object association**/
+
         hlevel.deleteLinkedList(&map_res);
         assoccie->init_multicamassoc();
+        assoccie->cam_associate( 1, nump1,numm1,predic1,measure1);
+        assoccie->cam_associate( 2, nump2,numm2,predic2,measure2);
+        assoccie->cam_associate( 3, nump3,numm3,predic3,measure3);
         assoccie->accum_assoc(init,pred_dat1,pred_dat2,pred_dat3,New_dat1,New_dat2,New_dat3,prev_num1,prev_num2,prev_num3,num_cluster1,num_cluster2,num_cluster3);
         if(assoccie->validate==NUM_PLAYER)
             Isvalid = true;
