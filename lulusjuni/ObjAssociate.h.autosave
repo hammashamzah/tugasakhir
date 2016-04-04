@@ -83,10 +83,7 @@ class Associate{
         double yo;
         double xo;
 
-        int num_trans1;
-        int num_trans2;
-        int numm1,numm2,numm3,nump1,nump2,nump3;
-
+       
         //const double threshold_glob = 1.50;
         int obj_cam[3];
         int meas_cam[3];

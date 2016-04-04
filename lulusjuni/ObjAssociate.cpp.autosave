@@ -128,17 +128,11 @@ void Associate::accum_assoc(bool Isinit,bool start_accum){
 
 bool Associate::sum_updated_mat(){
     int i,j;
-    for(i=0;i<23;i++){
-        for(j=0;j<23;j++){
-            association_agrr[i][j] = inMatCam1.at<int>(i,j)+inMatCam2.at<int>(i,j)+inMatCam1.at<int>(i,j);
-        }
-    }
-    return(true);
+    association_globe = association1p + association2p + association3p;
 }
 
 void Associate::mapping(){
     int i,j;
-    Node* getbuf;
     switch(cameras)
     for(i=0;i<23;i++){
         for(j=0;j<23;j++){
@@ -183,12 +177,12 @@ void Associate::update_arracc(){
     int i,j;
     for(i=0;i<23;i++){
         for(j=0;j<23;j++){
-            accumulate_row1[i]=accumulate_row1[i]+association1p[i][j];
-            accumulate_row2[i]=accumulate_row2[i]+association2p[i][j];
-            accumulate_row3[i]=accumulate_row3[i]+association3p[i][j];
-            accumulate_col1[j]=accumulate_col1[j]+association1p[i][j];
-            accumulate_col2[j]=accumulate_col2[j]+association2p[i][j];
-            accumulate_col3[j]=accumulate_col3[j]+association3p[i][j];
+            accumulate_row1[i]=accumulate_row1[i]+inMatCam1.at(i,j);
+            accumulate_row2[i]=accumulate_row2[i]+inMatCam2.at(i,j);
+            accumulate_row3[i]=accumulate_row3[i]+inMatCam3.at(i,j);
+            accumulate_col1[j]=accumulate_col1[j]+inMatCam1.at(i,j);
+            accumulate_col2[j]=accumulate_col2[j]+inMatCam1.at(i,j);
+            accumulate_col3[j]=accumulate_col3[j]+inMatCam1.at(i,j);
         }
     }
 }
@@ -200,7 +194,7 @@ void Associate::set_Ntoone(int &occ1,int &occ2,int &occ3,int &clus_occ1,int &clu
     while(j<23){
         if(accumulate_col1[j]>1){
             for(k=0;k<23;k++){
-                if(association1p[k][j]==1){
+                if(inMatCam1.at(k,j)==1){
                     id_obj_occluded1[i].x = (double)j;
                     id_obj_occluded1[i].y = (double)k;
                     i++;
@@ -210,7 +204,7 @@ void Associate::set_Ntoone(int &occ1,int &occ2,int &occ3,int &clus_occ1,int &clu
             }
         if(accumulate_col2[j]>1){
             for(k=0;k<23;k++){
-                if(association2p[k][j]==1){
+                if(inMatCam2.at(k,j)==1){
                     id_obj_occluded2[l].x = (double)j;
                     id_obj_occluded2[l].y = (double)k;
                     l++;
@@ -220,7 +214,7 @@ void Associate::set_Ntoone(int &occ1,int &occ2,int &occ3,int &clus_occ1,int &clu
             }
         if(accumulate_col3[j]>1){
             for(k=0;k<23;k++){
-                if(association3p[k][j]==1){
+                if(inMatCam3.at(k,j)==1){
                     id_obj_occluded3[m].x = (double)j;
                     id_obj_occluded3[m].y = (double)k;
                     m++;
@@ -241,42 +235,39 @@ void Associate::set_Ntoone(int &occ1,int &occ2,int &occ3,int &clus_occ1,int &clu
 void Associate::pot_ousted(int init,int camr,int &fin){
     int i =0;
     int j =init;
-    Node* curr1 = predic1;
-    Node* curr2 = predic2;
-    Node* curr3 = predic3;
     switch(camr){
         case(1):{
-            while(i<nump1){
-                if(accumulate_row1[curr1->data_id]==0){
+            i=0;
+            while(i<sizePredict1){
+                if(accumulate_row1[predic1.at(i).id]==0){
                     Potentially_out[j].x = 1.00;
-                    Potentially_out[j].y = (double)curr1->data_id;
+                    Potentially_out[j].y = (double)predic1.at(i).id;
                     j++;
                 }
-                curr1 = curr1->next;
                 i++;
             }
             break;
         }
         case(2):{
-            while(i<nump2){
-                if(accumulate_row1[curr2->data_id]==0){
+            i=0;
+            while(i<sizePredict2){
+                if(accumulate_row1[predic2.at(i).id]==0){
                     Potentially_out[j].x = 2.00;
-                    Potentially_out[j].y = (double)curr2->data_id;
+                    Potentially_out[j].y = (double)predic2.at(i).id;
                     j++;
                 }
-                curr2 = curr2->next;
                 i++;
             }
             break;
         }
         case(3):{
-            while(i<nump3){
-                if(accumulate_row3[curr3->data_id]==0){
+            i=0;
+            while(i<sizePredict3){
+                if(accumulate_row3[predic3.at(i).id]==0){
                     Potentially_out[j].x = 3.00;
-                    Potentially_out[j].y = (double)curr3->data_id;
+                    Potentially_out[j].y = (double)predic3.at(i).id;
                     j++;
                 }
-                curr3 = curr3->next;
                 i++;
             }
             break;
@@ -291,43 +282,40 @@ void Associate::pot_ousted(int init,int camr,int &fin){
 void Associate::update_hypothesis(int init,int camr,int &fin){
     int i=0;
     int j=init;
-    Node* meas1 = measure1;
-    Node* meas2 = measure2;
-    Node* meas3 = measure3;
     switch(camr){
         case(1):{
-            while(i<numm1){
-                if(accumulate_col1[meas1->data_id]==0){
+            i=0;
+            while(i<sizeMeas1){
+                if(accumulate_col1[measure1.at(i).id]==0){
                     hypothest[j].x = 1.00;
-                    hypothest[j].y = meas1->data_id; 
-                j++;
+                    hypothest[j].y = measure1.at(i).id;
+                    j++;
                 }
-            i++;
-            meas1 = meas1->next;
+                i++;
             }
             break;
         }
         case(2):{
-            while(i<numm2){
-                if(accumulate_col2[meas2->data_id]==0){
+            i=0;
+            while(i<sizeMeas1){
+                if(accumulate_col2[measure2.at(i).id]==0){
                     hypothest[j].x = 2.00;
-                    hypothest[j].y = meas2->data_id; 
-                j++;
+                    hypothest[j].y = measure2.at(i).id;
+                    j++;
                 }
-            i++;
-            meas2 = meas2->next;
+                i++;
             }
             break;
         }
         case(3):{
-            while(i<numm3){
-                if(accumulate_col3[meas3->data_id]==0){
+            i=0;
+            while(i<sizeMeas3){
+                if(accumulate_col3[measure3.at(i).id]==0){
                     hypothest[j].x = 3.00;
-                    hypothest[j].y = meas3->data_id; 
-                j++;
+                    hypothest[j].y = measure3.at(i).id;
+                    j++;
                 }
-            i++;
-            meas3 = meas3->next;
+                i++;
             }
             break;
         }
@@ -388,21 +376,7 @@ int Associate::FSM(int prev_state,bool Isinit,bool set_id,bool onetoN,bool Ntoon
 
 void Associate::init_matrices_assoc(){
     int i,j;
-    num_trans1 = 0;
-    num_trans2 = 0;
-    for(i=0;i<23;i++){
-        for(j=0;j<23;j++){
-            association1p[i][j]= 0;
-            association2p[i][j]= 0;
-            association3p[i][j]= 0;
-            association_globe[i][j]= 0;
-            association_agrr[i][j]=0;
-        }
-    }
-    for(i=0;i<23;i++){
-        obj_cam[i]=0;
-        meas_cam[i]=0;    
-    }
+
 }
 
 
