@@ -31,12 +31,10 @@ void ClickDisplay::mousePressEvent(QMouseEvent *mouse_event)
     QPoint mouse_click = mouse_event->pos();
     if (mouse_event->button() == Qt::LeftButton)
     {
-        int pixmapWidth = this->pixmap()->width();
-        int sizeWidth = this->size().width();
-        QString message = "pixmap width: " + QString::number(pixmapWidth);
-        QString message2 = "size width: " + QString::number(sizeWidth);
-        qDebug() << message;
-        qDebug() << message2;
+        QString message = "pixmap width: " + QString::number(this->pixmap()->width());
+        QString message2 = "size width: " + QString::number(this->size()->width());
+        qDebug(message);
+        qDebug(message2);
         mouse_click.setX(mouse_click.x() * this->pixmap()->width() / this->size().width());
         mouse_click.setY(mouse_click.y() * this->pixmap()->height() / this->size().height());
         emit sendClickPosition(mouse_click);

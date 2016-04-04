@@ -21,11 +21,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QObject::connect(myStream_2, SIGNAL(rawImage(QImage)), myCVDialog, SLOT(updateRawPlayerUI_2(QImage)));
 	QObject::connect(myStream_3, SIGNAL(rawImage(QImage)), myCVDialog, SLOT(updateRawPlayerUI_3(QImage)));
 
+    QObject::connect(myStream_1, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_1(QImage)));
+    QObject::connect(myStream_2, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_2(QImage)));
+    QObject::connect(myStream_3, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_3(QImage)));
+
 	QObject::connect(myStream_1, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImageFrame_1(QImage)));
 	QObject::connect(myStream_2, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImageFrame_2(QImage)));
 	QObject::connect(myStream_3, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImageFrame_3(QImage)));
 
-	//connect slot from
 	QObject::connect(myBMTDialog, SIGNAL(valueMinArea_1(int)), myStream_1, SLOT(updateValueMinArea(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueMinArea_2(int)), myStream_2, SLOT(updateValueMinArea(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueMinArea_3(int)), myStream_3, SLOT(updateValueMinArea(int)));
@@ -42,14 +45,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_2(int)), myStream_2, SLOT(updateValueGaussianSize(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_3(int)), myStream_3, SLOT(updateValueGaussianSize(int)));
 
-    QObject::connect(myStream_1, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_1(QImage)));
-    QObject::connect(myStream_2, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_2(QImage)));
-    QObject::connect(myStream_3, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_3(QImage)));
 
     QObject::connect(myFSDialog, SIGNAL(maskCoordinates_1(QList<QPoint>)), myStream_1, SLOT(getMaskCoordinate(QList<QPoint>)));
-    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_2(QList<QPoint>)), myStream_1, SLOT(getMaskCoordinate(QList<QPoint>)));
-    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_3(QList<QPoint>)), myStream_1, SLOT(getMaskCoordinate(QList<QPoint>)));
-
+    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_2(QList<QPoint>)), myStream_2, SLOT(getMaskCoordinate(QList<QPoint>)));
+    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_3(QList<QPoint>)), myStream_3, SLOT(getMaskCoordinate(QList<QPoint>)));
 
 }
 
@@ -60,11 +59,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionTuning_Background_Model_triggered()
 {
-	/*BackgroundModelTuningDialog myBMTDialog;
-	myBMTDialog.setModal(true);
-	myBMTDialog.exec();
-	*/
-
 	myBMTDialog->show();
 }
 
@@ -87,8 +81,8 @@ void MainWindow::on_actionSystem_Performance_Testing_Metrics_triggered()
 
 void MainWindow::on_actionField_Selection_triggered()
 {
-	myFSDialog->show();
-    if(!myStream_1->isStopped()){
+	
+	if(!myStream_1->isStopped()){
         myStream_1->Stop();
 	}
     if(!myStream_2->isStopped()){
@@ -97,6 +91,9 @@ void MainWindow::on_actionField_Selection_triggered()
     if(!myStream_3->isStopped()){
         myStream_3->Stop();
 	}
+
+
+	myFSDialog->show();
 }
 
 void MainWindow::on_actionTracking_View_triggered()
@@ -116,6 +113,7 @@ void MainWindow::on_actionVideo_1_triggered()
 			msgBox.exec();
 		} else {
 			ui->label_videostream_1->setText("Video Stream 1:" +  filename_1);
+			myStream_1->getFirstFrame();
 		}
 	}
 	
@@ -134,6 +132,7 @@ void MainWindow::on_actionVideo_2_triggered()
 			msgBox.exec();
 		} else {
 			ui->label_videostream_2->setText("Video Stream 2:" +  filename_2);
+			myStream_2->getFirstFrame();
 		}
 	}
 	
@@ -153,6 +152,7 @@ void MainWindow::on_actionVideo_3_triggered()
 			msgBox.exec();
 		} else {
 			ui->label_videostream_3->setText("Video Stream 3:" +  filename_3);
+			myStream_3->getFirstFrame();
 		}
 	}
 	

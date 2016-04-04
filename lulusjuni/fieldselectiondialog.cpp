@@ -17,16 +17,16 @@ FieldSelectionDialog::~FieldSelectionDialog()
     delete ui;
 }
 
-void FieldSelectionDialog::setFrame_1(QImage img) {
-    frameCamera_1 = img;
+void FieldSelectionDialog::setFrame_1(QImage img1) {
+    frameCamera_1 = img1;
 }
 
-void FieldSelectionDialog::setFrame_2(QImage img) {
-    frameCamera_2 = img;
+void FieldSelectionDialog::setFrame_2(QImage img2) {
+    frameCamera_2 = img2;
 }
 
-void FieldSelectionDialog::setFrame_3(QImage img) {
-    frameCamera_3 = img;
+void FieldSelectionDialog::setFrame_3(QImage img3) {
+    frameCamera_3 = img3;
 }
 void FieldSelectionDialog::on_cameraSelectCombo_currentIndexChanged(int index)
 {
@@ -35,23 +35,20 @@ void FieldSelectionDialog::on_cameraSelectCombo_currentIndexChanged(int index)
     case 0:
         if (!frameCamera_1.isNull()) {
             ui->imageView->setAlignment(Qt::AlignCenter);
-            ui->imageView->setPixmap(QPixmap::fromImage(frameCamera_1).scaled(ui->imageView->size(),
-                                     Qt::KeepAspectRatio, Qt::FastTransformation));
+            ui->imageView->setPixmap(QPixmap::fromImage(frameCamera_1));
         }
         break;
     case 1:
         if (!frameCamera_2.isNull()) {
             ui->imageView->setAlignment(Qt::AlignCenter);
-            ui->imageView->setPixmap(QPixmap::fromImage(frameCamera_2).scaled(ui->imageView->size(),
-                                     Qt::KeepAspectRatio, Qt::FastTransformation));
+            ui->imageView->setPixmap(QPixmap::fromImage(frameCamera_2));
 
         }
         break;
     case 2:
         if (!frameCamera_3.isNull()) {
             ui->imageView->setAlignment(Qt::AlignCenter);
-            ui->imageView->setPixmap(QPixmap::fromImage(frameCamera_3).scaled(ui->imageView->size(),
-                                     Qt::KeepAspectRatio, Qt::FastTransformation));
+            ui->imageView->setPixmap(QPixmap::fromImage(frameCamera_3));
 
         }
         break;
@@ -85,23 +82,11 @@ void FieldSelectionDialog::on_pushButton_apply_released()
     switch (currentCameraIndex + 1) {
     case 1:
         emit maskCoordinates_1(clickCoordinates);
-        //emit maskCoordinates_1_a(clickCoordinates[0]);
-        //emit maskCoordinates_1_b(clickCoordinates[1]);
-        //emit maskCoordinates_1_c(clickCoordinates[2]);
-        //emit maskCoordinates_1_d(clickCoordinates[3]);
         break;
     case 2:
         emit maskCoordinates_2(clickCoordinates);
-        //emit maskCoordinates_2_a(clickCoordinates[0]);
-        //emit maskCoordinates_2_b(clickCoordinates[1]);
-        //emit maskCoordinates_2_c(clickCoordinates[2]);
-        //emit maskCoordinates_2_d(clickCoordinates[3]);
         break;
     case 3:
         emit maskCoordinates_3(clickCoordinates);
-        //emit maskCoordinates_3_a(clickCoordinates[0]);
-        //emit maskCoordinates_3_b(clickCoordinates[1]);
-        //emit maskCoordinates_3_c(clickCoordinates[2]);
-        //emit maskCoordinates_3_d(clickCoordinates[3]);
     }
 }

@@ -5,6 +5,8 @@
 #include <QWidget>
 #include <QLabel>
 #include <QMouseEvent>
+#include <QDebug>
+#include <QString>
 
 class ClickDisplay : public QLabel
 {

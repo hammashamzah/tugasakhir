@@ -71,6 +71,7 @@ private:
     VideoProcessor *myStream_1;
     VideoProcessor *myStream_2;
     VideoProcessor *myStream_3;
+    bool isFieldSelectionDialogInitialized;
 
 };
 

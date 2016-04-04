@@ -13,6 +13,7 @@ VideoProcessor::VideoProcessor(QObject *parent): QThread(parent)
 	morphElementSize = 3;
 	gaussianSize = 3;
 	isSetMask = false;
+
 }
 //destructor
 VideoProcessor::~VideoProcessor()
@@ -39,6 +40,17 @@ bool VideoProcessor::loadVideo(String filename) {
 	}
 	else
 		return false;
+}
+
+void VideoProcessor::getFirstFrame(){
+	Mat firstFrame;
+	setCurrentFrame(2);
+	capture->read(firstFrame);
+	setCurrentFrame(1);
+	cv::cvtColor(firstFrame, RGBframe, CV_BGR2RGB);
+	qRawImage = QImage((const unsigned char*)(RGBframe.data),
+		                   RGBframe.cols, RGBframe.rows, QImage::Format_RGB888);
+	emit rawImage(qRawImage);
 }
 
 void VideoProcessor::Play()
@@ -78,12 +90,22 @@ void VideoProcessor::run()
 		emit rawImage(qRawImage);		
 		
 		//mask object
-		maskImage();
+		//maskImage();
+	    Mask = Mat::zeros(frame.size(), CV_8UC3);
+		if(isSetMask){
+		    const Point * ppt[1] = {maskPoint[0]};
+		    int npt[] = {numberOfMaskPoints};
+		    fillPoly(Mask, ppt, npt, 1, Scalar(255,255,255), 8);
+			frame.copyTo(maskedFrame, Mask);
+			//maskedFrame = frame.mul(Mask);
+		}else{
+			maskedFrame = frame;
+		}
 
 		//emit masked image
-		cv::cvtColor(maskedFrame, RGBframe, CV_BGR2RGB);
-		qMaskedFrame = QImage((const unsigned char*)(RGBframe.data),
-		                   RGBframe.cols, RGBframe.rows, QImage::Format_RGB888);
+		cv::cvtColor(maskedFrame, tempMasked, CV_BGR2RGB);
+		qMaskedFrame = QImage((const unsigned char*)(tempMasked.data),
+		                   tempMasked.cols, tempMasked.rows, QImage::Format_RGB888);
 		emit maskedImage(qMaskedFrame);
 
 		//update the background model
@@ -141,17 +163,19 @@ void VideoProcessor::updateValueGaussianSize(int value) {
 
 void VideoProcessor::getMaskCoordinate(QList<QPoint> maskPoints){
     numberOfMaskPoints = maskPoints.count();
+    QString message = "Number of points is: " + QString::number(numberOfMaskPoints);
+    qDebug() << message;
 	//clean coordinate of mask
     for (int j = 0; j < 10; j++)
 	{
         maskPoint[0][j] = Point(0,0);
 	}
 	//convert QPoint to OpenCV Point
-	if(numberOfMaskPoints <= 10){
+	if(numberOfMaskPoints > 2 && numberOfMaskPoints <= 10){
 		int i= 0;
         foreach(QPoint point, maskPoints){
 			qDebug() << point;
-			maskPoint[0][i] == Point(point.x(), point.y());
+            maskPoint[0][i] = Point(point.x(), point.y());
 			i++;
 		}
 		isSetMask = true;
@@ -162,12 +186,13 @@ void VideoProcessor::getMaskCoordinate(QList<QPoint> maskPoints){
 }
 
 void VideoProcessor::maskImage(){
-    Mask = Mat::zeros(frame.size(), CV_8U);
+    Mask = Mat::ones(frame.size(), CV_8UC3) * 255;
 	if(isSetMask){
 	    const Point * ppt[1] = {maskPoint[0]};
 	    int npt[] = {numberOfMaskPoints};
 	    fillPoly(Mask, ppt, npt, 1, Scalar(0,0,0), 8);
 	}
-	Mask = cv::Scalar::all(255) - Mask;
+	Mask = Mat::zeros(frame.size(), CV_8UC3) - Mask;
 	maskedFrame = frame.mul(Mask);
 }
+

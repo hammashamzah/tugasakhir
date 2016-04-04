@@ -25,7 +25,7 @@ private:
 	Mat frame;
 	int frameRate;
 	VideoCapture *capture;
-	Mat Mask, RGBframe, objectFrame, maskedFrame, openedFrame, bluredFrame, withKeypointsFrame;
+	Mat Mask, RGBframe, tempMasked, objectFrame, maskedFrame, openedFrame, bluredFrame, withKeypointsFrame;
 	QImage qRawImage, qMaskedFrame, qOpenedFrame, qBluredFrame, qWithKeypointsFrame;
     SimpleBlobDetector::Params params;
 	Ptr<BackgroundSubtractor> pMOG;
@@ -77,7 +77,7 @@ public:
 	double getFrameRate();
 	double getCurrentFrame();
 	double getNumberOfFrames();
-	QImage getFirstFrame();
+	void getFirstFrame();
 
 private:
 	Point maskPoint[1][10];

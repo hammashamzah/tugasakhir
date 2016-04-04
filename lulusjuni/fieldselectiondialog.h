@@ -45,20 +45,6 @@ signals:
     void maskCoordinates_2(QList<QPoint>);
     void maskCoordinates_3(QList<QPoint>);
     
-    //void maskCoordinates_1_a(QPoint& pos);
-    //void maskCoordinates_1_b(QPoint& pos);
-    //void maskCoordinates_1_c(QPoint& pos);
-    //void maskCoordinates_1_d(QPoint& pos);
-
-    //void maskCoordinates_2_a(QPoint& pos);
-    //void maskCoordinates_2_b(QPoint& pos);
-    //void maskCoordinates_2_c(QPoint& pos);
-    //void maskCoordinates_2_d(QPoint& pos);
-
-    //void maskCoordinates_3_a(QPoint& pos);
-    //void maskCoordinates_3_b(QPoint& pos);
-    //void maskCoordinates_3_c(QPoint& pos);
-    //void maskCoordinates_3_d(QPoint& pos);
 };
 
 
