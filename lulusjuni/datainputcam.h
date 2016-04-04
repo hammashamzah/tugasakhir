@@ -15,6 +15,7 @@ class DataInputCam
         Rect dataplayer;
         Point2f pixelSpeed;
         bool flagOcclusion;
+        int camera;
         int status;
 };
 

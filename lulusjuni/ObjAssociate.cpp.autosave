@@ -118,7 +118,6 @@ void Associate::accum_assoc(bool Isinit,bool start_accum){
             /**Membentuk matrik assosiasi agregat dari ketiga kamera ini yang digunakan untuk mapping**/
             Issetmat = sum_updated_mat();
             /**Tahapan terakhir dari assosiasi ialah mapping data measurement ke object yang terdefinisi**/
-
         }
         Ismapped = mapping();
     }
@@ -131,7 +130,7 @@ bool Associate::sum_updated_mat(){
     int i,j;
     for(i=0;i<23;i++){
         for(j=0;j<23;j++){
-            association_agrr[i][j] = association1p[i][j]+association2p[i][j]+association3p[i][j];
+            association_agrr[i][j] = inMatCam1.at<int>(i,j)+inMatCam2.at<int>(i,j)+inMatCam1.at<int>(i,j);
         }
     }
     return(true);
