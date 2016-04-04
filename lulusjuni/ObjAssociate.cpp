@@ -22,8 +22,7 @@ void Associate::init_multicamassoc(){
     }
 }
 
-Associate::Associate(bool start){
-    mulai = start;
+Associate::Associate(){
 
 }
 
@@ -31,6 +30,63 @@ Associate::~Associate(){
 
 }
 
+
+void Associate::updateMatCam1(Mat Cam1){
+    inMatCam1 = Cam1;
+    Isset12 = true;
+}
+void Associate::updateMatCam2(Mat Cam2){
+    inMatCam2 = Cam2;
+    Isset11 = true;
+}
+void Associate::updateMatCam3(Mat Cam3){
+    inMatCam3 = Cam3;
+    Isset10 = true;
+}
+void Associate::updateMatTrans(Mat CamT){
+    inMatCamT = CamT;
+    Isset9 = true;
+}
+void Associate::updateKalmanCam1(QList<DataInputCam> predicCam1){
+    predic1 = predicCam1;
+    sizePredict1 = predic1.length;
+    Isset8 = true;
+}
+void Associate::updateKalmanCam2(QList<DataInputCam> predicCam2){
+    predic2 = predicCam2;
+    sizePredict2 = predic2.length;
+    Isset7 = true;
+}
+void Associate::updateKalmanCam3(QList<DataInputCam> predicCam3){
+    predic3 = predicCam3;
+    sizePredict3 = predic3.length;
+    Isset6 = true;
+}
+void Associate::updateKalmanTrans(QList<DataInputTrans> predicCamT){
+    predicTrans = predicCamT;
+    sizePredictT = predicTrans.length;
+    Isset5 = true;
+}
+void Associate::updateCurrentCam1(QList<DataInputCam> currCam1){
+    currcam1 = currCam1;
+    sizeMeas1 = currcam1.length;
+    Isset4 = true;
+}
+void Associate::updateCurrentCam2(QList<DataInputCam> currCam2){
+    currcam2 = currCam2;
+    sizeMeas2 = currCam2.length;
+    Isset3 = true;
+}
+void Associate::updateCurrentCam3(QList<DataInputCam> currCam3){
+    currcam3 = currCam3;
+    sizeMeas3 = currcam3.length;
+    Isset2 = true;
+}
+void Associate::updateCurrentTrans(QList<DataInputTrans> currCamT){
+    currcamT = currCamT;
+    sizeMeasT = currcamT.length;
+    Isset1 = true;
+}
 
 void Associate::accum_assoc(bool Isinit,bool start_accum){
     int ntoone1=0,ntoone2=0,ntoone3=0,ousted=0,hypo=0,cntoone1=0,cntoone2=0,cntoone3=0;
@@ -352,9 +408,3 @@ void Associate::init_matrices_assoc(){
 }
 
 
-
-
-
-void Associate::setInput(bool stIn){
-    if(stIn){
-}

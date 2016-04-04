@@ -8,8 +8,9 @@
 #include <cmath>
 #include <string>
 #include <QList>
-#include "datainputcam.h"
+#include "datainputtrans.h"
 #include "objectvariable.h"
+
 /**Parameter yang akan dipindahkan ke KalmanObj.h**/
 #define Pict_sizex 1280
 #define Pict_sizey 1024
@@ -24,17 +25,17 @@ using namespace std;
 using namespace cv;
 
 
-class Kalmanobj{
+class Kalmanobj3D{
     public:
-        Kalmanobj(int camera_id,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr);
-        ~Kalmanobj();
+        Kalmanobj3D(double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr);
+        ~Kalmanobj3D();
         void accum_kalmanobj();
         void multitrackObj();
     private:
-        QList <DataInputCam> currentData;
-        QList <DataInputCam> previousData;
-        QList <DataInputCam> predictionData;
-        QList <DataInputCam> initsData;
+        QList <DataInputTrans> currentData;
+        QList <DataInputTrans> previousData;
+        QList <DataInputTrans> predictionData;
+        QList <DataInputTrans> initsData;
         double XUL,XUR,XDR,XDL,YUL,YUR,YDR,YDL;
         void initKalmanMOt(double pos_x, double pos_y,double v_x,double v_y,double a_x, double a_y);
         Point2f getCurrentStateMot() const;
@@ -42,9 +43,8 @@ class Kalmanobj{
         Point2f getAccMot() const;
         void extract_actual_v(double curr_posx,double curr_posy,int idx);
         void extract_actual_a(int idx);
-        void track_size(double &pred_w, double &pred_h,DataInputCam reff,DataInputCam current);
-        void track_ind2Dmotion(DataInputCam current,Point pre_pos,Point pre_veloc,Point pre_Acce,Point post_pos,Point post_veloc,Point post_Acce);
-        //void track_ind3Dmotion(Point pre_pos,Point pre_veloc,Point pre_Acce,Point post_pos,Point post_veloc,Point post_Acce);
+        //void track_size(double &pred_w, double &pred_h,DataInputTrans reff,DataInputTrans current);
+        void track_ind3Dmotion(DataInputTrans curr_cond,Point pre_pos,Point pre_veloc,Point pre_Acce,Point post_pos,Point post_veloc,Point post_Acce);
         void resetdata();
         int Object_Number;
         int camera;
@@ -55,17 +55,18 @@ class Kalmanobj{
         double FrPs;
         double intervals;
         Mat_<float> measurement_pos;
-        Point2f curr_pos         [JUMLAH_PLAYER];
-        Point2f post_pos         [JUMLAH_PLAYER];
-        Point2f pre_velocity     [JUMLAH_PLAYER];
-        Point2f post_velocity    [JUMLAH_PLAYER];
-        Point2f accel            [JUMLAH_PLAYER];
+        Point2f curr_pos3d     [JUMLAH_PLAYER];
+        Point post_pos3d       [JUMLAH_PLAYER];
+        Point pre_velocity3d   [JUMLAH_PLAYER];
+        Point post_velocity3d  [JUMLAH_PLAYER];
+        Point accel3d          [JUMLAH_PLAYER];
    public slots:
-        void updateCurrentData(QList<DataInputCam>);
-        void updateInitsData(QList<DataInputCam>);
+        void updateCurrentData(QList<DataInputTrans>);
+        void updateInitsData(QList<DataInputTrans>);
         void updateFrame(int frm);
    signals:
-        void updatePrediction(QList<DataInputCam>);
+        void updatePrediction(QList<DataInputTrans>);
+
 };
 
 #endif // KALMANOBJ_H_INCLUDED

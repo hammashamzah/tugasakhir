@@ -2,9 +2,8 @@
 
 #define DEBUG
 
-Kalmanobj::Kalmanobj(int camera_id,bool start,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr){
+Kalmanobj::Kalmanobj(int camera_id,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr){
     camera = camera_id;
-    mulai = start;
     XDL = xdl;
     XDR = xdr;
     XUL = xul;
@@ -16,25 +15,71 @@ Kalmanobj::Kalmanobj(int camera_id,bool start,double xdl,double xdr,double xul,d
     FrPs = fr;
 }
 
+void Kalmanobj::updateCurrentData(QList<DataInputCam> current){
+    previousData.clear();
+    previousData = currentData;
+    currentData = current;
+    sizeCurrent = currentData.length();
+    sizePrevious = previousData.length();
+    Isset1 = true;
+}
+void Kalmanobj::updateInitsData(QList<DataInputCam> init){
+    initsData = init;
+    sizeInit = initsData.length();
+    Isset2 = true;
+}
+void Kalmanobj::updateFrame(int frm){
+    frames = frm;
+    Isset3 = true;
+}
+
+void Kalmanobj::resetdata(){
+    int i,j;
+    for(i=0;i<sizePrevious;i++){
+        int k = 0;
+        for(j=0;j<sizeCurrent;j++){
+            if(previousData.at(i).id == currentData.at(j).id){
+                k++;
+            }
+        }
+        if(k > 0){
+            accel[i].x=0.00;
+            accel[i].y=0.00;
+            pre_velocity[i].x=0.00;
+            pre_velocity[i].y=0.00;
+            post_velocity[i].x=0.00;
+            post_velocity[i].y=0.00;
+            post_pos[i].x=0.00;
+            post_pos[i].y=0.00;
+        }
+    }
+}
+
 void Kalmanobj::accum_kalmanobj(){
     int i;
     intervals = 1/FrPs;
-    if(frame_start == 1){
-        for(i=0;i<23;i++){
-            post_pos[i].x=0.00;
-            post_pos3d[i].x=0.00;
-            pre_velocity[i].x=0.00;
-            pre_velocity3d[i].x=0.00;
-            accel[i].x=0.00;
-            accel3d[i].x=0.00;
-            post_pos[i].y=0.00;
-            post_pos3d[i].y=0.00;
-            pre_velocity[i].y=0.00;
-            pre_velocity3d[i].y=0.00;
-            accel[i].y=0.00;
-            accel3d[i].y =0.00;
+    if(frames == 1){
+        for(i=0;i<JUMLAH_PLAYER;i++){
+            post_pos[i].x       = 0.00;
+            pre_velocity[i].x   = 0.00;
+            accel[i].x          = 0.00;
+            post_pos[i].y       = 0.00;
+            pre_velocity[i].y   = 0.00;
+            accel[i].y          = 0.00;
         }
     }
+    else{
+        if(sizeCurrent < sizePrevious){
+            resetdata();
+        }
+        multitrackObj();
+    }
+    emit updatePrediction(predictionData);
+    Isset1=false;
+    Isset2=false;
+    Isset3=false;
+    currentData.clear();
+    initsData.clear();
 }
 
 Kalmanobj::~Kalmanobj(){
@@ -42,27 +87,26 @@ Kalmanobj::~Kalmanobj(){
 }
 
 void Kalmanobj::multitrackObj(){
-    Point2f priory_pos,priory_vels,priory_acc,post_pos,post_vels,post_acc;
+    int i;
+    DataInputCam buffer;
     Point2f priory_posp,priory_velsp,priory_accp,post_posp,post_velsp,post_accp;
     double pred_h,pred_w;
-    while(list_curr!=NULL){
-        predict_track = new Node;
-        track_ind3Dmotion(list_curr,priory_pos,priory_vels,priory_acc,post_pos,post_vels,post_acc);
-        track_ind2Dmotion(list_curr,priory_posp,priory_velsp,priory_accp,post_posp,post_velsp,post_accp);
-        Node *list_get = list1.searchNode(list_init,list_curr->data_id);
-        track_size(pred_w, pred_h,list_get,list_curr);
-        predict_track->data_id = list_curr->data_id;
-        predict_track->val_x = (double)post_posp.x;
-        predict_track->val_y = (double)post_posp.y;
-        predict_track->x_trans = (double)post_pos.x;
-        predict_track->y_trans = (double)post_pos.y;
-        predict_track->val_w = pred_w;
-        predict_track->val_h = pred_h;
-        predict_track->vx_trans = (double)post_vels.x;
-        predict_track->vy_trans = (double)post_vels.y;
-        predict_track->flag = list_curr->flag;
-        predict_track = predict_track->next;
-        list_curr = list_curr->next;
+    for(i=0;i<sizeCurrent;i++){
+        //track_ind3Dmotion(currentData.at(i)priory_pos,priory_vels,priory_acc,post_pos,post_vels,post_acc);
+        track_ind2Dmotion(currentData.at(i),priory_posp,priory_velsp,priory_accp,post_posp,post_velsp,post_accp);
+        //Node *list_get = list1.searchNode(list_init,list_curr->data_id);
+        track_size(pred_w, pred_h,initsData.at(currentData.at(i).id),currentData.at(i));
+
+        buffer.id = currentData.at(i).id;
+        buffer.dataplayer.x = (double)post_posp.x;
+        buffer.dataplayer.y = (double)post_posp.y;
+        buffer.dataplayer.width = pred_w;
+        buffer.dataplayer.height = pred_h;
+        buffer.status = (double)currentData.at(i).status;
+        buffer.flagOcclusion = (double)currentData.at(i).flagOcclusion;
+        buffer.pixelSpeed.x = (double)post_velsp.x;
+        buffer.pixelSpeed.y = (double)post_velsp.y;
+        predictionData.append(buffer);
     }
 }
 
@@ -98,63 +142,47 @@ Point2f Kalmanobj::getCurrentStateMot() const{
 Point2f Kalmanobj::getVelocityMot() const{
     Point state_pos;
     Mat statePost = KF_Mot.statePost;
-    state_pos.x = statePost.at<double>(0);
-    state_pos.y = statePost.at<double>(1);
+    state_pos.x = statePost.at<double>(2);
+    state_pos.y = statePost.at<double>(3);
     return (state_pos);
 }
 
 Point2f Kalmanobj::getAccMot() const{
     Point state_pos;
     Mat statePost = KF_Mot.statePost;
-    state_pos.x = statePost.at<double>(0);
-    state_pos.y = statePost.at<double>(1);
+    state_pos.x = statePost.at<double>(4);
+    state_pos.y = statePost.at<double>(5);
     return (state_pos);
 }
 
-void Kalmanobj::extract_actual_v(double curr_posx,double curr_posy,int idx,int rep){
-    if(rep==1){/*untuk 3d coordinate*/
-        post_pos3d[idx]= curr_pos3d[idx];
-        curr_pos3d[idx].x= curr_posx;
-        curr_pos3d[idx].y= curr_posy;
-        post_velocity3d[idx] = pre_velocity3d[idx];
-        pre_velocity3d[idx].x = (curr_pos3d[idx].x-post_pos3d[idx].x)/intervals;
-        pre_velocity3d[idx].y = (curr_pos3d[idx].y-post_pos3d[idx].y)/intervals;
-    }
-    else{/*untuk 2d coordinate*/
+void Kalmanobj::extract_actual_v(double curr_posx,double curr_posy,int idx){
         post_pos[idx]= curr_pos[idx];
         curr_pos[idx].x= curr_posx;
         curr_pos[idx].y= curr_posy;
         post_velocity[idx] = pre_velocity[idx];
         pre_velocity[idx].x = (curr_pos[idx].x-post_pos[idx].x)/intervals;
         pre_velocity[idx].y = (curr_pos[idx].y-post_pos[idx].y)/intervals;
-    }
 }
 
-void Kalmanobj::extract_actual_a(int idx,int rep){
-    if(rep==1){/*untuk 3d coordinate*/
-        accel3d[idx].x = (pre_velocity3d[idx].x-post_velocity3d[idx].x)/intervals;
-        accel3d[idx].y = (pre_velocity3d[idx].y-post_velocity3d[idx].y)/intervals;
-    }
-    else{/*untuk 2d coordinate*/
-        accel[idx].x = (pre_velocity[idx].x-post_velocity[idx].x)/intervals; 
-        accel[idx].y = (pre_velocity[idx].y-post_velocity[idx].y)/intervals;    
-    }
+void Kalmanobj::extract_actual_a(int idx){
+   accel[idx].x = (pre_velocity[idx].x-post_velocity[idx].x)/intervals;
+   accel[idx].y = (pre_velocity[idx].y-post_velocity[idx].y)/intervals;
+
 }
 
-void Kalmanobj::track_size(double &pred_w, double &pred_h,Node* init_matric,Node* curr_matric){
+void Kalmanobj::track_size(double &pred_h,double &pred_w,DataInputCam reff,DataInputCam curr){
     /*koordinate titik hilang*/
     double yo =((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))-((YDL+YDR)/2);
-    double perb_init = (-(init_matric->val_y)+((YDL+YDR)/2))/((init_matric->val_y)-yo);
-    double perb_act = ((curr_matric->val_y)-yo)/(((curr_matric->val_y)-yo)+((init_matric->val_y)-((YDL+YDR)/(2))));
-    double width_pres = (1+perb_init)*curr_matric->val_w;
-    double height_pres = (1+perb_init)*curr_matric->val_h;
+    double perb_init = (-((double)reff.dataplayer.y)+((YDL+YDR)/2))/(((double)((double)reff.dataplayer.width))-yo);
+    double perb_act = (((double)curr.dataplayer.y)-yo)/((((double)curr.dataplayer.y)-yo)+((reff.dataplayer.y)-((YDL+YDR)/(2))));
+    double width_pres = (1+perb_init)*((double)curr.dataplayer.width);
+    double height_pres = (1+perb_init)*((double)curr.dataplayer.height);
     pred_w = width_pres * perb_act;
     pred_h = height_pres * perb_act;
 }
 
-void Kalmanobj::track_ind2Dmotion(Node* curr_cond, Point pre_pos,Point pre_veloc,Point pre_Acce,Point post_pos,Point post_veloc,Point post_Acce){
-    int rep = 1;
-    initKalmanMOt((double)curr_cond->val_x, (double)curr_cond->val_y,(double)pre_velocity[curr_cond->data_id].x,(double)pre_velocity[curr_cond->data_id].y,(double)accel[curr_cond->data_id].x, (double)accel[curr_cond->data_id].y);
+void Kalmanobj::track_ind2Dmotion(DataInputCam curr_cond, Point pre_pos,Point pre_veloc,Point pre_Acce,Point post_pos,Point post_veloc,Point post_Acce){
+    initKalmanMOt((double)curr_cond.dataplayer.x, (double)curr_cond.dataplayer.y,(double)pre_velocity[curr_cond.id].x,(double)pre_velocity[curr_cond.id].y,(double)accel[curr_cond.id].x, (double)accel[curr_cond.id].y);
     KF_Mot.predict();
     pre_pos = getCurrentStateMot();
     pre_veloc = getVelocityMot();
@@ -163,35 +191,7 @@ void Kalmanobj::track_ind2Dmotion(Node* curr_cond, Point pre_pos,Point pre_veloc
     post_pos = getCurrentStateMot();
     post_veloc = getVelocityMot();
     post_Acce = getAccMot();
-    extract_actual_v((double)curr_cond->val_x,(double)curr_cond->val_y,curr_cond->data_id,rep);
-    extract_actual_a(curr_cond->data_id,rep);
-}
-
-void Kalmanobj::track_ind3Dmotion(Node* curr_cond, Point pre_pos,Point pre_veloc,Point pre_Acce,Point post_pos,Point post_veloc,Point post_Acce){
-    int rep = 2;
-    initKalmanMOt((double)curr_cond->val_x, (double)curr_cond->val_y,(double)pre_velocity3d[curr_cond->data_id].x,(double)pre_velocity3d[curr_cond->data_id].y,(double)accel3d[curr_cond->data_id].x, (double)accel3d[curr_cond->data_id].y);
-    KF_Mot.predict();
-    pre_pos = getCurrentStateMot();
-    pre_veloc = getVelocityMot();
-    pre_Acce = getAccMot();
-    KF_Mot.correct(measurement_pos);
-    post_pos = getCurrentStateMot();
-    post_veloc = getVelocityMot();
-    post_Acce = getAccMot();
-    extract_actual_v((double)curr_cond->val_x,(double)curr_cond->val_y,curr_cond->data_id,rep);
-    extract_actual_a(curr_cond->data_id,rep);
-}
-
-void Kalmanobj::set_Value(int start,int Num_Obj,Node* init_symp, Node* current_symp,bool set_input){
-    if(frame_start !=start){
-        frame_start = start;
-    }
-    if(Object_Number != Num_Obj){
-        Object_Number = Num_Obj;
-    }
-    if(set_input){
-        list1.copyLinkedList(current_symp,&list_curr);
-        list1.copyLinkedList(init_symp,&list_init);
-    }
+    extract_actual_v((double)curr_cond.dataplayer.x,(double)curr_cond.dataplayer.y,curr_cond.id);
+    extract_actual_a(curr_cond.id);
 }
 

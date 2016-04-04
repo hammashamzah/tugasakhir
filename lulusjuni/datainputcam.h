@@ -1,22 +1,21 @@
 #ifndef DATAINPUTCAM_H
 #define DATAINPUTCAM_H
+#include <opencv/cv.h>
+#include <opencv2/core/core.hpp>
 
-#include "opencv/cv.h"
-#include "objectvariable.h"
-#include <QObject>
 using namespace cv;
+using namespace std;
 
-
-
-class Datainputcam{
+class DataInputCam
+{
     public:
+        DataInputCam();
+        ~DataInputCam();
         int id;
-        Rect playerData;
+        Rect dataplayer;
+        Point2f pixelSpeed;
         bool flagOcclusion;
         int status;
-        Datainputcam (int identity, Rect Player_dat, int stats, bool fo);
-        ~Datainputcam();
 };
-
 
 #endif // DATAINPUTCAM_H

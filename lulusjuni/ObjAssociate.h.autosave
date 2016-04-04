@@ -48,6 +48,10 @@ class Associate{
         Mat inMatCam3;bool Isset11;
         Mat inMatCamT;bool Isset12;
 
+        Mat association1p    ;
+        Mat association2p    ;
+        Mat association3p    ;
+        Mat association_globe;
 
         QList<DataInputCam> mapRes1;
         QList<DataInputCam> mapRes2;
@@ -73,10 +77,7 @@ class Associate{
         int num_measurement;
         int cameras;
         double eigen_distance_transform(double x_m, double y_m, double x_obj, double y_obj);
-        Mat association1p    ;
-        Mat association2p    ;
-        Mat association3p    ;
-        Mat association_globe;
+        
 
         double THETA;
         double yo;

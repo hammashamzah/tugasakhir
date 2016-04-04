@@ -1,5 +1,6 @@
 #ifndef GENERATEMATCAM_H
 #define GENERATEMATCAM_H
+
 #include "objectvariable.h"
 #include "opencv/ml.h"
 #include "opencv2/legacy/legacy.hpp"
@@ -8,26 +9,27 @@
 #include <opencv2/core/core.hpp>
 #include <stdio.h>
 #include <cmath>
-#include <QObject>
-#include "arrdatcam.h"
+#include <QList>
+#include "datainputcam.h"
 
 using namespace cv;
 using namespace std;
 
-class GenerateMatcam
+class GenerateMatCam
 {
     public:
-        GenerateMatcam(int cam,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double pixel_th);
-        ~GenerateMatcam();
+        GenerateMatCam(int cam,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double pixel_th);
+        ~GenerateMatCam();
         void cam_associate();
-        Mat Associate;
-        bool Isset;
     private:
+        Mat Associate;
         double XDL,XDR,XUL,XUR,YDL,YDR,YUL,YUR,THETA;
         int cameras;
-        Arrcam pred;
-        Arrcam inits;
-        Arrcam curr;
+        bool Isset1,Isset2,Isset3,Isset4;
+        QList<DataInputCam> pred;
+        QList<DataInputCam> inits;
+        QList<DataInputCam> curr;
+        int sizeInits,sizePrediction,sizeCurrent;
         double Euclid_x,Euclid_y;
         double th_y;
         double th_xka,th_xki;
@@ -38,10 +40,12 @@ class GenerateMatcam
         double find_threshold_y(double y);
         void link_theid();
     public slots:
-        void updatePredic(bool Isset,ArrDatCam predic);
-        void updateinit(bool Isset, ArrDatCam init);
-        void updateCurrent(bool Isset, ArrDatCam current);
-    signals:
+        void updatePredic(QList<DataInputCam>);
+        void updateinit(QList<DataInputCam>);
+        void updateCurrent(QList<DataInputCam>);
+        void updateFrame(int fr);
+   signals:
+        void UpdateMatrices(Mat);
 };
 
 #endif // GENERATEMATCAM_H

@@ -28,13 +28,11 @@ SOURCES += main.cpp\
     Highlevel.cpp \
     KalmanObj.cpp \
     ObjAssociate.cpp \
-    preprocessing.cpp \
-    arrdatcam.cpp \
-    arrdattrans.cpp \
     generatematcam.cpp \
-    arrcam.cpp \
-    arrtrans.cpp \
-    generatemattrans.cpp
+    generatemattrans.cpp \
+    datainputtrans.cpp \
+    datainputcam.cpp \
+    kalmanobj3d.cpp
 
 HEADERS  += mainwindow.h \
     fieldselectiondialog.h \
@@ -49,13 +47,14 @@ HEADERS  += mainwindow.h \
     Highlevel.h \
     KalmanObj.h \
     ObjAssociate.h \
-    preprocessing.h \
     arrdatcam.h \
     arrdattrans.h \
     generatematcam.h \
     arrcam.h \
-    arrtrans.h \
-    generatemattrans.h
+    generatemattrans.h \
+    datainputtrans.h \
+    datainputcam.h \
+    kalmanobj3d.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

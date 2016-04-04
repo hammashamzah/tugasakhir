@@ -10,9 +10,8 @@
 #include <opencv2/core/core.hpp>
 #include <stdio.h>
 #include <cmath>
-#include <QObject>
-#include "arrdattrans.h"
-
+#include <QList>
+#include <datainputtrans.h>
 using namespace cv;
 using namespace std;
 
@@ -22,22 +21,26 @@ class GenerateMatTrans
        GenerateMatTrans(double trehshold);
         ~GenerateMatTrans();
         void cam_associate();
-        Mat Associate;
-        bool Isset;
     private:
+        Mat Associate;
         double THETA;
-        Arrtrans pred;
-        Arrtrans inits;
-        Arrtrans curr;
+        bool Isset1,Isset2,Isset3,Isset4;
+
+        QList<DataInputTrans> pred;
+        QList<DataInputTrans> inits;
+        QList<DataInputTrans> curr;
+        int sizeInit,sizePredic,sizeCurrent;
         double Euclid_r,Euclid_x,Euclid_y;
         int frames;
         void link_theid();
         double eigen_distance_transform(double x_m, double y_m, double x_obj, double y_obj);
     public slots:
-        void updatePredic(bool Isset,Arrdattrans predic);
-        void updateinit(bool Isset, Arrdattrans init);
-        void updateCurrent(bool Isset, Arrdattrans current);
-    signals:
+        void updatePredic(QList<DataInputTrans>);
+        void updateinit(QList<DataInputTrans>);
+        void updateCurrent(QList<DataInputTrans>);
+        void updateFrame(int fr);
+   signals:
+        void UpdateAssociate(Mat);
 };
 
 

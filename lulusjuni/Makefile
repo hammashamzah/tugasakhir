@@ -62,13 +62,11 @@ SOURCES       = main.cpp \
 		Highlevel.cpp \
 		KalmanObj.cpp \
 		ObjAssociate.cpp \
-		preprocessing.cpp \
-		arrdatcam.cpp \
-		arrdattrans.cpp \
 		generatematcam.cpp \
-		arrcam.cpp \
-		arrtrans.cpp \
-		generatemattrans.cpp moc_mainwindow.cpp \
+		generatemattrans.cpp \
+		datainputtrans.cpp \
+		datainputcam.cpp \
+		kalmanobj3d.cpp moc_mainwindow.cpp \
 		moc_fieldselectiondialog.cpp \
 		moc_trackingviewdialog.cpp \
 		moc_systemperformancedialog.cpp \
@@ -76,9 +74,7 @@ SOURCES       = main.cpp \
 		moc_cameraviewdialog.cpp \
 		moc_videoprocessor.cpp \
 		moc_matdisplay.cpp \
-		moc_playervisual.cpp \
-		moc_arrdatcam.cpp \
-		moc_arrdattrans.cpp
+		moc_playervisual.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		fieldselectiondialog.o \
@@ -93,13 +89,11 @@ OBJECTS       = main.o \
 		Highlevel.o \
 		KalmanObj.o \
 		ObjAssociate.o \
-		preprocessing.o \
-		arrdatcam.o \
-		arrdattrans.o \
 		generatematcam.o \
-		arrcam.o \
-		arrtrans.o \
 		generatemattrans.o \
+		datainputtrans.o \
+		datainputcam.o \
+		kalmanobj3d.o \
 		moc_mainwindow.o \
 		moc_fieldselectiondialog.o \
 		moc_trackingviewdialog.o \
@@ -108,9 +102,7 @@ OBJECTS       = main.o \
 		moc_cameraviewdialog.o \
 		moc_videoprocessor.o \
 		moc_matdisplay.o \
-		moc_playervisual.o \
-		moc_arrdatcam.o \
-		moc_arrdattrans.o
+		moc_playervisual.o
 DIST          = ../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		../../Qt5.5.1/5.5/gcc_64/mkspecs/common/unix.conf \
 		../../Qt5.5.1/5.5/gcc_64/mkspecs/common/linux.conf \
@@ -258,13 +250,14 @@ DIST          = ../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		Highlevel.h \
 		KalmanObj.h \
 		ObjAssociate.h \
-		preprocessing.h \
 		arrdatcam.h \
 		arrdattrans.h \
 		generatematcam.h \
 		arrcam.h \
-		arrtrans.h \
-		generatemattrans.h main.cpp \
+		generatemattrans.h \
+		datainputtrans.h \
+		datainputcam.h \
+		kalmanobj3d.h main.cpp \
 		mainwindow.cpp \
 		fieldselectiondialog.cpp \
 		trackingviewdialog.cpp \
@@ -278,13 +271,11 @@ DIST          = ../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		Highlevel.cpp \
 		KalmanObj.cpp \
 		ObjAssociate.cpp \
-		preprocessing.cpp \
-		arrdatcam.cpp \
-		arrdattrans.cpp \
 		generatematcam.cpp \
-		arrcam.cpp \
-		arrtrans.cpp \
-		generatemattrans.cpp
+		generatemattrans.cpp \
+		datainputtrans.cpp \
+		datainputcam.cpp \
+		kalmanobj3d.cpp
 QMAKE_TARGET  = lulusjuni
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = lulusjuni
@@ -606,8 +597,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h fieldselectiondialog.h trackingviewdialog.h systemperformancedialog.h errorcalculationdialog.h cameraviewdialog.h videoprocessor.h matdisplay.h playervisual.h objectvariable.h Highlevel.h KalmanObj.h ObjAssociate.h preprocessing.h arrdatcam.h arrdattrans.h generatematcam.h arrcam.h arrtrans.h generatemattrans.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp fieldselectiondialog.cpp trackingviewdialog.cpp systemperformancedialog.cpp errorcalculationdialog.cpp cameraviewdialog.cpp videoprocessor.cpp matdisplay.cpp playervisual.cpp objectvariable.cpp Highlevel.cpp KalmanObj.cpp ObjAssociate.cpp preprocessing.cpp arrdatcam.cpp arrdattrans.cpp generatematcam.cpp arrcam.cpp arrtrans.cpp generatemattrans.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h fieldselectiondialog.h trackingviewdialog.h systemperformancedialog.h errorcalculationdialog.h cameraviewdialog.h videoprocessor.h matdisplay.h playervisual.h objectvariable.h Highlevel.h KalmanObj.h ObjAssociate.h arrdatcam.h arrdattrans.h generatematcam.h arrcam.h generatemattrans.h datainputtrans.h datainputcam.h kalmanobj3d.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp fieldselectiondialog.cpp trackingviewdialog.cpp systemperformancedialog.cpp errorcalculationdialog.cpp cameraviewdialog.cpp videoprocessor.cpp matdisplay.cpp playervisual.cpp objectvariable.cpp Highlevel.cpp KalmanObj.cpp ObjAssociate.cpp generatematcam.cpp generatemattrans.cpp datainputtrans.cpp datainputcam.cpp kalmanobj3d.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui backgroundmodeltuningdialog.ui fieldselectiondialog.ui trackingviewdialog.ui systemperformancedialog.ui errorcalculationdialog.ui cameraviewdialog.ui $(DISTDIR)/
 
 
@@ -631,9 +622,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_fieldselectiondialog.cpp moc_trackingviewdialog.cpp moc_systemperformancedialog.cpp moc_errorcalculationdialog.cpp moc_cameraviewdialog.cpp moc_videoprocessor.cpp moc_matdisplay.cpp moc_playervisual.cpp moc_arrdatcam.cpp moc_arrdattrans.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_fieldselectiondialog.cpp moc_trackingviewdialog.cpp moc_systemperformancedialog.cpp moc_errorcalculationdialog.cpp moc_cameraviewdialog.cpp moc_videoprocessor.cpp moc_matdisplay.cpp moc_playervisual.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_fieldselectiondialog.cpp moc_trackingviewdialog.cpp moc_systemperformancedialog.cpp moc_errorcalculationdialog.cpp moc_cameraviewdialog.cpp moc_videoprocessor.cpp moc_matdisplay.cpp moc_playervisual.cpp moc_arrdatcam.cpp moc_arrdattrans.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_fieldselectiondialog.cpp moc_trackingviewdialog.cpp moc_systemperformancedialog.cpp moc_errorcalculationdialog.cpp moc_cameraviewdialog.cpp moc_videoprocessor.cpp moc_matdisplay.cpp moc_playervisual.cpp
 moc_mainwindow.cpp: ../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
@@ -773,10 +764,6 @@ moc_mainwindow.cpp: ../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		playervisual.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		arrdatcam.h \
-		arrcam.h \
-		arrdattrans.h \
-		arrtrans.h \
 		mainwindow.h
 	/home/bima/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/bima/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/bima/tugasakhir/lulusjuni -I/usr/local/include/opencv -I/home/bima/Qt5.5.1/5.5/gcc_64/include -I/home/bima/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/bima/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/bima/Qt5.5.1/5.5/gcc_64/include/QtCore mainwindow.h -o moc_mainwindow.cpp
 
@@ -1580,272 +1567,6 @@ moc_playervisual.cpp: ../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
 		playervisual.h
 	/home/bima/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/bima/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/bima/tugasakhir/lulusjuni -I/usr/local/include/opencv -I/home/bima/Qt5.5.1/5.5/gcc_64/include -I/home/bima/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/bima/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/bima/Qt5.5.1/5.5/gcc_64/include/QtCore playervisual.h -o moc_playervisual.cpp
 
-moc_arrdatcam.cpp: ../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
-		objectvariable.h \
-		videoprocessor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QThread \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qthread.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QImage \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QPainter \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainter.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtextoption.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QWaitCondition \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qwaitcondition.h \
-		backgroundmodeltuningdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
-		cameraviewdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTime \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatetime.h \
-		errorcalculationdialog.h \
-		fieldselectiondialog.h \
-		systemperformancedialog.h \
-		trackingviewdialog.h \
-		playervisual.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		arrdatcam.h \
-		arrcam.h \
-		arrdattrans.h \
-		arrtrans.h \
-		arrdatcam.h
-	/home/bima/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/bima/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/bima/tugasakhir/lulusjuni -I/usr/local/include/opencv -I/home/bima/Qt5.5.1/5.5/gcc_64/include -I/home/bima/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/bima/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/bima/Qt5.5.1/5.5/gcc_64/include/QtCore arrdatcam.h -o moc_arrdatcam.cpp
-
-moc_arrdattrans.cpp: arrtrans.h \
-		objectvariable.h \
-		videoprocessor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QThread \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qthread.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QImage \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QPainter \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainter.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtextoption.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QWaitCondition \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qwaitcondition.h \
-		backgroundmodeltuningdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
-		cameraviewdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTime \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatetime.h \
-		errorcalculationdialog.h \
-		fieldselectiondialog.h \
-		systemperformancedialog.h \
-		trackingviewdialog.h \
-		playervisual.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		arrdatcam.h \
-		arrcam.h \
-		arrdattrans.h \
-		arrdattrans.h
-	/home/bima/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/bima/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/bima/tugasakhir/lulusjuni -I/usr/local/include/opencv -I/home/bima/Qt5.5.1/5.5/gcc_64/include -I/home/bima/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/bima/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/bima/Qt5.5.1/5.5/gcc_64/include/QtCore arrdattrans.h -o moc_arrdattrans.cpp
-
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
 compiler_uic_make_all: ui_mainwindow.h ui_backgroundmodeltuningdialog.h ui_fieldselectiondialog.h ui_trackingviewdialog.h ui_systemperformancedialog.h ui_errorcalculationdialog.h ui_cameraviewdialog.h
@@ -2130,10 +1851,6 @@ main.o: main.cpp mainwindow.h \
 		playervisual.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		arrdatcam.h \
-		arrcam.h \
-		arrdattrans.h \
-		arrtrans.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QApplication \
 		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qapplication.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreapplication.h \
@@ -2283,10 +2000,6 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		playervisual.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		arrdatcam.h \
-		arrcam.h \
-		arrdattrans.h \
-		arrtrans.h \
 		ui_mainwindow.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QVariant \
 		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QAction \
@@ -3448,11 +3161,7 @@ playervisual.o: playervisual.cpp playervisual.h \
 		errorcalculationdialog.h \
 		fieldselectiondialog.h \
 		systemperformancedialog.h \
-		trackingviewdialog.h \
-		arrdatcam.h \
-		arrcam.h \
-		arrdattrans.h \
-		arrtrans.h
+		trackingviewdialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o playervisual.o playervisual.cpp
 
 objectvariable.o: objectvariable.cpp objectvariable.h \
@@ -3580,23 +3289,14 @@ objectvariable.o: objectvariable.cpp objectvariable.h \
 		trackingviewdialog.h \
 		playervisual.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		arrdatcam.h \
-		arrcam.h \
-		arrdattrans.h \
-		arrtrans.h
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o objectvariable.o objectvariable.cpp
 
 Highlevel.o: Highlevel.cpp Highlevel.h \
 		KalmanObj.h \
-		LinkedList.h \
-		node.h \
-		ObjAssociate.h \
-		preprocessing.h \
-		objectvariable.h \
-		videoprocessor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QList \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
@@ -3623,26 +3323,29 @@ Highlevel.o: Highlevel.cpp Highlevel.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		datainputcam.h \
+		objectvariable.h \
+		videoprocessor.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QThread \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qthread.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
@@ -3719,289 +3422,147 @@ Highlevel.o: Highlevel.cpp Highlevel.h \
 		playervisual.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		arrdatcam.h \
-		arrcam.h \
-		arrdattrans.h \
-		arrtrans.h
+		ObjAssociate.h \
+		datainputtrans.h \
+		LinkedList.h \
+		node.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Highlevel.o Highlevel.cpp
 
 KalmanObj.o: KalmanObj.cpp KalmanObj.h \
-		LinkedList.h \
-		node.h
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QList \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		datainputcam.h \
+		objectvariable.h \
+		videoprocessor.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QThread \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qthread.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QImage \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QPainter \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainter.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtextoption.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QWaitCondition \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qwaitcondition.h \
+		backgroundmodeltuningdialog.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
+		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		cameraviewdialog.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTime \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatetime.h \
+		errorcalculationdialog.h \
+		fieldselectiondialog.h \
+		systemperformancedialog.h \
+		trackingviewdialog.h \
+		playervisual.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o KalmanObj.o KalmanObj.cpp
 
 ObjAssociate.o: ObjAssociate.cpp ObjAssociate.h \
-		node.h
+		datainputcam.h \
+		datainputtrans.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ObjAssociate.o ObjAssociate.cpp
-
-preprocessing.o: preprocessing.cpp preprocessing.h \
-		LinkedList.h \
-		node.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o preprocessing.o preprocessing.cpp
-
-arrdatcam.o: arrdatcam.cpp arrdatcam.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
-		objectvariable.h \
-		videoprocessor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QThread \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qthread.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QImage \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QPainter \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainter.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtextoption.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QWaitCondition \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qwaitcondition.h \
-		backgroundmodeltuningdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
-		cameraviewdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTime \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatetime.h \
-		errorcalculationdialog.h \
-		fieldselectiondialog.h \
-		systemperformancedialog.h \
-		trackingviewdialog.h \
-		playervisual.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		arrdattrans.h \
-		arrtrans.h \
-		arrcam.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arrdatcam.o arrdatcam.cpp
-
-arrdattrans.o: arrdattrans.cpp arrdattrans.h \
-		arrtrans.h \
-		objectvariable.h \
-		videoprocessor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QThread \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qthread.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QImage \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QPainter \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainter.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtextoption.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QWaitCondition \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qwaitcondition.h \
-		backgroundmodeltuningdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
-		cameraviewdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTime \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatetime.h \
-		errorcalculationdialog.h \
-		fieldselectiondialog.h \
-		systemperformancedialog.h \
-		trackingviewdialog.h \
-		playervisual.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		arrdatcam.h \
-		arrcam.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arrdattrans.o arrdattrans.cpp
 
 generatematcam.o: generatematcam.cpp generatematcam.h \
 		objectvariable.h \
@@ -4130,275 +3691,9 @@ generatematcam.o: generatematcam.cpp generatematcam.h \
 		playervisual.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		arrdatcam.h \
-		arrcam.h \
-		arrdattrans.h \
-		arrtrans.h
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QList \
+		datainputcam.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generatematcam.o generatematcam.cpp
-
-arrcam.o: arrcam.cpp arrcam.h \
-		objectvariable.h \
-		videoprocessor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QThread \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qthread.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QImage \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QPainter \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainter.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtextoption.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QWaitCondition \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qwaitcondition.h \
-		backgroundmodeltuningdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
-		cameraviewdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTime \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatetime.h \
-		errorcalculationdialog.h \
-		fieldselectiondialog.h \
-		systemperformancedialog.h \
-		trackingviewdialog.h \
-		playervisual.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		arrdatcam.h \
-		arrdattrans.h \
-		arrtrans.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arrcam.o arrcam.cpp
-
-arrtrans.o: arrtrans.cpp arrtrans.h \
-		objectvariable.h \
-		videoprocessor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QThread \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qthread.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QImage \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QPainter \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainter.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtextoption.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QWaitCondition \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qwaitcondition.h \
-		backgroundmodeltuningdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
-		cameraviewdialog.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTime \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatetime.h \
-		errorcalculationdialog.h \
-		fieldselectiondialog.h \
-		systemperformancedialog.h \
-		trackingviewdialog.h \
-		playervisual.h \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
-		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		arrdatcam.h \
-		arrcam.h \
-		arrdattrans.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arrtrans.o arrtrans.cpp
 
 generatemattrans.o: generatemattrans.cpp generatemattrans.h \
 		objectvariable.h \
@@ -4527,11 +3822,146 @@ generatemattrans.o: generatemattrans.cpp generatemattrans.h \
 		playervisual.h \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
 		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		arrdatcam.h \
-		arrcam.h \
-		arrdattrans.h \
-		arrtrans.h
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QList \
+		datainputtrans.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generatemattrans.o generatemattrans.cpp
+
+datainputtrans.o: datainputtrans.cpp datainputtrans.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datainputtrans.o datainputtrans.cpp
+
+datainputcam.o: datainputcam.cpp datainputcam.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datainputcam.o datainputcam.cpp
+
+kalmanobj3d.o: kalmanobj3d.cpp kalmanobj3d.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QList \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		datainputtrans.h \
+		objectvariable.h \
+		videoprocessor.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QThread \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qthread.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QImage \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/QPainter \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainter.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtextoption.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QWaitCondition \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qwaitcondition.h \
+		backgroundmodeltuningdialog.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
+		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		cameraviewdialog.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTime \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatetime.h \
+		errorcalculationdialog.h \
+		fieldselectiondialog.h \
+		systemperformancedialog.h \
+		trackingviewdialog.h \
+		playervisual.h \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
+		../../Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o kalmanobj3d.o kalmanobj3d.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
@@ -4559,12 +3989,6 @@ moc_matdisplay.o: moc_matdisplay.cpp
 
 moc_playervisual.o: moc_playervisual.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_playervisual.o moc_playervisual.cpp
-
-moc_arrdatcam.o: moc_arrdatcam.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_arrdatcam.o moc_arrdatcam.cpp
-
-moc_arrdattrans.o: moc_arrdattrans.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_arrdattrans.o moc_arrdattrans.cpp
 
 ####### Install
 
