@@ -65,47 +65,43 @@ void FieldSelectionDialog::processMouse(QPoint &pos) {
 
 void FieldSelectionDialog::processClick(QPoint &pos) {
     if (entryMode == 1) {
-        clickCoordinates[entryCounter].setX(pos.x());
-        clickCoordinates[entryCounter].setY(pos.y());
-        if (entryCounter < 3) {
-            entryCounter++;
-        } else {
-            entryCounter = 0;
-            entryMode = 0;
-
-            //assign data then emit
-            switch (currentCameraIndex + 1) {
-            case 1:
-                emit maskCoordinates_1_a(clickCoordinates[0]);
-                emit maskCoordinates_1_b(clickCoordinates[1]);
-                emit maskCoordinates_1_c(clickCoordinates[2]);
-                emit maskCoordinates_1_d(clickCoordinates[3]);
-                break;
-            case 2:
-                emit maskCoordinates_2_a(clickCoordinates[0]);
-                emit maskCoordinates_2_b(clickCoordinates[1]);
-                emit maskCoordinates_2_c(clickCoordinates[2]);
-                emit maskCoordinates_2_d(clickCoordinates[3]);
-                break;
-            case 3:
-                emit maskCoordinates_3_a(clickCoordinates[0]);
-                emit maskCoordinates_3_b(clickCoordinates[1]);
-                emit maskCoordinates_3_c(clickCoordinates[2]);
-                emit maskCoordinates_3_d(clickCoordinates[3]);
-            }
-
-        }
+        clickCoordinates.append(pos);
     }
 }
 
 void FieldSelectionDialog::on_pushButton_set_released()
 {
+    //set to entry mode
     entryMode = 1;
-    entryCounter = 0;
     //clean up coordinate of mask
-    for (int i = 0; i < 4; i++) {
-        clickCoordinates[i].setX(0);
-        clickCoordinates[i].setY(0);
-    }
+    clickCoordinates.clear();
 }
 
+
+void FieldSelectionDialog::on_pushButton_apply_released()
+{
+    entryMode = 0;
+    //assign data then emit
+    switch (currentCameraIndex + 1) {
+    case 1:
+        emit maskCoordinates_1(clickCoordinates);
+        //emit maskCoordinates_1_a(clickCoordinates[0]);
+        //emit maskCoordinates_1_b(clickCoordinates[1]);
+        //emit maskCoordinates_1_c(clickCoordinates[2]);
+        //emit maskCoordinates_1_d(clickCoordinates[3]);
+        break;
+    case 2:
+        emit maskCoordinates_2(clickCoordinates);
+        //emit maskCoordinates_2_a(clickCoordinates[0]);
+        //emit maskCoordinates_2_b(clickCoordinates[1]);
+        //emit maskCoordinates_2_c(clickCoordinates[2]);
+        //emit maskCoordinates_2_d(clickCoordinates[3]);
+        break;
+    case 3:
+        emit maskCoordinates_3(clickCoordinates);
+        //emit maskCoordinates_3_a(clickCoordinates[0]);
+        //emit maskCoordinates_3_b(clickCoordinates[1]);
+        //emit maskCoordinates_3_c(clickCoordinates[2]);
+        //emit maskCoordinates_3_d(clickCoordinates[3]);
+    }
+}

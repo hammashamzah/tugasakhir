@@ -23,7 +23,9 @@ public slots:
 	void updateRawPlayerUI_1(QImage img);
 	void updateRawPlayerUI_2(QImage img);
 	void updateRawPlayerUI_3(QImage img);
-
+	void updateMaskedImageFrame_1(QImage);
+	void updateMaskedImageFrame_2(QImage);
+	void updateMaskedImageFrame_3(QImage);
 private:
     Ui::CameraViewDialog *ui;
 };

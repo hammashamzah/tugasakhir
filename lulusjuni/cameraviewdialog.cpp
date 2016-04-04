@@ -41,3 +41,31 @@ void CameraViewDialog::updateRawPlayerUI_3(QImage img) {
 		                     Qt::KeepAspectRatio, Qt::FastTransformation));
 	}
 }
+
+
+void CameraViewDialog::updateMaskedImageFrame_1(QImage img) {
+	if (!img.isNull())
+	{
+		ui->masked_1->setAlignment(Qt::AlignCenter);
+        ui->masked_1->setPixmap(QPixmap::fromImage(img).scaled(ui->masked_1->size(),
+		                     Qt::KeepAspectRatio, Qt::FastTransformation));
+	}
+}
+
+void CameraViewDialog::updateMaskedImageFrame_2(QImage img) {
+	if (!img.isNull())
+	{
+		ui->masked_2->setAlignment(Qt::AlignCenter);
+        ui->masked_2->setPixmap(QPixmap::fromImage(img).scaled(ui->masked_2->size(),
+		                     Qt::KeepAspectRatio, Qt::FastTransformation));
+	}
+}
+
+void CameraViewDialog::updateMaskedImageFrame_3(QImage img) {
+	if (!img.isNull())
+	{
+		ui->masked_3->setAlignment(Qt::AlignCenter);
+        ui->masked_3->setPixmap(QPixmap::fromImage(img).scaled(ui->masked_3->size(),
+		                     Qt::KeepAspectRatio, Qt::FastTransformation));
+	}
+}
