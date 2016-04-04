@@ -44,10 +44,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myCVDialog, SLOT(updateLabel(int)));
 */
     connect(ui->label_game_visual, SIGNAL(sendMousePosition(QPoint&)),this, SLOT(showMousePosition(QPoint&)));
-    connect(ui->label_game_visual, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(showClickPosition(QPoint&)));
+    connect(ui->label_game_visual, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(mainGameDisplayClickEvent(QPoint&)));
+    connect(ui->label_formationTeamA, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationA(QPoint&)));
+    connect(ui->label_formationTeamB, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationB(QPoint&)));
+    connect(ui->label_game_visual, SIGNAL(sendRightClickPosition(QPoint&)),this, SLOT(mainGameDisplayRightClickEvent(QPoint&)));
 
     setRandomPlayerProperties();
     updateGameVisual();
+    teamA.setFormation(442);
+    teamB.setFormation(442);
+    updateDisplayFormationTeamA();
+    updateDisplayFormationTeamB();
+
 }
 
 MainWindow::~MainWindow()
@@ -165,11 +173,11 @@ void MainWindow::on_pushButton_play_released()
 
 void MainWindow::showMousePosition(QPoint &pos)
 {
-    //ui->label_mouse_pos->setText("x: "+ QString::number(pos.x())+",y: "+QString::number(pos.y()));
+    //ui->label
 
 }
 
-void MainWindow::showClickPosition(QPoint &pos)
+void MainWindow::mainGameDisplayClickEvent(QPoint &pos)
 {
     int isPlayer=false;
 
@@ -179,11 +187,11 @@ void MainWindow::showClickPosition(QPoint &pos)
         {
             playerIdSelected = player_visual[i].id;
             isPlayer = true;
-            if(player_visual[i].id<900)
+            if(player_visual[i].id<1100)
             {
-                //ui->lineEdit_setIDplayer->setText(QString::number(playerIdSelected));
+                ui->idLabel->setText("ID    :"+QString::number(playerIdSelected));
             }
-            //else ui->lineEdit_setIDplayer->setText("???");
+            else ui->idLabel->setText("ID                   :not set");
 
 
         }
@@ -196,6 +204,36 @@ void MainWindow::showClickPosition(QPoint &pos)
     }
 
 }
+
+void MainWindow::mainGameDisplayRightClickEvent(QPoint &pos)
+{
+    int isPlayer=false;
+
+    for(int i=0;i<JUMLAH_PLAYER;i++)
+    {
+        if((pos.x()>=player_visual[i].Position.x() && pos.x()<=player_visual[i].Position.x()+10) && (pos.y()>=player_visual[i].Position.y() && pos.y()<=player_visual[i].Position.y()+10))
+        {
+            isPlayer = true;
+            player_visual[i].id=idToAssign;
+            idToAssign=999;
+            if(player_visual[i].id<1100)
+            {
+                ui->idLabel->setText("ID    :"+QString::number(playerIdSelected));
+            }
+            else ui->idLabel->setText("ID                   :not set");
+
+            updateGameVisual();
+        }
+    }
+    if(!isPlayer)
+    {
+        playerIdSelected = 999;
+        setRandomPlayerProperties();
+        updateGameVisual();
+    }
+}
+
+
 
 void MainWindow::updateGameVisual()
 {
@@ -240,21 +278,86 @@ void MainWindow::setRandomPlayerProperties()
             player_visual[i].Position.setX(qrand() % (640-68)+34);
             //cout<<player_visual[i].pos_x<<" ";
             player_visual[i].Position.setY(qrand() % (434-56) + 28);
-        }
-}
-
-void MainWindow::setIDplayer()
-{
-
-}
-void MainWindow::on_pushButton_clicked()
-{
-    for(int i=0; i<JUMLAH_PLAYER;i++)
-    {
-        if (player_visual[i].id==playerIdSelected)
-        {
-            //player_visual[i].id= ui->lineEdit_setIDplayer->text().toInt();
-            updateGameVisual();
-        }
     }
 }
+
+void MainWindow::selectPlayerFromFormationA(QPoint &pos)
+{
+    bool isPlayer=false;
+    for(int id=0; id<=10; id++)
+    {
+        if(pos.x() > playerFormation[id].x()*220/192 && pos.x() <= (playerFormation[id].x()*220/192 + 20) && pos.y() > playerFormation[id].y()*150/130 && pos.y() <= (playerFormation[id].y()*150/130 +20))
+        {
+            ui->playerNameLabel->setText("ID to Assign-->"+QString::number(id));
+            isPlayer=true;
+            idToAssign=id;
+        }
+
+        //qDebug() << playerFormation[id].x();
+    }
+    if(!isPlayer) ui->playerNameLabel->setText("Not Player");
+    ui->positionLabel->setText(QString::number(pos.x())+"  "+QString::number(pos.y()));
+}
+
+void MainWindow::selectPlayerFromFormationB(QPoint &pos)
+{
+    bool isPlayer=false;
+    for(int id=0; id<=10; id++)
+    {
+        if(pos.x() < 192-playerFormation[id].x()*220/192 && pos.x() >= (192-playerFormation[id].x()*220/192 - 20) && pos.y() > playerFormation[id].y()*150/130 && pos.y() <= (playerFormation[id].y()*150/130+20))
+        {
+            ui->playerNameLabel->setText("ID to Assign-->"+QString::number(id+JUMLAH_PLAYER_TEAM_A));
+            isPlayer=true;
+            idToAssign=id+JUMLAH_PLAYER_TEAM_A;
+        }
+
+        //qDebug() << playerFormation[id].x();
+    }
+    if(!isPlayer) ui->playerNameLabel->setText("Not Player");
+    ui->positionLabel->setText(QString::number(pos.x())+"  "+QString::number(pos.y()));
+}
+
+
+void MainWindow::updateDisplayFormationTeamA()
+{
+    QPixmap pixmapFieldTeam("lapanganTeamA.png");
+    qDebug()<<pixmapFieldTeam.width()<<' '<<pixmapFieldTeam.height();
+    qDebug()<<ui->label_formationTeamA->width()<<' '<<ui->label_formationTeamA->height();
+    QPainter painterField(&pixmapFieldTeam);
+    QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
+    QBrush brush(Qt::yellow);
+    painterField.setPen(pen);
+    //painterField
+    painterField.setBrush(brush);
+    for(int i=0;i<JUMLAH_PLAYER_TEAM_A;i++)
+    {
+        painterField.drawRect(playerFormation[i].x()*220/192 , playerFormation[i].y()*150/130 , 20, 20);
+    }
+
+   // painterField.
+    ui->label_formationTeamA->setPixmap(pixmapFieldTeam);
+
+}
+
+void MainWindow::updateDisplayFormationTeamB()
+{
+    QPixmap pixmapFieldTeam("lapanganTeamA.png");
+    qDebug()<<pixmapFieldTeam.width()<<' '<<pixmapFieldTeam.height();
+    qDebug()<<ui->label_formationTeamB->width()<<' '<<ui->label_formationTeamB->height();
+    QPainter painterField(&pixmapFieldTeam);
+    QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
+    QBrush brush(Qt::red);
+    painterField.setPen(pen);
+    //painterField
+    painterField.setBrush(brush);
+    for(int i=0;i<JUMLAH_PLAYER_TEAM_B;i++)
+    {
+        painterField.drawRect(192-playerFormation[i].x()*220/192 , playerFormation[i].y()*150/130 , -20, 20);
+    }
+
+   // painterField.
+    ui->label_formationTeamB->setPixmap(pixmapFieldTeam);
+
+}
+
+

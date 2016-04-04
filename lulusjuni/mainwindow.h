@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <string>
 #include <iostream>
+#include <QDebug>
 #include "objectvariable.h"
 
 
@@ -28,13 +29,26 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    AllAboutTeam teamA;
+    AllAboutTeam teamB;
+
+    void updateDisplayFormationTeamA();
+    void updateDisplayFormationTeamB();
+
+
+
 
 
 
 
 public slots:
     void showMousePosition(QPoint& pos);
-    void showClickPosition(QPoint& pos);
+    void mainGameDisplayClickEvent(QPoint& pos);
+    void mainGameDisplayRightClickEvent(QPoint& pos);
+    //void updateDisplayFormation(QPoint& playerPos, int& id);
+    //void DisplayMousePos(QPoint& pos);
+    void selectPlayerFromFormationA(QPoint& pos);
+    void selectPlayerFromFormationB(QPoint& pos);
 
 private slots:
     void on_actionTuning_Background_Model_triggered();
@@ -57,14 +71,6 @@ private slots:
 
     void on_pushButton_play_released();
 
-    void on_lineEdit_setIDplayer_textChanged(const QString &arg1);
-
-    void on_lineEdit_setIDplayer_textEdited(const QString &arg1);
-
-    void on_lineEdit_setIDplayer_returnPressed();
-
-    void on_pushButton_clicked();
-
 private:
     Ui::MainWindow *ui;
     CameraViewDialog *myCVDialog;
@@ -86,7 +92,8 @@ private:
 
     void updateGameVisual();
     void setRandomPlayerProperties();
-    void setIDplayer();
+    void initDisplayFormation();
+    int idToAssign;
 
 
 };

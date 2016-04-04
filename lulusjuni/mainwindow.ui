@@ -208,19 +208,52 @@
            </layout>
           </item>
           <item>
-           <widget class="QLabel" name="label_formationTeamA">
+           <widget class="matDisplay" name="label_formationTeamA">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>240</horstretch>
+              <verstretch>120</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>220</width>
+              <height>150</height>
+             </size>
+            </property>
             <property name="text">
              <string>FormationTeamA</string>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_formationTeamB">
+           <widget class="matDisplay" name="label_formationTeamB">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>240</horstretch>
+              <verstretch>120</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>220</width>
+              <height>150</height>
+             </size>
+            </property>
             <property name="layoutDirection">
              <enum>Qt::LeftToRight</enum>
             </property>
             <property name="text">
              <string>FormationTeamB</string>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -253,57 +286,50 @@
            <property name="title">
             <string>Player Performance</string>
            </property>
-           <widget class="QLabel" name="label_2">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
-              <x>20</x>
-              <y>30</y>
-              <width>59</width>
-              <height>15</height>
+              <x>0</x>
+              <y>20</y>
+              <width>141</width>
+              <height>86</height>
              </rect>
             </property>
-            <property name="text">
-             <string>ID</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_3">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>50</y>
-              <width>121</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Player Name</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_4">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>70</y>
-              <width>121</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Player Speed</string>
-            </property>
-           </widget>
-           <widget class="QLabel" name="label_5">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>90</y>
-              <width>59</width>
-              <height>15</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>Position</string>
-            </property>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="0">
+              <widget class="QLabel" name="idLabel">
+               <property name="font">
+                <font>
+                 <pointsize>9</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>ID</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="playerNameLabel">
+               <property name="text">
+                <string>Player Name</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="playerSpeedLabel">
+               <property name="text">
+                <string>Player Speed</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="positionLabel">
+               <property name="text">
+                <string>Position</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </widget>
          </widget>
@@ -320,7 +346,7 @@
      <x>0</x>
      <y>0</y>
      <width>919</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

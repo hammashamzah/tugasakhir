@@ -67,17 +67,19 @@ public:
     QLabel *label_videostream_1;
     QLabel *label_videostream_2;
     QLabel *label_videostream_3;
-    QLabel *label_formationTeamA;
-    QLabel *label_formationTeamB;
+    matDisplay *label_formationTeamA;
+    matDisplay *label_formationTeamB;
     QVBoxLayout *verticalLayout_2;
     QLabel *label;
     QLabel *label_6;
     QSplitter *splitter;
     QGroupBox *groupBox;
-    QLabel *label_2;
-    QLabel *label_3;
-    QLabel *label_4;
-    QLabel *label_5;
+    QWidget *layoutWidget;
+    QGridLayout *gridLayout_2;
+    QLabel *idLabel;
+    QLabel *playerNameLabel;
+    QLabel *playerSpeedLabel;
+    QLabel *positionLabel;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuLoad_Video;
@@ -253,14 +255,26 @@ public:
 
         horizontalLayout_4->addLayout(verticalLayout);
 
-        label_formationTeamA = new QLabel(centralWidget);
+        label_formationTeamA = new matDisplay(centralWidget);
         label_formationTeamA->setObjectName(QStringLiteral("label_formationTeamA"));
+        label_formationTeamA->setEnabled(true);
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(240);
+        sizePolicy2.setVerticalStretch(120);
+        sizePolicy2.setHeightForWidth(label_formationTeamA->sizePolicy().hasHeightForWidth());
+        label_formationTeamA->setSizePolicy(sizePolicy2);
+        label_formationTeamA->setMinimumSize(QSize(220, 150));
+        label_formationTeamA->setScaledContents(true);
 
         horizontalLayout_4->addWidget(label_formationTeamA);
 
-        label_formationTeamB = new QLabel(centralWidget);
+        label_formationTeamB = new matDisplay(centralWidget);
         label_formationTeamB->setObjectName(QStringLiteral("label_formationTeamB"));
+        sizePolicy2.setHeightForWidth(label_formationTeamB->sizePolicy().hasHeightForWidth());
+        label_formationTeamB->setSizePolicy(sizePolicy2);
+        label_formationTeamB->setMinimumSize(QSize(220, 150));
         label_formationTeamB->setLayoutDirection(Qt::LeftToRight);
+        label_formationTeamB->setScaledContents(true);
 
         horizontalLayout_4->addWidget(label_formationTeamB);
 
@@ -288,18 +302,37 @@ public:
         splitter->setOrientation(Qt::Vertical);
         groupBox = new QGroupBox(splitter);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        label_2 = new QLabel(groupBox);
-        label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(20, 30, 59, 15));
-        label_3 = new QLabel(groupBox);
-        label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setGeometry(QRect(20, 50, 121, 16));
-        label_4 = new QLabel(groupBox);
-        label_4->setObjectName(QStringLiteral("label_4"));
-        label_4->setGeometry(QRect(20, 70, 121, 16));
-        label_5 = new QLabel(groupBox);
-        label_5->setObjectName(QStringLiteral("label_5"));
-        label_5->setGeometry(QRect(20, 90, 59, 15));
+        layoutWidget = new QWidget(groupBox);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(0, 20, 141, 86));
+        gridLayout_2 = new QGridLayout(layoutWidget);
+        gridLayout_2->setSpacing(6);
+        gridLayout_2->setContentsMargins(11, 11, 11, 11);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout_2->setContentsMargins(0, 0, 0, 0);
+        idLabel = new QLabel(layoutWidget);
+        idLabel->setObjectName(QStringLiteral("idLabel"));
+        QFont font;
+        font.setPointSize(9);
+        idLabel->setFont(font);
+
+        gridLayout_2->addWidget(idLabel, 0, 0, 1, 1);
+
+        playerNameLabel = new QLabel(layoutWidget);
+        playerNameLabel->setObjectName(QStringLiteral("playerNameLabel"));
+
+        gridLayout_2->addWidget(playerNameLabel, 1, 0, 1, 1);
+
+        playerSpeedLabel = new QLabel(layoutWidget);
+        playerSpeedLabel->setObjectName(QStringLiteral("playerSpeedLabel"));
+
+        gridLayout_2->addWidget(playerSpeedLabel, 2, 0, 1, 1);
+
+        positionLabel = new QLabel(layoutWidget);
+        positionLabel->setObjectName(QStringLiteral("positionLabel"));
+
+        gridLayout_2->addWidget(positionLabel, 3, 0, 1, 1);
+
         splitter->addWidget(groupBox);
 
         verticalLayout_2->addWidget(splitter);
@@ -313,7 +346,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 919, 21));
+        menuBar->setGeometry(QRect(0, 0, 919, 25));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuLoad_Video = new QMenu(menuFile);
@@ -383,10 +416,10 @@ public:
         label->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         label_6->setText(QApplication::translate("MainWindow", "TextLabel", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "Player Performance", 0));
-        label_2->setText(QApplication::translate("MainWindow", "ID", 0));
-        label_3->setText(QApplication::translate("MainWindow", "Player Name", 0));
-        label_4->setText(QApplication::translate("MainWindow", "Player Speed", 0));
-        label_5->setText(QApplication::translate("MainWindow", "Position", 0));
+        idLabel->setText(QApplication::translate("MainWindow", "ID", 0));
+        playerNameLabel->setText(QApplication::translate("MainWindow", "Player Name", 0));
+        playerSpeedLabel->setText(QApplication::translate("MainWindow", "Player Speed", 0));
+        positionLabel->setText(QApplication::translate("MainWindow", "Position", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
         menuLoad_Video->setTitle(QApplication::translate("MainWindow", "Load Video", 0));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Setting", 0));

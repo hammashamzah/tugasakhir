@@ -8,8 +8,6 @@ matDisplay::matDisplay(QWidget* parent):QLabel(parent)
 {
     this->setMouseTracking(true);
     QPixmap pixmap("field.jpg");
-   // cout<<pixmap.width()<<' '<<pixmap.height();
-    pixmap = pixmap.scaled(QSize(800, 600), Qt::KeepAspectRatio, Qt::SmoothTransformation);
     this->setPixmap(pixmap);
 }
 
@@ -42,7 +40,9 @@ void matDisplay::mousePressEvent(QMouseEvent *mouse_event)
     }
     else if(mouse_event->buttons()==Qt::RightButton)
     {
-
+        mouse_click.setX(mouse_click.x() * this->pixmap()->width() / this->size().width());
+        mouse_click.setY(mouse_click.y() * this->pixmap()->height() / this->size().height());
+        emit sendRightClickPosition(mouse_click);
         //msg.setText("Right Mouse Pressed!");
         //msg.exec();
     }

@@ -30,7 +30,8 @@ SOURCES += main.cpp\
     LinkedList.cpp \
     ObjAssociate.cpp \
     preprocessing.cpp \
-    node.cpp
+    node.cpp \
+    allaboutteam.cpp
 
 HEADERS  += mainwindow.h \
     fieldselectiondialog.h \
@@ -47,7 +48,8 @@ HEADERS  += mainwindow.h \
     LinkedList.h \
     ObjAssociate.h \
     preprocessing.h \
-    node.h
+    node.h \
+    allaboutteam.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \
