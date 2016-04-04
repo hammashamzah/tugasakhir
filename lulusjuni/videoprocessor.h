@@ -32,6 +32,7 @@ private:
 	vector<Vec4i> hierarchy;
 	vector<KeyPoint> keypoints;
     Mat morphElement;
+    int entryCounter;
 
     int minArea;
     int maxArea;
@@ -60,7 +61,8 @@ public slots:
 protected:
 	void run();
 	void msleep(int ms);
-    void convertMatToQImage(Mat &originalImage, QImage resultQImage);
+	void maskImage(Mat &img, Mat &result, Point maskPoint[]);
+    //void convertMatToQImage(Mat &originalImage, QImage resultQImage);
 public:
 	//Constructor
 	VideoProcessor(QObject *parent = 0);

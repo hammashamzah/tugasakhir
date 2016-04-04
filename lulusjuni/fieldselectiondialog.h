@@ -33,6 +33,7 @@ private:
     QImage frameCamera_2;
     QImage frameCamera_3;
     QPoint clickCoordinates[4];
+    Point maskPoint[4];
     int currentCameraIndex;
     int entryMode;
     int entryCounter;

@@ -12,7 +12,6 @@ VideoProcessor::VideoProcessor(QObject *parent): QThread(parent)
 	maxArea = 200;
 	morphElementSize = 3;
 	gaussianSize = 3;
-
 }
 //destructor
 VideoProcessor::~VideoProcessor()
@@ -66,6 +65,10 @@ void VideoProcessor::run()
 		                   RGBframe.cols, RGBframe.rows, QImage::Format_RGB888);
 		emit rawImage(qRawImage);
 
+		if(entryCounter == 4){
+			//do masking
+			maskImage(frame, frame, maskPoint);
+		}
 		//set parameters based on tuning from background model tuning window
 		params.filterByArea = true;
 		params.filterByInertia = false;
@@ -135,20 +138,33 @@ void VideoProcessor::updateValueGaussianSize(int value) {
 }
 
 void VideoProcessor::getMaskCoordinate_a(QPoint &pos){
-    std::cout << "coordinate a: " << pos.x() << "," << pos.y() << "\n";
-    
+    //std::cout << "coordinate a: " << pos.x() << "," << pos.y() << "\n";
+	maskPoint[1] = Point(pos.x(), pos.y());    
 }
 
 void VideoProcessor::getMaskCoordinate_b(QPoint &pos){
-    std::cout << "coordinate b: " << pos.x() << "," << pos.y() << "\n";
-
+    //std::cout << "coordinate b: " << pos.x() << "," << pos.y() << "\n";
+	maskPoint[2] = Point(pos.x(), pos.y());
 }
 
 void VideoProcessor::getMaskCoordinate_c(QPoint &pos){
-    std::cout << "coordinate c: " << pos.x() << "," << pos.y() << "\n";
-
+    //std::cout << "coordinate c: " << pos.x() << "," << pos.y() << "\n";
+	maskPoint[3] = Point(pos.x(), pos.y());
 }
 
 void VideoProcessor::getMaskCoordinate_d(QPoint &pos){
-    std::cout << "coordinate d: " << pos.x() << "," << pos.y() << "\n";
+    //std::cout << "coordinate d: " << pos.x() << "," << pos.y() << "\n";
+	maskPoint[0] = Point(pos.x(), pos.y());
+}
+
+void VideoProcessor::maskImage(Mat &img, Mat &result, Point maskPoint[]){
+	int lineType = 8;
+	Point mask_point[1][5];
+    mask_point[0][0] = maskPoint[1];
+    mask_point[0][1] = maskPoint[2];
+    mask_point[0][2] = maskPoint[3];
+    mask_point[0][3] = maskPoint[0];
+    const Point * ppt[1] = {mask_point[0]};
+    int npt[] = {5};
+    fillPoly(img, ppt, npt, 1, Scalar(0,0,0), lineType);
 }
