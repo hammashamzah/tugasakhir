@@ -94,6 +94,7 @@ private:
     void setRandomPlayerProperties();
     void initDisplayFormation();
     int idToAssign;
+    bool idAssignedFlag[JUMLAH_PLAYER];
 
 
 };

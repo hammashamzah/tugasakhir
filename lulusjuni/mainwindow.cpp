@@ -50,6 +50,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->label_game_visual, SIGNAL(sendRightClickPosition(QPoint&)),this, SLOT(mainGameDisplayRightClickEvent(QPoint&)));
 
     setRandomPlayerProperties();
+
+
     updateGameVisual();
     teamA.setFormation(442);
     teamB.setFormation(442);
@@ -208,28 +210,54 @@ void MainWindow::mainGameDisplayClickEvent(QPoint &pos)
 void MainWindow::mainGameDisplayRightClickEvent(QPoint &pos)
 {
     int isPlayer=false;
-
-    for(int i=0;i<JUMLAH_PLAYER;i++)
+    if(idToAssign<JUMLAH_PLAYER)
     {
-        if((pos.x()>=player_visual[i].Position.x() && pos.x()<=player_visual[i].Position.x()+10) && (pos.y()>=player_visual[i].Position.y() && pos.y()<=player_visual[i].Position.y()+10))
+        for(int i=0;i<JUMLAH_PLAYER;i++)
         {
-            isPlayer = true;
-            player_visual[i].id=idToAssign;
-            idToAssign=999;
-            if(player_visual[i].id<1100)
+            if((pos.x()>=player_visual[i].Position.x() && pos.x()<=player_visual[i].Position.x()+10) && (pos.y()>=player_visual[i].Position.y() && pos.y()<=player_visual[i].Position.y()+10))
             {
-                ui->idLabel->setText("ID    :"+QString::number(playerIdSelected));
-            }
-            else ui->idLabel->setText("ID                   :not set");
+                isPlayer = true;
 
-            updateGameVisual();
+                //handle kondisi user meng-Assign id ke player yang sudah punya id valid sebelumnya
+                //ketahui id player sebelum diubah idnya
+                if(player_visual[i].id<JUMLAH_PLAYER)
+                idAssignedFlag[player_visual[i].id]=false;  //set player yang punya id tersebut dengan flag idAssignedFlag=0
+
+
+                //handle kondisi ketika meng-Assigned id yang sudah ada di lapangan
+                //cek terlebih dahulu apakah id yang ingin di Assigned <jumlah pemain
+                if(idToAssign<JUMLAH_PLAYER)
+                {
+                    if(idAssignedFlag[idToAssign])
+                    {
+
+                        //cari player yang punya idlama;
+                        for(int j=0; j<JUMLAH_PLAYER; j++)
+                        {
+                            if(player_visual[j].id==idToAssign) // cari id lama yang terdapat dalam player
+                            {
+                                player_visual[j].id=999;        //jika ditemukan, set id tersebut dengan jadi unknown
+
+                            }
+                        }
+                        //set id player lama jadi unknown;
+                    }
+                }
+
+
+                player_visual[i].id=idToAssign;
+
+                //jika id yang ingin di assigned tidak valid, mkaa tidak perlu mengubah variabel idAssignedFlag
+                if(idToAssign<JUMLAH_PLAYER)idAssignedFlag[player_visual[i].id]=true;
+
+                //idToSigned default
+                idToAssign=999;
+
+                updateGameVisual();
+                updateDisplayFormationTeamA();
+                updateDisplayFormationTeamB();
+            }
         }
-    }
-    if(!isPlayer)
-    {
-        playerIdSelected = 999;
-        setRandomPlayerProperties();
-        updateGameVisual();
     }
 }
 
@@ -242,7 +270,7 @@ void MainWindow::updateGameVisual()
     QPainter painterField(&pixmapField);
     QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
     QBrush brush(Qt::white);
-    QString id;
+
     QPoint batas_lapang_kiri_atas(34, 28);
     QPoint batas_lapang_kiri_bawah(34, pixmapField.height()-28);
     QPoint batas_lapang_kanan_atas(pixmapField.width()-34, 28);
@@ -258,20 +286,26 @@ void MainWindow::updateGameVisual()
 
           painterField.drawRect(player_visual[i].Position.x(), player_visual[i].Position.y(), rect_player_size, rect_player_size);  //posisi x, y, dan ukuran elips
           painterField.setFont(QFont ("Arial"));
-            id = QString::number(player_visual[i].id);
-          if(player_visual[i].id<900) painterField.drawText(QPoint(player_visual[i].Position.x(), player_visual[i].Position.y()), id); //posisi x, y, dan ukuran elips
+
+          if(player_visual[i].id<900) painterField.drawText(QPoint(player_visual[i].Position.x(), player_visual[i].Position.y()), QString::number(player_visual[i].id)); //posisi x, y, dan ukuran elips
           else painterField.drawText(QPoint(player_visual[i].Position.x(), player_visual[i].Position.y()), "??");
 
      }
       ui->label_game_visual->setPixmap (pixmapField);
+      this->updateDisplayFormationTeamA();
+      this->updateDisplayFormationTeamB();
 
 }
 
 void MainWindow::setRandomPlayerProperties()
 {
     //set random value of player
+    for(int i=0;i<=JUMLAH_PLAYER;i++)
+    {
+        idAssignedFlag[i]=false;
+    }
     for(int i=0; i<JUMLAH_PLAYER; i++)
-        {
+    {
             player_visual[i].id=i+999;
             if(i<=12) player_visual[i].TeamSide='A';
             else player_visual[i].TeamSide='B';
@@ -295,7 +329,11 @@ void MainWindow::selectPlayerFromFormationA(QPoint &pos)
 
         //qDebug() << playerFormation[id].x();
     }
-    if(!isPlayer) ui->playerNameLabel->setText("Not Player");
+    if(!isPlayer)
+    {
+        ui->playerNameLabel->setText("Not Player");
+        idToAssign=999;
+    }
     ui->positionLabel->setText(QString::number(pos.x())+"  "+QString::number(pos.y()));
 }
 
@@ -313,7 +351,11 @@ void MainWindow::selectPlayerFromFormationB(QPoint &pos)
 
         //qDebug() << playerFormation[id].x();
     }
-    if(!isPlayer) ui->playerNameLabel->setText("Not Player");
+    if(!isPlayer)
+    {
+        ui->playerNameLabel->setText("Not Player");
+        idToAssign=999;
+    }
     ui->positionLabel->setText(QString::number(pos.x())+"  "+QString::number(pos.y()));
 }
 
@@ -325,13 +367,16 @@ void MainWindow::updateDisplayFormationTeamA()
     qDebug()<<ui->label_formationTeamA->width()<<' '<<ui->label_formationTeamA->height();
     QPainter painterField(&pixmapFieldTeam);
     QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
-    QBrush brush(Qt::yellow);
+    QBrush fill(Qt::yellow);
+    QBrush empty;
     painterField.setPen(pen);
     //painterField
-    painterField.setBrush(brush);
     for(int i=0;i<JUMLAH_PLAYER_TEAM_A;i++)
     {
+        if(idAssignedFlag[i]) painterField.setBrush(fill);
+        else painterField.setBrush(empty);
         painterField.drawRect(playerFormation[i].x()*220/192 , playerFormation[i].y()*150/130 , 20, 20);
+        painterField.drawText(QPoint(playerFormation[i].x()*220/192+2, playerFormation[i].y()*150/130+15), QString::number(i));
     }
 
    // painterField.
@@ -346,18 +391,21 @@ void MainWindow::updateDisplayFormationTeamB()
     qDebug()<<ui->label_formationTeamB->width()<<' '<<ui->label_formationTeamB->height();
     QPainter painterField(&pixmapFieldTeam);
     QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
-    QBrush brush(Qt::red);
+    QBrush empty;
+    QBrush fill(Qt::red);
     painterField.setPen(pen);
     //painterField
-    painterField.setBrush(brush);
+
     for(int i=0;i<JUMLAH_PLAYER_TEAM_B;i++)
     {
+        if(idAssignedFlag[i+11]) painterField.setBrush(fill);
+        else painterField.setBrush(empty);
         painterField.drawRect(192-playerFormation[i].x()*220/192 , playerFormation[i].y()*150/130 , -20, 20);
+        painterField.drawText(QPoint(192-playerFormation[i].x()*220/192-18, playerFormation[i].y()*150/130+15), QString::number(i+11));
     }
 
    // painterField.
     ui->label_formationTeamB->setPixmap(pixmapFieldTeam);
 
 }
-
 
