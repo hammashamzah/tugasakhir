@@ -28,7 +28,7 @@ private:
 	Mat frame, objectFrame, mask, maskedFrame, openedFrame, bluredFrame, objectWithKeypointsFrame;
 	QImage qRawImage, qMaskedFrame, qObjectFrame, qOpenedFrame, qBluredFrame, qObjectWithKeypointsFrame;
     SimpleBlobDetector::Params params;
-	Ptr<BackgroundSubtractor> pMOG;
+	Ptr<BackgroundSubtractor> pMOG2;
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	vector<KeyPoint> keypoints;
@@ -39,6 +39,7 @@ private:
     int maxArea;
     int morphElementSize;
     int gaussianSize;
+    int mode;
 
 signals:
 	//Signal to output frame to be displayed

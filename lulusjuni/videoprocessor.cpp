@@ -6,14 +6,14 @@ using namespace cv;
 VideoProcessor::VideoProcessor(QObject *parent): QThread(parent)
 {
 	stop = true;
-	pMOG = new BackgroundSubtractorMOG();
+    pMOG2 = new BackgroundSubtractorMOG2();
 
 	minArea = 0;
 	maxArea = 200;
 	morphElementSize = 3;
 	gaussianSize = 3;
 	isSetMask = false;
-
+	mode = 1;
 }
 //destructor
 VideoProcessor::~VideoProcessor()
@@ -95,16 +95,32 @@ void VideoProcessor::run()
             maskedFrame = frame;
         }
 		//update the background model
-		pMOG->operator()(maskedFrame, objectFrame);
+		pMOG2->operator()(maskedFrame, objectFrame);
 
 		morphologyEx(objectFrame, openedFrame, 2, morphElement);
 		GaussianBlur(openedFrame, bluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
 
-		blob_detector.detect(bluredFrame, keypoints);
-
         objectWithKeypointsFrame = frame;
 
-        drawKeypoints(objectWithKeypointsFrame, keypoints, objectWithKeypointsFrame, Scalar(0, 0, 255), DrawMatchesFlags::DEFAULT);
+		if(mode == 0){
+			blob_detector.detect(bluredFrame, keypoints);
+        	drawKeypoints(objectWithKeypointsFrame, keypoints, objectWithKeypointsFrame, Scalar(0, 0, 255), DrawMatchesFlags::DEFAULT);
+		}else if(mode == 1){
+			findContours(bluredFrame, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
+        	vector<Rect>boundRect(contours.size());
+
+	        for (int i = 0; i < contours.size(); i++)
+	        {
+	            boundRect[i] = boundingRect(contours[i]);
+	        }
+
+	        for (int i = 0; i < contours.size(); i++)
+	        {
+	            rectangle(bluredFrame, boundRect[i].tl(), boundRect[i].br(), Scalar(255,255,255), 2, 8, 0) ;
+	        }
+		}
+
+
 
         qRawImage = QtOcv::mat2Image_shared(frame).copy().rgbSwapped();
         qMaskedFrame = QtOcv::mat2Image_shared(maskedFrame).copy().rgbSwapped();
@@ -209,3 +225,5 @@ void VideoProcessor::maskImage(Mat& frame, Mat& maskedFrame){
 		maskedFrame = frame;
 	}
 }
+
+
