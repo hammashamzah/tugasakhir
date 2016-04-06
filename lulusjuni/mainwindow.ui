@@ -199,22 +199,16 @@
      <x>0</x>
      <y>0</y>
      <width>804</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>
     </property>
-    <widget class="QMenu" name="menuLoad_Video">
-     <property name="title">
-      <string>Load Video</string>
-     </property>
-     <addaction name="actionVideo_1"/>
-     <addaction name="actionVideo_2"/>
-     <addaction name="actionVideo_3"/>
-    </widget>
-    <addaction name="menuLoad_Video"/>
+    <addaction name="actionVideo_1"/>
+    <addaction name="actionVideo_2"/>
+    <addaction name="actionVideo_3"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -259,17 +253,17 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionVideo_1">
    <property name="text">
-    <string>Video 1</string>
+    <string>Load Video 1</string>
    </property>
   </action>
   <action name="actionVideo_2">
    <property name="text">
-    <string>Video 2</string>
+    <string>Load Video 2</string>
    </property>
   </action>
   <action name="actionVideo_3">
    <property name="text">
-    <string>Video 3</string>
+    <string>Load Video 3</string>
    </property>
   </action>
   <action name="actionTuning_Background_Model">

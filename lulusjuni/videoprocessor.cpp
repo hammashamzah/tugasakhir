@@ -44,13 +44,13 @@ bool VideoProcessor::loadVideo(String filename) {
 
 void VideoProcessor::getFirstFrame(){
 	Mat firstFrame;
+	QImage qFirstImage;
 	setCurrentFrame(2);
 	capture->read(firstFrame);
 	setCurrentFrame(1);
-	cv::cvtColor(firstFrame, RGBframe, CV_BGR2RGB);
-	qRawImage = QImage((const unsigned char*)(RGBframe.data),
-		                   RGBframe.cols, RGBframe.rows, QImage::Format_RGB888);
-	emit rawImage(qRawImage);
+
+    qFirstImage = QtOcv::mat2Image_shared(firstFrame).rgbSwapped().copy();
+    emit firstFrameImage(qFirstImage);
 }
 
 void VideoProcessor::Play()
@@ -83,42 +83,44 @@ void VideoProcessor::run()
 			stop = true;
 		}
 
-		//emit raw image
-		cv::cvtColor(frame, RGBframe, CV_BGR2RGB);
-		qRawImage = QImage((const unsigned char*)(RGBframe.data),
-		                   RGBframe.cols, RGBframe.rows, QImage::Format_RGB888);
-		emit rawImage(qRawImage);		
-		
 		//mask object
-		//maskImage();
-	    Mask = Mat::zeros(frame.size(), CV_8UC3);
-		if(isSetMask){
-		    const Point * ppt[1] = {maskPoint[0]};
-		    int npt[] = {numberOfMaskPoints};
-		    fillPoly(Mask, ppt, npt, 1, Scalar(255,255,255), 8);
-			frame.copyTo(maskedFrame, Mask);
-			//maskedFrame = frame.mul(Mask);
-		}else{
-			maskedFrame = frame;
-		}
-
-		//emit masked image
-		cv::cvtColor(maskedFrame, tempMasked, CV_BGR2RGB);
-		qMaskedFrame = QImage((const unsigned char*)(tempMasked.data),
-		                   tempMasked.cols, tempMasked.rows, QImage::Format_RGB888);
-		emit maskedImage(qMaskedFrame);
-
+        //maskImage(frame, maskedFrame);
+        mask = Mat::zeros(frame.size(), CV_8UC3);
+        if(isSetMask){
+            const Point * ppt[1] = {maskPoint[0]};
+            int npt[] = {numberOfMaskPoints};
+            fillPoly(mask, ppt, npt, 1, Scalar(255,255,255), 8);
+            frame.copyTo(maskedFrame, mask);
+        }else{
+            maskedFrame = frame;
+        }
 		//update the background model
-		pMOG->operator()(frame, objectFrame);
+		pMOG->operator()(maskedFrame, objectFrame);
 
 		morphologyEx(objectFrame, openedFrame, 2, morphElement);
 		GaussianBlur(openedFrame, bluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
 
 		blob_detector.detect(bluredFrame, keypoints);
 
-		drawKeypoints(objectFrame, keypoints, objectFrame, Scalar(0, 0, 255), DrawMatchesFlags::DEFAULT);
-		
-		this->msleep(delay);
+        objectWithKeypointsFrame = frame;
+
+        drawKeypoints(objectWithKeypointsFrame, keypoints, objectWithKeypointsFrame, Scalar(0, 0, 255), DrawMatchesFlags::DEFAULT);
+
+        qRawImage = QtOcv::mat2Image_shared(frame).copy().rgbSwapped();
+        qMaskedFrame = QtOcv::mat2Image_shared(maskedFrame).copy().rgbSwapped();
+        qObjectFrame = QtOcv::mat2Image_shared(objectFrame).copy().rgbSwapped();
+        qOpenedFrame = QtOcv::mat2Image_shared(openedFrame).copy().rgbSwapped();
+        qBluredFrame = QtOcv::mat2Image_shared(bluredFrame).copy().rgbSwapped();
+        qObjectWithKeypointsFrame = QtOcv::mat2Image_shared(objectWithKeypointsFrame).copy().rgbSwapped();
+        //emit raw image
+        emit rawImage(qRawImage);
+        emit maskedImage(qMaskedFrame);
+        emit objectImage(qObjectFrame);
+        emit openedImage(qOpenedFrame);
+        emit bluredImage(qBluredFrame);
+        emit objectWithKeypointsImage(qObjectWithKeypointsFrame);
+
+        this->msleep(delay);
 	}
 }
 
@@ -186,13 +188,24 @@ void VideoProcessor::getMaskCoordinate(QList<QPoint> maskPoints){
 }
 
 void VideoProcessor::maskImage(){
-    Mask = Mat::ones(frame.size(), CV_8UC3) * 255;
+    mask = Mat::ones(frame.size(), CV_8UC3) * 255;
 	if(isSetMask){
 	    const Point * ppt[1] = {maskPoint[0]};
 	    int npt[] = {numberOfMaskPoints};
-	    fillPoly(Mask, ppt, npt, 1, Scalar(0,0,0), 8);
+	    fillPoly(mask, ppt, npt, 1, Scalar(0,0,0), 8);
 	}
-	Mask = Mat::zeros(frame.size(), CV_8UC3) - Mask;
-	maskedFrame = frame.mul(Mask);
+	mask = Mat::zeros(frame.size(), CV_8UC3) - mask;
+	maskedFrame = frame.mul(mask);
 }
 
+void VideoProcessor::maskImage(Mat& frame, Mat& maskedFrame){
+    mask = Mat::zeros(frame.size(), CV_8UC3);
+	if(isSetMask){
+	    const Point * ppt[1] = {maskPoint[0]};
+	    int npt[] = {numberOfMaskPoints};
+	    fillPoly(mask, ppt, npt, 1, Scalar(255,255,255), 8);
+		frame.copyTo(maskedFrame, mask);
+	}else{
+		maskedFrame = frame;
+	}
+}

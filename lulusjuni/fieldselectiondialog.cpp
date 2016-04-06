@@ -19,6 +19,10 @@ FieldSelectionDialog::~FieldSelectionDialog()
 
 void FieldSelectionDialog::setFrame_1(QImage img1) {
     frameCamera_1 = img1;
+    if(currentCameraIndex == 0){
+        ui->imageView->setAlignment(Qt::AlignCenter);
+        ui->imageView->setPixmap(QPixmap::fromImage(frameCamera_1));
+    }
 }
 
 void FieldSelectionDialog::setFrame_2(QImage img2) {

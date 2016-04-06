@@ -16,18 +16,37 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	myBMTDialog = new BackgroundModelTuningDialog(this);
 	myFSDialog = new FieldSelectionDialog(this);
 
+    QObject::connect(myStream_1, SIGNAL(firstFrameImage(QImage)), myFSDialog, SLOT(setFrame_1(QImage)));
+    QObject::connect(myStream_2, SIGNAL(firstFrameImage(QImage)), myFSDialog, SLOT(setFrame_2(QImage)));
+    QObject::connect(myStream_3, SIGNAL(firstFrameImage(QImage)), myFSDialog, SLOT(setFrame_3(QImage)));
 	//connect slot
-	QObject::connect(myStream_1, SIGNAL(rawImage(QImage)), myCVDialog, SLOT(updateRawPlayerUI_1(QImage)));
-	QObject::connect(myStream_2, SIGNAL(rawImage(QImage)), myCVDialog, SLOT(updateRawPlayerUI_2(QImage)));
-	QObject::connect(myStream_3, SIGNAL(rawImage(QImage)), myCVDialog, SLOT(updateRawPlayerUI_3(QImage)));
+	QObject::connect(myStream_1, SIGNAL(rawImage(QImage)), myCVDialog, SLOT(updateRawImage_1(QImage)));
+	QObject::connect(myStream_2, SIGNAL(rawImage(QImage)), myCVDialog, SLOT(updateRawImage_2(QImage)));
+	QObject::connect(myStream_3, SIGNAL(rawImage(QImage)), myCVDialog, SLOT(updateRawImage_3(QImage)));
 
-    QObject::connect(myStream_1, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_1(QImage)));
-    QObject::connect(myStream_2, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_2(QImage)));
-    QObject::connect(myStream_3, SIGNAL(rawImage(QImage)), myFSDialog, SLOT(setFrame_3(QImage)));
+	QObject::connect(myStream_1, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImage_1(QImage)));
+	QObject::connect(myStream_2, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImage_2(QImage)));
+	QObject::connect(myStream_3, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImage_3(QImage)));
 
-	QObject::connect(myStream_1, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImageFrame_1(QImage)));
-	QObject::connect(myStream_2, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImageFrame_2(QImage)));
-	QObject::connect(myStream_3, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImageFrame_3(QImage)));
+	QObject::connect(myStream_1, SIGNAL(objectImage(QImage)), myCVDialog, SLOT(updateObjectImage_1(QImage)));
+	QObject::connect(myStream_2, SIGNAL(objectImage(QImage)), myCVDialog, SLOT(updateObjectImage_2(QImage)));
+	QObject::connect(myStream_3, SIGNAL(objectImage(QImage)), myCVDialog, SLOT(updateObjectImage_3(QImage)));
+
+	QObject::connect(myStream_1, SIGNAL(openedImage(QImage)), myCVDialog, SLOT(updateOpenedImage_1(QImage)));
+	QObject::connect(myStream_2, SIGNAL(openedImage(QImage)), myCVDialog, SLOT(updateOpenedImage_2(QImage)));
+	QObject::connect(myStream_3, SIGNAL(openedImage(QImage)), myCVDialog, SLOT(updateOpenedImage_3(QImage)));
+
+	QObject::connect(myStream_1, SIGNAL(bluredImage(QImage)), myCVDialog, SLOT(updateBluredImage_1(QImage)));
+	QObject::connect(myStream_2, SIGNAL(bluredImage(QImage)), myCVDialog, SLOT(updateBluredImage_2(QImage)));
+	QObject::connect(myStream_3, SIGNAL(bluredImage(QImage)), myCVDialog, SLOT(updateBluredImage_3(QImage)));
+
+	QObject::connect(myStream_1, SIGNAL(objectWithKeypointsImage(QImage)), myCVDialog, SLOT(updateObjectWithKeypointsImage_1(QImage)));
+	QObject::connect(myStream_2, SIGNAL(objectWithKeypointsImage(QImage)), myCVDialog, SLOT(updateObjectWithKeypointsImage_2(QImage)));
+	QObject::connect(myStream_3, SIGNAL(objectWithKeypointsImage(QImage)), myCVDialog, SLOT(updateObjectWithKeypointsImage_3(QImage)));
+
+	QObject::connect(myStream_1, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImage_1(QImage)));
+	QObject::connect(myStream_2, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImage_2(QImage)));
+	QObject::connect(myStream_3, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImage_3(QImage)));
 
 	QObject::connect(myBMTDialog, SIGNAL(valueMinArea_1(int)), myStream_1, SLOT(updateValueMinArea(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueMinArea_2(int)), myStream_2, SLOT(updateValueMinArea(int)));
@@ -44,7 +63,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myStream_1, SLOT(updateValueGaussianSize(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_2(int)), myStream_2, SLOT(updateValueGaussianSize(int)));
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_3(int)), myStream_3, SLOT(updateValueGaussianSize(int)));
-
 
     QObject::connect(myFSDialog, SIGNAL(maskCoordinates_1(QList<QPoint>)), myStream_1, SLOT(getMaskCoordinate(QList<QPoint>)));
     QObject::connect(myFSDialog, SIGNAL(maskCoordinates_2(QList<QPoint>)), myStream_2, SLOT(getMaskCoordinate(QList<QPoint>)));

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>775</width>
-    <height>554</height>
+    <width>1137</width>
+    <height>936</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,8 +22,8 @@
      <widget class="QWidget" name="scrollAreaWidgetContents">
       <property name="geometry">
        <rect>
-        <x>-1186</x>
-        <y>-187</y>
+        <x>0</x>
+        <y>-1092</y>
         <width>1962</width>
         <height>3102</height>
        </rect>
@@ -274,7 +274,7 @@
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>Histogram 1</string>
+                  <string>Object Frame 1</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -282,7 +282,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_20">
+                <widget class="QLabel" name="object_1">
                  <property name="minimumSize">
                   <size>
                    <width>640</width>
@@ -312,7 +312,7 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Histogram 2</string>
+                <string>Object Frame 2</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -320,7 +320,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_22">
+              <widget class="QLabel" name="object_2">
                <property name="minimumSize">
                 <size>
                  <width>640</width>
@@ -348,7 +348,7 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Histogram 3</string>
+                <string>Object Frame 3</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -356,7 +356,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_24">
+              <widget class="QLabel" name="object_3">
                <property name="minimumSize">
                 <size>
                  <width>640</width>
@@ -390,7 +390,7 @@
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>Histogram 1</string>
+                  <string>Opened Frame 1</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -398,7 +398,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_26">
+                <widget class="QLabel" name="opened_1">
                  <property name="minimumSize">
                   <size>
                    <width>640</width>
@@ -428,7 +428,7 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Histogram 2</string>
+                <string>Opened Frame 2</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -436,7 +436,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_28">
+              <widget class="QLabel" name="opened_2">
                <property name="minimumSize">
                 <size>
                  <width>640</width>
@@ -464,7 +464,7 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Histogram 3</string>
+                <string>Opened Frame 3</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -472,7 +472,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_30">
+              <widget class="QLabel" name="opened_3">
                <property name="minimumSize">
                 <size>
                  <width>640</width>
@@ -506,7 +506,7 @@
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>Histogram 1</string>
+                  <string>Blurred Frame 1</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -514,7 +514,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_32">
+                <widget class="QLabel" name="blured_1">
                  <property name="minimumSize">
                   <size>
                    <width>640</width>
@@ -544,7 +544,7 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Histogram 2</string>
+                <string>Blurred Frame 2</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -552,7 +552,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_34">
+              <widget class="QLabel" name="blured_2">
                <property name="minimumSize">
                 <size>
                  <width>640</width>
@@ -580,7 +580,7 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Histogram 3</string>
+                <string>Blurred Frame 3</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -588,7 +588,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_36">
+              <widget class="QLabel" name="blured_3">
                <property name="minimumSize">
                 <size>
                  <width>640</width>
@@ -622,7 +622,7 @@
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>Histogram 1</string>
+                  <string>Keypoints 1</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -630,7 +630,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QLabel" name="label_38">
+                <widget class="QLabel" name="keypoint_1">
                  <property name="minimumSize">
                   <size>
                    <width>640</width>
@@ -660,7 +660,7 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Histogram 2</string>
+                <string>Keypoints 2</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -668,7 +668,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_40">
+              <widget class="QLabel" name="keypoint_2">
                <property name="minimumSize">
                 <size>
                  <width>640</width>
@@ -696,7 +696,7 @@
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Histogram 3</string>
+                <string>Keypoints 3</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -704,7 +704,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_42">
+              <widget class="QLabel" name="keypoint_3">
                <property name="minimumSize">
                 <size>
                  <width>640</width>

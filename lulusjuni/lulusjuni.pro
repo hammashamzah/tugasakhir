@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     errorcalculationdialog.cpp \
     cameraviewdialog.cpp \
     videoprocessor.cpp \
-    clickdisplay.cpp
+    clickdisplay.cpp \
+    cvmatandqimage.cpp
 
 HEADERS  += mainwindow.h \
     backgroundmodeltuningdialog.h \
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     errorcalculationdialog.h \
     cameraviewdialog.h \
     videoprocessor.h \
-    clickdisplay.h
+    clickdisplay.h \
+    cvmatandqimage.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

@@ -11,6 +11,7 @@
 #include <opencv2/video/background_segm.hpp>
 #include <opencv2/video/video.hpp>
 #include <opencv2/features2d/features2d.hpp>
+#include <cvmatandqimage.h>
 #include <iostream>
 #include <QDebug>
 
@@ -22,11 +23,10 @@ private:
 	bool stop;
 	QMutex mutex;
 	QWaitCondition condition;
-	Mat frame;
 	int frameRate;
 	VideoCapture *capture;
-	Mat Mask, RGBframe, tempMasked, objectFrame, maskedFrame, openedFrame, bluredFrame, withKeypointsFrame;
-	QImage qRawImage, qMaskedFrame, qOpenedFrame, qBluredFrame, qWithKeypointsFrame;
+	Mat frame, objectFrame, mask, maskedFrame, openedFrame, bluredFrame, objectWithKeypointsFrame;
+	QImage qRawImage, qMaskedFrame, qObjectFrame, qOpenedFrame, qBluredFrame, qObjectWithKeypointsFrame;
     SimpleBlobDetector::Params params;
 	Ptr<BackgroundSubtractor> pMOG;
 	vector<vector<Point> > contours;
@@ -41,10 +41,14 @@ private:
     int gaussianSize;
 
 signals:
-//Signal to output frame to be displayed
-	//void processedImage(const QImage &image);
+	//Signal to output frame to be displayed
+	void firstFrameImage(const QImage &image);
 	void rawImage(const QImage &image);
 	void maskedImage(const QImage &image);
+	void objectImage(const QImage &image);
+	void openedImage(const QImage &image);
+	void bluredImage(const QImage &image);
+	void objectWithKeypointsImage(const QImage &image);
 public slots:
 	//update parameters
 	void updateValueMinArea(int value);
@@ -80,6 +84,8 @@ public:
 	void getFirstFrame();
 
 private:
+    void convertMatToQImage(Mat frame, QImage result);
+    void maskImage(Mat& frame, Mat& maskedFrame);
 	Point maskPoint[1][10];
 	int numberOfMaskPoints;
 	bool isSetMask;
