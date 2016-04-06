@@ -3,60 +3,52 @@
 
 #include "KalmanObj.h"
 #include "ObjAssociate.h"
-#include "LinkedList.h"
-#include "preprocessing.h"
-
-#define NUM_PLAYER 23
-
-/****
-#define XUL 100
-#define XUR 729
-#define XDR 1000
-#define XDL 30
-#define YUL 512
-#define YUR 511
-#define YDR 1000
-#define YDL 1003
-
-#define FRAME_RATE 24
-**********/
-
-Preprocess *preproc1;
-Preprocess *preproc2;
-Preprocess *preproc3;
-Kalmanobj *kalman1;
-Kalmanobj *kalman2;
-Kalmanobj *kalman3;
-Associate *assoccie;
-
+#include "KalmanObj.h"
+#include "kalmanobj3d.h"
+#include "generatematcam.h"
+#include "generatemattrans.h"
+#include "ObjAssociate.h"
+#include "objectvariable.h"
+#include <QObject>
+#include <QList>
 
 class HighLevel{
     public:
-        Node *init1;
-        Node *init2;
-        Node *init3;
-        Node *prev_dat1;
-        Node *New_dat1;
-        Node *prev_dat2;
-        Node *New_dat2;
-        Node *prev_dat3;
-        Node *New_dat3;
-        Node *pred_dat1;
-        Node *pred_dat2;
-        Node *pred_dat3;
-        Node *map_res;
-        HighLevel(bool process_on,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double hung_th,double fr);
-        void Highlevel_proc(int frame,bool init,int num_cluster1,int num_cluster2,int num_cluster3,player plays1[],player plays2[],player plays3[],play_transform played1[],play_transform played2[],play_transform played3[]);
-        int prev_num1,prev_num2,prev_num3;
-        Point accel_3d3[NUM_PLAYER];Point velo3d3[NUM_PLAYER];Point accels3[NUM_PLAYER];Point velo3[NUM_PLAYER];
-        Point accel_3d2[NUM_PLAYER];Point velo3d2[NUM_PLAYER];Point accels2[NUM_PLAYER];Point velo2[NUM_PLAYER];
-        Point accel_3d1[NUM_PLAYER];Point velo3d1[NUM_PLAYER];Point accels1[NUM_PLAYER];Point velo1[NUM_PLAYER];
-        int assoc_mat[NUM_PLAYER][NUM_PLAYER];
-        void get_matricesAssociate();
-        bool Isvalid;
+        HighLevel(double FR,double xdl1,double xdr1,double xul1,double xur1,double ydl1,double ydr1,double yul1,double yur1,double pixel_th1,
+                                double xdl2,double xdr2,double xul2,double xur2,double ydl2,double ydr2,double yul2,double yur2,double pixel_th2,
+                                double xdl3,double xdr3,double xul3,double xur3,double ydl3,double ydr3,double yul3,double yur3,double pixel_th3,
+                                double THcam1,double THcam2,double THcam3,mode ops);
+        ~HighLevel();
+        proHighLevel(mode proc);
     private:
-        bool start;
-        void update_player();
+        int Frames;
+        mode operate;
+        QList<DataInputCam> initGab;
+        QList<DataInputCam>HCam1;
+        QList<DataInputCam>HCam2;
+        QList<DataInputCam>HCam3;
+        QList<DataInputCam>aCam1F;
+        QList<DataInputCam>aCam2F;
+        QList<DataInputCam>aCam3F;
+        QList<DataInputTrans>aCam1L;
+        QList<DataInputTrans>aCam2L;
+        QList<DataInputTrans>aCam3L;
+        bool Isset1,Isset2,Isset3,Isset4,Isset5,Isset6,Isset7,Isset8,Isset9,Isseto;
+    public slots:
+        void updateDataHamasCam1(QList<DataInputCam>);
+        void updateDataHamasCam2(QList<DataInputCam>);
+        void updateDataHamasCam3(QList<DataInputCam>);
+        void updateDataAznanCam1(QList<DataInputTrans>);
+        void updateDataAznanCam2(QList<DataInputTrans>);
+        void updateDataAznanCam3(QList<DataInputTrans>);
+    signals:
+        void sendDataQFound1(QList<DataInputCam>);
+        void sendDataQLost1(QList<DataInputCam>);
+        void sendDataQFound2(QList<DataInputCam>);
+        void sendDataQLost2(QList<DataInputCam>);
+        void sendDataQFound3(QList<DataInputCam>);
+        void sendDataQLost3(QList<DataInputCam>);
+
 }
 ;
 

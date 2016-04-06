@@ -18,7 +18,7 @@ using namespace cv;
 
 class Kalmanobj{
     public:
-        Kalmanobj(int camera_id,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur);
+        Kalmanobj(int camera_id,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr);
         ~Kalmanobj();
         void accum_kalmanobj();
         void multitrackObj();

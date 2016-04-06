@@ -18,29 +18,28 @@ using namespace std;
 class GenerateMatTrans
 {
     public:
-       GenerateMatTrans(double trehshold);
+        GenerateMatTrans(double trehshold);
         ~GenerateMatTrans();
         void cam_associate();
     private:
         Mat Associate;
         double THETA;
         bool Isset1,Isset2,Isset3,Isset4;
-
-        QList<DataInputTrans> pred;
-        QList<DataInputTrans> inits;
-        QList<DataInputTrans> curr;
-        int sizeInit,sizePredic,sizeCurrent;
+        QList<DataInputTrans> Qlost;
+        QList<DataInputTrans> QFound;
+        Mat fixIt;
+        Mat inits;
+        Mat Assoc;
+        int sizeQLost,sizeQFound;
         double Euclid_r,Euclid_x,Euclid_y;
-        int frames;
         void link_theid();
         double eigen_distance_transform(double x_m, double y_m, double x_obj, double y_obj);
     public slots:
-        void updatePredic(QList<DataInputTrans>);
-        void updateinit(QList<DataInputTrans>);
-        void updateCurrent(QList<DataInputTrans>);
-        void updateFrame(int fr);
+        void updateQLost(QList<DataInputTrans>);//darigenerateMatcam
+        void updateQFound(QList<DataInputTrans>);//dari generateMatcam
+        void getAssociate(Mat);//dari generateMatcam
    signals:
-        void UpdateAssociate(Mat);
+        void UpdateAssociate(Mat);//menuju objassociate
 };
 
 

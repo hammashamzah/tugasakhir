@@ -18,6 +18,7 @@ Kalmanobj::Kalmanobj(int camera_id,double xdl,double xdr,double xul,double xur,d
 void Kalmanobj::updateCurrentData(QList<DataInputCam> current){
     previousData.clear();
     previousData = currentData;
+    currentData.clear();
     currentData = current;
     sizeCurrent = currentData.length();
     sizePrevious = previousData.length();
@@ -75,6 +76,8 @@ void Kalmanobj::accum_kalmanobj(){
         multitrackObj();
     }
     emit updatePrediction(predictionData);
+    emit sendPrevious(prev);
+
     Isset1=false;
     Isset2=false;
     Isset3=false;
@@ -88,7 +91,7 @@ Kalmanobj::~Kalmanobj(){
 
 void Kalmanobj::multitrackObj(){
     int i;
-    DataInputCam buffer;
+    DataInputCam buffer,buffer2;
     Point2f priory_posp,priory_velsp,priory_accp,post_posp,post_velsp,post_accp;
     double pred_h,pred_w;
     for(i=0;i<sizeCurrent;i++){
@@ -96,6 +99,16 @@ void Kalmanobj::multitrackObj(){
         track_ind2Dmotion(currentData.at(i),priory_posp,priory_velsp,priory_accp,post_posp,post_velsp,post_accp);
         //Node *list_get = list1.searchNode(list_init,list_curr->data_id);
         track_size(pred_w, pred_h,initsData.at(currentData.at(i).id),currentData.at(i));
+
+        buffer2.id = currentData.at(i).id;
+        buffer2.dataplayer.x = (double)currentData.at(i).dataplayer.x;
+        buffer2.dataplayer.y = (double)currentData.at(i).dataplayer.y;
+        buffer2.dataplayer.width = currentData.at(i).dataplayer.width;
+        buffer2.dataplayer.height = currentData.at(i).dataplayer.height;
+        buffer2.status = (double)currentData.at(i).status;
+        buffer2.flagOcclusion = (double)currentData.at(i).flagOcclusion;
+        buffer2.pixelSpeed.x = (double)pre_velocity[i].x;
+        buffer2.pixelSpeed.y = (double)pre_velocity[i].y;
 
         buffer.id = currentData.at(i).id;
         buffer.dataplayer.x = (double)post_posp.x;
@@ -107,6 +120,7 @@ void Kalmanobj::multitrackObj(){
         buffer.pixelSpeed.x = (double)post_velsp.x;
         buffer.pixelSpeed.y = (double)post_velsp.y;
         predictionData.append(buffer);
+        prev.append(buffer2);
     }
 }
 
@@ -156,7 +170,8 @@ Point2f Kalmanobj::getAccMot() const{
 }
 
 void Kalmanobj::extract_actual_v(double curr_posx,double curr_posy,int idx){
-        post_pos[idx]= curr_pos[idx];
+        post_pos[idx].x= curr_pos[idx].x;
+        post_pos[idx].y= curr_pos[idx].y;
         curr_pos[idx].x= curr_posx;
         curr_pos[idx].y= curr_posy;
         post_velocity[idx] = pre_velocity[idx];
