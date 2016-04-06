@@ -1,7 +1,7 @@
-/**
-  Header ini digunakan sebagai jembatan penghubung variabel ataupun objek global
+/* Header ini digunakan sebagai jembatan penghubung variabel ataupun objek global yang akan digunakan pada
+ * berbagai class dari beberapa file. header yang di-include hanya boleh header yang digunakan untuk variabel global
+ */
 
-  **/
 #ifndef OBJECTVARIABLE
 #define OBJECTVARIABLE
 #define JUMLAH_PLAYER_TEAM_A 11
@@ -12,23 +12,13 @@
 #define marginAtasField 20
 
 
-#include "videoprocessor.h"
-#include "backgroundmodeltuningdialog.h"
-#include "cameraviewdialog.h"
-#include "errorcalculationdialog.h"
-#include "fieldselectiondialog.h"
-#include "systemperformancedialog.h"
-#include "trackingviewdialog.h"
+#include <QPoint>
 #include "playervisual.h"
-#include "allaboutteam.h"
+#include "coordinateconverter.h"
 
-extern playerVisual player_visual[JUMLAH_PLAYER];
 extern int playerIdSelected;
-extern const int heightOfField;
-extern const int widthOfField;
 extern QPoint playerFormation[JUMLAH_PLAYER];
-//extern AllAboutTeam teamB;
-
-
+extern playerVisual player_visual[JUMLAH_PLAYER];
+extern CoordinateConverter konversi;
 
 #endif // OBJECTVARIABLE

@@ -71,6 +71,13 @@
                </widget>
               </item>
               <item>
+               <widget class="QSlider" name="time_slider_1">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QLabel" name="max_time_1">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -139,13 +146,6 @@
               </item>
               <item>
                <widget class="QSlider" name="time_slider_3">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QSlider" name="time_slider_1">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>

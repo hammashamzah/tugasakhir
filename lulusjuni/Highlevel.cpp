@@ -1,5 +1,7 @@
 #include "Highlevel.h"
 #include "objectvariable.h"
+#include "mainwindow.h"
+
 
 LinkedList hlevel;
 

@@ -12,10 +12,20 @@
 #include <iostream>
 #include <QDebug>
 #include "objectvariable.h"
+#include "playervisual.h"
+#include <opencv2/opencv.hpp>
+#include <allaboutteam.h>
+#include "cameraviewdialog.h"
+#include "videoprocessor.h"
+#include "backgroundmodeltuningdialog.h"
+#include "errorcalculationdialog.h"
+#include "fieldselectiondialog.h"
+#include "systemperformancedialog.h"
+#include "trackingviewdialog.h"
+#include "coordinateconverter.h"
 
 
-
-
+using namespace cv;
 using namespace std;
 
 namespace Ui {
@@ -39,14 +49,9 @@ public:
 
 
 
-
-
 public slots:
-    void showMousePosition(QPoint& pos);
     void mainGameDisplayClickEvent(QPoint& pos);
     void mainGameDisplayRightClickEvent(QPoint& pos);
-    //void updateDisplayFormation(QPoint& playerPos, int& id);
-    //void DisplayMousePos(QPoint& pos);
     void selectPlayerFromFormationA(QPoint& pos);
     void selectPlayerFromFormationB(QPoint& pos);
 

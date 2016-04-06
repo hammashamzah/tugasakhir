@@ -5,6 +5,7 @@
 #include "ObjAssociate.h"
 #include "LinkedList.h"
 #include "preprocessing.h"
+#include "objectvariable.h"
 
 #define NUM_PLAYER 23
 

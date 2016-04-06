@@ -47,4 +47,3 @@ bool AllAboutTeam::setFormation(int formation)
 
     return true;
 }
-

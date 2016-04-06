@@ -18,8 +18,6 @@ public:
     int TeamPlayerNumber;
 
     bool setFormation(int formation);
-    void displayFormation();
-    void initFormation();
 
 private:
 

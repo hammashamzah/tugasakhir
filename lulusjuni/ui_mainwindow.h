@@ -54,6 +54,7 @@ public:
     QPushButton *pushButton_play;
     QHBoxLayout *horizontalLayout;
     QLabel *current_time_1;
+    QSlider *time_slider_1;
     QLabel *max_time_1;
     QHBoxLayout *horizontalLayout_2;
     QLabel *current_time_2;
@@ -62,7 +63,6 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QLabel *current_time_3;
     QSlider *time_slider_3;
-    QSlider *time_slider_1;
     QLabel *max_time_3;
     QLabel *label_videostream_1;
     QLabel *label_videostream_2;
@@ -163,6 +163,12 @@ public:
 
         horizontalLayout->addWidget(current_time_1);
 
+        time_slider_1 = new QSlider(centralWidget);
+        time_slider_1->setObjectName(QStringLiteral("time_slider_1"));
+        time_slider_1->setOrientation(Qt::Horizontal);
+
+        horizontalLayout->addWidget(time_slider_1);
+
         max_time_1 = new QLabel(centralWidget);
         max_time_1->setObjectName(QStringLiteral("max_time_1"));
         sizePolicy1.setHeightForWidth(max_time_1->sizePolicy().hasHeightForWidth());
@@ -214,12 +220,6 @@ public:
         time_slider_3->setOrientation(Qt::Horizontal);
 
         horizontalLayout_3->addWidget(time_slider_3);
-
-        time_slider_1 = new QSlider(centralWidget);
-        time_slider_1->setObjectName(QStringLiteral("time_slider_1"));
-        time_slider_1->setOrientation(Qt::Horizontal);
-
-        horizontalLayout_3->addWidget(time_slider_1);
 
         max_time_3 = new QLabel(centralWidget);
         max_time_3->setObjectName(QStringLiteral("max_time_3"));

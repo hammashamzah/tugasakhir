@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     ObjAssociate.cpp \
     preprocessing.cpp \
     node.cpp \
-    allaboutteam.cpp
+    allaboutteam.cpp \
+    coordinateconverter.cpp
 
 HEADERS  += mainwindow.h \
     fieldselectiondialog.h \
@@ -49,7 +50,8 @@ HEADERS  += mainwindow.h \
     ObjAssociate.h \
     preprocessing.h \
     node.h \
-    allaboutteam.h
+    allaboutteam.h \
+    coordinateconverter.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

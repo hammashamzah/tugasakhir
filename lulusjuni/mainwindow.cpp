@@ -43,12 +43,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_3(int)), myStream_3, SLOT(updateValueGaussianSize(int)));
     QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myCVDialog, SLOT(updateLabel(int)));
 */
-    connect(ui->label_game_visual, SIGNAL(sendMousePosition(QPoint&)),this, SLOT(showMousePosition(QPoint&)));
+
     connect(ui->label_game_visual, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(mainGameDisplayClickEvent(QPoint&)));
     connect(ui->label_formationTeamA, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationA(QPoint&)));
     connect(ui->label_formationTeamB, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationB(QPoint&)));
     connect(ui->label_game_visual, SIGNAL(sendRightClickPosition(QPoint&)),this, SLOT(mainGameDisplayRightClickEvent(QPoint&)));
 
+/*
+    Mat matrik;
+    Mat posisi;
+
+    matrik=konversi.getPersTransformMatrix("lapangan.png");
+    cout<<matrik;
+    posisi = matrik+matrik;
+     cout<<posisi;
+
+*/
     setRandomPlayerProperties();
 
 
@@ -57,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     teamB.setFormation(442);
     updateDisplayFormationTeamA();
     updateDisplayFormationTeamB();
+
 
 }
 
@@ -79,7 +90,6 @@ void MainWindow::on_actionPer_Camera_Raw_View_triggered()
 {
 	myCVDialog->show();
 }
-
 
 void MainWindow::on_actionError_Calculation_triggered()
 {
@@ -173,12 +183,6 @@ void MainWindow::on_pushButton_play_released()
 	}
 }
 
-void MainWindow::showMousePosition(QPoint &pos)
-{
-    //ui->label
-
-}
-
 void MainWindow::mainGameDisplayClickEvent(QPoint &pos)
 {
     int isPlayer=false;
@@ -209,14 +213,12 @@ void MainWindow::mainGameDisplayClickEvent(QPoint &pos)
 
 void MainWindow::mainGameDisplayRightClickEvent(QPoint &pos)
 {
-    int isPlayer=false;
     if(idToAssign<JUMLAH_PLAYER)
     {
         for(int i=0;i<JUMLAH_PLAYER;i++)
         {
             if((pos.x()>=player_visual[i].Position.x() && pos.x()<=player_visual[i].Position.x()+10) && (pos.y()>=player_visual[i].Position.y() && pos.y()<=player_visual[i].Position.y()+10))
             {
-                isPlayer = true;
 
                 //handle kondisi user meng-Assign id ke player yang sudah punya id valid sebelumnya
                 //ketahui id player sebelum diubah idnya
@@ -250,18 +252,16 @@ void MainWindow::mainGameDisplayRightClickEvent(QPoint &pos)
                 //jika id yang ingin di assigned tidak valid, mkaa tidak perlu mengubah variabel idAssignedFlag
                 if(idToAssign<JUMLAH_PLAYER)idAssignedFlag[player_visual[i].id]=true;
 
-                //idToSigned default
-                idToAssign=999;
-
                 updateGameVisual();
                 updateDisplayFormationTeamA();
                 updateDisplayFormationTeamB();
+
+                //idToSigned default
+                idToAssign=999;
             }
         }
     }
 }
-
-
 
 void MainWindow::updateGameVisual()
 {
@@ -289,11 +289,10 @@ void MainWindow::updateGameVisual()
 
           if(player_visual[i].id<900) painterField.drawText(QPoint(player_visual[i].Position.x(), player_visual[i].Position.y()), QString::number(player_visual[i].id)); //posisi x, y, dan ukuran elips
           else painterField.drawText(QPoint(player_visual[i].Position.x(), player_visual[i].Position.y()), "??");
-
      }
       ui->label_game_visual->setPixmap (pixmapField);
-      this->updateDisplayFormationTeamA();
-      this->updateDisplayFormationTeamB();
+      /*if(idToAssign<12) this->updateDisplayFormationTeamA();
+      else this->updateDisplayFormationTeamB();*/
 
 }
 
@@ -359,12 +358,11 @@ void MainWindow::selectPlayerFromFormationB(QPoint &pos)
     ui->positionLabel->setText(QString::number(pos.x())+"  "+QString::number(pos.y()));
 }
 
-
 void MainWindow::updateDisplayFormationTeamA()
 {
     QPixmap pixmapFieldTeam("lapanganTeamA.png");
-    qDebug()<<pixmapFieldTeam.width()<<' '<<pixmapFieldTeam.height();
-    qDebug()<<ui->label_formationTeamA->width()<<' '<<ui->label_formationTeamA->height();
+    //qDebug()<<pixmapFieldTeam.width()<<' '<<pixmapFieldTeam.height();
+    //qDebug()<<ui->label_formationTeamA->width()<<' '<<ui->label_formationTeamA->height();
     QPainter painterField(&pixmapFieldTeam);
     QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
     QBrush fill(Qt::yellow);
@@ -387,8 +385,8 @@ void MainWindow::updateDisplayFormationTeamA()
 void MainWindow::updateDisplayFormationTeamB()
 {
     QPixmap pixmapFieldTeam("lapanganTeamA.png");
-    qDebug()<<pixmapFieldTeam.width()<<' '<<pixmapFieldTeam.height();
-    qDebug()<<ui->label_formationTeamB->width()<<' '<<ui->label_formationTeamB->height();
+    //qDebug()<<pixmapFieldTeam.width()<<' '<<pixmapFieldTeam.height();
+    //qDebug()<<ui->label_formationTeamB->width()<<' '<<ui->label_formationTeamB->height();
     QPainter painterField(&pixmapFieldTeam);
     QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
     QBrush empty;
