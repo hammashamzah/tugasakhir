@@ -111,12 +111,12 @@ void HighLevel::proHighLevel(int Fr,mode proc){
     }
     switch(operate){
             case(singel):{
-                connect(kalmancam1,&Kalmanobj::updatePrediction,generateCam1,&GenerateMatCam::updatePredic);
-                connect(kalmancam1,&Kalmanobj::sendPrevious,generateCam1,&GenerateMatCam::updatePrevious);
-                connect(generateCam1,&GenerateMatCam::updateMatrices,generateCamTrans1,&GenerateMatTrans::getAssociate);
-                connect(generateCam1,&GenerateMatCam::updateOcclusion,Associe,&Associate::getOcclusion1);
-                connect(generateCam1,&GenerateMatCam::sendCurrent,Associe,&Associate::updateCurrentCam1);
-                connect(generateCamTrans1,&GenerateMatTrans::UpdateAssociate,Associe,&Associate::updateMatCam1);
+                QObject::connect(kalmancam1,SIGNAL(updatePrediction(QList<DataInputCam>)),generateCam1,SLOT(updatePredic(QList<DataInputCam>)));
+                QObject::connect(kalmancam1,SIGNAL(sendPrevious(QList<DataInputCam>)),generateCam1,SLOT(updatePrevious(QList<DataInputCam>)));
+                QObject::connect(generateCam1,SIGNAL(updateMatrices(Mat)),generateCamTrans1,SLOT(getAssociate(Mat)));
+                QObject::connect(generateCam1,SIGNAL(updateOcclusion(QList<Point>)),Associe,SLOT(getOcclusion1(QList<Point>)));
+                QObject::connect(generateCam1,SIGNAL(sendCurrent(QList<DataInputCam>)),Associe,SLOT(updateCurrentCam1(QList<DataInputCam>)));
+                QObject::connect(generateCamTrans1,SIGNAL(UpdateAssociate(Mat)),Associe,SLOT(updateMatCam1(Mat)));
                 if(Isset1){
                     generateCam1->cam_associate(0,HCam1,Frames);
                     indicatedLost1 = generateCam1->indicatedLost;
@@ -147,18 +147,18 @@ void HighLevel::proHighLevel(int Fr,mode proc){
             break;
             }
             case(dual):{
-                connect(kalmancam1,&Kalmanobj::updatePrediction,generateCam1,&GenerateMatCam::updatePredic);
-                connect(kalmancam1,&Kalmanobj::sendPrevious,generateCam1,&GenerateMatCam::updatePrevious);
-                connect(kalmancam2,&Kalmanobj::updatePrediction,generateCam2,&GenerateMatCam::updatePredic);
-                connect(kalmancam2,&Kalmanobj::sendPrevious,generateCam2,&GenerateMatCam::updatePrevious);
-                connect(generateCam1,&GenerateMatCam::updateMatrices,generateCamTrans1,&GenerateMatTrans::getAssociate);
-                connect(generateCam1,&GenerateMatCam::updateOcclusion,Associe,&Associate::getOcclusion1);
-                connect(generateCam1,&GenerateMatCam::sendCurrent,Associe,&Associate::updateCurrentCam1);
-                connect(generateCam2,&GenerateMatCam::updateMatrices,generateCamTrans2,&GenerateMatTrans::getAssociate);
-                connect(generateCam2,&GenerateMatCam::updateOcclusion,Associe,&Associate::getOcclusion2);
-                connect(generateCam2,&GenerateMatCam::sendCurrent,Associe,&Associate::updateCurrentCam2);
-                connect(generateCamTrans1,&GenerateMatTrans::UpdateAssociate,Associe,&Associate::updateMatCam1);
-                connect(generateCamTrans2,&GenerateMatTrans::UpdateAssociate,Associe,&Associate::updateMatCam2);
+                QObject::connect(kalmancam1,SIGNAL(updatePrediction(QList<DataInputCam>)),generateCam1,SLOT(updatePredic(QList<DataInputCam>)));
+                QObject::connect(kalmancam1,SIGNAL(sendPrevious(QList<DataInputCam>)),generateCam1,SLOT(updatePrevious(QList<DataInputCam>)));
+                QObject::connect(kalmancam2,SIGNAL(updatePrediction(QList<DataInputCam>)),generateCam2,SLOT(updatePredic(QList<DataInputCam>)));
+                QObject::connect(kalmancam2,SIGNAL(sendPrevious(QList<DataInputCam>)),generateCam2,SLOT(updatePrevious(QList<DataInputCam>)));
+                QObject::connect(generateCam1,SIGNAL(updateMatrices(Mat)),generateCamTrans1,SLOT(getAssociate(Mat)));
+                QObject::connect(generateCam1,SIGNAL(updateOcclusion(QList<Point>)),Associe,SLOT(getOcclusion1(QList<Point>)));
+                QObject::connect(generateCam1,SIGNAL(sendCurrent(QList<DataInputCam>)),Associe,SLOT(updateCurrentCam1(QList<DataInputCam>)));
+                QObject::connect(generateCam2,SIGNAL(updateMatrices(Mat)),generateCamTrans2,SLOT(getAssociate(Mat)));
+                QObject::connect(generateCam2,SIGNAL(updateOcclusion(QList<Point>)),Associe,SLOT(getOcclusion2(QList<Point>)));
+                QObject::connect(generateCam2,SIGNAL(sendCurrent(QList<DataInputCam>)),Associe,SLOT(updateCurrentCam2(QList<DataInputCam>)));
+                QObject::connect(generateCamTrans1,SIGNAL(UpdateAssociate(Mat)),Associe,SLOT(updateMatCam1(Mat)));
+                QObject::connect(generateCamTrans2,SIGNAL(UpdateAssociate(Mat)),Associe,SLOT(updateMatCam2(Mat)));
                 if(Isset1 && Isset2){
                     generateCam1->cam_associate(0,HCam1,Frames);
                     indicatedLost1 = generateCam1->indicatedLost;
@@ -200,24 +200,24 @@ void HighLevel::proHighLevel(int Fr,mode proc){
             break;
             }
             case(triple):{;
-                connect(kalmancam1,&Kalmanobj::updatePrediction,generateCam1,&GenerateMatCam::updatePredic);
-                connect(kalmancam1,&Kalmanobj::sendPrevious,generateCam1,&GenerateMatCam::updatePrevious);
-                connect(kalmancam2,&Kalmanobj::updatePrediction,generateCam2,&GenerateMatCam::updatePredic);
-                connect(kalmancam2,&Kalmanobj::sendPrevious,generateCam2,&GenerateMatCam::updatePrevious);
-                connect(kalmancam3,&Kalmanobj::updatePrediction,generateCam3,&GenerateMatCam::updatePredic);
-                connect(kalmancam3,&Kalmanobj::sendPrevious,generateCam3,&GenerateMatCam::updatePrevious);
-                connect(generateCam1,&GenerateMatCam::updateMatrices,generateCamTrans1,&GenerateMatTrans::getAssociate);
-                connect(generateCam1,&GenerateMatCam::updateOcclusion,Associe,&Associate::getOcclusion1);
-                connect(generateCam1,&GenerateMatCam::sendCurrent,Associe,&Associate::updateCurrentCam1);
-                connect(generateCam2,&GenerateMatCam::updateMatrices,generateCamTrans2,&GenerateMatTrans::getAssociate);
-                connect(generateCam2,&GenerateMatCam::updateOcclusion,Associe,&Associate::getOcclusion2);
-                connect(generateCam2,&GenerateMatCam::sendCurrent,Associe,&Associate::updateCurrentCam2);
-                connect(generateCam3,&GenerateMatCam::updateMatrices,generateCamTrans2,&GenerateMatTrans::getAssociate);
-                connect(generateCam3,&GenerateMatCam::updateOcclusion,Associe,&Associate::getOcclusion3);
-                connect(generateCam3,&GenerateMatCam::sendCurrent,Associe,&Associate::updateCurrentCam3);
-                connect(generateCamTrans1,&GenerateMatTrans::UpdateAssociate,Associe,&Associate::updateMatCam1);
-                connect(generateCamTrans2,&GenerateMatTrans::UpdateAssociate,Associe,&Associate::updateMatCam2);
-                connect(generateCamTrans3,&GenerateMatTrans::UpdateAssociate,Associe,&Associate::updateMatCam3);
+                QObject::connect(kalmancam1,SIGNAL(updatePrediction(QList<DataInputCam>)),generateCam1,SLOT(updatePredic(QList<DataInputCam>)));
+                QObject::connect(kalmancam1,SIGNAL(sendPrevious(QList<DataInputCam>)),generateCam1,SLOT(updatePrevious(QList<DataInputCam>)));
+                QObject::connect(kalmancam2,SIGNAL(updatePrediction(QList<DataInputCam>)),generateCam2,SLOT(updatePredic(QList<DataInputCam>)));
+                QObject::connect(kalmancam2,SIGNAL(sendPrevious(QList<DataInputCam>)),generateCam2,SLOT(updatePrevious(QList<DataInputCam>)));
+                QObject::connect(kalmancam3,SIGNAL(updatePrediction(QList<DataInputCam>)),generateCam3,SLOT(updatePredic(QList<DataInputCam>)));
+                QObject::connect(kalmancam3,SIGNAL(sendPrevious(QList<DataInputCam>)),generateCam3,SLOT(updatePrevious(QList<DataInputCam>)));
+                QObject::connect(generateCam1,SIGNAL(updateMatrices(Mat)),generateCamTrans1,SLOT(getAssociate(Mat)));
+                QObject::connect(generateCam1,SIGNAL(updateOcclusion(QList<Point>)),Associe,SLOT(getOcclusion1(QList<Point>)));
+                QObject::connect(generateCam1,SIGNAL(sendCurrent(QList<DataInputCam>)),Associe,SLOT(updateCurrentCam1(QList<DataInputCam>)));
+                QObject::connect(generateCam2,SIGNAL(updateMatrices(Mat)),generateCamTrans2,SLOT(getAssociate(Mat)));
+                QObject::connect(generateCam2,SIGNAL(updateOcclusion(QList<Point>)),Associe,SLOT(getOcclusion2(QList<Point>)));
+                QObject::connect(generateCam2,SIGNAL(sendCurrent(QList<DataInputCam>)),Associe,SLOT(updateCurrentCam2(QList<DataInputCam>)));
+                QObject::connect(generateCam3,SIGNAL(updateMatrices(Mat)),generateCamTrans2,SLOT(getAssociate(Mat)));
+                QObject::connect(generateCam3,SIGNAL(updateOcclusion(QList<Point>)),Associe,SLOT(getOcclusion3(QList<Point>)));
+                QObject::connect(generateCam3,SIGNAL(sendCurrent(QList<DataInputCam>)),Associe,SLOT(updateCurrentCam3(QList<DataInputCam>)));
+                QObject::connect(generateCamTrans1,SIGNAL(UpdateAssociate(Mat)),Associe,SLOT(updateMatCam1(Mat)));
+                QObject::connect(generateCamTrans2,SIGNAL(UpdateAssociate(Mat)),Associe,SLOT(updateMatCam2(Mat)));
+                QObject::connect(generateCamTrans3,SIGNAL(UpdateAssociate(Mat)),Associe,SLOT(updateMatCam3(Mat)));
                 if(Isset1 && Isset2){
                     generateCam1->cam_associate(0,HCam1,Frames);
                     indicatedLost1 = generateCam1->indicatedLost;

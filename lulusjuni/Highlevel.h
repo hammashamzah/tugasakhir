@@ -18,9 +18,10 @@
 #include "generatematcam.h"
 #include "generatemattrans.h"
 #include "ObjAssociate.h"
+#include <QObject>
 #include "objectvariable.h"
 
-GenerateMatCam *generateCam1 ;
+GenerateMatCam *generateCam1;
 GenerateMatCam *generateCam2;
 GenerateMatCam *generateCam3;
 GenerateMatTrans *generateCamTrans1;
@@ -31,9 +32,8 @@ Kalmanobj *kalmancam2;
 Kalmanobj *kalmancam3;
 Associate *Associe;
 
-class HighLevel:public QObject
+class HighLevel
 {
-    Q_OBJECT
     public:
         HighLevel(double FR,double xdl1,double xdr1,double xul1,double xur1,double ydl1,double ydr1,double yul1,double yur1,double pixel_th1,
                                 double xdl2,double xdr2,double xul2,double xur2,double ydl2,double ydr2,double yul2,double yur2,double pixel_th2,

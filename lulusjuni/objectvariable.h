@@ -37,7 +37,7 @@ enum mode{singel,dual,triple};
 
 extern playerVisual player_visual[JUMLAH_PLAYER];
 extern int playerIdSelected;
-extern const double BOBOT_PREDICTIONS = 0.30;
+const double BOBOT_PREDICTIONS = 0.30;
 
 extern int foo(QList<DataInputCam>,int idx);
 extern int fooT(QList<DataInputTrans>,int idx);
