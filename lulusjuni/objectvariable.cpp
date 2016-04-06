@@ -7,7 +7,7 @@
 playerVisual player_visual[JUMLAH_PLAYER];
 int playerIdSelected;
 
-int Foo(QList<DataInputCam> keyList,int id) {
+int ObjectVariable::foo(QList<DataInputCam> keyList,int id) {
    DataInputCam nk;
    int i=0;
    foreach(nk,keyList) {
@@ -21,7 +21,7 @@ int Foo(QList<DataInputCam> keyList,int id) {
 }
 
 
-int FooT(QList<DataInputTrans> keyList,int id) {
+int ObjectVariable::fooT(QList<DataInputTrans> keyList,int id) {
    int i=0;
    DataInputTrans  nk;
    foreach (nk, keyList) {

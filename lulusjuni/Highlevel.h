@@ -21,20 +21,22 @@
 #include <QObject>
 #include "objectvariable.h"
 
-GenerateMatCam *generateCam1;
-GenerateMatCam *generateCam2;
-GenerateMatCam *generateCam3;
-GenerateMatTrans *generateCamTrans1;
-GenerateMatTrans *generateCamTrans2;
-GenerateMatTrans *generateCamTrans3;
-Kalmanobj *kalmancam1;
-Kalmanobj *kalmancam2;
-Kalmanobj *kalmancam3;
-Associate *Associe;
 
-class HighLevel
+
+class HighLevel: public QObject
 {
+    Q_OBJECT
     public:
+        GenerateMatCam *generateCam1;
+        GenerateMatCam *generateCam2;
+        GenerateMatCam *generateCam3;
+        GenerateMatTrans *generateCamTrans1;
+        GenerateMatTrans *generateCamTrans2;
+        GenerateMatTrans *generateCamTrans3;
+        Kalmanobj *kalmancam1;
+        Kalmanobj *kalmancam2;
+        Kalmanobj *kalmancam3;
+        Associate *Associe;
         HighLevel(double FR,double xdl1,double xdr1,double xul1,double xur1,double ydl1,double ydr1,double yul1,double yur1,double pixel_th1,
                                 double xdl2,double xdr2,double xul2,double xur2,double ydl2,double ydr2,double yul2,double yur2,double pixel_th2,
                                 double xdl3,double xdr3,double xul3,double xur3,double ydl3,double ydr3,double yul3,double yur3,double pixel_th3,

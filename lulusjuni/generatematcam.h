@@ -27,6 +27,7 @@ class GenerateMatCam:public QObject
         QList<DataInputCam> indicatedLost;
         QList<DataInputCam> indicatedFound;
     private:
+        ObjectVariable obj;
         int data_bef;
         Mat Associate;
         double XDL,XDR,XUL,XUR,YDL,YDR,YUL,YUR,THETA;

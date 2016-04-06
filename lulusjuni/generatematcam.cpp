@@ -112,7 +112,7 @@ void GenerateMatCam::link_theid(int data_before){
     else{
         for(i=0;i<sizePrevious;i++){
            for(j=0;j<sizeCurrent;j++){
-               const int idx = foo(pred,previous.at(i).id);
+               const int idx = obj.foo(pred,previous.at(i).id);
                if(idx<=sizePrevious){
                    Euclid_x = (( BOBOT_PREDICTIONS * (pred.at(idx).dataplayer.x))+((1-BOBOT_PREDICTIONS)*(previous.at(i).dataplayer.x)))-(curr.at(j).dataplayer.x);
                    Euclid_y = abs(( BOBOT_PREDICTIONS * (pred.at(idx).dataplayer.y))+((1-BOBOT_PREDICTIONS)*(previous.at(i).dataplayer.y))-curr.at(j).dataplayer.y);
@@ -155,7 +155,7 @@ void GenerateMatCam::checkLost(){
     DataInputCam buffer;
     for(int i=0;i<JUMLAH_PLAYER;i++){
         if(accRow.at<int>(i)==0){
-            int idx = foo(pred,previous.at(i).id);
+            int idx = obj.foo(pred,previous.at(i).id);
             if(idx<=previous.length()){
                 buffer.id     = previous.at(i).id;
                 buffer.camera = previous.at(i).camera;

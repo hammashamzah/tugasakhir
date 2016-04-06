@@ -39,9 +39,11 @@ extern playerVisual player_visual[JUMLAH_PLAYER];
 extern int playerIdSelected;
 const double BOBOT_PREDICTIONS = 0.30;
 
-extern int foo(QList<DataInputCam>,int idx);
-extern int fooT(QList<DataInputTrans>,int idx);
-
+class ObjectVariable{
+public:
+     int foo(QList<DataInputCam>,int idx);
+     int fooT(QList<DataInputTrans>,int idx);
+};
 
 
 #endif // OBJECTVARIABLE
