@@ -47,10 +47,7 @@ HEADERS  += mainwindow.h \
     Highlevel.h \
     KalmanObj.h \
     ObjAssociate.h \
-    arrdatcam.h \
-    arrdattrans.h \
     generatematcam.h \
-    arrcam.h \
     generatemattrans.h \
     datainputtrans.h \
     datainputcam.h \

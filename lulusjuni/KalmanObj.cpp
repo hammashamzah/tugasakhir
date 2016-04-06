@@ -15,24 +15,6 @@ Kalmanobj::Kalmanobj(int camera_id,double xdl,double xdr,double xul,double xur,d
     FrPs = fr;
 }
 
-void Kalmanobj::updateCurrentData(QList<DataInputCam> current){
-    previousData.clear();
-    previousData = currentData;
-    currentData.clear();
-    currentData = current;
-    sizeCurrent = currentData.length();
-    sizePrevious = previousData.length();
-    Isset1 = true;
-}
-void Kalmanobj::updateInitsData(QList<DataInputCam> init){
-    initsData = init;
-    sizeInit = initsData.length();
-    Isset2 = true;
-}
-void Kalmanobj::updateFrame(int frm){
-    frames = frm;
-    Isset3 = true;
-}
 
 void Kalmanobj::resetdata(){
     int i,j;
@@ -56,8 +38,16 @@ void Kalmanobj::resetdata(){
     }
 }
 
-void Kalmanobj::accum_kalmanobj(){
+void Kalmanobj::accum_kalmanobj(QList<DataInputCam> init,QList<DataInputCam> current,int frm){
     int i;
+    frames = frm;
+    initsData = init;
+    previousData.clear();
+    previousData = currentData;
+    currentData.clear();
+    currentData = current;
+    sizeCurrent = currentData.length();
+    sizePrevious = previousData.length();
     intervals = 1/FrPs;
     if(frames == 1){
         for(i=0;i<JUMLAH_PLAYER;i++){

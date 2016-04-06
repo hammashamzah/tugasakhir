@@ -28,21 +28,14 @@ void GenerateMatCam::updatePredic(QList<DataInputCam> predict){
     sizePrediction = pred.length();
     Isset1 = true;
 }
-void GenerateMatCam::updateCurrent(QList<DataInputCam> current){
-    curr = current;
-    sizeCurrent =  curr.length();
-    Isset2 = true;
-}
-void GenerateMatCam::updateFrame(int fr){
-    frames = fr;
-    Isset3 = true;
-}
-void GenerateMatCam::cam_associate(int data_before){
+void GenerateMatCam::cam_associate(int data_before,QList<DataInputCam> current,int Fr){
     int i,j;
     data_bef = data_before;
     accCol = Mat::zeros(JUMLAH_PLAYER,1,CV_8U);
     accRow = Mat::zeros(JUMLAH_PLAYER,1,CV_8U);
-    if(Isset3){
+    curr = current;
+    sizeCurrent =  curr.length();
+    frames = Fr;
     if(frames == 1){
         Associate = Mat::zeros(JUMLAH_PLAYER,JUMLAH_PLAYER,CV_8U);
         for(i=0;i<sizeCurrent;i++){
@@ -53,7 +46,7 @@ void GenerateMatCam::cam_associate(int data_before){
         }
     }
     else{
-        if(Isseto && Isset1 && Isset2 && Isset3){
+        if(Isseto && Isset1){
             if(YDL>YUL && YDR>YUR && XDR>XUR && XDL<XUR){
                 yo =((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))-((YDL+YDR)/2);
             }
@@ -61,18 +54,14 @@ void GenerateMatCam::cam_associate(int data_before){
             link_theid(data_bef);
             checkFound();
             checkLost();
-            emit updateQFound(indicatedFound);
-            emit updateQlost(indicatedLost);
             emit updateOcclusion(occlusion);
         }
     }
-   }
    emit sendCurrent(curr);
-   emit UpdateMatrices(Associate);
-   Isset1 =false;Isset2 =false;Isset3 =false;
+   emit updateMatrices(Associate);
+   Isset1 =false;Isseto =false;
    pred.clear();
    curr.clear();
-   inits.clear();
    indicatedFound.clear();
    indicatedLost.clear();
    occlusion.clear();

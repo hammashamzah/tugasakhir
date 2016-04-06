@@ -8,6 +8,21 @@ Associate::~Associate(){
 
 }
 
+void Associate::getOcclusion1(QList<Point> occ){
+    Occlussion1 = occ;
+    Isseto = true;
+}
+
+void Associate::getOcclusion2(QList<Point> occ){
+    Occlussion2 = occ;
+    Isset7 = true;
+}
+
+void Associate::getOcclusion3(QList<Point> occ){
+    Occlussion3 = occ;
+    Isset8 = true;
+}
+
 void Associate::updateMatCam1(Mat ass1){//from generate MatCam
     assoc1 = ass1;
     Isset1 = true;
@@ -61,10 +76,7 @@ void Associate::accum_assoc(){
         }
     }
     mapping();
-    emit updateMapping(Mapping);
-    emit matricesChanged(association_agrr);
-    Isset1 =false;Isset2 =false;Isset3 =false;Isset4 =false;Isset5 =false;Isset6 =false;
-
+    Isset1 =false;Isset2 =false;Isset3 =false;Isset4 =false;Isset5 =false;Isset6 =false;Isset7 =false;Isseto =false;Isset8 =false;
 }
 
 void Associate::mapping(){

@@ -16,13 +16,15 @@ using namespace std;
 using namespace cv;
 
 
-class Kalmanobj{
+class Kalmanobj:public QObject
+{
+    Q_OBJECT
     public:
-        Kalmanobj(int camera_id,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur);
+        Kalmanobj(int camera_id,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr);
         ~Kalmanobj();
-        void accum_kalmanobj();
-        void multitrackObj();
+        void accum_kalmanobj(QList<DataInputCam> init,QList<DataInputCam> current,int frm);
     private:
+        void multitrackObj();
         QList <DataInputCam> currentData;
         QList <DataInputCam> previousData;
         QList <DataInputCam> predictionData;
@@ -53,10 +55,6 @@ class Kalmanobj{
         Point2f pre_velocity     [JUMLAH_PLAYER];
         Point2f post_velocity    [JUMLAH_PLAYER];
         Point2f accel            [JUMLAH_PLAYER];
-   public slots:
-        void updateCurrentData(QList<DataInputCam>);//from ObjAssociate hasil mapping
-        void updateInitsData(QList<DataInputCam>);//from Hamas
-        void updateFrame(int frm);//from Hamas
    signals:
         void updatePrediction(QList<DataInputCam>);//menuju generateMatCam
         void sendPrevious(QList<DataInputCam>);//menuju generateMatCam

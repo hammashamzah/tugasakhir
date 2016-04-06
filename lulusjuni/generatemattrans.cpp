@@ -8,17 +8,7 @@ GenerateMatTrans::~GenerateMatTrans()
 {
 
 }
-void GenerateMatTrans::updateQLost(QList<DataInputTrans> Lost){
-    Qlost =Lost;
-    sizeQLost = Qlost.length();
-    Isset1 = true;
-}
 
-void GenerateMatTrans::updateQFound(QList<DataInputTrans> Found){
-    QFound = Found;
-    sizeQFound =QFound.length();
-    Isset2 = true;
-}
 
 void GenerateMatTrans::getAssociate(Mat initials){
     inits = initials;
@@ -26,11 +16,14 @@ void GenerateMatTrans::getAssociate(Mat initials){
 }
 
 
-void GenerateMatTrans::cam_associate(){
+void GenerateMatTrans::cam_associate(QList<DataInputTrans> Lost,QList<DataInputTrans> Found){
+    Qlost =Lost;
+    sizeQLost = Qlost.length();
+    QFound = Found;
+    sizeQFound =QFound.length();
     if(Isset1 & Isset2 & Isset3){
         link_theid();
     }
-    Isset1 = false;Isset2 = false;Isset3 = false;Isset4 = false;
     emit UpdateAssociate(Assoc);
     Qlost.clear();
     QFound.clear();

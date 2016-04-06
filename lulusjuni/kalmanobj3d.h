@@ -25,7 +25,9 @@ using namespace std;
 using namespace cv;
 
 
-class Kalmanobj3D{
+class Kalmanobj3D:public QObject
+{
+    Q_OBJECT
     public:
         Kalmanobj3D(double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr);
         ~Kalmanobj3D();

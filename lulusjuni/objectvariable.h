@@ -19,6 +19,7 @@
 #include "datainputtrans.h"
 #include <QList>
 #include <QRegExp>
+#include <QObject>
 #define Pict_sizex 1280
 #define Pict_sizey 1024
 #define stateNum_mot 6

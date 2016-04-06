@@ -15,12 +15,13 @@
 using namespace cv;
 using namespace std;
 
-class GenerateMatTrans
+class GenerateMatTrans:public QObject
 {
+    Q_OBJECT
     public:
         GenerateMatTrans(double trehshold);
         ~GenerateMatTrans();
-        void cam_associate();
+        void cam_associate(QList<DataInputTrans> Lost,QList<DataInputTrans> Found);
     private:
         Mat Associate;
         double THETA;
@@ -35,8 +36,6 @@ class GenerateMatTrans
         void link_theid();
         double eigen_distance_transform(double x_m, double y_m, double x_obj, double y_obj);
     public slots:
-        void updateQLost(QList<DataInputTrans>);//darigenerateMatcam
-        void updateQFound(QList<DataInputTrans>);//dari generateMatcam
         void getAssociate(Mat);//dari generateMatcam
    signals:
         void UpdateAssociate(Mat);//menuju objassociate

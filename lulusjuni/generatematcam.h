@@ -13,15 +13,19 @@
 #include "datainputcam.h"
 
 
+
 using namespace cv;
 using namespace std;
 
-class GenerateMatCam
+class GenerateMatCam:public QObject
 {
+    Q_OBJECT
     public:
         GenerateMatCam(int cam,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double pixel_th);
         ~GenerateMatCam();
-        void cam_associate(int data_before);
+        void cam_associate(int data_before,QList<DataInputCam> Current,int Fr);
+        QList<DataInputCam> indicatedLost;
+        QList<DataInputCam> indicatedFound;
     private:
         int data_bef;
         Mat Associate;
@@ -31,8 +35,6 @@ class GenerateMatCam
         QList<DataInputCam> pred;
         QList<DataInputCam> curr;
         QList<DataInputCam> previous;
-        QList<DataInputCam> indicatedLost;
-        QList<DataInputCam> indicatedFound;
         QList<Point> occlusion;
         Mat accCol;Mat accRow;
 
@@ -52,13 +54,9 @@ class GenerateMatCam
         void checkOcclusion();
     public slots:
         void updatePredic(QList<DataInputCam>);//dari KalmanObj
-        void updateCurrent(QList<DataInputCam>);//dari ambildata Initials
-        void updateFrame(int fr);//dari Hamas
         void updatePrevious(QList<DataInputCam>);//dari KalmanObj
    signals:
-        void UpdateMatrices(Mat);//menuju generatematrans
-        void updateQlost(QList<DataInputCam>);//fungsi transformasi aznan
-        void updateQFound(QList<DataInputCam>);//fungsi transformasi aznan
+        void updateMatrices(Mat);//menuju generatematrans
         void updateOcclusion(QList<Point>);//menuju objassociate
         void sendCurrent(QList<DataInputCam>);//menuju objectassociate
 };
