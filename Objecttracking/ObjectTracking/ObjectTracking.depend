@@ -44,3 +44,109 @@
 	<fstream>
 	<stdlib.h>
 
+<<<<<<< Updated upstream
+=======
+1459577663 source:/home/bima/tugasakhir/Objecttracking/ObjectTracking/preprocessing.cpp
+	"preprocessing.h"
+
+1459577679 /home/bima/tugasakhir/Objecttracking/ObjectTracking/preprocessing.h
+	<stdio.h>
+	<iostream>
+	<stdlib.h>
+	"LinkedList.h"
+	"opencv2/legacy/legacy.hpp"
+	<opencv/cv.h>
+	<opencv2/highgui/highgui.hpp>
+	<stdio.h>
+	<cmath>
+	<string>
+	<sstream>
+	<iostream>
+	<stdlib.h>
+	<fstream>
+	<stdlib.h>
+
+1459584015 source:/home/bima/tugasakhir/Objecttracking/ObjectTracking/Highlevel.cpp
+	"Highlevel.h"
+
+1459583914 /home/bima/tugasakhir/Objecttracking/ObjectTracking/Highlevel.h
+	"KalmanObj.h"
+	"ObjAssociate.h"
+	"LinkedList.h"
+	"preprocessing.h"
+
+1459939133 source:/media/data/dev/code/lulusjuni/Objecttracking/ObjectTracking/Highlevel.cpp
+	"Highlevel.h"
+
+1459939133 /media/data/dev/code/lulusjuni/Objecttracking/ObjectTracking/Highlevel.h
+	"KalmanObj.h"
+	"ObjAssociate.h"
+	"LinkedList.h"
+	"preprocessing.h"
+
+1459939133 /media/data/dev/code/lulusjuni/Objecttracking/ObjectTracking/KalmanObj.h
+	"LinkedList.h"
+	"opencv2/legacy/legacy.hpp"
+	<opencv/cv.h>
+	<opencv2/video/tracking.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<stdio.h>
+	<cmath>
+	<string>
+	<sstream>
+	<iostream>
+	<stdlib.h>
+	<fstream>
+	<stdlib.h>
+
+1459587948 /media/data/dev/code/lulusjuni/Objecttracking/ObjectTracking/LinkedList.h
+	<iostream>
+	<cstddef>
+	<stdlib.h>
+
+1459939133 /media/data/dev/code/lulusjuni/Objecttracking/ObjectTracking/ObjAssociate.h
+	"opencv/ml.h"
+	"LinkedList.h"
+	"opencv2/legacy/legacy.hpp"
+	<opencv/cv.h>
+	<opencv2/video/tracking.hpp>
+	<opencv2/highgui/highgui.hpp>
+	<stdio.h>
+	<cmath>
+	<string>
+	<sstream>
+	<iostream>
+	<stdlib.h>
+	<fstream>
+	<stdlib.h>
+
+1459939133 /media/data/dev/code/lulusjuni/Objecttracking/ObjectTracking/preprocessing.h
+	<stdio.h>
+	<iostream>
+	<stdlib.h>
+	"LinkedList.h"
+	"opencv2/legacy/legacy.hpp"
+	<opencv/cv.h>
+	<opencv2/highgui/highgui.hpp>
+	<stdio.h>
+	<cmath>
+	<string>
+	<sstream>
+	<iostream>
+	<stdlib.h>
+	<fstream>
+	<stdlib.h>
+
+1459939133 source:/media/data/dev/code/lulusjuni/Objecttracking/ObjectTracking/KalmanObj.cpp
+	"KalmanObj.h"
+
+1459587948 source:/media/data/dev/code/lulusjuni/Objecttracking/ObjectTracking/LinkedList.cpp
+	"LinkedList.h"
+
+1459939133 source:/media/data/dev/code/lulusjuni/Objecttracking/ObjectTracking/ObjAssociate.cpp
+	"ObjAssociate.h"
+
+1459939133 source:/media/data/dev/code/lulusjuni/Objecttracking/ObjectTracking/preprocessing.cpp
+	"preprocessing.h"
+
+>>>>>>> Stashed changes

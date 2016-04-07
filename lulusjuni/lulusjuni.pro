@@ -36,11 +36,29 @@ HEADERS  += mainwindow.h \
     videoprocessor.h \
     clickdisplay.h \
     cvmatandqimage.h
+    matdisplay.cpp \
+    playervisual.cpp \
+    objectvariable.cpp \
+    Highlevel.cpp \
+    KalmanObj.cpp \
+    ObjAssociate.cpp \
+    generatematcam.cpp \
+    generatemattrans.cpp \
+    datainputtrans.cpp \
+    datainputcam.cpp \
+    kalmanobj3d.cpp
+
+HEADERS  += mainwindow.h \
+    matdisplay.h \
+    playervisual.h \
+    objectvariable.h \
+    Highlevel.h \
+    KalmanObj.h \
+    ObjAssociate.h \
+    generatematcam.h \
+    generatemattrans.h \
+    datainputtrans.h \
+    datainputcam.h \
+    kalmanobj3d.h
 
 FORMS    += mainwindow.ui \
-    backgroundmodeltuningdialog.ui \
-    fieldselectiondialog.ui \
-    trackingviewdialog.ui \
-    systemperformancedialog.ui \
-    errorcalculationdialog.ui \
-    cameraviewdialog.ui
