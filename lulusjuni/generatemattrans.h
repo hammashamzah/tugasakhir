@@ -19,6 +19,7 @@ class GenerateMatTrans:public QObject
 {
     Q_OBJECT
     public:
+        explicit GenerateMatTrans(QObject *parent = 0);
         GenerateMatTrans(double trehshold);
         ~GenerateMatTrans();
         void cam_associate(QList<DataInputTrans> Lost,QList<DataInputTrans> Found);

@@ -65,13 +65,9 @@ void Kalmanobj::accum_kalmanobj(QList<DataInputCam> init,QList<DataInputCam> cur
         }
         multitrackObj();
     }
-    emit updatePrediction(predictionData);
-    emit sendPrevious(prev);
+    //emit updatePrediction(predictionData);
+    //emit sendPrevious(prev);
 
-    Isset1=false;
-    Isset2=false;
-    Isset3=false;
-    currentData.clear();
     initsData.clear();
 }
 

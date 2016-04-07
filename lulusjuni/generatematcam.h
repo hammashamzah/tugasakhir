@@ -20,10 +20,11 @@ using namespace std;
 class GenerateMatCam:public QObject
 {
     Q_OBJECT
-    public:
+public:
+        explicit GenerateMatCam(QObject *parent = 0);
         GenerateMatCam(int cam,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double pixel_th);
         ~GenerateMatCam();
-        void cam_associate(int data_before,QList<DataInputCam> Current,int Fr);
+        void cam_associate(int data_before,QList<DataInputCam> Current,int Fr,QList<DataInputCam> predict,QList<DataInputCam> prev);
         QList<DataInputCam> indicatedLost;
         QList<DataInputCam> indicatedFound;
     private:
@@ -53,9 +54,9 @@ class GenerateMatCam:public QObject
         void checkFound();
         void checkLost();
         void checkOcclusion();
-    public slots:
+/*    public slots:
         void updatePredic(QList<DataInputCam>);//dari KalmanObj
-        void updatePrevious(QList<DataInputCam>);//dari KalmanObj
+        void updatePrevious(QList<DataInputCam>);//dari KalmanObj*/
    signals:
         void updateMatrices(Mat);//menuju generatematrans
         void updateOcclusion(QList<Point>);//menuju objassociate

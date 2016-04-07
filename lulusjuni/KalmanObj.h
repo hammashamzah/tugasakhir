@@ -20,14 +20,15 @@ class Kalmanobj:public QObject
 {
     Q_OBJECT
     public:
+        explicit Kalmanobj (QObject *parent = 0);
         Kalmanobj(int camera_id,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr);
         ~Kalmanobj();
         void accum_kalmanobj(QList<DataInputCam> init,QList<DataInputCam> current,int frm);
+        QList <DataInputCam> previousData;
+        QList <DataInputCam> predictionData;
     private:
         void multitrackObj();
         QList <DataInputCam> currentData;
-        QList <DataInputCam> previousData;
-        QList <DataInputCam> predictionData;
         QList <DataInputCam> initsData;
         QList <DataInputCam> prev;
         double XUL,XUR,XDR,XDL,YUL,YUR,YDR,YDL;
@@ -55,9 +56,9 @@ class Kalmanobj:public QObject
         Point2f pre_velocity     [JUMLAH_PLAYER];
         Point2f post_velocity    [JUMLAH_PLAYER];
         Point2f accel            [JUMLAH_PLAYER];
-   signals:
+   /**signals:
         void updatePrediction(QList<DataInputCam>);//menuju generateMatCam
-        void sendPrevious(QList<DataInputCam>);//menuju generateMatCam
+        void sendPrevious(QList<DataInputCam>);//menuju generateMatCam**/
 };
 
 #endif // KALMANOBJ_H_INCLUDED

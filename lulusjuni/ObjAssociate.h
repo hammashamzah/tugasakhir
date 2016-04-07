@@ -17,6 +17,7 @@ class Associate:public QObject
 {
     Q_OBJECT
     public: 
+        explicit Associate (QObject *parent = 0);
         int validate;
         Associate(mode operate);
         ~Associate();

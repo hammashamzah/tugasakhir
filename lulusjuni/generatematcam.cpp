@@ -18,7 +18,8 @@ GenerateMatCam::~GenerateMatCam()
 
 
 }
-void GenerateMatCam::updatePrevious(QList<DataInputCam> prev){
+
+/**void GenerateMatCam::updatePrevious(QList<DataInputCam> prev){
     previous = prev;
     sizePrevious = previous.length();
     Isseto = true;
@@ -27,14 +28,18 @@ void GenerateMatCam::updatePredic(QList<DataInputCam> predict){
     pred = predict;
     sizePrediction = pred.length();
     Isset1 = true;
-}
-void GenerateMatCam::cam_associate(int data_before,QList<DataInputCam> current,int Fr){
+}**/
+void GenerateMatCam::cam_associate(int data_before,QList<DataInputCam> current,int Fr,QList<DataInputCam> predict,QList<DataInputCam> prev){
     int i,j;
     data_bef = data_before;
     accCol = Mat::zeros(JUMLAH_PLAYER,1,CV_8U);
     accRow = Mat::zeros(JUMLAH_PLAYER,1,CV_8U);
     curr = current;
     sizeCurrent =  curr.length();
+    previous = prev;
+    sizePrevious = previous.length();
+    pred = predict;
+    sizePrediction = pred.length();
     frames = Fr;
     if(frames == 1){
         Associate = Mat::zeros(JUMLAH_PLAYER,JUMLAH_PLAYER,CV_8U);
@@ -46,7 +51,7 @@ void GenerateMatCam::cam_associate(int data_before,QList<DataInputCam> current,i
         }
     }
     else{
-        if(Isseto && Isset1){
+        if((!previous.empty())&&(!pred.empty())){
             if(YDL>YUL && YDR>YUR && XDR>XUR && XDL<XUR){
                 yo =((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))-((YDL+YDR)/2);
             }

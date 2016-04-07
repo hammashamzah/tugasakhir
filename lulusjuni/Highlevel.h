@@ -19,14 +19,20 @@
 #include "generatemattrans.h"
 #include "ObjAssociate.h"
 #include <QObject>
+#include <QMutex>
+#include <QTimer>
+#include <QEventLoop>
+#include <QDebug>
+#include <QThread>
 #include "objectvariable.h"
 
 
 
-class HighLevel: public QObject
+class HighLevel: public QThread
 {
     Q_OBJECT
     public:
+        explicit HighLevel(QObject *parent = 0);
         GenerateMatCam *generateCam1;
         GenerateMatCam *generateCam2;
         GenerateMatCam *generateCam3;
@@ -42,9 +48,16 @@ class HighLevel: public QObject
                                 double xdl3,double xdr3,double xul3,double xur3,double ydl3,double ydr3,double yul3,double yur3,double pixel_th3,
                                 double THcam1,double THcam2,double THcam3,mode ops);
         ~HighLevel();
-        void proHighLevel(int Fr,mode proc);
+//        void proHighLevel(int Fr,mode proc);
         Mat AsosiasiGlob;
+        void requestedCamData();
+        void run2(QList<DataInputTrans>LostCam1,QList<DataInputTrans>FoundCam1,QList<DataInputTrans>LostCam2,QList<DataInputTrans>FoundCam2,QList<DataInputTrans>LostCam3,QList<DataInputTrans>FoundCam3);
     private:
+        QMutex mutex;
+        bool flagrun1;
+        bool flagrun2;
+        bool IsReady;
+        bool finishRun1;
         int Frames;
         mode operate;
         QList<DataInputCam> hasilMapping;
@@ -58,34 +71,15 @@ class HighLevel: public QObject
         QList<DataInputCam> indicatedLost3;
         QList<DataInputCam> indicatedFound3;
         QList<DataInputCam> initGab;
-        QList<DataInputCam>HCam1;
-        QList<DataInputCam>HCam2;
-        QList<DataInputCam>HCam3;
-        QList<DataInputTrans>aCam1F;
-        QList<DataInputTrans>aCam2F;
-        QList<DataInputTrans>aCam3F;
-        QList<DataInputTrans>aCam1L;
-        QList<DataInputTrans>aCam2L;
-        QList<DataInputTrans>aCam3L;
-        bool Isset1,Isset2,Isset3,Isset4,Isset5,Isset6,Isset7,Isset8,Isset9,Isseto;
     public slots:
-        void updateDataHamasCam1(QList<DataInputCam>);
-        void updateDataHamasCam2(QList<DataInputCam>);
-        void updateDataHamasCam3(QList<DataInputCam>);
-        void updateDataAznanCam1F(QList<DataInputTrans>);
-        void updateDataAznanCam2F(QList<DataInputTrans>);
-        void updateDataAznanCam3F(QList<DataInputTrans>);
-        void updateDataAznanCam1L(QList<DataInputTrans>);
-        void updateDataAznanCam2L(QList<DataInputTrans>);
-        void updateDataAznanCam3L(QList<DataInputTrans>);
+        void run1(QList<DataInputCam>,QList<DataInputCam>,QList<DataInputCam>);
+
     signals:
-        void sendDataQFound1(QList<DataInputCam>);
-        void sendDataQLost1(QList<DataInputCam>);
-        void sendDataQFound2(QList<DataInputCam>);
-        void sendDataQLost2(QList<DataInputCam>);
-        void sendDataQFound3(QList<DataInputCam>);
-        void sendDataQLost3(QList<DataInputCam>);
+        void sendDataQFoundLost(QList<DataInputCam>,QList<DataInputCam>,QList<DataInputCam>,QList<DataInputCam>,QList<DataInputCam>,QList<DataInputCam>);
+        void requestDataCam(bool);
+        void sendFlagGetLostFoundData(bool);
         void signalupdateAssociateMat(Mat);
+
 }
 ;
 
