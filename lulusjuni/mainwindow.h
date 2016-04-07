@@ -23,6 +23,7 @@
 #include "systemperformancedialog.h"
 #include "trackingviewdialog.h"
 #include "coordinateconverter.h"
+#include "perspectivetransformation.h"
 
 
 using namespace cv;
@@ -44,6 +45,7 @@ public:
 
     void updateDisplayFormationTeamA();
     void updateDisplayFormationTeamB();
+    perspectiveTransformation *myPersTransDialog;
 
 
 
@@ -84,6 +86,7 @@ private:
     SystemPerformanceDialog *mySPDialog;
     TrackingViewDialog *myTVDialog;
     BackgroundModelTuningDialog *myBMTDialog;
+
 
     QString filename_1;
     QString filename_2;

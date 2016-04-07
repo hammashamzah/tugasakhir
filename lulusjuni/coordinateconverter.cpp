@@ -37,40 +37,23 @@ QPoint CoordinateConverter::pixelToReal(QPoint pos, int pixel_width, int pixel_h
     posReal.setY((pos.y()-offset_y)/y_size);
     return posReal;
 }
-/* fungsi ini mentransformasi perspective */
-Mat CoordinateConverter::getPersTransformMatrix(String imageFileName)
+
+/* input: koordinat piksel gambar asli, matriks transformasi
+ * output: koordinat piksel hasil transformasi
+ */
+QPoint CoordinateConverter::perspectiveTrans(QPoint picture_coordinate, Mat transformer)
 {
-    Point2f inputQuad[4];
-    // Output Quadilateral or World plane coordinates
-    Point2f outputQuad[4];
-    // Lambda Matrix
-    Mat lambda( 2, 4, CV_32FC1 );
 
-    //Load the image
-    Mat input=imread(imageFileName);
+    Mat result;
+    QPoint dst;
+    double src[3]={(double)picture_coordinate.x(), (double)picture_coordinate.y(), 1};
+    Mat src_coordinate = Mat(3,1,CV_64FC1, src);
 
-    // Set the lambda matrix the same type and size as input
-    lambda = Mat::zeros( input.rows, input.cols, input.type() );
+    result=transformer*src_coordinate;
 
-    inputQuad[0] =Point2f (100, 50);
-    inputQuad[1] =Point2f (400, 50);
-    inputQuad[2] =Point2f (100, 400);
-    inputQuad[3] =Point2f (400, 400);
+    dst.setX((int)(result.at<double>(0,0)/result.at<double>(0,2)));
+    dst.setY((int)(result.at<double>(0,1)/result.at<double>(0,2)));
 
-    // The 4 points where the mapping is to be done , from top-left in clockwise order
-    outputQuad[0] = Point2f( 0, 0 );
-    outputQuad[1] = Point2f( input.cols, 0);
-    outputQuad[2] = Point2f( input.cols, input.rows);
-    outputQuad[3] = Point2f( 0, input.rows );
-
-    // Get the Perspective Transform Matrix i.e. lambda
-    lambda = getPerspectiveTransform( inputQuad, outputQuad );
-    //qDebug << "lambda = "<< endl << " "  << lambda << endl << endl;
-
-    //imshow("lambda", lambda);
-    // Apply the Perspective Transform just found to the src image
-    //warpPerspective(input,output,lambda,input.size());
-    //imwrite("output.jpg", output);
-    return lambda;
+    return dst;
 }
 

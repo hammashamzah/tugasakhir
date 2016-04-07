@@ -5,7 +5,6 @@
 #include <iostream>
 
 
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
@@ -19,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	myTVDialog = new TrackingViewDialog(this);
 //	myBMTDialog = new BackgroundModelTuningDialog(this);
 	myFSDialog = new FieldSelectionDialog(this);
+    myPersTransDialog = new perspectiveTransformation(this);
 
 	//connect slot
 	QObject::connect(myStream_1, SIGNAL(rawImage(QImage)), myCVDialog, SLOT(updateRawPlayerUI_1(QImage)));
@@ -43,24 +43,27 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_3(int)), myStream_3, SLOT(updateValueGaussianSize(int)));
     QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myCVDialog, SLOT(updateLabel(int)));
 */
+    //QObject::connect(myPersTransDialog, SIGNAL(valueGaussianSize_1(int)), myCVDialog, SLOT(updateLabel(int)));
 
     connect(ui->label_game_visual, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(mainGameDisplayClickEvent(QPoint&)));
     connect(ui->label_formationTeamA, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationA(QPoint&)));
     connect(ui->label_formationTeamB, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationB(QPoint&)));
     connect(ui->label_game_visual, SIGNAL(sendRightClickPosition(QPoint&)),this, SLOT(mainGameDisplayRightClickEvent(QPoint&)));
 
-/*
     Mat matrik;
     Mat posisi;
+    QPoint P;
+    QPoint Ptrans(5,2);
 
-    matrik=konversi.getPersTransformMatrix("lapangan.png");
-    cout<<matrik;
-    posisi = matrik+matrik;
-     cout<<posisi;
+    myPersTransDialog->show();
 
-*/
+    matrik=myPersTransDialog->getMatrix("lapangan.png");
+    Ptrans = konversi.perspectiveTrans(P, matrik);
+    cout<<matrik<<" ";
+    cout<<Ptrans.x()<<" "<<Ptrans.y();
+
+
     setRandomPlayerProperties();
-
 
     updateGameVisual();
     teamA.setFormation(442);

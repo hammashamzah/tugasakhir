@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     preprocessing.cpp \
     node.cpp \
     allaboutteam.cpp \
-    coordinateconverter.cpp
+    coordinateconverter.cpp \
+    perspectivetransformation.cpp
 
 HEADERS  += mainwindow.h \
     fieldselectiondialog.h \
@@ -51,7 +52,8 @@ HEADERS  += mainwindow.h \
     preprocessing.h \
     node.h \
     allaboutteam.h \
-    coordinateconverter.h
+    coordinateconverter.h \
+    perspectivetransformation.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \
@@ -59,4 +61,5 @@ FORMS    += mainwindow.ui \
     trackingviewdialog.ui \
     systemperformancedialog.ui \
     errorcalculationdialog.ui \
-    cameraviewdialog.ui
+    cameraviewdialog.ui \
+    perspectivetransformation.ui

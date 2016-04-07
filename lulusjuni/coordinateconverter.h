@@ -13,6 +13,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <qglobal.h>
 
 using namespace cv;
 
@@ -23,7 +24,7 @@ public:
     explicit CoordinateConverter(QObject *parent = 0);
     QPoint pixelToHeatMap(QPoint pos, int pixel_width, int pixel_height, int offset_x, int offset_y);
     QPoint pixelToReal(QPoint pos, int pixel_width, int pixel_height, int offset_x, int offset_y);
-    Mat getPersTransformMatrix(String imageFileName);
+    QPoint perspectiveTrans(QPoint picture_coordinate, Mat transformer);
 
 signals:
 
