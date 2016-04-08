@@ -25,14 +25,14 @@ SOURCES += main.cpp\
     matdisplay.cpp \
     playervisual.cpp \
     objectvariable.cpp \
-    Highlevel.cpp \
     KalmanObj.cpp \
     ObjAssociate.cpp \
     generatematcam.cpp \
     generatemattrans.cpp \
     datainputtrans.cpp \
     datainputcam.cpp \
-    kalmanobj3d.cpp
+    kalmanobj3d.cpp \
+    Tracking.cpp
 
 HEADERS  += mainwindow.h \
     fieldselectiondialog.h \
@@ -44,14 +44,14 @@ HEADERS  += mainwindow.h \
     matdisplay.h \
     playervisual.h \
     objectvariable.h \
-    Highlevel.h \
     KalmanObj.h \
     ObjAssociate.h \
     generatematcam.h \
     generatemattrans.h \
     datainputtrans.h \
     datainputcam.h \
-    kalmanobj3d.h
+    kalmanobj3d.h \
+    Tracking.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

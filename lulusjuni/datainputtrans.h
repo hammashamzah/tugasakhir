@@ -11,9 +11,9 @@ class DataInputTrans
     public:
         DataInputTrans();
         ~DataInputTrans();
-        Point Pos_trans;
-        Point speed;
-        Point accel;
+        Point2f Pos_trans;
+        Point2f speed;
+        Point2f accel;
         bool flag;
         int id;
 };
