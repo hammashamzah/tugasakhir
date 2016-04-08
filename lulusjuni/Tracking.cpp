@@ -10,7 +10,7 @@ Tracking::Tracking(int FR,double x_down_left1,double x_down_right1,double x_uppe
     generateCamTrans2=new GenerateMatTrans (TdataCamera2);
     kalmancam1  = new Kalmanobj (1,x_down_left1,x_down_right1,x_upper_left1,x_upper_right1,y_down_left1,y_down_right1,y_upper_left1,y_upper_right1,FR);
     kalmancam2  = new Kalmanobj (2,x_down_left2,x_down_right2,x_upper_left2,x_upper_right2,y_down_left2,y_down_right2,y_upper_left2,y_upper_right2,FR);
-    Associe     = new Associate (operate);
+    Associe     = new Associate (dual);
     flagrun1 = false;
     flagrun2 = false;
     initGab = Init;
