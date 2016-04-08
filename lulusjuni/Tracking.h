@@ -43,8 +43,8 @@ class Tracking: public QObject
         Kalmanobj *kalmancam2;
         Kalmanobj *kalmancam3;
         Associate *Associe;
-        Tracking(int FR,double xdl1,double xdr1,double xul1,double xur1,double ydl1,double ydr1,double yul1,double yur1,double pixel_th1,
-                                    double xdl2,double xdr2,double xul2,double xur2,double ydl2,double ydr2,double yul2,double yur2,double pixel_th2,
+        Tracking(int FR,double x_down_left1,double x_down_right1,double x_upper_left1,double x_upper_right1,double y_down_left1,double y_down_right1,double y_upper_left1,double y_upper_right1,double pixel_th1,
+                                    double x_down_left2,double x_down_right2,double x_upper_left2,double x_upper_right2,double y_down_left2,double y_down_right2,double y_upper_left2,double y_upper_right2,double pixel_th2,
                                     double TdataCamera1,double TdataCamera2,mode ops, QList <DataInputCam>Init);
         ~Tracking();
         Mat AsosiasiGlob;

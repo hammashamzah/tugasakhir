@@ -1,16 +1,15 @@
 #include "Tracking.h"
 
-
-Tracking::Tracking(int FR,double xdl1,double xdr1,double xul1,double xur1,double ydl1,double ydr1,double yul1,double yur1,double pixel_th1,
-                            double xdl2,double xdr2,double xul2,double xur2,double ydl2,double ydr2,double yul2,double yur2,double pixel_th2,
+Tracking::Tracking(int FR,double x_down_left1,double x_down_right1,double x_upper_left1,double x_upper_right1,double y_down_left1,double y_down_right1,double y_upper_left1,double y_upper_right1,double pixel_th1,
+                            double x_down_left2,double x_down_right2,double x_upper_left2,double x_upper_right2,double y_down_left2,double y_down_right2,double y_upper_left2,double y_upper_right2,double pixel_th2,
                             double TdataCamera1,double TdataCamera2,mode ops, QList <DataInputCam>Init){
     operate = ops;
-    generateCam1 = new GenerateMatCam(1,xdl1,xdr1,xul1,xur1,ydl1,ydr1,yul1,yur1,pixel_th1);
-    generateCam2 = new GenerateMatCam(2,xdl2,xdr2,xul2,xur2,ydl2,ydr2,yul2,yur2,pixel_th2);
+    generateCam1 = new GenerateMatCam(1,x_down_left1,x_down_right1,x_upper_left1,x_upper_right1,y_down_left1,y_down_right1,y_upper_left1,y_upper_right1,pixel_th1);
+    generateCam2 = new GenerateMatCam(2,x_down_left2,x_down_right2,x_upper_left2,x_upper_right2,y_down_left2,y_down_right2,y_upper_left2,y_upper_right2,pixel_th2);
     generateCamTrans1=new GenerateMatTrans (TdataCamera1);
     generateCamTrans2=new GenerateMatTrans (TdataCamera2);
-    kalmancam1  = new Kalmanobj (1,xdl1,xdr1,xul1,xur1,ydl1,ydr1,yul1,yur1,FR);
-    kalmancam2  = new Kalmanobj (2,xdl2,xdr2,xul2,xur2,ydl2,ydr2,yul2,yur2,FR);
+    kalmancam1  = new Kalmanobj (1,x_down_left1,x_down_right1,x_upper_left1,x_upper_right1,y_down_left1,y_down_right1,y_upper_left1,y_upper_right1,FR);
+    kalmancam2  = new Kalmanobj (2,x_down_left2,x_down_right2,x_upper_left2,x_upper_right2,y_down_left2,y_down_right2,y_upper_left2,y_upper_right2,FR);
     Associe     = new Associate (operate);
     flagrun1 = false;
     flagrun2 = false;
