@@ -51,8 +51,13 @@ void CoordinateTransform::processDataQFoundLost(QList<DataInputCam> lostCam1, QL
     emit sendDataInputTransformed(lostCamTrans1, foundCamTrans1, lostCamTrans2, foundCamTrans2);
 }
 
+void CoordinateTransform::getTransformMat(QPoint clicked1, QPoint clicked2, QPoint clicked3, QPoint clicked4, Mat image)
+{
 
-Point2f CoordinateTransform::TransformPoint(Point2f pos, int cameraID)
+}
+
+
+Point2f CoordinateTransform::TransformPointToGlobal(Point2f pos, int cameraID)
 {
     int offset=0;
     if (cameraID==1) offset=PANJANG_LAPANGAN/2;
@@ -60,4 +65,19 @@ Point2f CoordinateTransform::TransformPoint(Point2f pos, int cameraID)
     //lakukan transformasi
     //return (pos*lambda).x + offset, (pos*lambda).y)
 
+}
+
+Point2f CoordinateTransform::TransformPointToCamera(Point2f picture_coordinate, Mat transform_matrix)
+{
+    Mat result;
+        Point2f dst;
+        double src[3]={(double)picture_coordinate.x, (double)picture_coordinate.y, 1};
+        Mat src_coordinate = Mat(3,1,CV_64FC1, src);
+
+        result=transfor_matrix*src_coordinate;
+
+        dst.setX((int)(result.at<double>(0,0)/result.at<double>(0,2)));
+        dst.setY((int)(result.at<double>(0,1)/result.at<double>(0,2)));
+
+        return dst;
 }

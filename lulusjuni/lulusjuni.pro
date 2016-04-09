@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     generatemattrans.cpp \
     datainputtrans.cpp \
     datainputcam.cpp \
-    kalmanobj3d.cpp
+    kalmanobj3d.cpp \
+    coordinatetransform.cpp
 
 HEADERS  += mainwindow.h \
     fieldselectiondialog.h \
@@ -51,7 +52,8 @@ HEADERS  += mainwindow.h \
     generatemattrans.h \
     datainputtrans.h \
     datainputcam.h \
-    kalmanobj3d.h
+    kalmanobj3d.h \
+    coordinatetransform.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \
