@@ -53,9 +53,9 @@ void GenerateMatCam::cam_associate(int data_before,QList<DataInputCam> current,i
     else{
         if((!previous.empty())&&(!pred.empty())){
             if(YDL>YUL && YDR>YUR && XDR>XUR && XDL<XUR){
-                yo =((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))-((YDL+YDR)/2);
+                yo =-((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))+((YDL+YDR)/2);
             }
-            xo =(((((yo*(-XDL+XUL))/(YDL-YUL))+XDL)+(((yo*(XDR-XUR))/(YDR-YUR))+(XDR)))/2);
+            xo =((((((YDL-yo)*(-XDL+XUL))/(YDL-YUL))+XDL)+((-(((YDR-yo)*(XDR-XUR))/(YDR-YUR))+(XDR))))/2);
             link_theid(data_bef);
             checkFound();
             checkLost();
@@ -84,10 +84,8 @@ double GenerateMatCam::threshold_coef(double y){
 void GenerateMatCam::find_threshold_x(double &x_kanan,double &x_kiri,double y,double x,double y_m){
     double k = threshold_coef(y);
     double th = k*THETA;
-    if(y > yo){
-        x_kanan = x+(th/2)-(((x-xo)/(y-yo))*(y_m-y));
-        x_kiri = x-(th/2)-(((x-xo)/(y-yo))*(y_m-y));
-    }
+    x_kanan = x+(th/2)-(((x-xo)/(y-yo))*(y_m-y));
+    x_kiri = x-(th/2)-(((x-xo)/(y-yo))*(y_m-y));
 }
 double GenerateMatCam::find_threshold_y(double y){
     double k = threshold_coef(y);

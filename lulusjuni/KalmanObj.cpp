@@ -173,9 +173,9 @@ void Kalmanobj::extract_actual_a(int idx){
 
 void Kalmanobj::track_size(double &pred_h,double &pred_w,DataInputCam reff,DataInputCam curr){
     /*koordinate titik hilang*/
-    double yo =((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))-((YDL+YDR)/2);
-    double perb_init = (-((double)reff.dataplayer.y)+((YDL+YDR)/2))/(((double)((double)reff.dataplayer.width))-yo);
-    double perb_act = (((double)curr.dataplayer.y)-yo)/((((double)curr.dataplayer.y)-yo)+((reff.dataplayer.y)-((YDL+YDR)/(2))));
+    double yo =-((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))+((YDL+YDR)/2);
+    double perb_init = (-((double)reff.dataplayer.y)+((YDL+YDR)/2))/((((double)reff.dataplayer.y))-yo);
+    double perb_act = (((double)curr.dataplayer.y)-yo)/((-yo)+((YDL+YDR)/(2)));
     double width_pres = (1+perb_init)*((double)curr.dataplayer.width);
     double height_pres = (1+perb_init)*((double)curr.dataplayer.height);
     pred_w = width_pres * perb_act;
