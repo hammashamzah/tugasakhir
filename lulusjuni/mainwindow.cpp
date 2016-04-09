@@ -56,13 +56,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QPoint Ptrans(5,2);
 
     myPersTransDialog->show();
-
+    /*
     matrik=myPersTransDialog->getMatrix("lapangan.png");
     Ptrans = konversi.perspectiveTrans(P, matrik);
     cout<<matrik<<" ";
     cout<<Ptrans.x()<<" "<<Ptrans.y();
 
-
+    */
     setRandomPlayerProperties();
 
     updateGameVisual();
@@ -146,15 +146,13 @@ void MainWindow::on_actionVideo_2_triggered()
 		} else {
 			ui->label_videostream_2->setText("Video Stream 2:" +  filename_2);
 		}
-	}
-	
+    }
 
 }
 
 void MainWindow::on_actionVideo_3_triggered()
 {
-	
-	filename_3 = QFileDialog::getOpenFileName(this,
+    filename_3 = QFileDialog::getOpenFileName(this,
 	             tr("Open Video Stream 3"), ".",
 	             tr("Video Files (*.avi *.mpg *.mp4)"));
 	if (!filename_3.isEmpty()) {

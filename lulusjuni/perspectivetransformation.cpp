@@ -44,7 +44,7 @@ void perspectiveTransformation::get4Point(QPoint &pos)
 }
 
 /* fungsi ini mentransformasi perspective */
-Mat perspectiveTransformation::getMatrix(String imageFileName)
+void perspectiveTransformation::getMatrix(String imageFileName)
 {
 
     // Output Quadilateral or World plane coordinates
@@ -72,7 +72,8 @@ Mat perspectiveTransformation::getMatrix(String imageFileName)
     // Apply the Perspective Transform just found to the src image
     //warpPerspective(input,output,lambda,input.size());
     //imwrite("output.jpg", output);
-    return lambda;
+    emit sendTransformMat (lambda);
+
 }
 
 

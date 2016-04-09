@@ -18,7 +18,7 @@ class perspectiveTransformation : public QDialog
 
 public:
     explicit perspectiveTransformation(QWidget *parent = 0);
-    Mat getMatrix(String imageFileName);
+    void getMatrix(String imageFileName);
     ~perspectiveTransformation();
 public slots:
     void get4Point(QPoint &pos);
@@ -30,6 +30,8 @@ private slots:
 private:
     Ui::perspectiveTransformation *ui;
     Point2f clickedPoint[4];
+signals:
+    void sendTransformMat(Mat&);
 
 
 };
