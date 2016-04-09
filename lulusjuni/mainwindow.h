@@ -14,6 +14,7 @@
 #include "fieldselectiondialog.h"
 #include "systemperformancedialog.h"
 #include "trackingviewdialog.h"
+#include "processor.h"
 
 namespace Ui {
 class MainWindow;
@@ -46,14 +47,11 @@ private slots:
 
     void on_actionVideo_2_triggered();
 
-    void on_actionVideo_3_triggered();
-
     void on_pushButton_play_released();
 
+    void on_pushButton_single_play_released();
+
 signals:
-    void firstFrame_1(const QImage &image);
-    void firstFrame_2(const QImage &image);
-    void firstFrame_3(const QImage &image);
 
 private:
     Ui::MainWindow *ui;
@@ -63,14 +61,9 @@ private:
     SystemPerformanceDialog *mySPDialog;
     TrackingViewDialog *myTVDialog;
     BackgroundModelTuningDialog *myBMTDialog;
+    Processor *myProcessor;
 
-    QString filename_1;
-    QString filename_2;
-    QString filename_3;
-
-    VideoProcessor *myStream_1;
-    VideoProcessor *myStream_2;
-    VideoProcessor *myStream_3;
+    QString filename;
     bool isFieldSelectionDialogInitialized;
 
 };

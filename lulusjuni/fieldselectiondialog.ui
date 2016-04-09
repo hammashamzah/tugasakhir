@@ -28,11 +28,6 @@
          <string>Camera 2</string>
         </property>
        </item>
-       <item>
-        <property name="text">
-         <string>Camera 3</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item>

@@ -42,6 +42,13 @@
      </widget>
     </item>
     <item>
+     <widget class="QPushButton" name="pushButton_single_play">
+      <property name="text">
+       <string>Single Frame Play</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QLabel" name="current_time_1">
@@ -208,7 +215,6 @@
     </property>
     <addaction name="actionVideo_1"/>
     <addaction name="actionVideo_2"/>
-    <addaction name="actionVideo_3"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">

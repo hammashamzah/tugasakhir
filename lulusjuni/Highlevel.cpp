@@ -1,7 +1,7 @@
 #include "Highlevel.h"
 
 
-HighLevel::HighLevel(double FR,double xdl1,double xdr1,double xul1,double xur1,double ydl1,double ydr1,double yul1,double yur1,double pixel_th1,
+HighLevel::HighLevel(double FR,double xdl1,double xdr1,double xsul1,double xur1,double ydl1,double ydr1,double yul1,double yur1,double pixel_th1,
                             double xdl2,double xdr2,double xul2,double xur2,double ydl2,double ydr2,double yul2,double yur2,double pixel_th2,
                             double xdl3,double xdr3,double xul3,double xur3,double ydl3,double ydr3,double yul3,double yur3,double pixel_th3,
                             double TdataCamera1,double TdataCamera2,double TdataCamera3,mode ops){
@@ -206,6 +206,7 @@ void HighLevel::run2(QList<DataInputTrans>LostCam1,QList<DataInputTrans>FoundCam
                     AsosiasiGlob.release();
                     AsosiasiGlob = Associe->association_agrr;
                     emit signalupdateAssociateMat(AsosiasiGlob);
+                    //separator
                     for(int i=0;i<hasilMapping.length();i++){
                         if(hasilMapping.at(i).camera==1){
                             inKalman1.append(hasilMapping.at(i));

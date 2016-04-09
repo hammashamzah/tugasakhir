@@ -14,7 +14,6 @@
 #include "fieldselectiondialog.h"
 #include "systemperformancedialog.h"
 #include "trackingviewdialog.h"
-#include "playervisual.h"
 #include "datainputcam.h"
 #include "datainputtrans.h"
 #include <QList>

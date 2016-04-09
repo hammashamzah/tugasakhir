@@ -5,69 +5,18 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	myStream_1 = new VideoProcessor();
-	myStream_2 = new VideoProcessor();
-	myStream_3 = new VideoProcessor();
-
 	myCVDialog = new CameraViewDialog(this);
 	myECDialog = new ErrorCalculationDialog(this);
 	mySPDialog = new SystemPerformanceDialog(this);
 	myTVDialog = new TrackingViewDialog(this);
 	myBMTDialog = new BackgroundModelTuningDialog(this);
 	myFSDialog = new FieldSelectionDialog(this);
+    myProcessor = new Processor();
 
-    QObject::connect(myStream_1, SIGNAL(firstFrameImage(QImage)), myFSDialog, SLOT(setFrame_1(QImage)));
-    QObject::connect(myStream_2, SIGNAL(firstFrameImage(QImage)), myFSDialog, SLOT(setFrame_2(QImage)));
-    QObject::connect(myStream_3, SIGNAL(firstFrameImage(QImage)), myFSDialog, SLOT(setFrame_3(QImage)));
-	//connect slot
-	QObject::connect(myStream_1, SIGNAL(rawImage(QImage)), myCVDialog, SLOT(updateRawImage_1(QImage)));
-	QObject::connect(myStream_2, SIGNAL(rawImage(QImage)), myCVDialog, SLOT(updateRawImage_2(QImage)));
-	QObject::connect(myStream_3, SIGNAL(rawImage(QImage)), myCVDialog, SLOT(updateRawImage_3(QImage)));
-
-	QObject::connect(myStream_1, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImage_1(QImage)));
-	QObject::connect(myStream_2, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImage_2(QImage)));
-	QObject::connect(myStream_3, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImage_3(QImage)));
-
-	QObject::connect(myStream_1, SIGNAL(objectImage(QImage)), myCVDialog, SLOT(updateObjectImage_1(QImage)));
-	QObject::connect(myStream_2, SIGNAL(objectImage(QImage)), myCVDialog, SLOT(updateObjectImage_2(QImage)));
-	QObject::connect(myStream_3, SIGNAL(objectImage(QImage)), myCVDialog, SLOT(updateObjectImage_3(QImage)));
-
-	QObject::connect(myStream_1, SIGNAL(openedImage(QImage)), myCVDialog, SLOT(updateOpenedImage_1(QImage)));
-	QObject::connect(myStream_2, SIGNAL(openedImage(QImage)), myCVDialog, SLOT(updateOpenedImage_2(QImage)));
-	QObject::connect(myStream_3, SIGNAL(openedImage(QImage)), myCVDialog, SLOT(updateOpenedImage_3(QImage)));
-
-	QObject::connect(myStream_1, SIGNAL(bluredImage(QImage)), myCVDialog, SLOT(updateBluredImage_1(QImage)));
-	QObject::connect(myStream_2, SIGNAL(bluredImage(QImage)), myCVDialog, SLOT(updateBluredImage_2(QImage)));
-	QObject::connect(myStream_3, SIGNAL(bluredImage(QImage)), myCVDialog, SLOT(updateBluredImage_3(QImage)));
-
-	QObject::connect(myStream_1, SIGNAL(objectWithKeypointsImage(QImage)), myCVDialog, SLOT(updateObjectWithKeypointsImage_1(QImage)));
-	QObject::connect(myStream_2, SIGNAL(objectWithKeypointsImage(QImage)), myCVDialog, SLOT(updateObjectWithKeypointsImage_2(QImage)));
-	QObject::connect(myStream_3, SIGNAL(objectWithKeypointsImage(QImage)), myCVDialog, SLOT(updateObjectWithKeypointsImage_3(QImage)));
-
-	QObject::connect(myStream_1, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImage_1(QImage)));
-	QObject::connect(myStream_2, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImage_2(QImage)));
-	QObject::connect(myStream_3, SIGNAL(maskedImage(QImage)), myCVDialog, SLOT(updateMaskedImage_3(QImage)));
-
-	QObject::connect(myBMTDialog, SIGNAL(valueMinArea_1(int)), myStream_1, SLOT(updateValueMinArea(int)));
-	QObject::connect(myBMTDialog, SIGNAL(valueMinArea_2(int)), myStream_2, SLOT(updateValueMinArea(int)));
-	QObject::connect(myBMTDialog, SIGNAL(valueMinArea_3(int)), myStream_3, SLOT(updateValueMinArea(int)));
-
-	QObject::connect(myBMTDialog, SIGNAL(valueMaxArea_1(int)), myStream_1, SLOT(updateValueMaxArea(int)));
-	QObject::connect(myBMTDialog, SIGNAL(valueMaxArea_2(int)), myStream_2, SLOT(updateValueMaxArea(int)));
-	QObject::connect(myBMTDialog, SIGNAL(valueMaxArea_3(int)), myStream_3, SLOT(updateValueMaxArea(int)));
-
-	QObject::connect(myBMTDialog, SIGNAL(valueMorpElementSize_1(int)), myStream_1, SLOT(updateValueMorphElementSize(int)));
-	QObject::connect(myBMTDialog, SIGNAL(valueMorpElementSize_2(int)), myStream_2, SLOT(updateValueMorphElementSize(int)));
-	QObject::connect(myBMTDialog, SIGNAL(valueMorpElementSize_3(int)), myStream_3, SLOT(updateValueMorphElementSize(int)));
-
-	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_1(int)), myStream_1, SLOT(updateValueGaussianSize(int)));
-	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_2(int)), myStream_2, SLOT(updateValueGaussianSize(int)));
-	QObject::connect(myBMTDialog, SIGNAL(valueGaussianSize_3(int)), myStream_3, SLOT(updateValueGaussianSize(int)));
-
-    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_1(QList<QPoint>)), myStream_1, SLOT(getMaskCoordinate(QList<QPoint>)));
-    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_2(QList<QPoint>)), myStream_2, SLOT(getMaskCoordinate(QList<QPoint>)));
-    QObject::connect(myFSDialog, SIGNAL(maskCoordinates_3(QList<QPoint>)), myStream_3, SLOT(getMaskCoordinate(QList<QPoint>)));
-
+	QObject::connect(myProcessor, SIGNAL(firstFrameImage(QVector<QImage>)), myFSDialog, SLOT(setFrame(QVector<QImage>)));
+	QObject::connect(myFSDialog, SIGNAL(setMaskCoordinates(QVector< QList<QPoint> >)), myProcessor, SLOT(updateMaskCoordinate(QVector< QList<QPoint> >)));
+	QObject::connect(myProcessor, SIGNAL(setCameraViewImage(QVector< QVector<QImage> >)), myCVDialog, SLOT(updateCameraViewImage(QVector< QVector<QImage> >)));
+	QObject::connect(myBMTDialog, SIGNAL(setValueParameter(QVector< QVector<int> >)), myProcessor, SLOT(updateValueParameter(QVector< QVector<int> >)));
 }
 
 MainWindow::~MainWindow()
@@ -99,18 +48,6 @@ void MainWindow::on_actionSystem_Performance_Testing_Metrics_triggered()
 
 void MainWindow::on_actionField_Selection_triggered()
 {
-	
-	if(!myStream_1->isStopped()){
-        myStream_1->Stop();
-	}
-    if(!myStream_2->isStopped()){
-        myStream_2->Stop();
-	}
-    if(!myStream_3->isStopped()){
-        myStream_3->Stop();
-	}
-
-
 	myFSDialog->show();
 }
 
@@ -121,77 +58,37 @@ void MainWindow::on_actionTracking_View_triggered()
 
 void MainWindow::on_actionVideo_1_triggered()
 {
-	filename_1 = QFileDialog::getOpenFileName(this,
-	             tr("Open Video Stream 1"), ".",
-	             tr("Video Files (*.avi *.mpg *.mp4)"));
-	if (!filename_1.isEmpty()) {
-		if (!myStream_1->loadVideo(filename_1.toLatin1().data())) {
-			QMessageBox msgBox;
-			msgBox.setText("The selected video could not be opened!");
-			msgBox.exec();
-		} else {
-			ui->label_videostream_1->setText("Video Stream 1:" +  filename_1);
-			myStream_1->getFirstFrame();
-		}
-	}
-	
+	filename = QFileDialog::getOpenFileName(this,
+	                                        tr("Open Video Stream 1"), ".",
+	                                        tr("Video Files (*.avi *.mpg *.mp4)"));
+	myProcessor->loadVideo(filename, 1);
 
 }
 
 void MainWindow::on_actionVideo_2_triggered()
 {
-	filename_2 = QFileDialog::getOpenFileName(this,
-	             tr("Open Video Stream 2"), ".",
-	             tr("Video Files (*.avi *.mpg *.mp4)"));
-	if (!filename_2.isEmpty()) {
-		if (!myStream_2->loadVideo(filename_2.toLatin1().data())) {
-			QMessageBox msgBox;
-			msgBox.setText("The selected video could not be opened!");
-			msgBox.exec();
-		} else {
-			ui->label_videostream_2->setText("Video Stream 2:" +  filename_2);
-			myStream_2->getFirstFrame();
-		}
-	}
-	
-
+	filename = QFileDialog::getOpenFileName(this,
+	                                        tr("Open Video Stream 2"), ".",
+	                                        tr("Video Files (*.avi *.mpg *.mp4)"));
+	myProcessor->loadVideo(filename, 2);
 }
 
-void MainWindow::on_actionVideo_3_triggered()
-{
-	
-	filename_3 = QFileDialog::getOpenFileName(this,
-	             tr("Open Video Stream 3"), ".",
-	             tr("Video Files (*.avi *.mpg *.mp4)"));
-	if (!filename_3.isEmpty()) {
-		if (!myStream_3->loadVideo(filename_3.toLatin1().data())) {
-			QMessageBox msgBox;
-			msgBox.setText("The selected video could not be opened!");
-			msgBox.exec();
-		} else {
-			ui->label_videostream_3->setText("Video Stream 3:" +  filename_3);
-			myStream_3->getFirstFrame();
-		}
-	}
-	
-
-
-}
 
 void MainWindow::on_pushButton_play_released()
 {
-	if (myStream_1->isStopped() && myStream_2->isStopped() && myStream_3->isStopped())
+	/*if (myProcessor->isStopped())
 	{
-		myStream_1->Play();
-		myStream_2->Play();
-		myStream_3->Play();
+		myProcessor->playContinously();
 	} else
 	{
-		myStream_1->Stop();
-		myStream_2->Stop();
-		myStream_3->Stop();
-	}
+		myProcessor->Stop();
+	}*/
 }
+
+void MainWindow::on_pushButton_single_play_released() {
+	myProcessor->playSingleFrame();
+}
+
 
 /*QString MainWindow::getFormattedTime(int timeInSeconds){
     int seconds = (int) (timeInSeconds) % 60 ;

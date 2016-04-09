@@ -6,6 +6,11 @@ BackgroundModelTuningDialog::BackgroundModelTuningDialog(QWidget *parent) :
     ui(new Ui::BackgroundModelTuningDialog)
 {
     ui->setupUi(this);
+    parameters.resize(2);
+    parameters[0].resize(4);
+    parameters[1].resize(4);
+    parameters[0].fill(0);
+    parameters[1].fill(0);
 }
 
 BackgroundModelTuningDialog::~BackgroundModelTuningDialog()
@@ -15,64 +20,58 @@ BackgroundModelTuningDialog::~BackgroundModelTuningDialog()
 
 void BackgroundModelTuningDialog::on_slider_min_area_1_valueChanged(int value)
 {
-	emit valueMinArea_1(value);
+	parameters[0][0] = value;
+    emit setValueParameter(parameters);
 }
 
 void BackgroundModelTuningDialog::on_slider_min_area_2_valueChanged(int value)
 {
-	emit valueMinArea_2(value);
-}
+	parameters[1][0] = value;
+    emit setValueParameter(parameters);
 
-void BackgroundModelTuningDialog::on_slider_min_area_3_valueChanged(int value)
-{
-	emit valueMinArea_3(value);
 }
 
 void BackgroundModelTuningDialog::on_slider_max_area_1_valueChanged(int value)
 {
-	emit valueMaxArea_1(value);
+	parameters[0][1] = value;
+    emit setValueParameter(parameters);
+
 }
 
 void BackgroundModelTuningDialog::on_slider_max_area_2_valueChanged(int value)
 {
-	emit valueMaxArea_2(value);
-}
+	parameters[1][1] = value;
+    emit setValueParameter(parameters);
 
-void BackgroundModelTuningDialog::on_slider_max_area_3_valueChanged(int value)
-{
-	emit valueMaxArea_3(value);
 }
 
 void BackgroundModelTuningDialog::on_slider_morp_element_size_1_valueChanged(int value)
 {
-	emit valueMorpElementSize_1(value);
+	parameters[0][2] = value;
+    emit setValueParameter(parameters);
+
 }
 
 void BackgroundModelTuningDialog::on_slider_morp_element_size_2_valueChanged(int value)
 {
-	emit valueMorpElementSize_2(value);
-}
+	parameters[1][2] = value;
+    emit setValueParameter(parameters);
 
-void BackgroundModelTuningDialog::on_slider_morp_element_size_3_valueChanged(int value)
-{
-	emit valueMorpElementSize_3(value);
 }
 
 void BackgroundModelTuningDialog::on_slider_gaussian_size_1_valueChanged(int value)
 {
-	emit valueGaussianSize_1(value);
+	parameters[0][3] = value;
+    emit setValueParameter(parameters);
+
 }
 
 void BackgroundModelTuningDialog::on_slider_gaussian_size_2_valueChanged(int value)
 {
-	emit valueGaussianSize_2(value);
-}
+	parameters[1][3] = value;
+    emit setValueParameter(parameters);
 
-void BackgroundModelTuningDialog::on_slider_gaussian_size_3_valueChanged(int value)
-{
-	emit valueGaussianSize_3(value);
 }
-
 
 void BackgroundModelTuningDialog::on_pushButton_load_released()
 {

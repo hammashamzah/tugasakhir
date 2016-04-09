@@ -17,7 +17,7 @@
 
 using namespace cv;
 
-class VideoProcessor : public QThread
+class VideoProcessor : public QObject
 {	Q_OBJECT
 private:
 	bool stop;
@@ -26,15 +26,14 @@ private:
 	int frameRate;
 	VideoCapture *capture;
 	Mat frame, objectFrame, mask, maskedFrame, openedFrame, bluredFrame, objectWithKeypointsFrame;
-	QImage qRawImage, qMaskedFrame, qObjectFrame, qOpenedFrame, qBluredFrame, qObjectWithKeypointsFrame;
+	QImage qRawFrame, qMaskedFrame, qObjectFrame, qOpenedFrame, qBluredFrame, qObjectWithKeypointsFrame;
     SimpleBlobDetector::Params params;
 	Ptr<BackgroundSubtractor> pMOG2;
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	vector<KeyPoint> keypoints;
     Mat morphElement;
-    int entryCounter;
-
+    QVector<QImage> allFrames;
     int minArea;
     int maxArea;
     int morphElementSize;
@@ -43,19 +42,10 @@ private:
 
 signals:
 	//Signal to output frame to be displayed
-	void firstFrameImage(const QImage &image);
-	void rawImage(const QImage &image);
-	void maskedImage(const QImage &image);
-	void objectImage(const QImage &image);
-	void openedImage(const QImage &image);
-	void bluredImage(const QImage &image);
-	void objectWithKeypointsImage(const QImage &image);
+	void setSingleCameraViewImage(const QVector<QImage>);
 public slots:
 	//update parameters
-	void updateValueMinArea(int value);
-	void updateValueMaxArea(int value);
-	void updateValueMorphElementSize(int value);
-	void updateValueGaussianSize(int value);
+    void setValueParameter(QVector<int>);
 	void getMaskCoordinate(QList<QPoint>);
 protected:
 	void run();
@@ -63,18 +53,12 @@ protected:
 	void maskImage();
 public:
 	//Constructor
-	VideoProcessor(QObject *parent = 0);
+    VideoProcessor();
 	//Destructor
 	~VideoProcessor();
 	//Load a video from memory
 	bool loadVideo(string filename);
-	//Play the video
-	void Play();
-	//Stop the video
-	void Stop();
 	//check if the player has been stopped
-	bool isStopped() const;
-
 	//set video properties
 	void setCurrentFrame( int frameNumber);
 
@@ -82,7 +66,8 @@ public:
 	double getFrameRate();
 	double getCurrentFrame();
 	double getNumberOfFrames();
-	void getFirstFrame();
+	QImage getFirstFrame();
+	void processSingleFrame();
 
 private:
     void convertMatToQImage(Mat frame, QImage result);

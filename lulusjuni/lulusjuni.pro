@@ -15,7 +15,7 @@ INCLUDEPATH += /usr/local/include/opencv
 LIBS += -L/usr/local/lib -lopencv_calib3d -lopencv_contrib -lopencv_core -lopencv_features2d -lopencv_flann -lopencv_gpu -lopencv_highgui -lopencv_imgproc -lopencv_legacy -lopencv_ml -lopencv_nonfree -lopencv_objdetect -lopencv_ocl -lopencv_photo -lopencv_stitching -lopencv_superres -lopencv_ts -lopencv_video -lopencv_videostab
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    mainwindow.cpp \
     backgroundmodeltuningdialog.cpp \
     fieldselectiondialog.cpp \
     trackingviewdialog.cpp \
@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     cameraviewdialog.cpp \
     videoprocessor.cpp \
     clickdisplay.cpp \
-    cvmatandqimage.cpp
+    cvmatandqimage.cpp \
+    processor.cpp \
 
 HEADERS  += mainwindow.h \
     backgroundmodeltuningdialog.h \
@@ -35,30 +36,12 @@ HEADERS  += mainwindow.h \
     cameraviewdialog.h \
     videoprocessor.h \
     clickdisplay.h \
-    cvmatandqimage.h
-    matdisplay.cpp \
-    playervisual.cpp \
-    objectvariable.cpp \
-    Highlevel.cpp \
-    KalmanObj.cpp \
-    ObjAssociate.cpp \
-    generatematcam.cpp \
-    generatemattrans.cpp \
-    datainputtrans.cpp \
-    datainputcam.cpp \
-    kalmanobj3d.cpp
-
-HEADERS  += mainwindow.h \
-    matdisplay.h \
-    playervisual.h \
-    objectvariable.h \
-    Highlevel.h \
-    KalmanObj.h \
-    ObjAssociate.h \
-    generatematcam.h \
-    generatemattrans.h \
-    datainputtrans.h \
-    datainputcam.h \
-    kalmanobj3d.h
+    cvmatandqimage.h \
+    processor.h \
 
 FORMS    += mainwindow.ui \
+cameraviewdialog.ui \
+errorcalculationdialog.ui \
+fieldselectiondialog.ui \
+systemperformancedialog.ui \
+backgroundmodeltuningdialog.ui

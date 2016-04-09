@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1137</width>
-    <height>936</height>
+    <width>1015</width>
+    <height>942</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,8 +23,8 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-1092</y>
-        <width>1962</width>
+        <y>-180</y>
+        <width>1314</width>
         <height>3102</height>
        </rect>
       </property>
@@ -89,42 +89,6 @@
              </item>
              <item>
               <widget class="QLabel" name="raw_2">
-               <property name="minimumSize">
-                <size>
-                 <width>640</width>
-                 <height>480</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">Background-color: #000;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <item>
-              <widget class="QLabel" name="label_9">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Raw 3</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="raw_3">
                <property name="minimumSize">
                 <size>
                  <width>640</width>
@@ -221,42 +185,6 @@
              </item>
             </layout>
            </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_7">
-             <item>
-              <widget class="QLabel" name="label_12">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Masked Frame 3</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="masked_3">
-               <property name="minimumSize">
-                <size>
-                 <width>640</width>
-                 <height>480</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">Background-color: #000;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
           </layout>
          </item>
          <item>
@@ -321,42 +249,6 @@
              </item>
              <item>
               <widget class="QLabel" name="object_2">
-               <property name="minimumSize">
-                <size>
-                 <width>640</width>
-                 <height>480</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">Background-color: #000;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_15">
-             <item>
-              <widget class="QLabel" name="label_23">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Object Frame 3</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="object_3">
                <property name="minimumSize">
                 <size>
                  <width>640</width>
@@ -453,42 +345,6 @@
              </item>
             </layout>
            </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_18">
-             <item>
-              <widget class="QLabel" name="label_29">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Opened Frame 3</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="opened_3">
-               <property name="minimumSize">
-                <size>
-                 <width>640</width>
-                 <height>480</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">Background-color: #000;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
           </layout>
          </item>
          <item>
@@ -569,42 +425,6 @@
              </item>
             </layout>
            </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_21">
-             <item>
-              <widget class="QLabel" name="label_35">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Blurred Frame 3</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="blured_3">
-               <property name="minimumSize">
-                <size>
-                 <width>640</width>
-                 <height>480</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">Background-color: #000;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
           </layout>
          </item>
          <item>
@@ -669,42 +489,6 @@
              </item>
              <item>
               <widget class="QLabel" name="keypoint_2">
-               <property name="minimumSize">
-                <size>
-                 <width>640</width>
-                 <height>480</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">Background-color: #000;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_24">
-             <item>
-              <widget class="QLabel" name="label_41">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Keypoints 3</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="keypoint_3">
                <property name="minimumSize">
                 <size>
                  <width>640</width>

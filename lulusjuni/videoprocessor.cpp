@@ -3,23 +3,22 @@
 
 using namespace cv;
 
-VideoProcessor::VideoProcessor(QObject *parent): QThread(parent)
+VideoProcessor::VideoProcessor()
 {
 	stop = true;
     pMOG2 = new BackgroundSubtractorMOG2();
-
 	minArea = 0;
 	maxArea = 200;
 	morphElementSize = 3;
 	gaussianSize = 3;
 	isSetMask = false;
-	mode = 1;
+    mode = 0;
+	allFrames.resize(6);
 }
 //destructor
 VideoProcessor::~VideoProcessor()
 {
 	mutex.lock();
-	stop = true;
 	capture->release();
 	delete capture;
 	condition.wakeOne();
@@ -42,7 +41,7 @@ bool VideoProcessor::loadVideo(String filename) {
 		return false;
 }
 
-void VideoProcessor::getFirstFrame(){
+QImage VideoProcessor::getFirstFrame(){
 	Mat firstFrame;
 	QImage qFirstImage;
 	setCurrentFrame(2);
@@ -50,23 +49,13 @@ void VideoProcessor::getFirstFrame(){
 	setCurrentFrame(1);
 
     qFirstImage = QtOcv::mat2Image_shared(firstFrame).rgbSwapped().copy();
-    emit firstFrameImage(qFirstImage);
+    qDebug("Aku siap");
+    return qFirstImage;
+    //emit firstFrameImage(qFirstImage);
 }
 
-void VideoProcessor::Play()
+void VideoProcessor::processSingleFrame()
 {
-	if (!isRunning()) {
-		if (isStopped()) {
-			stop = false;
-		}
-		start(NormalPriority);
-	}
-}
-
-void VideoProcessor::run()
-{
-	int delay = (1000 / frameRate);
-	while (!stop) {
 		//set parameters based on tuning from background model tuning window
 		params.filterByArea = true;
 		params.filterByInertia = false;
@@ -120,36 +109,24 @@ void VideoProcessor::run()
 	        }
 		}
 
-
-
-        qRawImage = QtOcv::mat2Image_shared(frame).copy().rgbSwapped();
+        qRawFrame = QtOcv::mat2Image_shared(frame).copy().rgbSwapped();
         qMaskedFrame = QtOcv::mat2Image_shared(maskedFrame).copy().rgbSwapped();
         qObjectFrame = QtOcv::mat2Image_shared(objectFrame).copy().rgbSwapped();
         qOpenedFrame = QtOcv::mat2Image_shared(openedFrame).copy().rgbSwapped();
         qBluredFrame = QtOcv::mat2Image_shared(bluredFrame).copy().rgbSwapped();
         qObjectWithKeypointsFrame = QtOcv::mat2Image_shared(objectWithKeypointsFrame).copy().rgbSwapped();
         //emit raw image
-        emit rawImage(qRawImage);
-        emit maskedImage(qMaskedFrame);
-        emit objectImage(qObjectFrame);
-        emit openedImage(qOpenedFrame);
-        emit bluredImage(qBluredFrame);
-        emit objectWithKeypointsImage(qObjectWithKeypointsFrame);
+        qDebug("Im here baby");
+		qDebug() << allFrames.size();
+        allFrames[0] = qRawFrame;
+        allFrames[1] = qMaskedFrame;
+        allFrames[2] = qObjectFrame;
+        allFrames[3] = qOpenedFrame;
+        allFrames[4] = qBluredFrame;
+        allFrames[5] = qObjectWithKeypointsFrame;
+        qDebug("Sent");
 
-        this->msleep(delay);
-	}
-}
-
-void VideoProcessor::Stop()
-{
-	stop = true;
-}
-void VideoProcessor::msleep(int ms) {
-	struct timespec ts = { ms / 1000, (ms % 1000) * 1000 * 1000 };
-	nanosleep(&ts, NULL);
-}
-bool VideoProcessor::isStopped() const {
-	return this->stop;
+        emit setSingleCameraViewImage(allFrames);
 }
 
 double VideoProcessor::getCurrentFrame() {
@@ -166,18 +143,13 @@ void VideoProcessor::setCurrentFrame( int frameNumber )
 	capture->set(CV_CAP_PROP_POS_FRAMES, frameNumber);
 }
 
-void VideoProcessor::updateValueMinArea(int value) {
-	minArea = value; 
+void VideoProcessor::setValueParameter(QVector<int> value){
+	minArea = value.at(0);
+	maxArea = value.at(1);
+	morphElementSize = value.at(2);
+	gaussianSize = value.at(3);
 }
-void VideoProcessor::updateValueMaxArea(int value) {
-	maxArea = value;
-}
-void VideoProcessor::updateValueMorphElementSize(int value) {
-	morphElementSize = value;
-}
-void VideoProcessor::updateValueGaussianSize(int value) {
-	gaussianSize = value;
-}
+
 
 void VideoProcessor::getMaskCoordinate(QList<QPoint> maskPoints){
     numberOfMaskPoints = maskPoints.count();
