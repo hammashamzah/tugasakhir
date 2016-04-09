@@ -15,6 +15,7 @@ class DataInputTrans
         Point2f speed;
         Point2f accel;
         bool flag;
+        int cam;
         int id;
 };
 

@@ -1,14 +1,15 @@
 #include "ObjAssociate.h"
 
-Associate::Associate(mode operate){
-    ops = operate;
+Associate::Associate(){
+    IsMatCam1 = false;
+    IsMatCam2 = false;
 }
 
 Associate::~Associate(){
 
 }
 
-void Associate::getOcclusion1(QList<Point> occ){
+/**void Associate::getOcclusion1(QList<Point> occ){
     Occlussion1 = occ;
     Isseto = true;
 }
@@ -21,19 +22,18 @@ void Associate::getOcclusion2(QList<Point> occ){
 void Associate::getOcclusion3(QList<Point> occ){
     Occlussion3 = occ;
     Isset8 = true;
-}
+}**/
 
 void Associate::updateMatCam1(Mat ass1){//from generate MatCam
     assoc1 = ass1;
-    Isset1 = true;
+    IsMatCam1 = true;
 }
 
 void Associate::updateMatCam2(Mat ass2){//from generate MatCam
     assoc2 = ass2;
-    Isset2 = true;
-
+    IsMatCam2 = true;
 }
-
+/**
 void Associate::updateMatCam3(Mat ass3){//from generate MatCam
     assoc3 = ass3;
     Isset3 = true;
@@ -51,32 +51,26 @@ void Associate::updateCurrentCam2(QList<DataInputCam> dat2){//from generate MatC
 void Associate::updateCurrentCam3(QList<DataInputCam> dat3){//from generate MatCam
     cam3 =dat3;
     Isset6 =true;
-}
+}**/
 
-void Associate::accum_assoc(){
+void Associate::accum_assoc(QList<DataInputCam> DataCam1,QList<DataInputCam> DataCam2,QList<Point> OcclusionCam1,QList<Point> OcclusionCam2){
     association_agrr = Mat::zeros(JUMLAH_PLAYER,JUMLAH_PLAYER,CV_8U);
-    switch (ops){
-        case(singel):{
-        if(Isset1 & Isset4){
-            association_agrr = assoc1;
-        }
-        break;
-        }
-        case(dual):{
-        if(Isset1 & Isset2 & Isset4 & Isset5){
-            association_agrr = assoc1 + assoc2 ;
-        }
-        break;
-        }
-        case(triple):{
-        if(Isset1 & Isset2 & Isset3 & Isset4 & Isset5 & Isset6){
-            association_agrr = assoc1 + assoc2+ assoc3;
-        }
-        break;
+    cam1.clear();
+    cam2.clear();
+    Occlussion1.clear();
+    Occlussion2.clear();
+    cam1 = DataCam1;
+    cam2 = DataCam2;
+    Occlussion1 = OcclusionCam1;
+    Occlussion2 = OcclusionCam2;
+    while(!IsMatCam1 || !IsMatCam2){
+        if(IsMatCam1 && IsMatCam2){
+            break;
         }
     }
+    association_agrr = assoc1 + assoc2 ;
     mapping();
-    Isset1 =false;Isset2 =false;Isset3 =false;Isset4 =false;Isset5 =false;Isset6 =false;Isset7 =false;Isseto =false;Isset8 =false;
+    IsMatCam1 = false;IsMatCam2 =false;
 }
 
 void Associate::mapping(){
@@ -92,7 +86,7 @@ void Associate::mapping(){
                     buffer.dataplayer.height =cam1.at(j).dataplayer.height;
                     buffer.status = cam1.at(j).status;
                     buffer.camera = 1;
-                    buffer.flagOcclusion = cam1.at(j).flagOcclusion;
+                    buffer.flag = cam1.at(j).flag;
                     buffer.pixelSpeed.x =cam1.at(j).pixelSpeed.x;
                     buffer.pixelSpeed.y =cam1.at(j).pixelSpeed.y;
                     Mapping.append(buffer);
@@ -107,7 +101,7 @@ void Associate::mapping(){
                     buffer.dataplayer.height =cam2.at(j).dataplayer.height;
                     buffer.status = cam2.at(j).status;
                     buffer.camera = 2;
-                    buffer.flagOcclusion = cam2.at(j).flagOcclusion;
+                    buffer.flag = cam2.at(j).flag;
                     buffer.pixelSpeed.x =cam2.at(j).pixelSpeed.x;
                     buffer.pixelSpeed.y =cam2.at(j).pixelSpeed.y;
                     Mapping.append(buffer);
@@ -122,7 +116,7 @@ void Associate::mapping(){
                     buffer.dataplayer.height =cam3.at(j).dataplayer.height;
                     buffer.status = cam3.at(j).status;
                     buffer.camera = 3;
-                    buffer.flagOcclusion = cam3.at(j).flagOcclusion;
+                    buffer.flag = cam3.at(j).flag;
                     buffer.pixelSpeed.x =cam3.at(j).pixelSpeed.x;
                     buffer.pixelSpeed.y =cam3.at(j).pixelSpeed.y;
                     Mapping.append(buffer);

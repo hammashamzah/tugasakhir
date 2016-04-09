@@ -1,7 +1,6 @@
 #ifndef GENERATEMATTRANS_H
 #define GENERATEMATTRANS_H
 
-
 #include "objectvariable.h"
 #include "opencv/ml.h"
 #include "opencv2/legacy/legacy.hpp"
@@ -22,24 +21,27 @@ class GenerateMatTrans:public QObject
         explicit GenerateMatTrans(QObject *parent = 0);
         GenerateMatTrans(double trehshold);
         ~GenerateMatTrans();
-        void cam_associate(QList<DataInputTrans> Lost,QList<DataInputTrans> Found);
+        void cam_associate();
     private:
         Mat Associate;
         double THETA;
-        bool Isset1,Isset2,Isset3,Isset4;
+        bool IsSetMat,IsSetDataTrans;
+
+        QList<DataInputTrans> QlostFound;
         QList<DataInputTrans> Qlost;
-        QList<DataInputTrans> QFound;
+        QList<DataInputTrans> Qfound;
         Mat fixIt;
         Mat inits;
         Mat Assoc;
-        int sizeQLost,sizeQFound;
-        double Euclid_r,Euclid_x,Euclid_y;
+        double Euclid_r;
         void link_theid();
         double eigen_distance_transform(double x_m, double y_m, double x_obj, double y_obj);
     public slots:
         void getAssociate(Mat);//dari generateMatcam
+        void getDataTrans(QList<DataInputTrans>);//dari Aznan
    signals:
         void UpdateAssociate(Mat);//menuju objassociate
+
 };
 
 

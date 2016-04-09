@@ -19,11 +19,9 @@ class Associate:public QObject
     public: 
         explicit Associate (QObject *parent = 0);
         int validate;
-        Associate(mode operate);
+        Associate();
         ~Associate();
-        void accum_assoc();
-        mode ops;
-        bool Isset1,Isset2,Isset3,Isset4,Isset5,Isset6,Isseto,Isset7,Isset8;
+        void accum_assoc(QList<DataInputCam>,QList<DataInputCam>,QList<Point>,QList<Point>);
         Mat association_agrr;
         QList<DataInputCam>Mapping;
     private:
@@ -31,26 +29,15 @@ class Associate:public QObject
         void AddMat();
         QList<DataInputCam>cam1;
         QList<DataInputCam>cam2;
-        QList<DataInputCam>cam3;
         QList<Point>Occlussion1;
         QList<Point>Occlussion2;
-        QList<Point>Occlussion3;
         Mat assoc1;
         Mat assoc2;
-        Mat assoc3;
-
-        /**Parameter Input Class dinamik**/
+        bool IsMatCam1,IsMatCam2;
 
    public slots:
-        void getOcclusion1(QList<Point>);
-        void getOcclusion2(QList<Point>);
-        void getOcclusion3(QList<Point>);
-        void updateMatCam1(Mat);//from generate MatCam
-        void updateMatCam2(Mat);//from generate MatCam
-        void updateMatCam3(Mat);//from generate MatCam
-        void updateCurrentCam1(QList<DataInputCam>);// from generate MatCam
-        void updateCurrentCam2(QList<DataInputCam>);//from generate MatCam
-        void updateCurrentCam3(QList<DataInputCam>);//from generate MatCam
+        void updateMatCam1(Mat);//from generate MatTrans
+        void updateMatCam2(Mat);//from generate MatTrans
 };
 
 

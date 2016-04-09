@@ -3,31 +3,47 @@
 GenerateMatTrans::GenerateMatTrans(double threshold)
 {
     THETA = threshold;
+    IsSetMat = false;
+    IsSetDataTrans = false;
 }
+
 GenerateMatTrans::~GenerateMatTrans()
 {
 
 }
 
 
-void GenerateMatTrans::getAssociate(Mat initials){
-    inits = initials;
-    Isset3 = true;
+void GenerateMatTrans::getDataTrans(QList<DataInputTrans>LostFound)//dari Aznan
+{
+    QlostFound = LostFound;
+    for(int i=0;i<QlostFound.length();i++){
+        if(QlostFound.at(i).flag == false){
+            Qfound.append(QlostFound.at(i));
+        }
+        else if(QlostFound.at(i).flag == true){
+            Qlost.append(QlostFound.at(i));
+        }
+    }
+    IsSetDataTrans = true;
 }
 
 
-void GenerateMatTrans::cam_associate(QList<DataInputTrans> Lost,QList<DataInputTrans> Found){
-    Qlost =Lost;
-    sizeQLost = Qlost.length();
-    QFound = Found;
-    sizeQFound =QFound.length();
-    if(Isset1 & Isset2 & Isset3){
-        link_theid();
-    }
-    emit UpdateAssociate(Assoc);
-    Qlost.clear();
-    QFound.clear();
+void GenerateMatTrans::getAssociate(Mat initials){
+    inits = initials;
+    IsSetMat = true;
+}
+
+
+void GenerateMatTrans::cam_associate(){
+    QlostFound.clear();
     inits.release();
+    while(!IsSetDataTrans || !IsSetMat){
+        if(IsSetDataTrans && IsSetMat){
+            break;
+        }
+    }\
+    link_theid();
+    emit UpdateAssociate(Assoc);
 }
 
 
@@ -36,15 +52,13 @@ double GenerateMatTrans::eigen_distance_transform(double x_m, double y_m, double
 }
 /**Hungarian Algorithms**/
 void GenerateMatTrans::link_theid(){
-    //double Euclid_x;
-    //double Euclid_y;
     int i,j;
     fixIt = Mat::zeros(JUMLAH_PLAYER,JUMLAH_PLAYER,CV_8U);
-        for(i=0;i<sizeQLost;i++){
-           for(j=0;j<sizeQFound;j++){
-                double th_r = eigen_distance_transform((double)QFound.at(j).Pos_trans.x,(double)QFound.at(j).Pos_trans.y,(double)Qlost.at(i).Pos_trans.x,(double)Qlost.at(i).Pos_trans.y);
+        for(i=0;i<Qlost.length();i++){
+           for(j=0;j<Qfound.length();j++){
+                double th_r = eigen_distance_transform((double)Qfound.at(j).Pos_trans.x,(double)Qfound.at(j).Pos_trans.y,(double)Qlost.at(i).Pos_trans.x,(double)Qlost.at(i).Pos_trans.y);
                 if(th_r < THETA){
-                       fixIt.at<int>(Qlost.at(i).id,QFound.at(i).id) = 1;
+                       fixIt.at<uint8_t>(Qlost.at(i).id,Qfound.at(i).id) += 1;
                    }
              }
         }

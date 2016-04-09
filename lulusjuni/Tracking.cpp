@@ -10,7 +10,7 @@ Tracking::Tracking(int FR,double x_down_left1,double x_down_right1,double x_uppe
     generateCamTrans2=new GenerateMatTrans (TdataCamera2);
     kalmancam1  = new Kalmanobj (1,x_down_left1,x_down_right1,x_upper_left1,x_upper_right1,y_down_left1,y_down_right1,y_upper_left1,y_upper_right1,FR);
     kalmancam2  = new Kalmanobj (2,x_down_left2,x_down_right2,x_upper_left2,x_upper_right2,y_down_left2,y_down_right2,y_upper_left2,y_upper_right2,FR);
-    Associe     = new Associate (dual);
+    Associe     = new Associate (operate);
     flagrun1 = false;
     flagrun2 = false;
     initGab = Init;
@@ -20,12 +20,8 @@ Tracking::Tracking(int FR,double x_down_left1,double x_down_right1,double x_uppe
     QObject::connect(generateCam2,SIGNAL(updateMatrices(Mat)),generateCamTrans2,SLOT(getAssociate(Mat)));
     QObject::connect(generateCam2,SIGNAL(updateOcclusion(QList<Point>)),Associe,SLOT(getOcclusion2(QList<Point>)));
     QObject::connect(generateCam2,SIGNAL(sendCurrent(QList<DataInputCam>)),Associe,SLOT(updateCurrentCam2(QList<DataInputCam>)));
-    QObject::connect(generateCam3,SIGNAL(updateMatrices(Mat)),generateCamTrans2,SLOT(getAssociate(Mat)));
-    QObject::connect(generateCam3,SIGNAL(updateOcclusion(QList<Point>)),Associe,SLOT(getOcclusion3(QList<Point>)));
-    QObject::connect(generateCam3,SIGNAL(sendCurrent(QList<DataInputCam>)),Associe,SLOT(updateCurrentCam3(QList<DataInputCam>)));
     QObject::connect(generateCamTrans1,SIGNAL(UpdateAssociate(Mat)),Associe,SLOT(updateMatCam1(Mat)));
     QObject::connect(generateCamTrans2,SIGNAL(UpdateAssociate(Mat)),Associe,SLOT(updateMatCam2(Mat)));
-    QObject::connect(generateCamTrans3,SIGNAL(UpdateAssociate(Mat)),Associe,SLOT(updateMatCam3(Mat)));
 }
 
 
@@ -49,11 +45,11 @@ void Tracking::run1(int Frame,QList<DataInputCam> dataCamera1,QList<DataInputCam
     finishRun1 = false;
     Frames = Frame;
     generateCam1->cam_associate(0,dataCamera1,Frames,kalmancam1->predictionData,kalmancam1->previousData);
-    indicatedLost1 = generateCam1->indicatedLost;
-    indicatedFound1 = generateCam1->indicatedFound;
+    /**indicatedLostFound1 = generateCam1->indicatedLostFound;
+    indicatedLostFound2 = generateCam2->indicatedLostFound;**/
     generateCam2->cam_associate(((dataCamera1.length())),dataCamera2,Frames,kalmancam2->predictionData,kalmancam2->previousData);
-    indicatedLost2 = generateCam1->indicatedLost;
-    indicatedFound2 = generateCam2->indicatedFound;
+    /**indicatedLost2 = generateCam1->indicatedLost;
+    indicatedFound2 = generateCam2->indicatedFound;**/
     emit sendDataQFoundLost(indicatedFound1,indicatedLost1,indicatedFound2,indicatedLost2);
     mutex.lock();
     bool runs = flagrun2;

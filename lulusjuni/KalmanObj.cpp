@@ -92,7 +92,7 @@ void Kalmanobj::multitrackObj(){
         buffer2.dataplayer.width = currentData.at(i).dataplayer.width;
         buffer2.dataplayer.height = currentData.at(i).dataplayer.height;
         buffer2.status = (double)currentData.at(i).status;
-        buffer2.flagOcclusion = (double)currentData.at(i).flagOcclusion;
+        buffer2.flag = (double)currentData.at(i).flag;
         buffer2.pixelSpeed.x = (double)pre_velocity[i].x;
         buffer2.pixelSpeed.y = (double)pre_velocity[i].y;
 
@@ -102,7 +102,7 @@ void Kalmanobj::multitrackObj(){
         buffer.dataplayer.width = pred_w;
         buffer.dataplayer.height = pred_h;
         buffer.status = (double)currentData.at(i).status;
-        buffer.flagOcclusion = (double)currentData.at(i).flagOcclusion;
+        buffer.flag = (double)currentData.at(i).flag;
         buffer.pixelSpeed.x = (double)post_velsp.x;
         buffer.pixelSpeed.y = (double)post_velsp.y;
         predictionData.append(buffer);
