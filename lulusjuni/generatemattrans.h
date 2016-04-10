@@ -27,14 +27,14 @@ class GenerateMatTrans:public QObject
         double THETA;
         bool IsSetMat,IsSetDataTrans,IsOccSet;
 
-        Qlist<int> remaidedDataId;
+        QList<int> remaindedDataId;
         QList<DataInputTrans> QlostFound;
         QList<DataInputTrans> Qlost;
         QList<DataInputTrans> Qfound;
 
 
-        QList <QList<DataInputCam>> prevOcc;
-        QList <QList<DataInputCam>> currOcc;
+        QList <QList<DataInputCam> > prevOcc;
+        QList <QList<DataInputCam> > currOcc;
 
         Mat fixIt;
         Mat inits;

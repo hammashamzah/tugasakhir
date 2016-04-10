@@ -1,7 +1,8 @@
 #include "dataseparator.h"
 
-DataSeparator::DataSeparator()
+DataSeparator::DataSeparator(bool on)
 {
+    startseparate =on;
 
 }
 
@@ -10,19 +11,37 @@ DataSeparator::~DataSeparator()
 
 }
 
-void DataSeparator::getDataTrans(QList<DataInputTrans> hasilTransformasi){
+void DataSeparator::getDataTrans(QList<QList<DataInputTrans> > hasilTransformasi){
+    QList<DataInputTrans> buffer1;
+    QList<DataInputTrans> buffer2;
     DataCam1.clear();
     DataCam2.clear();
-    for(int i=0;i<hasilTransformasi.length();i++){
-        //lost camera 2 found camera 1
-        if((hasilTransformasi.at(i).cam == 1 && hasilTransformasi.at(i).flag == false)||(hasilTransformasi.at(i).cam == 2 && hasilTransformasi.at(i).flag == true) ){
-            DataCam1.append(hasilTransformasi.at(i));
+    buffer1.clear();
+    buffer2.clear();
+    if(startseparate){
+        buffer1 = hasilTransformasi.at(0);
+        buffer2 = hasilTransformasi.at(1);
+        for(int i =0;i<buffer1.length();i++){
+            if(buffer1.at(i).flag==false)//found
+            {
+                DataCam1.append(buffer1.at(i));
+            }
+            else if(buffer1.at(i).flag==true)//lost
+            {
+                DataCam2.append(buffer1.at(i));
+            }
         }
-        //lost camera 1 found camera 2
-        if((hasilTransformasi.at(i).cam == 1 && hasilTransformasi.at(i).flag == true)||(hasilTransformasi.at(i).cam == 2 && hasilTransformasi.at(i).flag == false)){
-            DataCam2.append(hasilTransformasi.at(i));
+        for(int i =0;i<buffer1.length();i++){
+            if(buffer2.at(i).flag==false)//found
+            {
+                DataCam2.append(buffer1.at(i));
+            }
+            else if(buffer2.at(i).flag==true)//lost
+            {
+                DataCam1.append(buffer1.at(i));
+            }
         }
+        emit SendCamera1(DataCam1);
+        emit SendCamera2(DataCam2);
     }
-    emit SendCamera1(DataCam1);
-    emit SendCamera2(DataCam2);
 }

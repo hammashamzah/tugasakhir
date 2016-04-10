@@ -24,7 +24,7 @@ public:
         explicit GenerateMatCam(QObject *parent = 0);
         GenerateMatCam(int cam,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double pixel_th);
         ~GenerateMatCam();
-        void cam_associate(int data_before,QList<DataInputCam> Current,int Fr,QList<DataInputCam> predict,QList<DataInputCam> prev);
+        void cam_associate(int data_before,int Fr,QList<DataInputCam> predict,QList<DataInputCam> prev);
         QList<DataInputCam> indicatedLostFound;
         Mat Associate;
         double xo,yo;
@@ -33,14 +33,14 @@ public:
         int data_bef;
         double XDL,XDR,XUL,XUR,YDL,YDR,YUL,YUR,THETA;
         int cameras;
-        bool Isset1,Isset2,Isset3,Isseto;
+        bool IssetCurrent;
 
         QList<Point> occlusion;
         QList<DataInputCam> pred;
         QList<DataInputCam> curr;
         QList<DataInputCam> previous;
 
-        QList <QList<DataInputCam>> pot_Occlusion;
+        QList <QList<DataInputCam> > pot_Occlusion;
         Mat accCol;Mat accRow;
 
         int sizeInits,sizePrediction,sizeCurrent,sizePrevious;
@@ -57,15 +57,12 @@ public:
         void checkLost();
         void checkOcclusion();
         void generateOcclusionCluster();
-
-
-/*    public slots:
-        void updatePredic(QList<DataInputCam>);//dari KalmanObj
-        void updatePrevious(QList<DataInputCam>);//dari KalmanObj*/
+   public slots:
+        void getDataCurrent(QList<DataInputCam>);
    signals:
         void updateMatrices(Mat);//menuju generatematrans
         void sendLostFound(QList<DataInputCam>);//menuju fussionData
-        void sendOcclusion(QList<QList<DataInputCam>>);////menuju ObjAssociate
+        void sendOcclusion(QList<QList<DataInputCam> >);////menuju ObjAssociate
 };
 
 #endif // GENERATEMATCAM_H
