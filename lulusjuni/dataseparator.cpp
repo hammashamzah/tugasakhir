@@ -18,7 +18,7 @@ void DataSeparator::getDataTrans(QList<QList<DataInputTrans> > hasilTransformasi
     DataCam2.clear();
     buffer1.clear();
     buffer2.clear();
-    if(startseparate){
+    if(startseparat){
         buffer1 = hasilTransformasi.at(0);
         buffer2 = hasilTransformasi.at(1);
         for(int i =0;i<buffer1.length();i++){
