@@ -15,8 +15,6 @@ class DataInputCam
         Rect dataplayer;
         Point2f pixelSpeed;
         bool flag;
-        int camera;
-        int status;
 };
 
 #endif // DATAINPUTCAM_H

@@ -38,20 +38,22 @@ void GenerateMatTrans::getAssociate(Mat initials){
 void GenerateMatTrans::cam_associate(){
     QlostFound.clear();
     inits.release();
-    while(!IsSetDataTrans || !IsSetMat ){
-        if(IsSetDataTrans && IsSetMat){
+    while(!IsSetMat ){
+        QTest::qWait(100);
+        if(IsSetMat){
             break;
         }
-    }\
+    }
     link_theid();
     emit UpdateAssociate(Assoc);
-    emit UpdateremaindedData(remaidedDataId);
+    emit UpdateremaindedData(remaindedDataId);
 }
 
 
 double GenerateMatTrans::eigen_distance_transform(double x_m, double y_m, double x_obj, double y_obj){
     return(sqrt(((x_m-x_obj)*(x_m-x_obj))+((y_m-y_obj)*(y_m-y_obj))));
 }
+
 /**Hungarian Algorithms**/
 void GenerateMatTrans::link_theid(){
     int i,j;
@@ -68,7 +70,7 @@ void GenerateMatTrans::link_theid(){
                 j++;
              }
            if(j== Qlost.length()){
-                remaidedDataId.append(i);
+                remaindedDataId.append(i);
            }
         }
     Assoc = fixIt + inits;

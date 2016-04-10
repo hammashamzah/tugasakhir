@@ -21,6 +21,10 @@
 #include <QRegExp>
 #include <QObject>
 #include <QMutex>
+#include <QThread>
+#include <QEventLoop>
+#include <QtTest/QTest>
+
 #define Pict_sizex 1280
 #define Pict_sizey 1024
 #define stateNum_mot 6

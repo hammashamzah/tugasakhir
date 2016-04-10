@@ -19,29 +19,35 @@ class Associate:public QObject
     public: 
         explicit Associate (QObject *parent = 0);
         int validate;
-        Associate();
+        Associate(bool);
         ~Associate();
         void accum_assoc(QList<DataInputCam>,QList<DataInputCam>);
         Mat association_agrr;
-        QList<DataInputCam>Mapping;
+        QList<QList<DataInputCam> > DataFinal;
 
-        QList<QList<DataInputCam>> clusterOccCam1;
-        QList<QList<DataInputCam>> clusterOccCam2;
-        QList<QList<DataInputCam>> prevClusterOccCam1;
-        QList<QList<DataInputCam>> prevClusterOccCam2;
+    private:
+        bool startAssociate;
+        void mapping();
+        void AddMat();
+        void handlerOutlier();
+
+        QList<DataInputCam>Mapping1;
+        QList<DataInputCam>Mapping2;
+
+        QList<QList<DataInputCam> > clusterOccCam1;
+        QList<QList<DataInputCam> > clusterOccCam2;
+        QList<QList<DataInputCam> > prevClusterOccCam1;
+        QList<QList<DataInputCam> > prevClusterOccCam2;
+
 
         QList<int> remainData1;
         QList<int> remainData2;
 
-    private:
-        void mapping();
-        void AddMat();
-        void handlerOutlier();
         QList<DataInputCam>cam1;
         QList<DataInputCam>cam2;
 
-        QList<int> posibleId_newclustercam1;
-        QList<int> posibleId_newclustercam2;
+        QList <DataInputCam> Outlier1;
+        QList <DataInputCam> Outlier2;
 
         Mat assoc1;
         Mat assoc2;
@@ -49,14 +55,12 @@ class Associate:public QObject
    public slots:
         void updateMatCam1(Mat);//from generate MatTrans
         void updateMatCam2(Mat);//from generate MatTrans
-        void UpdateOcclusionCam1(QList<QList<DataInputCam>>);//dari generateMatcam
-        void UpdateOcclusionCam2(QList<QList<DataInputCam>>);//dari generateMatcam
+        void UpdateOcclusionCam1(QList<QList<DataInputCam> >);//dari generateMatcam
+        void UpdateOcclusionCam2(QList<QList<DataInputCam> >);//dari generateMatcam
         void remaindedDataCam1(QList<int>);//dari generateMattrans
         void remaindedDataCam2(QList<int>);//dari generateMattrans
-        void handlerOutlier();
     signals:
-        void posibleIdsend(QList<int>);
-        void posibbleIdsend(QList<int>);
+        void sendDataFinal(QList<QList<DataInputCam> >);
 };
 
 

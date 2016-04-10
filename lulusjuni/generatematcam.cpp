@@ -16,6 +16,7 @@ GenerateMatCam::GenerateMatCam(int cam,double xdl,double xdr,double xul,double x
         yo =-((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))+((YDL+YDR)/2);
     }
     xo =((((((YDL-yo)*(-XDL+XUL))/(YDL-YUL))+XDL)+((-(((YDR-yo)*(XDR-XUR))/(YDR-YUR))+(XDR))))/2);
+    IssetCurrent = false;
 }
 GenerateMatCam::~GenerateMatCam()
 {
@@ -23,26 +24,16 @@ GenerateMatCam::~GenerateMatCam()
 
 }
 
-void GenerateMatCam::sendOcclusion(QList<Point>)////menuju generatematrans
-{
-    emit
+void GenerateMatCam::getDataCurrent(QList<DataInputCam> current){
+    curr.clear();
+    curr = current;
+    IssetCurrent = true;
 }
-/**
-void GenerateMatCam::updatePrevious(QList<DataInputCam> prev){
-    previous = prev;
-    sizePrevious = previous.length();
-    Isseto = true;
-}
-void GenerateMatCam::updatePredic(QList<DataInputCam> predict){
-    pred = predict;
-    sizePrediction = pred.length();
-    Isset1 = true;
-}**/
 
-void GenerateMatCam::cam_associate(int data_before,QList<DataInputCam> current,int Fr,QList<DataInputCam> predict,QList<DataInputCam> prev){
+
+void GenerateMatCam::cam_associate(int data_before,int Fr,QList<DataInputCam> predict,QList<DataInputCam> prev){
     int i,j;
     pred.clear();
-    curr.clear();
     indicatedLostFound.clear();
     occlusion.clear();
     accCol.release();
@@ -52,7 +43,6 @@ void GenerateMatCam::cam_associate(int data_before,QList<DataInputCam> current,i
     Associate = Mat::zeros(JUMLAH_PLAYER,JUMLAH_PLAYER,CV_8U);
     accCol = Mat::zeros(JUMLAH_PLAYER,1,CV_8U);
     accRow = Mat::zeros(JUMLAH_PLAYER,1,CV_8U);
-    curr = current;
     sizeCurrent =  curr.length();
     previous = prev;
     sizePrevious = previous.length();
@@ -71,7 +61,7 @@ void GenerateMatCam::cam_associate(int data_before,QList<DataInputCam> current,i
         }
     }
     else{
-        if((!previous.IsEmpty())||(!pred.IsEmpty())){
+        if(!previous.isEmpty()){
             link_theid();
             accums();
             checkFound();
@@ -83,6 +73,7 @@ void GenerateMatCam::cam_associate(int data_before,QList<DataInputCam> current,i
     }
    emit updateMatrices(Associate);
    emit sendLostFound(indicatedLostFound);//menuju fussionData
+   IssetCurrent = false;
 }
 
 double GenerateMatCam::threshold_coef(double y){
@@ -166,7 +157,6 @@ void GenerateMatCam::checkFound(){
             buffer.id = j;
             buffer.dataplayer.x = curr.at(j).dataplayer.x;
             buffer.dataplayer.y = curr.at(j).dataplayer.y;
-            buffer.camera = curr.at(j).camera;
             buffer.flag = false;//found
             indicatedLostFound.append(buffer);
         }
@@ -180,11 +170,9 @@ void GenerateMatCam::checkLost(){
         if(accRow.at<uint8_t>(previous.at(i).id)==0){
                 iter = obj.foo(pred,previous.at(i).id);
                 buffer.id     = previous.at(i).id;
-                buffer.camera = previous.at(i).camera;
                 buffer.flag = true;//lost
                 buffer.pixelSpeed.x =previous.at(i).pixelSpeed.x;
                 buffer.pixelSpeed.y =previous.at(i).pixelSpeed.y;
-                buffer.status = previous.at(i).status;
                 buffer.dataplayer.x = (( BOBOT_PREDICTIONS * (pred.at(iter).dataplayer.x))+((1-BOBOT_PREDICTIONS)*(previous.at(i).dataplayer.x)));
                 buffer.dataplayer.y =(( BOBOT_PREDICTIONS * (pred.at(iter).dataplayer.y))+((1-BOBOT_PREDICTIONS)*(previous.at(i).dataplayer.y)));
                 buffer.dataplayer.width =(( BOBOT_PREDICTIONS * (pred.at(iter).dataplayer.width))+((1-BOBOT_PREDICTIONS)*(previous.at(i).dataplayer.width)));
@@ -197,7 +185,7 @@ void GenerateMatCam::checkLost(){
 void GenerateMatCam::generateOcclusionCluster(){
     DataInputCam buff;
     QList <DataInputCam> buffer;
-    if(!occlusion.IsEmpty()){
+    if(!occlusion.isEmpty()){
         for(int i=0;i<JUMLAH_PLAYER;i++){
             if(accCol.at<uint8_t>(i)>1){
                 for(int j=0;j<occlusion.length();j++){
