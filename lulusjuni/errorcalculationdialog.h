@@ -2,6 +2,7 @@
 #define ERRORCALCULATIONDIALOG_H
 
 #include <QDialog>
+#include "objectvariable.h"
 
 namespace Ui {
 class ErrorCalculationDialog;

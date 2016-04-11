@@ -7,14 +7,27 @@
 #include <QImage>
 #include <QPainter>
 #include <QTime>
+#include <QLabel>
+#include <string>
+#include <iostream>
+#include <QDebug>
+#include "objectvariable.h"
+#include "playervisual.h"
+#include <opencv2/opencv.hpp>
+#include <allaboutteam.h>
+#include "cameraviewdialog.h"
 #include "videoprocessor.h"
 #include "backgroundmodeltuningdialog.h"
-#include "cameraviewdialog.h"
 #include "errorcalculationdialog.h"
 #include "fieldselectiondialog.h"
 #include "systemperformancedialog.h"
 #include "trackingviewdialog.h"
-#include "processor.h"
+#include "coordinateconverter.h"
+#include "perspectivetransformation.h"
+
+
+using namespace cv;
+using namespace std;
 
 namespace Ui {
 class MainWindow;
@@ -27,8 +40,22 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    AllAboutTeam teamA;
+    AllAboutTeam teamB;
+
+    void updateDisplayFormationTeamA();
+    void updateDisplayFormationTeamB();
+    perspectiveTransformation *myPersTransDialog;
 
 
+
+
+
+public slots:
+    void mainGameDisplayClickEvent(QPoint& pos);
+    void mainGameDisplayRightClickEvent(QPoint& pos);
+    void selectPlayerFromFormationA(QPoint& pos);
+    void selectPlayerFromFormationB(QPoint& pos);
 
 private slots:
     void on_actionTuning_Background_Model_triggered();
@@ -47,11 +74,9 @@ private slots:
 
     void on_actionVideo_2_triggered();
 
+    void on_actionVideo_3_triggered();
+
     void on_pushButton_play_released();
-
-    void on_pushButton_single_play_released();
-
-signals:
 
 private:
     Ui::MainWindow *ui;
@@ -61,10 +86,24 @@ private:
     SystemPerformanceDialog *mySPDialog;
     TrackingViewDialog *myTVDialog;
     BackgroundModelTuningDialog *myBMTDialog;
-    Processor *myProcessor;
 
-    QString filename;
-    bool isFieldSelectionDialogInitialized;
+
+    QString filename_1;
+    QString filename_2;
+    QString filename_3;
+
+    VideoProcessor *myStream_1;
+    VideoProcessor *myStream_2;
+    VideoProcessor *myStream_3;
+
+
+
+    void updateGameVisual();
+    void setRandomPlayerProperties();
+    void initDisplayFormation();
+    int idToAssign;
+    bool idAssignedFlag[JUMLAH_PLAYER];
+
 
 };
 
