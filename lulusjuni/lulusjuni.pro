@@ -15,7 +15,8 @@ INCLUDEPATH += /usr/local/include/opencv
 LIBS += -L/usr/local/lib -lopencv_calib3d -lopencv_contrib -lopencv_core -lopencv_features2d -lopencv_flann -lopencv_gpu -lopencv_highgui -lopencv_imgproc -lopencv_legacy -lopencv_ml -lopencv_nonfree -lopencv_objdetect -lopencv_ocl -lopencv_photo -lopencv_stitching -lopencv_superres -lopencv_ts -lopencv_video -lopencv_videostab
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+    backgroundmodeltuningdialog.cpp \
+    mainwindow.cpp \
     fieldselectiondialog.cpp \
     trackingviewdialog.cpp \
     systemperformancedialog.cpp \
@@ -25,7 +26,6 @@ SOURCES += main.cpp\
     matdisplay.cpp \
     playervisual.cpp \
     objectvariable.cpp \
-    Highlevel.cpp \
     KalmanObj.cpp \
     LinkedList.cpp \
     ObjAssociate.cpp \
@@ -34,9 +34,14 @@ SOURCES += main.cpp\
     allaboutteam.cpp \
     coordinateconverter.cpp \
     perspectivetransformation.cpp \
-    dialogcameracalibration.cpp
+    dialogcameracalibration.cpp \
+    clickdisplay.cpp \
+    cvmatandqimage.cpp \
+    processor.cpp \
+    Tracking.cpp
 
 HEADERS  += mainwindow.h \
+    backgroundmodeltuningdialog.h \
     fieldselectiondialog.h \
     trackingviewdialog.h \
     systemperformancedialog.h \
@@ -46,7 +51,6 @@ HEADERS  += mainwindow.h \
     matdisplay.h \
     playervisual.h \
     objectvariable.h \
-    Highlevel.h \
     KalmanObj.h \
     LinkedList.h \
     ObjAssociate.h \
@@ -55,7 +59,11 @@ HEADERS  += mainwindow.h \
     allaboutteam.h \
     coordinateconverter.h \
     perspectivetransformation.h \
-    dialogcameracalibration.h
+    dialogcameracalibration.h \
+    clickdisplay.h \
+    cvmatandqimage.h \
+    processor.h \
+    Tracking.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

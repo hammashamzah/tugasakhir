@@ -17,14 +17,14 @@ using namespace std;
 using namespace cv;
 
 
-class Kalmanobj:public QObject
+class KalmanPredictor:public QObject
 {
     Q_OBJECT
     public:
-        explicit Kalmanobj (QObject *parent = 0);
-        ObjectVariable obj;
-        Kalmanobj(double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr);
-        ~Kalmanobj();
+        explicit KalmanPredictor (QObject *parent = 0);
+        //ObjectVariable obj;
+        KalmanPredictor(double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr);
+        ~KalmanPredictor();
         void accum_kalmanobj(QList<DataInputCam> init,QList<DataInputCam> current,int frm);
         QList <DataInputCam> previousData;
         QList <DataInputCam> predictionData;

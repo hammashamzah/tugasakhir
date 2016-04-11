@@ -5,10 +5,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    //MainWindow w;
-    //w.myPersTransDialog->show();
+    MainWindow w;
    // w.show();
-    DialogCameraCalibration cal;
-    cal.show();
     return a.exec();
 }

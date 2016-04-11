@@ -24,6 +24,7 @@
 #include "trackingviewdialog.h"
 #include "coordinateconverter.h"
 #include "perspectivetransformation.h"
+#include "processor.h"
 
 
 using namespace cv;
@@ -77,24 +78,21 @@ private slots:
     void on_actionVideo_3_triggered();
 
     void on_pushButton_play_released();
+        void on_pushButton_single_play_released();
+
 
 private:
-    Ui::MainWindow *ui;
+   Ui::MainWindow *ui;
     CameraViewDialog *myCVDialog;
     ErrorCalculationDialog *myECDialog;
     FieldSelectionDialog *myFSDialog;
     SystemPerformanceDialog *mySPDialog;
     TrackingViewDialog *myTVDialog;
     BackgroundModelTuningDialog *myBMTDialog;
+    Processor *myProcessor;
 
-
-    QString filename_1;
-    QString filename_2;
-    QString filename_3;
-
-    VideoProcessor *myStream_1;
-    VideoProcessor *myStream_2;
-    VideoProcessor *myStream_3;
+    QString filename;
+    bool isFieldSelectionDialogInitialized;
 
 
 

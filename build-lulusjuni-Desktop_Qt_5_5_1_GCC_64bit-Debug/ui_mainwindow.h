@@ -13,6 +13,8 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -21,10 +23,12 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
+#include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <matdisplay.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -41,8 +45,12 @@ public:
     QAction *actionField_Selection;
     QAction *actionTracking_View;
     QWidget *centralWidget;
+    QGridLayout *gridLayout;
+    QHBoxLayout *horizontalLayout_5;
+    QVBoxLayout *verticalLayout_3;
+    matDisplay *label_game_visual;
+    QHBoxLayout *horizontalLayout_4;
     QVBoxLayout *verticalLayout;
-    QLabel *label;
     QPushButton *pushButton_play;
     QPushButton *pushButton_single_play;
     QHBoxLayout *horizontalLayout;
@@ -60,8 +68,22 @@ public:
     QLabel *label_videostream_1;
     QLabel *label_videostream_2;
     QLabel *label_videostream_3;
+    matDisplay *label_formationTeamA;
+    matDisplay *label_formationTeamB;
+    QVBoxLayout *verticalLayout_2;
+    QLabel *label;
+    QLabel *label_6;
+    QSplitter *splitter;
+    QGroupBox *groupBox;
+    QWidget *layoutWidget;
+    QGridLayout *gridLayout_2;
+    QLabel *idLabel;
+    QLabel *playerNameLabel;
+    QLabel *playerSpeedLabel;
+    QLabel *positionLabel;
     QMenuBar *menuBar;
     QMenu *menuFile;
+    QMenu *menuLoad_Video;
     QMenu *menuEdit;
     QMenu *menuView;
     QMenu *menuPerformance;
@@ -73,7 +95,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(804, 576);
+        MainWindow->resize(919, 576);
         MainWindow->setAutoFillBackground(false);
         actionVideo_1 = new QAction(MainWindow);
         actionVideo_1->setObjectName(QStringLiteral("actionVideo_1"));
@@ -95,21 +117,35 @@ public:
         actionTracking_View->setObjectName(QStringLiteral("actionTracking_View"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        verticalLayout = new QVBoxLayout(centralWidget);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        label = new QLabel(centralWidget);
-        label->setObjectName(QStringLiteral("label"));
+        gridLayout = new QGridLayout(centralWidget);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        label_game_visual = new matDisplay(centralWidget);
+        label_game_visual->setObjectName(QStringLiteral("label_game_visual"));
+        label_game_visual->setEnabled(true);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
-        label->setSizePolicy(sizePolicy);
-        label->setStyleSheet(QStringLiteral("Background-color: #000;"));
+        sizePolicy.setHeightForWidth(label_game_visual->sizePolicy().hasHeightForWidth());
+        label_game_visual->setSizePolicy(sizePolicy);
+        label_game_visual->setStyleSheet(QStringLiteral("Background-color: #000;"));
+        label_game_visual->setScaledContents(true);
 
-        verticalLayout->addWidget(label);
+        verticalLayout_3->addWidget(label_game_visual);
 
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setSpacing(6);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         pushButton_play = new QPushButton(centralWidget);
         pushButton_play->setObjectName(QStringLiteral("pushButton_play"));
 
@@ -222,12 +258,105 @@ public:
 
         verticalLayout->addWidget(label_videostream_3);
 
+
+        horizontalLayout_4->addLayout(verticalLayout);
+
+        label_formationTeamA = new matDisplay(centralWidget);
+        label_formationTeamA->setObjectName(QStringLiteral("label_formationTeamA"));
+        label_formationTeamA->setEnabled(true);
+        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(240);
+        sizePolicy2.setVerticalStretch(120);
+        sizePolicy2.setHeightForWidth(label_formationTeamA->sizePolicy().hasHeightForWidth());
+        label_formationTeamA->setSizePolicy(sizePolicy2);
+        label_formationTeamA->setMinimumSize(QSize(220, 150));
+        label_formationTeamA->setScaledContents(true);
+
+        horizontalLayout_4->addWidget(label_formationTeamA);
+
+        label_formationTeamB = new matDisplay(centralWidget);
+        label_formationTeamB->setObjectName(QStringLiteral("label_formationTeamB"));
+        sizePolicy2.setHeightForWidth(label_formationTeamB->sizePolicy().hasHeightForWidth());
+        label_formationTeamB->setSizePolicy(sizePolicy2);
+        label_formationTeamB->setMinimumSize(QSize(220, 150));
+        label_formationTeamB->setLayoutDirection(Qt::LeftToRight);
+        label_formationTeamB->setScaledContents(true);
+
+        horizontalLayout_4->addWidget(label_formationTeamB);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_4);
+
+
+        horizontalLayout_5->addLayout(verticalLayout_3);
+
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+
+        verticalLayout_2->addWidget(label);
+
+        label_6 = new QLabel(centralWidget);
+        label_6->setObjectName(QStringLiteral("label_6"));
+
+        verticalLayout_2->addWidget(label_6);
+
+        splitter = new QSplitter(centralWidget);
+        splitter->setObjectName(QStringLiteral("splitter"));
+        splitter->setOrientation(Qt::Vertical);
+        groupBox = new QGroupBox(splitter);
+        groupBox->setObjectName(QStringLiteral("groupBox"));
+        layoutWidget = new QWidget(groupBox);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(0, 20, 141, 86));
+        gridLayout_2 = new QGridLayout(layoutWidget);
+        gridLayout_2->setSpacing(6);
+        gridLayout_2->setContentsMargins(11, 11, 11, 11);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        gridLayout_2->setContentsMargins(0, 0, 0, 0);
+        idLabel = new QLabel(layoutWidget);
+        idLabel->setObjectName(QStringLiteral("idLabel"));
+        QFont font;
+        font.setPointSize(9);
+        idLabel->setFont(font);
+
+        gridLayout_2->addWidget(idLabel, 0, 0, 1, 1);
+
+        playerNameLabel = new QLabel(layoutWidget);
+        playerNameLabel->setObjectName(QStringLiteral("playerNameLabel"));
+
+        gridLayout_2->addWidget(playerNameLabel, 1, 0, 1, 1);
+
+        playerSpeedLabel = new QLabel(layoutWidget);
+        playerSpeedLabel->setObjectName(QStringLiteral("playerSpeedLabel"));
+
+        gridLayout_2->addWidget(playerSpeedLabel, 2, 0, 1, 1);
+
+        positionLabel = new QLabel(layoutWidget);
+        positionLabel->setObjectName(QStringLiteral("positionLabel"));
+
+        gridLayout_2->addWidget(positionLabel, 3, 0, 1, 1);
+
+        splitter->addWidget(groupBox);
+
+        verticalLayout_2->addWidget(splitter);
+
+
+        horizontalLayout_5->addLayout(verticalLayout_2);
+
+
+        gridLayout->addLayout(horizontalLayout_5, 0, 0, 1, 1);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 804, 25));
+        menuBar->setGeometry(QRect(0, 0, 919, 25));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
+        menuLoad_Video = new QMenu(menuFile);
+        menuLoad_Video->setObjectName(QStringLiteral("menuLoad_Video"));
         menuEdit = new QMenu(menuBar);
         menuEdit->setObjectName(QStringLiteral("menuEdit"));
         menuView = new QMenu(menuBar);
@@ -249,8 +378,10 @@ public:
         menuBar->addAction(menuView->menuAction());
         menuBar->addAction(menuPerformance->menuAction());
         menuBar->addAction(menuAbout->menuAction());
-        menuFile->addAction(actionVideo_1);
-        menuFile->addAction(actionVideo_2);
+        menuFile->addAction(menuLoad_Video->menuAction());
+        menuLoad_Video->addAction(actionVideo_1);
+        menuLoad_Video->addAction(actionVideo_2);
+        menuLoad_Video->addAction(actionVideo_3);
         menuEdit->addAction(actionTuning_Background_Model);
         menuEdit->addAction(actionField_Selection);
         menuView->addAction(actionPer_Camera_Raw_View);
@@ -266,16 +397,16 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
-        actionVideo_1->setText(QApplication::translate("MainWindow", "Load Video 1", 0));
-        actionVideo_2->setText(QApplication::translate("MainWindow", "Load Video 2", 0));
-        actionVideo_3->setText(QApplication::translate("MainWindow", "Load Video 3", 0));
+        actionVideo_1->setText(QApplication::translate("MainWindow", "Video 1", 0));
+        actionVideo_2->setText(QApplication::translate("MainWindow", "Video 2", 0));
+        actionVideo_3->setText(QApplication::translate("MainWindow", "Video 3", 0));
         actionTuning_Background_Model->setText(QApplication::translate("MainWindow", "Tuning Background Model", 0));
         actionError_Calculation->setText(QApplication::translate("MainWindow", "Error Calculation", 0));
         actionSystem_Performance_Testing_Metrics->setText(QApplication::translate("MainWindow", "System Performance Testing/Metrics", 0));
         actionPer_Camera_Raw_View->setText(QApplication::translate("MainWindow", "Per Camera Raw View", 0));
         actionField_Selection->setText(QApplication::translate("MainWindow", "Field Selection", 0));
         actionTracking_View->setText(QApplication::translate("MainWindow", "Tracking View", 0));
-        label->setText(QString());
+        label_game_visual->setText(QString());
         pushButton_play->setText(QApplication::translate("MainWindow", "Play", 0));
         pushButton_single_play->setText(QApplication::translate("MainWindow", "Single Frame Play", 0));
         current_time_1->setText(QApplication::translate("MainWindow", "00:00", 0));
@@ -287,7 +418,17 @@ public:
         label_videostream_1->setText(QApplication::translate("MainWindow", "Video Stream 1: Unknown", 0));
         label_videostream_2->setText(QApplication::translate("MainWindow", "Video Stream 2: Unknown", 0));
         label_videostream_3->setText(QApplication::translate("MainWindow", "Video Stream 3: Unknown", 0));
+        label_formationTeamA->setText(QApplication::translate("MainWindow", "FormationTeamA", 0));
+        label_formationTeamB->setText(QApplication::translate("MainWindow", "FormationTeamB", 0));
+        label->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        label_6->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        groupBox->setTitle(QApplication::translate("MainWindow", "Player Performance", 0));
+        idLabel->setText(QApplication::translate("MainWindow", "ID", 0));
+        playerNameLabel->setText(QApplication::translate("MainWindow", "Player Name", 0));
+        playerSpeedLabel->setText(QApplication::translate("MainWindow", "Player Speed", 0));
+        positionLabel->setText(QApplication::translate("MainWindow", "Position", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
+        menuLoad_Video->setTitle(QApplication::translate("MainWindow", "Load Video", 0));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Setting", 0));
         menuView->setTitle(QApplication::translate("MainWindow", "View", 0));
         menuPerformance->setTitle(QApplication::translate("MainWindow", "Performance", 0));

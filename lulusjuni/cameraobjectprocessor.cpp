@@ -1,6 +1,6 @@
 #include "generatematcam.h"
 
-CameraObjectProcessor::CameraObjectProcessor(int cameraNumber, QList<QPoint> trapeziumCoordinate, double pixelThreshold)
+CameraObjectProcessor::CameraObjectProcessor(QList<QPoint> trapeziumCoordinate, double pixelThreshold)
 {
     XDL = xdl;
     XDR = xdr;
@@ -11,7 +11,6 @@ CameraObjectProcessor::CameraObjectProcessor(int cameraNumber, QList<QPoint> tra
     YUL = yul;
     YUR = yur;
     THETA = pixel_th;
-    cameras = cam;
     if(YDL>YUL && YDR>YUR && XDR>XUR && XDL<XUR){
         yo =-((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))+((YDL+YDR)/2);
     }
@@ -39,7 +38,6 @@ void CameraObjectProcessor::camAssociate(int data_before,int Fr,QList<DataInputC
     accCol.release();
     accRow.release();
     pot_Occlusion.clear();
-    data_bef = data_before;
     Associate = Mat::zeros(JUMLAH_PLAYER,JUMLAH_PLAYER,CV_8U);
     accCol = Mat::zeros(JUMLAH_PLAYER,1,CV_8U);
     accRow = Mat::zeros(JUMLAH_PLAYER,1,CV_8U);
@@ -48,10 +46,9 @@ void CameraObjectProcessor::camAssociate(int data_before,int Fr,QList<DataInputC
     sizePrevious = previous.length();
     pred = predict;
     sizePrediction = pred.length();
-    frames = Fr;
-    if(frames == 1){
+    if(Fr == 1){
         for(i=0;i<sizeCurrent;i++){
-            for(j=data_bef;j<(data_bef+sizeCurrent);j++){
+            for(j=data_before;j<(data_before+sizeCurrent);j++){
                 if(i==j){
                     Associate.at<uint8_t>(i,j)+= 1;
                 }else{

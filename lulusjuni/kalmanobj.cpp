@@ -2,7 +2,7 @@
 
 #define DEBUG
 
-Kalmanobj::Kalmanobj(double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr){
+KalmanPredictor::KalmanPredictor(double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr){
     XDL = xdl;
     XDR = xdr;
     XUL = xul;
@@ -16,17 +16,17 @@ Kalmanobj::Kalmanobj(double xdl,double xdr,double xul,double xur,double ydl,doub
     IssetCurr = false;
 }
 
-void Kalmanobj::getDataOutlier(QList<DataInputCam> Outlier){
+void KalmanPredictor::getDataOutlier(QList<DataInputCam> Outlier){
     OutlierData = Outlier;
     IssetOutlier = true;
 }
 
-void Kalmanobj::getDataCurr(QList<DataInputCam> CurrData){
+void KalmanPredictor::getDataCurr(QList<DataInputCam> CurrData){
     currentData = CurrData;
     IssetCurr = true;
 }
 
-void Kalmanobj::resetdata(){
+void KalmanPredictor::resetdata(){
     int i,j;
     for(i=0;i<sizePrevious;i++){
         int k = 0;
@@ -48,7 +48,7 @@ void Kalmanobj::resetdata(){
     }
 }
 
-void Kalmanobj::accum_kalmanobj(QList<DataInputCam> init,QList<DataInputCam> current,int frm){
+void KalmanPredictor::accum_kalmanobj(QList<DataInputCam> init,QList<DataInputCam> current,int frm){
     int i;
     frames = frm;
     previousData.clear();
@@ -81,11 +81,11 @@ void Kalmanobj::accum_kalmanobj(QList<DataInputCam> init,QList<DataInputCam> cur
     IssetCurr = false;
 }
 
-Kalmanobj::~Kalmanobj(){
+KalmanPredictor::~KalmanPredictor(){
     
 }
 
-void Kalmanobj::OutlierHandler(){
+void KalmanPredictor::OutlierHandler(){
    int idx;
    DataInputCam buffer;
    if(!OutlierData.isEmpty()){
@@ -103,7 +103,7 @@ void Kalmanobj::OutlierHandler(){
    }
 }
 
-void Kalmanobj::multitrackObj(){
+void KalmanPredictor::multitrackObj(){
     int i;
     DataInputCam buffer,buffer2;
     Point2f priory_posp,priory_velsp,priory_accp,post_posp,post_velsp,post_accp;
@@ -134,7 +134,7 @@ void Kalmanobj::multitrackObj(){
     }
 }
 
-void Kalmanobj::initKalmanMOt(double pos_x, double pos_y,double v_x,double v_y,double a_x, double a_y){
+void KalmanPredictor::initKalmanMOt(double pos_x, double pos_y,double v_x,double v_y,double a_x, double a_y){
     Mat statePost = (Mat_<float>(stateNum_mot, 1) << pos_x,pos_y,v_x,v_y,a_x,a_y);
     Mat transitionMatrix = (Mat_<float>(stateNum_mot, stateNum_mot) << 1, 0,    intervals,          0,      0.5*intervals*intervals,            0,
                                                                0, 1,            0,  intervals,                            0, 0.5*intervals*intervals,
@@ -155,7 +155,7 @@ void Kalmanobj::initKalmanMOt(double pos_x, double pos_y,double v_x,double v_y,d
 }
 
 
-Point2f Kalmanobj::getCurrentStateMot() const{
+Point2f KalmanPredictor::getCurrentStateMot() const{
     Point state_pos;
     Mat statePost = KF_Mot.statePost;
     state_pos.x = statePost.at<double>(0);
@@ -163,7 +163,7 @@ Point2f Kalmanobj::getCurrentStateMot() const{
     return (state_pos);
 }
 
-Point2f Kalmanobj::getVelocityMot() const{
+Point2f KalmanPredictor::getVelocityMot() const{
     Point state_pos;
     Mat statePost = KF_Mot.statePost;
     state_pos.x = statePost.at<double>(2);
@@ -171,7 +171,7 @@ Point2f Kalmanobj::getVelocityMot() const{
     return (state_pos);
 }
 
-Point2f Kalmanobj::getAccMot() const{
+Point2f KalmanPredictor::getAccMot() const{
     Point state_pos;
     Mat statePost = KF_Mot.statePost;
     state_pos.x = statePost.at<double>(4);
@@ -179,7 +179,7 @@ Point2f Kalmanobj::getAccMot() const{
     return (state_pos);
 }
 
-void Kalmanobj::extract_actual_v(double curr_posx,double curr_posy,int idx){
+void KalmanPredictor::extract_actual_v(double curr_posx,double curr_posy,int idx){
         post_pos[idx].x= curr_pos[idx].x;
         post_pos[idx].y= curr_pos[idx].y;
         curr_pos[idx].x= curr_posx;
@@ -189,13 +189,13 @@ void Kalmanobj::extract_actual_v(double curr_posx,double curr_posy,int idx){
         pre_velocity[idx].y = (curr_pos[idx].y-post_pos[idx].y)/intervals;
 }
 
-void Kalmanobj::extract_actual_a(int idx){
+void KalmanPredictor::extract_actual_a(int idx){
    accel[idx].x = (pre_velocity[idx].x-post_velocity[idx].x)/intervals;
    accel[idx].y = (pre_velocity[idx].y-post_velocity[idx].y)/intervals;
 
 }
 
-void Kalmanobj::track_size(double &pred_h,double &pred_w,DataInputCam reff,DataInputCam curr){
+void KalmanPredictor::track_size(double &pred_h,double &pred_w,DataInputCam reff,DataInputCam curr){
     /*koordinate titik hilang*/
     double yo =-((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))+((YDL+YDR)/2);
     double perb_init = (-((double)reff.dataplayer.y)+((YDL+YDR)/2))/((((double)reff.dataplayer.y))-yo);
@@ -206,7 +206,7 @@ void Kalmanobj::track_size(double &pred_h,double &pred_w,DataInputCam reff,DataI
     pred_h = height_pres * perb_act;
 }
 
-void Kalmanobj::track_ind2Dmotion(DataInputCam curr_cond, Point pre_pos,Point pre_veloc,Point pre_Acce,Point post_pos,Point post_veloc,Point post_Acce){
+void KalmanPredictor::track_ind2Dmotion(DataInputCam curr_cond, Point pre_pos,Point pre_veloc,Point pre_Acce,Point post_pos,Point post_veloc,Point post_Acce){
     initKalmanMOt((double)curr_cond.dataplayer.x, (double)curr_cond.dataplayer.y,(double)pre_velocity[curr_cond.id].x,(double)pre_velocity[curr_cond.id].y,(double)accel[curr_cond.id].x, (double)accel[curr_cond.id].y);
     KF_Mot.predict();
     pre_pos = getCurrentStateMot();
