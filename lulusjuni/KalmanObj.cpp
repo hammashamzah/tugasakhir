@@ -2,8 +2,7 @@
 
 #define DEBUG
 
-Kalmanobj::Kalmanobj(int camera_id,double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr){
-    camera = camera_id;
+Kalmanobj::Kalmanobj(double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr){
     XDL = xdl;
     XDR = xdr;
     XUL = xul;
@@ -13,8 +12,19 @@ Kalmanobj::Kalmanobj(int camera_id,double xdl,double xdr,double xul,double xur,d
     YUL = yul;
     YUR = yur;
     FrPs = fr;
+    IssetOutlier = false;
+    IssetCurr = false;
 }
 
+void Kalmanobj::getDataOutlier(QList<DataInputCam> Outlier){
+    OutlierData = Outlier;
+    IssetOutlier = true;
+}
+
+void Kalmanobj::getDataCurr(QList<DataInputCam> CurrData){
+    currentData = CurrData;
+    IssetCurr = true;
+}
 
 void Kalmanobj::resetdata(){
     int i,j;
@@ -41,7 +51,6 @@ void Kalmanobj::resetdata(){
 void Kalmanobj::accum_kalmanobj(QList<DataInputCam> init,QList<DataInputCam> current,int frm){
     int i;
     frames = frm;
-    initsData = init;
     previousData.clear();
     previousData = currentData;
     currentData.clear();
@@ -49,8 +58,11 @@ void Kalmanobj::accum_kalmanobj(QList<DataInputCam> init,QList<DataInputCam> cur
     sizeCurrent = currentData.length();
     sizePrevious = previousData.length();
     intervals = 1/FrPs;
+
+    OutlierHandler();
     if(frames == 1){
         for(i=0;i<JUMLAH_PLAYER;i++){
+            initsData           = init;
             post_pos[i].x       = 0.00;
             pre_velocity[i].x   = 0.00;
             accel[i].x          = 0.00;
@@ -65,14 +77,30 @@ void Kalmanobj::accum_kalmanobj(QList<DataInputCam> init,QList<DataInputCam> cur
         }
         multitrackObj();
     }
-    //emit updatePrediction(predictionData);
-    //emit sendPrevious(prev);
-
-    initsData.clear();
+    IssetOutlier = false;
+    IssetCurr = false;
 }
 
 Kalmanobj::~Kalmanobj(){
     
+}
+
+void Kalmanobj::OutlierHandler(){
+   int idx;
+   DataInputCam buffer;
+   if(!OutlierData.isEmpty()){
+       for(int i=0;i< OutlierData.length();i++){
+           idx = obj.foo(currentData,OutlierData.at(i).id);
+           buffer.id = OutlierData.at(i).id;
+           buffer.flag = false;
+           buffer.dataplayer.x = OutlierData.at(i).dataplayer.x;
+           buffer.dataplayer.y = OutlierData.at(i).dataplayer.y;
+           buffer.dataplayer.width = currentData.at(i).dataplayer.width;
+           buffer.dataplayer.height = currentData.at(i).dataplayer.height;
+           currentData.removeAt(idx);
+           currentData.append(buffer);
+       }
+   }
 }
 
 void Kalmanobj::multitrackObj(){
@@ -81,9 +109,7 @@ void Kalmanobj::multitrackObj(){
     Point2f priory_posp,priory_velsp,priory_accp,post_posp,post_velsp,post_accp;
     double pred_h,pred_w;
     for(i=0;i<sizeCurrent;i++){
-        //track_ind3Dmotion(currentData.at(i)priory_pos,priory_vels,priory_acc,post_pos,post_vels,post_acc);
         track_ind2Dmotion(currentData.at(i),priory_posp,priory_velsp,priory_accp,post_posp,post_velsp,post_accp);
-        //Node *list_get = list1.searchNode(list_init,list_curr->data_id);
         track_size(pred_w, pred_h,initsData.at(currentData.at(i).id),currentData.at(i));
 
         buffer2.id = currentData.at(i).id;
@@ -91,8 +117,7 @@ void Kalmanobj::multitrackObj(){
         buffer2.dataplayer.y = (double)currentData.at(i).dataplayer.y;
         buffer2.dataplayer.width = currentData.at(i).dataplayer.width;
         buffer2.dataplayer.height = currentData.at(i).dataplayer.height;
-        buffer2.status = (double)currentData.at(i).status;
-        buffer2.flagOcclusion = (double)currentData.at(i).flagOcclusion;
+        buffer2.flag = (double)currentData.at(i).flag;
         buffer2.pixelSpeed.x = (double)pre_velocity[i].x;
         buffer2.pixelSpeed.y = (double)pre_velocity[i].y;
 
@@ -101,8 +126,7 @@ void Kalmanobj::multitrackObj(){
         buffer.dataplayer.y = (double)post_posp.y;
         buffer.dataplayer.width = pred_w;
         buffer.dataplayer.height = pred_h;
-        buffer.status = (double)currentData.at(i).status;
-        buffer.flagOcclusion = (double)currentData.at(i).flagOcclusion;
+        buffer.flag = (double)currentData.at(i).flag;
         buffer.pixelSpeed.x = (double)post_velsp.x;
         buffer.pixelSpeed.y = (double)post_velsp.y;
         predictionData.append(buffer);
@@ -173,9 +197,9 @@ void Kalmanobj::extract_actual_a(int idx){
 
 void Kalmanobj::track_size(double &pred_h,double &pred_w,DataInputCam reff,DataInputCam curr){
     /*koordinate titik hilang*/
-    double yo =((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))-((YDL+YDR)/2);
-    double perb_init = (-((double)reff.dataplayer.y)+((YDL+YDR)/2))/(((double)((double)reff.dataplayer.width))-yo);
-    double perb_act = (((double)curr.dataplayer.y)-yo)/((((double)curr.dataplayer.y)-yo)+((reff.dataplayer.y)-((YDL+YDR)/(2))));
+    double yo =-((XDR-XDL)/(((-XDL+XUL)/(YDL-YUL))+((XDR-XUR)/(YDR-YUR))))+((YDL+YDR)/2);
+    double perb_init = (-((double)reff.dataplayer.y)+((YDL+YDR)/2))/((((double)reff.dataplayer.y))-yo);
+    double perb_act = (((double)curr.dataplayer.y)-yo)/((-yo)+((YDL+YDR)/(2)));
     double width_pres = (1+perb_init)*((double)curr.dataplayer.width);
     double height_pres = (1+perb_init)*((double)curr.dataplayer.height);
     pred_w = width_pres * perb_act;

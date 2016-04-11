@@ -14,9 +14,7 @@ class DataInputCam
         int id;
         Rect dataplayer;
         Point2f pixelSpeed;
-        bool flagOcclusion;
-        int camera;
-        int status;
+        bool flag;
 };
 
 #endif // DATAINPUTCAM_H

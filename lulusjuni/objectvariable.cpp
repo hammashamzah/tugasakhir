@@ -4,7 +4,7 @@
 
 #include "objectvariable.h"
 
-playerVisual player_visual[JUMLAH_PLAYER];
+//playerVisual player_visual[JUMLAH_PLAYER];
 int playerIdSelected;
 
 int ObjectVariable::foo(QList<DataInputCam> keyList,int id) {

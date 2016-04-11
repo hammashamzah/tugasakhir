@@ -19,38 +19,48 @@ class Associate:public QObject
     public: 
         explicit Associate (QObject *parent = 0);
         int validate;
-        Associate(mode operate);
+        Associate(bool);
         ~Associate();
-        void accum_assoc();
-        mode ops;
-        bool Isset1,Isset2,Isset3,Isset4,Isset5,Isset6,Isseto,Isset7,Isset8;
+        void accum_assoc(QList<DataInputCam>,QList<DataInputCam>);
         Mat association_agrr;
-        QList<DataInputCam>Mapping;
+        QList<QList<DataInputCam> > DataFinal;
+
     private:
+        bool startAssociate;
         void mapping();
         void AddMat();
+        void handlerOutlier();
+
+        QList<DataInputCam>Mapping1;
+        QList<DataInputCam>Mapping2;
+
+        QList<QList<DataInputCam> > clusterOccCam1;
+        QList<QList<DataInputCam> > clusterOccCam2;
+        QList<QList<DataInputCam> > prevClusterOccCam1;
+        QList<QList<DataInputCam> > prevClusterOccCam2;
+
+
+        QList<int> remainData1;
+        QList<int> remainData2;
+
         QList<DataInputCam>cam1;
         QList<DataInputCam>cam2;
-        QList<DataInputCam>cam3;
-        QList<Point>Occlussion1;
-        QList<Point>Occlussion2;
-        QList<Point>Occlussion3;
+
+        QList <DataInputCam> Outlier1;
+        QList <DataInputCam> Outlier2;
+
         Mat assoc1;
         Mat assoc2;
-        Mat assoc3;
-
-        /**Parameter Input Class dinamik**/
-
+        bool IsMatCam1,IsMatCam2,IsOccCam1,IsOccCam2,IsRemainCam1,IsRemainCam2;
    public slots:
-        void getOcclusion1(QList<Point>);
-        void getOcclusion2(QList<Point>);
-        void getOcclusion3(QList<Point>);
-        void updateMatCam1(Mat);//from generate MatCam
-        void updateMatCam2(Mat);//from generate MatCam
-        void updateMatCam3(Mat);//from generate MatCam
-        void updateCurrentCam1(QList<DataInputCam>);// from generate MatCam
-        void updateCurrentCam2(QList<DataInputCam>);//from generate MatCam
-        void updateCurrentCam3(QList<DataInputCam>);//from generate MatCam
+        void updateMatCam1(Mat);//from generate MatTrans
+        void updateMatCam2(Mat);//from generate MatTrans
+        void UpdateOcclusionCam1(QList<QList<DataInputCam> >);//dari generateMatcam
+        void UpdateOcclusionCam2(QList<QList<DataInputCam> >);//dari generateMatcam
+        void remaindedDataCam1(QList<int>);//dari generateMattrans
+        void remaindedDataCam2(QList<int>);//dari generateMattrans
+    signals:
+        void sendDataFinal(QList<QList<DataInputCam> >);
 };
 
 
