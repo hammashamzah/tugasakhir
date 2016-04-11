@@ -12,9 +12,9 @@ Tracking::        Tracking(int FR,double x_down_left1,double x_down_right1,doubl
     kalmancam2          = new Kalmanobj (x_down_left2,x_down_right2,x_upper_left2,x_upper_right2,y_down_left2,y_down_right2,y_upper_left2,y_upper_right2,FR);
     Associe             = new Associate(true);
 
-    thread1 = new QThread();
-    thread2 = new QThread();
-    thread3 = new QThread();
+    //thread1 = new QThread();
+    //thread2 = new QThread();
+    //thread3 = new QThread();
 
     InputDataCurrent    = new DataSeparatorCam(true);
     InputDataOutlier    = new DataSeparatorCam(true);
@@ -23,9 +23,9 @@ Tracking::        Tracking(int FR,double x_down_left1,double x_down_right1,doubl
 
     initGab             = Init;
 
-    InputDataCurrent->moveToThread(thread1);
-    InputTransform->moveToThread(thread2);
-    InputDataOutlier->moveToThread(thread3);
+    //InputDataCurrent->moveToThread(thread1);
+    //InputTransform->moveToThread(thread2);
+    //InputDataOutlier->moveToThread(thread3);
 
     /**Keluaran generateMatCam**/
 
@@ -41,7 +41,7 @@ Tracking::        Tracking(int FR,double x_down_left1,double x_down_right1,doubl
     QObject::connect(generateCamTrans1,SIGNAL(UpdateremaindedData(QList<int>)),Associe,SLOT(remaindedDataCam1(QList<int>)));
     QObject::connect(generateCamTrans2,SIGNAL(UpdateremaindedData(QList<int>)),Associe,SLOT(remaindedDataCam2(QList<int>)));
     /**Keluaran Object Associate berupa QLIST of Outlier dan Hasil Mapping dari masingmasing camera**/
-    QObject::connect(Associe,SIGNAL(sendDataFinal(QList<QList<DataInputCam> >)),SIGNAL(SendDataFinal(QList<QList<DataInputCam> >)));
+    QObject::connect(Associe,SIGNAL(sendDataFinal(QList<QList<DataInputCam> >)),this, SIGNAL(SendDataFinal(QList<QList<DataInputCam> >)));
     QObject::connect(fussion,SIGNAL(sendDatabeTransformed(QList<QList<DataInputCam> >)),SIGNAL(sendDataQFoundLost(QList<QList<DataInputCam> >)));
 
     IssetCurrent = false;IssetOutlier= false;IssetTransform = false;
@@ -63,7 +63,7 @@ void Tracking::GetDataCamera(QList<QList<DataInputCam> > dataCurrent){
     data2 = dataCurrent.at(1);
     generateCam1->cam_associate(0,Frames,kalmancam1->predictionData,kalmancam1->previousData);
     generateCam2->cam_associate(data1.length(),Frames,kalmancam1->predictionData,kalmancam1->previousData);
-    emit sendDataQFoundLost(fussion->ReadyData);
+    //emit sendDataQFoundLost(fussion->ReadyData);
 }
 
 void Tracking::GetDataOutlier(QList<QList<DataInputCam> > dataOutlier){
@@ -78,7 +78,7 @@ void Tracking::GetTransformedData (QList<QList<DataInputTrans> > DataTransformed
     generateCamTrans2->cam_associate();
     Associe->accum_assoc(data1,data2);
     emit signalupdateAssociateMat(Associe->association_agrr);
-    emit SendDataFinal(Associe->DataFinal);
+    //emit SendDataFinal(Associe->DataFinal);
 }
 
 

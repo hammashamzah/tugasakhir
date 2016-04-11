@@ -80,8 +80,7 @@ class Tracking: public QObject
         void sendDataQFoundLost(QList<QList<DataInputCam> >);
         void signalupdateAssociateMat(Mat);
         void SendDataFinal(QList<QList<DataInputCam> >);
-}
-;
+};
 
 
 #endif // TRACKING_H_INCLUDED
