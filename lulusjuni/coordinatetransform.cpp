@@ -8,7 +8,7 @@ CoordinateTransform::CoordinateTransform(QObject *parent) : QObject(parent)
  * input : QList dari player yang keluar (lost) dan masuk (found) untuk dua kamera
  * Output : QList dari player yang keluar (lost) dan masuk (found) untuk dua kamera
  *          dengan koordinat global lapangan*/
-void CoordinateTransform::processDataQFoundLost(QList<DataInputCam> lostCam1, QList<DataInputCam> foundCam1, QList<DataInputCam> lostCam2, QList<DataInputCam> foundCam2)
+void CoordinateTransform::processDataQFoundLost(QList)
 {
     QList<DataInputTrans> lostCamTrans1;
     QList<DataInputTrans> foundCamTrans1;
