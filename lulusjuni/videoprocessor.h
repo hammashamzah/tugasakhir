@@ -12,6 +12,7 @@
 #include <opencv2/video/video.hpp>
 #include <opencv2/features2d/features2d.hpp>
 #include <cvmatandqimage.h>
+#include <datainputcam.h>
 #include <iostream>
 #include <QDebug>
 
@@ -32,6 +33,8 @@ private:
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	vector<KeyPoint> keypoints;
+	vector<Point2f> points;
+	QList<DataInputCam> outputData;
     Mat morphElement;
     QVector<QImage> allFrames;
     int minArea;
@@ -43,6 +46,7 @@ private:
 signals:
 	//Signal to output frame to be displayed
 	void setSingleCameraViewImage(const QVector<QImage>);
+	void setObjectData(QList<DataInputCam>);
 public slots:
 	//update parameters
     void setValueParameter(QVector<int>);

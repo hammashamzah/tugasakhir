@@ -2,16 +2,16 @@
 
 #define DEBUG
 
-KalmanPredictor::KalmanPredictor(double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr){
-    XDL = xdl;
-    XDR = xdr;
-    XUL = xul;
-    XUR = xur;
-    YDL = ydl;
-    YDR = ydr;
-    YUL = yul;
-    YUR = yur;
-    FrPs = fr;
+KalmanPredictor::KalmanPredictor(QVector<QPoint> trapeziumCoordinates,int frameRate){
+    XDL = trapeziumCoordinates[0].x();
+    YDL = trapeziumCoordinates[0].y();
+    XUL = trapeziumCoordinates[1].x();
+    YUL = trapeziumCoordinates[1].y();
+    XUR = trapeziumCoordinates[2].x();
+    YUR = trapeziumCoordinates[2].y();
+    XDR = trapeziumCoordinates[3].x();
+    YDR = trapeziumCoordinates[3].y();
+    fps = frameRate;
     IssetOutlier = false;
     IssetCurr = false;
 }
@@ -57,7 +57,7 @@ void KalmanPredictor::accum_kalmanobj(QList<DataInputCam> init,QList<DataInputCa
     currentData = current;
     sizeCurrent = currentData.length();
     sizePrevious = previousData.length();
-    intervals = 1/FrPs;
+    intervals = 1/fps;
 
     OutlierHandler();
     if(frames == 1){

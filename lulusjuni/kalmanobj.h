@@ -23,7 +23,7 @@ class KalmanPredictor:public QObject
     public:
         explicit KalmanPredictor (QObject *parent = 0);
         //ObjectVariable obj;
-        KalmanPredictor(double xdl,double xdr,double xul,double xur,double ydl,double ydr,double yul,double yur,double fr);
+        KalmanPredictor(QVector<QPoint> trapeziumCoordinates,int frameRate);
         ~KalmanPredictor();
         void accum_kalmanobj(QList<DataInputCam> init,QList<DataInputCam> current,int frm);
         QList <DataInputCam> previousData;
@@ -43,7 +43,7 @@ class KalmanPredictor:public QObject
         KalmanFilter KF_Mot;
         bool IssetOutlier,IssetCurr;
         int sizeCurrent,sizeInit,sizePrevious;
-        double FrPs;
+        int fps;
         double intervals;
 
         Mat_<float> measurement_pos;

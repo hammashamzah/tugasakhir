@@ -7,8 +7,8 @@ BackgroundModelTuningDialog::BackgroundModelTuningDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     parameters.resize(2);
-    parameters[0].resize(4);
-    parameters[1].resize(4);
+    parameters[0].resize(6);
+    parameters[1].resize(6);
     parameters[0].fill(0);
     parameters[1].fill(0);
 }
@@ -73,6 +73,33 @@ void BackgroundModelTuningDialog::on_slider_gaussian_size_2_valueChanged(int val
 
 }
 
+void BackgroundModelTuningDialog::on_slider_pixel_threshold_1_valueChanged(int value)
+{
+    parameters[0][4] = value;
+    emit setValueParameter(parameters);
+}
+
+void BackgroundModelTuningDialog::on_slider_transformed_threshold_1_valueChanged(int value)
+{
+    parameters[0][5] = value;
+    emit setValueParameter(parameters);
+}
+
+void BackgroundModelTuningDialog::on_slider_pixel_threshold_2_valueChanged(int value)
+{
+    parameters[1][4] = value;
+    emit setValueParameter(parameters);
+}
+
+
+void BackgroundModelTuningDialog::on_slider_transformed_threshold_2_valueChanged(int value)
+{
+    parameters[1][5] = value;
+    emit setValueParameter(parameters);
+}
+
+
+
 void BackgroundModelTuningDialog::on_pushButton_load_released()
 {
 /*	QString filename = QFileDialog::getOpenFileName(this,
@@ -107,3 +134,4 @@ void BackgroundModelTuningDialog::on_pushButton_load_released()
     }
 */
 }
+

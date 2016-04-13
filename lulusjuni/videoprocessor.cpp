@@ -94,6 +94,7 @@ void VideoProcessor::processSingleFrame()
 		if(mode == 0){
 			blob_detector.detect(bluredFrame, keypoints);
         	drawKeypoints(objectWithKeypointsFrame, keypoints, objectWithKeypointsFrame, Scalar(0, 0, 255), DrawMatchesFlags::DEFAULT);
+        	KeyPoint::convert(keypoints, points);
 		}else if(mode == 1){
 			findContours(bluredFrame, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
         	vector<Rect>boundRect(contours.size());
@@ -107,6 +108,7 @@ void VideoProcessor::processSingleFrame()
 	        {
 	            rectangle(objectWithKeypointsFrame, boundRect[i].tl(), boundRect[i].br(), Scalar(255,255,255), 2, 8, 0) ;
 	        }
+	        qDebug
 		}
 
         qRawFrame = QtOcv::mat2Image_shared(frame).copy().rgbSwapped();
@@ -116,17 +118,22 @@ void VideoProcessor::processSingleFrame()
         qBluredFrame = QtOcv::mat2Image_shared(bluredFrame).copy().rgbSwapped();
         qObjectWithKeypointsFrame = QtOcv::mat2Image_shared(objectWithKeypointsFrame).copy().rgbSwapped();
         //emit raw image
-        qDebug("Im here baby");
-		qDebug() << allFrames.size();
         allFrames[0] = qRawFrame;
         allFrames[1] = qMaskedFrame;
         allFrames[2] = qObjectFrame;
         allFrames[3] = qOpenedFrame;
         allFrames[4] = qBluredFrame;
         allFrames[5] = qObjectWithKeypointsFrame;
-        qDebug("Sent");
 
+        //convert points to DataInputCam
+        outputData.clear();
+        for(int i =0; i < points.size(); i++){
+        	outputData.append(DataInputCam(points[i]));
+        }
+
+        emit setObjectData(outputData);
         emit setSingleCameraViewImage(allFrames);
+
 }
 
 double VideoProcessor::getCurrentFrame() {

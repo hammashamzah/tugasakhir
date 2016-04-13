@@ -28,6 +28,16 @@
          <string>Camera 2</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Camera 1 Trapezium</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Camera 2 Trapezium</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
@@ -68,7 +78,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Set..</string>
+            <string>Set Masking...</string>
            </property>
           </widget>
          </item>

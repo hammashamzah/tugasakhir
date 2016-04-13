@@ -12,7 +12,7 @@ class DataInputCam
         DataInputCam();
         ~DataInputCam();
         int id;
-        Rect dataplayer;
+        Point2f dataplayer;
         Point2f pixelSpeed;
         bool flag;
 };

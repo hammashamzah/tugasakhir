@@ -21,12 +21,12 @@ class CameraObjectProcessor: public QObject
 {
     Q_OBJECT
 public:
-        CameraObjectProcessor::CameraObjectProcessor(int cameraNumber, QList<QPoint> trapeziumCoordinate, double pixelThreshold);
+        CameraObjectProcessor::CameraObjectProcessor(QList<QPoint> trapeziumCoordinate, double pixelThreshold);
         ~CameraObjectProcessor();
-        void camAssociate(int data_before,int Fr,QList<DataInputCam> predict,QList<DataInputCam> prev);
+        void camAssociate(int minimumIndexOfObject,int Fr,QList<DataInputCam> predict,QList<DataInputCam> prev);
         
         QList<DataInputCam> indicatedLostFound;
-        Mat Associate;
+        Mat associate;
         double xo,yo;
     private:
         ObjectVariable obj;

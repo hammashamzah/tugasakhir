@@ -37,7 +37,7 @@ public:
     //trapeziumCoordinate: down left, up left, up right, down right
     //associationThreshold: pixelthreshold and transformedthreshold
     //constructor
-    Tracking(int frameRate, QList<QList<QPoint> > trapeziumCoordinates, QList<QList<double> > associationThresholds, QList<DataInputCam> playerDataInitial);
+    Tracking(int frameRate, QVector<QList<QPoint> > trapeziumCoordinates, QList<double> associationThresholds, QList<DataInputCam> playerDataInitial);
     //destructor
     ~Tracking();
     //fungsi untuk melakukan tracking
@@ -49,8 +49,8 @@ public:
     TransformedObjectProcessor  *transformedObjectProcessor_2;
     KalmanPredictor             *kalmanPredictor_1;
     KalmanPredictor             *kalmancam2;
-    Associate                   *associe;
-    FussionDataforTrans         *fussion;
+    Associate                   *associate;
+    FusionDataforTrans         *fusion;
     DataSeparator               *inputTransform;
     DataSeparatorCam            *inputDataCurrent;
     DataSeparatorCam            *inputDataOutlier;
@@ -65,13 +65,13 @@ private:
     int currentFrame;
     QList<DataInputCam> inKalman1;
     QList<DataInputCam> inKalman2;
-    QList<DataInputCam> initGab;
+    QList<DataInputCam> unifiedInitialObject;
 
 public slots:
-    void GetTransformedData (QList<QList<DataInputTrans> >);
-    void GetDataCamera      (QList<QList<DataInputCam> >);
-    void GetDataOutlier     (QList<QList<DataInputCam> >);
-    void GetDataFrame       (int);
+    void getTransformedData (QList<QList<DataInputTrans> >);
+    void getDataCamera      (QVector<QList<DataInputCam> >);
+    void getDataOutlier     (QList<QList<DataInputCam> >);
+    void getDataFrame       (int);
 
 signals:
     void sendDataQFoundLost(QList<QList<DataInputCam> >);

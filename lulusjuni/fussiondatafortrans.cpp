@@ -1,29 +1,29 @@
-#include "fussiondatafortrans.h"
+#include "fusiondatafortrans.h"
 
-FussionDataforTrans::FussionDataforTrans(bool on)
+FusionDataforTrans::FussionDataforTrans(bool on)
 {
     startfussion = on;
     IsSetdatCam1 = false;
     IsSetdatCam2 = false;
 }
 
-FussionDataforTrans::~FussionDataforTrans()
+FusionDataforTrans::~FussionDataforTrans()
 {
 
 }
 
 
-void FussionDataforTrans::getDataLostFoundCam1(QList<DataInputCam>ReadyData1){
+void FusionDataforTrans::getDataLostFoundCam1(QList<DataInputCam>ReadyData1){
     Ready1 = ReadyData1;
     IsSetdatCam1 = true;
 }
 
-void FussionDataforTrans::getDataLostFoundCam2(QList<DataInputCam>ReadyData2){
+void FusionDataforTrans::getDataLostFoundCam2(QList<DataInputCam>ReadyData2){
     Ready2 = ReadyData2;
     IsSetdatCam2 = true;
 }
 
-void FussionDataforTrans::sendDataFussion(){
+void FusionDataforTrans::sendDataFussion(){
     ReadyData.clear();
     if(startfussion){
         while(!IsSetdatCam1 || !IsSetdatCam2){

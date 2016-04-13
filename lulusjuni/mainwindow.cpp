@@ -18,13 +18,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     QObject::connect(myProcessor, SIGNAL(firstFrameImage(QVector<QImage>)), myFSDialog, SLOT(setFrame(QVector<QImage>)));
     QObject::connect(myFSDialog, SIGNAL(setMaskCoordinates(QVector< QList<QPoint> >)), myProcessor, SLOT(updateMaskCoordinate(QVector< QList<QPoint> >)));
+    QObject::connect(myFSDialog, SIGNAL(setTrapeziumCoordinates(QVector< QList<QPoint> >)), myProcessor, SLOT(updateTrapeziumCoordinates(QVector<QList<QPoint> >)));
     QObject::connect(myProcessor, SIGNAL(setCameraViewImage(QVector< QVector<QImage> >)), myCVDialog, SLOT(updateCameraViewImage(QVector< QVector<QImage> >)));
-    QObject::connect(myBMTDialog, SIGNAL(setValueParameter(QVector< QVector<int> >)), myProcessor, SLOT(updateValueParameter(QVector< QVector<int> >)));
+    QObject::connect(myBMTDialog, SIGNAL(setValueParameter(QVector< QVector<int> >)), myProcessor, SLOT(updateValueParameter(QVector< QVector<int> >))); 
 
-    connect(ui->label_game_visual, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(mainGameDisplayClickEvent(QPoint&)));
-    connect(ui->label_formationTeamA, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationA(QPoint&)));
-    connect(ui->label_formationTeamB, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationB(QPoint&)));
-    connect(ui->label_game_visual, SIGNAL(sendRightClickPosition(QPoint&)),this, SLOT(mainGameDisplayRightClickEvent(QPoint&)));
+    QObject::connect(ui->label_game_visual, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(mainGameDisplayClickEvent(QPoint&)));
+    QObject::connect(ui->label_formationTeamA, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationA(QPoint&)));
+    QObject::connect(ui->label_formationTeamB, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationB(QPoint&)));
+    QObject::connect(ui->label_game_visual, SIGNAL(sendRightClickPosition(QPoint&)),this, SLOT(mainGameDisplayRightClickEvent(QPoint&)));
+
 
     Mat matrik;
     Mat posisi;

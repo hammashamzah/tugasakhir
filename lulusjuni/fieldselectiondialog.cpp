@@ -14,6 +14,7 @@ FieldSelectionDialog::FieldSelectionDialog(QWidget *parent) :
     set[1] = false;
     frameCamera.resize(2);
     listOfClickCoordinates.resize(2);
+    listOfTrapeziumCoordinates.resize(2);
 }
 
 FieldSelectionDialog::~FieldSelectionDialog()
@@ -47,6 +48,18 @@ void FieldSelectionDialog::on_cameraSelectCombo_currentIndexChanged(int index)
         }
         break;
     }
+    case 2:
+        if (!frameCamera.at(0).isNull()) {
+            ui->imageView->setAlignment(Qt::AlignCenter);
+            ui->imageView->setPixmap(QPixmap::fromImage(frameCamera.at(0)));
+        }
+    break;
+    case 3:
+        if (!frameCamera.at(1).isNull()) {
+            ui->imageView->setAlignment(Qt::AlignCenter);
+            ui->imageView->setPixmap(QPixmap::fromImage(frameCamera.at(1)));
+        }
+    break;
 }
 
 void FieldSelectionDialog::processMouse(QPoint &pos) {
@@ -81,11 +94,18 @@ void FieldSelectionDialog::on_pushButton_apply_released()
         listOfClickCoordinates[1] = clickCoordinates;
         set[1] = true;
         break;
+    case 3:
+        listOfTrapeziumCoordinates[0] = clickCoordinates;
+    break;
+    case 4:
+        listOfTrapeziumCoordinates[1] = clickCoordinates;
+    break;
     }
 
     if(set[0] && set[1]){
 
         emit setMaskCoordinates(listOfClickCoordinates);
+        emit setTrapeziumCoordinates(listOfTrapeziumCoordinates);
         qDebug("mantap jaya");
     }
 

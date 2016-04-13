@@ -4,11 +4,15 @@ Processor::Processor()
 {
 	myStream_1 = new VideoProcessor();
 	myStream_2 = new VideoProcessor();
-
 	firstFrame_1_set = 0;
 	firstFrame_2_set = 0;
+	myTrackingInitialized = false;
 	//alocate size of qvector
-    
+    setData[0] = false;
+    setData[1] = false;
+
+    allOutputDataCam.resize(2);
+
 	firstFrame.resize(2);
 	cameraViewImage.resize(2);
     cameraViewImage[0].resize(6);
@@ -20,6 +24,12 @@ Processor::Processor()
     QObject::connect(this, SIGNAL(updateMaskCoordinate_2(QList<QPoint>)), myStream_2, SLOT(getMaskCoordinate(QList<QPoint>)));
     QObject::connect(myStream_1, SIGNAL(setSingleCameraViewImage(QVector<QImage>)), this, SLOT(updateSingleCameraViewImage_1(QVector<QImage>)));
     QObject::connect(myStream_2, SIGNAL(setSingleCameraViewImage(QVector<QImage>)), this, SLOT(updateSingleCameraViewImage_2(QVector<QImage>)));
+
+	QObject::connect(myStream_1, SIGNAL(setObjectData(QList<DataInputCam>)), this, SLOT(updateObjectData_1(QList<DataInputCam>)));
+    QObject::connect(myStream_2, SIGNAL(setObjectData(QList<DataInputCam>)), this, SLOT(updateObjectData_2(QList<DataInputCam>)));
+    
+    QObject::connect(this, SIGNAL(updateDataCamera(QVector<QList<DataInputCam> >)), myTracking, SLOT(getDataCamera(QVector<QList<DataInputCam> >)));
+
 }
 
 Processor::~Processor()
@@ -69,6 +79,17 @@ void Processor::loadVideo(QString filename, int id) {
 void Processor::updateValueParameter(QVector< QVector<int> > parameters) {
 	emit updateValueParameter_1(parameters.at(0));
 	emit updateValueParameter_2(parameters.at(1));
+	if(!myTrackingInitialized){
+		myAssociationThresholds.clear();
+		//pixel threshold 1
+		myAssociationThresholds.append(parameters[0][4]);
+		//pixel threshold 2
+		myAssociationThresholds.append(parameters[0][5]);
+		//transformed threshold 1
+		myAssociationThresholds.append(parameters[1][4]);
+		//transformed threshold 2
+		myAssociationThresholds.append(parameters[1][5]);
+	}
 }
 
 
@@ -83,12 +104,22 @@ void Processor::msleep(int ms) {
 }
 
 void Processor::playSingleFrame() {
-    //cameraViewImage.clear();
-    qDebug("Masuk sini");
     myStream_1->processSingleFrame();
     myStream_2->processSingleFrame();
 	emit setCameraViewImage(cameraViewImage);
 
+
+
+}
+
+void Processor::initializeFirstFrameObject(){
+	initialFrameObject.clear();
+	initialFrameObject.resize(2);
+	initialFrameObject[0] = myStream_1->getFirstFrameObject();
+	initialFrameObject[1] = myStream_2->getFirstFrameObject();
+	unifiedInitialFrameObject = myTransform->initialIdentification(initialFrameObject);
+	myTrackingInitialized = true;
+	myTracking = new Tracking(myStream1->getFrameRate(), myTrapeziumCoordinates, myAssociationThresholds,unifiedInitialFrameObject) ;
 }
 
 void Processor::updateSingleCameraViewImage_1(QVector<QImage> value) {
@@ -97,4 +128,23 @@ void Processor::updateSingleCameraViewImage_1(QVector<QImage> value) {
 
 void Processor::updateSingleCameraViewImage_2(QVector<QImage> value) {
 	cameraViewImage[1] = value;
+}
+
+void updateTrapeziumCoordinates(QVector<QList<QPoint> > value){
+	myTrapeziumCoordinates.clear();
+	myTrapeziumCoordinates.resize(2);
+	myTrapeziumCoordinates = value;
+}
+
+void updateObjectData_1(QList<DataInputCam> outputDataCam){
+	allOutputDataCam[0] = outputDataCam;
+	setData[0] = true;
+}
+
+void updateObjectData_2(QList<DataInputCam> outputDataCam){
+	allOutputDataCam[1] = outputDataCam;
+	setData[1] = true;
+	if(setData[0] && setData[1]){
+		emit updateDataCamera(allOutputDataCam);
+	}
 }

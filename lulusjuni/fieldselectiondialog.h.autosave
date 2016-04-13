@@ -25,12 +25,15 @@ private slots:
     void on_pushButton_set_released();
     void on_pushButton_apply_released();
 
+    void on_pushButton_released();
+    
+    void on_pushButton_trapezium_released();
+    
 private:
     Ui::FieldSelectionDialog *ui;
     QVector<QImage> frameCamera;
     QList<QPoint> clickCoordinates;
     QVector<QList<QPoint> > listOfClickCoordinates;
-    QVector<QList<QPoint> > listOfTrapeziumCoordinates;
 //    QPoint clickCoordinates[4];
     //cv::Point maskPoint[10];
     int currentCameraIndex;

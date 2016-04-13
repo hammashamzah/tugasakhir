@@ -25,9 +25,14 @@ private:
     QWaitCondition condition;
     VideoProcessor *myStream_1;
     VideoProcessor *myStream_2;
-
-    
-
+    Tracking *myTracking;
+    QVectorQList<<DataInputCam> > initialFrameObject;
+    QList<DataInputCam> unifiedInitialFrameObject;
+    QList<double> myAssociationThresholds;
+    bool myTrackingInitialized;
+    QVector<QList<QPoint> > myTrapeziumCoordinates;
+    QVector<QList<DataInputCam> > allOutputDataCam;
+    bool setData[2];
 public:
     Processor();
     ~Processor();
@@ -40,6 +45,7 @@ public slots:
     void updateSingleCameraViewImage_2(QVector<QImage>);
     void updateMaskCoordinate(QVector< QList<QPoint> >);
     void updateValueParameter(QVector< QVector<int> >);
+    void updateTrapeziumCoordinates(QVector<QList<QPoint> >);
 
 public:
     void loadVideo(QString filename, int id);

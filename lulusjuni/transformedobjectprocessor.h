@@ -18,7 +18,6 @@ class TransformedObjectProcessor:public QObject
 {
     Q_OBJECT
     public:
-        explicit TransformedObjectProcessor(QObject *parent = 0);
         TransformedObjectProcessor(double trehshold);
         ~TransformedObjectProcessor();
         void cam_associate();
