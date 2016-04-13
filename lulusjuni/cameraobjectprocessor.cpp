@@ -23,12 +23,6 @@ CameraObjectProcessor::~CameraObjectProcessor()
 
 }
 
-void CameraObjectProcessor::getDataCurrent(QList<DataInputCam> current) {
-    curr.clear();
-    curr = current;
-    IssetCurrent = true;
-}
-
 
 void CameraObjectProcessor::camAssociate(int minimumIndexOfObject, int Fr, QList<DataInputCam> predict, QList<DataInputCam> prev) {
     int i, j;
@@ -148,35 +142,36 @@ void CameraObjectProcessor::accums() {
 }
 
 void CameraObjectProcessor::checkFound() {
-    DataInputCam buffer;
+    QList<DataInputCam> buffer;
     for (int j = data_bef; j < (data_bef + sizeCurrent); j++) {
         if ((accCol.at<uint8_t>(j) == 0) & (frames != 1)) {
-            buffer.id = j;
-            buffer.dataplayer.x = curr.at(j).dataplayer.x;
-            buffer.dataplayer.y = curr.at(j).dataplayer.y;
-            buffer.flag = false;//found
-            indicatedLostFound.append(buffer);
+            buffer[j].id = j;
+            buffer[j].dataplayer.x = curr.at(j).dataplayer.x;
+            buffer[j].dataplayer.y = curr.at(j).dataplayer.y;
+            buffer[j].flag = false;//found
+            
         }
     }
+    indicatedLostFound.append(buffer);
 }
 
 void CameraObjectProcessor::checkLost() {
-    DataInputCam buffer;
+    QList<DataInputCam> buffer;
     int iter;
     for (int i = 0; i < sizePrevious; i++) {
         if (accRow.at<uint8_t>(previous.at(i).id) == 0) {
             iter = obj.foo(pred, previous.at(i).id);
-            buffer.id     = previous.at(i).id;
-            buffer.flag = true;//lost
-            buffer.pixelSpeed.x = previous.at(i).pixelSpeed.x;
-            buffer.pixelSpeed.y = previous.at(i).pixelSpeed.y;
-            buffer.dataplayer.x = (( BOBOT_PREDICTIONS * (pred.at(iter).dataplayer.x)) + ((1 - BOBOT_PREDICTIONS) * (previous.at(i).dataplayer.x)));
-            buffer.dataplayer.y = (( BOBOT_PREDICTIONS * (pred.at(iter).dataplayer.y)) + ((1 - BOBOT_PREDICTIONS) * (previous.at(i).dataplayer.y)));
+            buffer[i].id     = previous.at(i).id;
+            buffer[i].flag = true;//lost
+            buffer[i].pixelSpeed.x = previous.at(i).pixelSpeed.x;
+            buffer[i].pixelSpeed.y = previous.at(i).pixelSpeed.y;
+            buffer[i].dataplayer.x = (( BOBOT_PREDICTIONS * (pred.at(iter).dataplayer.x)) + ((1 - BOBOT_PREDICTIONS) * (previous.at(i).dataplayer.x)));
+            buffer[i].dataplayer.y = (( BOBOT_PREDICTIONS * (pred.at(iter).dataplayer.y)) + ((1 - BOBOT_PREDICTIONS) * (previous.at(i).dataplayer.y)));
             //buffer.dataplayer.width =(( BOBOT_PREDICTIONS * (pred.at(iter).dataplayer.width))+((1-BOBOT_PREDICTIONS)*(previous.at(i).dataplayer.width)));
             //buffer.dataplayer.height =(( BOBOT_PREDICTIONS * (pred.at(iter).dataplayer.height))+((1-BOBOT_PREDICTIONS)*(previous.at(i).dataplayer.height)));
-            indicatedLostFound.append(buffer);
         }
     }
+    indicatedLostFound.append(buffer);
 }
 
 void CameraObjectProcessor::generateOcclusionCluster() {

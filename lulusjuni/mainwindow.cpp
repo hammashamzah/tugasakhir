@@ -27,6 +27,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(ui->label_formationTeamB, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationB(QPoint&)));
     QObject::connect(ui->label_game_visual, SIGNAL(sendRightClickPosition(QPoint&)),this, SLOT(mainGameDisplayRightClickEvent(QPoint&)));
 
+    QObject::connect(myProcessor, SIGNAL(forwardTransformedRawData(QList<DataInputTrans>)), this, SLOT(updateTransformedRawData(QList<DataInputTrans>)));
+
+    QObject::connect(myProcessor, SIGNAL(forwardTransformedInitialFrameObject(QVector<QList<DataInputTrans> >)), this, SLOT(displayTransformedInitialFrameObject(QVector<QList<DataInputTrans> >)));
 
     Mat matrik;
     Mat posisi;
@@ -346,5 +349,17 @@ void MainWindow::updateDisplayFormationTeamB()
 
    // painterField.
     ui->label_formationTeamB->setPixmap(pixmapFieldTeam);
+
+}
+
+void MainWindow::updateTransformedRawData(QList<DataInputTrans> value){
+
+
+
+}
+
+void displayTransformedInitialFrameObject(QVector<QList<DataInputTrans> >){
+    //manual assignment job for initial frame
+
 
 }

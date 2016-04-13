@@ -73,10 +73,14 @@ void Associate::accum_assoc(QList<DataInputCam> DataCam1,QList<DataInputCam> Dat
         mapping();
         handlerOutlier();
         DataFinal.clear();
-        DataFinal.append(Outlier1);
-        DataFinal.append(Outlier2);
+        ReadyOutlier.clear();
+        ReadyOutlier.append(Outlier1);
+        ReadyOutlier.append(Outlier2);
         DataFinal.append(Mapping1);
         DataFinal.append(Mapping2);
+        emit sendDataFinalCam1(Mapping1);
+        emit sendDataFinalCam2(Mapping2);
+        emit sendDataOutlier(ReadyOutlier);
         emit sendDataFinal(DataFinal);
         IsMatCam1 = false;IsMatCam2 =false;IsOccCam1=false;IsOccCam2=false;IsRemainCam1=false;IsRemainCam2=false;
     }
@@ -88,7 +92,7 @@ void Associate::handlerOutlier(){
     int indicatedmin=0;
     double min = Thresholdoutlier;
     QList<DataInputCam> buff;
-    DataInputCam buffer;
+    QList<DataInputCam> buffer;
     Outlier1.clear();
     Outlier2.clear();
     if(!remainData1.isEmpty()){
@@ -102,18 +106,19 @@ void Associate::handlerOutlier(){
                     min = euclid_distance;
                 }
             }
-            if(indicatedmin != 30){
+            if(indicatedmin < prevClusterOccCam1.length()+1){
                for(int k=0;k<prevClusterOccCam1.at(indicatedmin).length();k++){
                    buff.clear();
                    buff = prevClusterOccCam1.at(indicatedmin);
-                   buffer.id = buff.at(k).id;
-                   buffer.dataplayer.x = cam1.at(remainData1.at(i)).dataplayer.x;
-                   buffer.dataplayer.y = cam1.at(remainData1.at(i)).dataplayer.y;
-                   buffer.dataplayer.width = cam1.at(remainData1.at(i)).dataplayer.width;
-                   buffer.dataplayer.height = cam1.at(remainData1.at(i)).dataplayer.height;
-                   Outlier1.append(buffer);
+                   buffer[k].id = buff.at(k).id;
+                   buffer[k].dataplayer.x = cam1.at(remainData1.at(i)).dataplayer.x;
+                   buffer[k].dataplayer.y = cam1.at(remainData1.at(i)).dataplayer.y;
+                   buffer[k].dataplayer.width = cam1.at(remainData1.at(i)).dataplayer.width;
+                   buffer[k].dataplayer.height = cam1.at(remainData1.at(i)).dataplayer.height;
+                
                }
             }
+            Outlier1.append(buffer);
         }
     }
     if(!remainData2.isEmpty()){
@@ -130,15 +135,16 @@ void Associate::handlerOutlier(){
            for(int k=0;k<prevClusterOccCam2.at(indicatedmin).length();k++){
                buff.clear();
                buff = prevClusterOccCam2.at(indicatedmin);
-               buffer.id = buff.at(k).id;
-               buffer.dataplayer.x = cam2.at(remainData2.at(i)).dataplayer.x;
-               buffer.dataplayer.y = cam2.at(remainData2.at(i)).dataplayer.y;
-               buffer.dataplayer.width = cam2.at(remainData2.at(i)).dataplayer.width;
-               buffer.dataplayer.height = cam2.at(remainData2.at(i)).dataplayer.height;
-               Outlier2.append(buffer);
-           }
-        }
-    }
+               buffer[k].id = buff.at(k).id;
+               buffer[k].dataplayer.x = cam2.at(remainData2.at(i)).dataplayer.x;
+               buffer[k].dataplayer.y = cam2.at(remainData2.at(i)).dataplayer.y;
+               buffer[k].dataplayer.width = cam2.at(remainData2.at(i)).dataplayer.width;
+               buffer[k].dataplayer.height = cam2.at(remainData2.at(i)).dataplayer.height;
+                }
+
+            }
+        Outlier2.append(buffer);
+    }               
 }
 
 void Associate::mapping(){

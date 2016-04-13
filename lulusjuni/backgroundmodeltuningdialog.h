@@ -35,6 +35,13 @@ public slots:
 
     void on_slider_max_area_1_valueChanged(int value);
 
+    void on_slider_pixel_threshold_1_valueChanged(int value);
+
+    void on_slider_transformed_threshold_1_valueChanged(int value);
+
+    void on_slider_pixel_threshold_2_valueChanged(int value);
+
+    void on_slider_transformed_threshold_2_valueChanged(int value);
 private:
     Ui::BackgroundModelTuningDialog *ui;
     QVector<QVector<int> > parameters;

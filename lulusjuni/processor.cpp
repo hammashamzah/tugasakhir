@@ -4,6 +4,8 @@ Processor::Processor()
 {
 	myStream_1 = new VideoProcessor();
 	myStream_2 = new VideoProcessor();
+	myCoordinateTransform = new CoordinateTransform();
+	myTracking = new Tracking() ;
 	firstFrame_1_set = 0;
 	firstFrame_2_set = 0;
 	myTrackingInitialized = false;
@@ -30,6 +32,15 @@ Processor::Processor()
     
     QObject::connect(this, SIGNAL(updateDataCamera(QVector<QList<DataInputCam> >)), myTracking, SLOT(getDataCamera(QVector<QList<DataInputCam> >)));
 
+    QObject::connect(this, SIGNAL(updateDataCamera(QVector<QList<DataInputCam> >)), myCoordinateTransform, SLOT(transformRawPosition(QVector<Qpoint> data_camera)));
+
+    QObject::connect(myCoordinateTransform, SIGNAL(sendTransformedRawData(QList<DataInputTrans>)), this, SIGNAL(forwardTransformedRawData(QList<DataInputTrans)));
+
+    QObject::connect(myCoordinateTransform, SIGNAL(sendDataInputTransformed1(QList<Qlist<DataInputTrans> >)), myTracking, SIGNAL(toDataSeparatorCam_1(QList<QList<DataInputTrans> >));
+    QObject::connect(myCoordinateTransform, SIGNAL(sendDataInputTransformed2(QList<Qlist<DataInputTrans> >)), myTracking, SIGNAL(toDataSeparatorCam_2(QList<QList<DataInputTrans> >));
+
+    QObject::connect(myCoordinateTransform, SIGNAL(setTransformedInitialFrameObject(QVector<QList<DataInputTrans)), this, SIGNAL(forwardTransformedInitialFrameObject(QVector<QList<DataInputTrans> >)));
+    
 }
 
 Processor::~Processor()
@@ -104,12 +115,10 @@ void Processor::msleep(int ms) {
 }
 
 void Processor::playSingleFrame() {
+    myTracking->process(myStream_1->getCurrentFrame());
     myStream_1->processSingleFrame();
     myStream_2->processSingleFrame();
 	emit setCameraViewImage(cameraViewImage);
-
-
-
 }
 
 void Processor::initializeFirstFrameObject(){
@@ -117,9 +126,9 @@ void Processor::initializeFirstFrameObject(){
 	initialFrameObject.resize(2);
 	initialFrameObject[0] = myStream_1->getFirstFrameObject();
 	initialFrameObject[1] = myStream_2->getFirstFrameObject();
-	unifiedInitialFrameObject = myTransform->initialIdentification(initialFrameObject);
+	unifiedInitialFrameObject = myCoordinateTransform->initialIdentification(initialFrameObject);
 	myTrackingInitialized = true;
-	myTracking = new Tracking(myStream1->getFrameRate(), myTrapeziumCoordinates, myAssociationThresholds,unifiedInitialFrameObject) ;
+	myTracking->setParameters(myStream1->getFrameRate(), myTrapeziumCoordinates, myAssociationThresholds,unifiedInitialFrameObject);
 }
 
 void Processor::updateSingleCameraViewImage_1(QVector<QImage> value) {

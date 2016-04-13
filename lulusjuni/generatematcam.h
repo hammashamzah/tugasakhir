@@ -21,7 +21,7 @@ class CameraObjectProcessor: public QObject
 {
     Q_OBJECT
 public:
-        CameraObjectProcessor::CameraObjectProcessor(int cameraNumber, QList<QPoint> trapeziumCoordinate, double pixelThreshold);
+        CameraObjectProcessor(int cameraNumber, QList<QPoint> trapeziumCoordinate, double pixelThreshold);
         ~CameraObjectProcessor();
         void camAssociate(int data_before,int Fr,QList<DataInputCam> predict,QList<DataInputCam> prev);
         

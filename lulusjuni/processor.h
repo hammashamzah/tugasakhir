@@ -14,6 +14,7 @@
 #include <opencv2/features2d/features2d.hpp>
 #include <cvmatandqimage.h>
 #include <videoprocessor.h>
+#include <tracking.h>
 #include <iostream>
 #include <QDebug>
 
@@ -26,8 +27,8 @@ private:
     VideoProcessor *myStream_1;
     VideoProcessor *myStream_2;
     Tracking *myTracking;
-    QVectorQList<<DataInputCam> > initialFrameObject;
-    QList<DataInputCam> unifiedInitialFrameObject;
+    QVector<QList<DataInputCam> > initialFrameObject;
+    QVector<QList<DataInputCam> > unifiedInitialFrameObject;
     QList<double> myAssociationThresholds;
     bool myTrackingInitialized;
     QVector<QList<QPoint> > myTrapeziumCoordinates;

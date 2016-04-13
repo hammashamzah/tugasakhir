@@ -57,6 +57,8 @@ public slots:
     void mainGameDisplayRightClickEvent(QPoint& pos);
     void selectPlayerFromFormationA(QPoint& pos);
     void selectPlayerFromFormationB(QPoint& pos);
+    updateTransformedRawData(QList<DataInputTrans>);
+    displayTransformedInitialFrameObject(QVector<QList<DataInputTrans> >);
 
 private slots:
     void on_actionTuning_Background_Model_triggered();
@@ -90,9 +92,14 @@ private:
     TrackingViewDialog *myTVDialog;
     BackgroundModelTuningDialog *myBMTDialog;
     Processor *myProcessor;
-
     QString filename;
     bool isFieldSelectionDialogInitialized;
+
+    playerVisual player_visual[JUMLAH_PLAYER];
+    int playerIdSelected;
+//    const int heightOfField=110;
+//    const int widthOfField=60;
+    QPoint playerFormation[JUMLAH_PLAYER];
 
 
 

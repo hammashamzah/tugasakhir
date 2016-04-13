@@ -25,7 +25,7 @@ public:
         ~CameraObjectProcessor();
         void camAssociate(int minimumIndexOfObject,int Fr,QList<DataInputCam> predict,QList<DataInputCam> prev);
         
-        QList<DataInputCam> indicatedLostFound;
+        QList<QList<DataInputCam> > indicatedLostFound;
         Mat associate;
         double xo,yo;
     private:
@@ -57,11 +57,9 @@ public:
         void checkLost();
         void checkOcclusion();
         void generateOcclusionCluster();
-   public slots:
-        void getDataCurrent(QList<DataInputCam>);
    signals:
         void updateMatrices(Mat);//menuju generatematrans
-        void sendLostFound(QList<DataInputCam>);//menuju fussionData
+        void sendLostFound(QList<QList<DataInputCam> >);//menuju fussionData
         void sendOcclusion(QList<QList<DataInputCam> >);////menuju ObjAssociate
 };
 

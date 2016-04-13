@@ -7,18 +7,18 @@ class DataSeparator:public QObject
 {
     Q_OBJECT
 public:
-    explicit DataSeparator(QObject *parent = 0);
-    DataSeparator(bool);
+    DataSeparator();
     ~DataSeparator();
 private:
-    bool startseparate;
+    bool isUpdatedDataTrans[2];
     QList<DataInputTrans>DataCam1;
     QList<DataInputTrans>DataCam2;
 public slots:
-    void getDataTrans(QList<QList<DataInputTrans> >);
+    void updateDataTrans_1(QList<QList<DataInputTrans> >);
+    void updateDataTrans_2(QList<QList<DataInputTrans> >);
 signals:
-    void SendCamera1(QList<DataInputTrans>);
-    void SendCamera2(QList<DataInputTrans>);
+    void sendCamera1(QList<DataInputTrans>);
+    void sendCamera2(QList<DataInputTrans>);
 };
 
 #endif // DATASEPARATOR_H

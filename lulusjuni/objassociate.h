@@ -34,6 +34,8 @@ class Associate:public QObject
         QList<DataInputCam>Mapping1;
         QList<DataInputCam>Mapping2;
 
+        //QList<QList<DataInputCam> > ;
+
         QList<QList<DataInputCam> > clusterOccCam1;
         QList<QList<DataInputCam> > clusterOccCam2;
         QList<QList<DataInputCam> > prevClusterOccCam1;
@@ -46,9 +48,9 @@ class Associate:public QObject
         QList<DataInputCam>cam1;
         QList<DataInputCam>cam2;
 
-        QList <DataInputCam> Outlier1;
-        QList <DataInputCam> Outlier2;
-
+        QList <QList<DataInputCam> > Outlier1;
+        QList <QList<DataInputCam> > Outlier2;
+        QList <QList<QList<DataInputCam> > > ReadyOutlier;
         Mat assoc1;
         Mat assoc2;
         bool IsMatCam1,IsMatCam2,IsOccCam1,IsOccCam2,IsRemainCam1,IsRemainCam2;
@@ -61,6 +63,7 @@ class Associate:public QObject
         void remaindedDataCam2(QList<int>);//dari generateMattrans
     signals:
         void sendDataFinal(QList<QList<DataInputCam> >);
+        void sendDataOutlier(QList<QList<QList<DataInputCam> > >);
 };
 
 

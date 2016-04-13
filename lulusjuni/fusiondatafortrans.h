@@ -8,9 +8,8 @@ class FusionDataforTrans:public QObject
 {
     Q_OBJECT
 public:
-    explicit FussionDataforTrans(QObject *parent = 0);
-    FussionDataforTrans(bool);
-    ~FussionDataforTrans();
+    FusionDataforTrans(bool);
+    ~FusionDataforTrans();
     void sendDataFussion();
     QList<QList<DataInputCam> > ReadyData;
 private:

@@ -13,7 +13,7 @@
 #define FRAME_RATE 24
 *********************/
 
-#include "fussiondatafortrans.h"
+#include "fusiondatafortrans.h"
 #include "dataseparator.h"
 #include "dataseparatorcam.h"
 #include "kalmanobj.h"
@@ -42,6 +42,7 @@ public:
     ~Tracking();
     //fungsi untuk melakukan tracking
     void proc_Tracking(int Frame);
+    setParameters(int frameRate, QVector<QList<QPoint> > trapeziumCoordinate, QList<double> associationThresholds, QVector<QList<DataInputCam> > playerDataInitial);
 
     CameraObjectProcessor       *cameraObjectProcessor_1;
     CameraObjectProcessor       *cameraObjectProcessor_2;
@@ -65,10 +66,13 @@ private:
     int currentFrame;
     QList<DataInputCam> inKalman1;
     QList<DataInputCam> inKalman2;
-    QList<DataInputCam> unifiedInitialObject;
+    QVector<QList<DataInputCam> > unifiedInitialObject;
+
+    QList<DataInputCam> inputoutlierCam1;
+    QList<DataInputCam> inputoutlierCam2;
 
 public slots:
-    void getTransformedData (QList<QList<DataInputTrans> >);
+   //void getTransformedData (QList<QList<DataInputTrans> >); 
     void getDataCamera      (QVector<QList<DataInputCam> >);
     void getDataOutlier     (QList<QList<DataInputCam> >);
     void getDataFrame       (int);
@@ -77,6 +81,10 @@ signals:
     void sendDataQFoundLost(QList<QList<DataInputCam> >);
     void signalupdateAssociateMat(Mat);
     void SendDataFinal(QList<QList<DataInputCam> >);
+    void sendOutlier(QList<QList<QList<DataInputCam> > >);
+    void toDataSeparatorCam_1(QList<QList<DataInputTrans> >);
+    void toDataSeparatorCam_2(QList<QList<DataInputTrans> >);
+
 };
 
 
