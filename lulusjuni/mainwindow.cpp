@@ -93,19 +93,33 @@ void MainWindow::on_actionTracking_View_triggered()
 
 void MainWindow::on_actionVideo_1_triggered()
 {
+<<<<<<< Updated upstream
     filename = QFileDialog::getOpenFileName(this,
                                             tr("Open Video Stream 1"), ".",
                                             tr("Video Files (*.avi *.mpg *.mp4)"));
     myProcessor->loadVideo(filename, 1);
+=======
+	filename = QFileDialog::getOpenFileName(this,
+	                                        tr("Open Video Stream 1"), ".",
+                                            tr("Video Files (*.avi *.mpg *.mp4 *.MOV)"));
+	myProcessor->loadVideo(filename, 1);
+>>>>>>> Stashed changes
 
 }
 
 void MainWindow::on_actionVideo_2_triggered()
 {
+<<<<<<< Updated upstream
     filename = QFileDialog::getOpenFileName(this,
                                             tr("Open Video Stream 2"), ".",
                                             tr("Video Files (*.avi *.mpg *.mp4)"));
     myProcessor->loadVideo(filename, 2);
+=======
+	filename = QFileDialog::getOpenFileName(this,
+	                                        tr("Open Video Stream 2"), ".",
+                                            tr("Video Files (*.avi *.mpg *.mp4 *.MOV)"));
+	myProcessor->loadVideo(filename, 2);
+>>>>>>> Stashed changes
 }
 
 void MainWindow::on_pushButton_play_released()
