@@ -105,7 +105,7 @@ void VideoProcessor::processSingleFrame()
 
 	        for (int i = 0; i < contours.size(); i++)
 	        {
-	            rectangle(bluredFrame, boundRect[i].tl(), boundRect[i].br(), Scalar(255,255,255), 2, 8, 0) ;
+	            rectangle(objectWithKeypointsFrame, boundRect[i].tl(), boundRect[i].br(), Scalar(255,255,255), 2, 8, 0) ;
 	        }
 		}
 
