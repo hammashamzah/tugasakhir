@@ -24,14 +24,13 @@ HEADERS  += mainwindow.h \
     videoprocessor.h \
     matdisplay.h \
     playervisual.h \
-    objectvariable.h \
-    preprocessing.h \
-    perspectivetransformation.h \
     dialogcameracalibration.h \
     clickdisplay.h \
     cvmatandqimage.h \
     processor.h \
     coordinatetransform.h \
+    datainputtrans.h \
+    datainputcam.h
 
 
 SOURCES += main.cpp\
@@ -45,14 +44,13 @@ SOURCES += main.cpp\
     videoprocessor.cpp \
     matdisplay.cpp \
     playervisual.cpp \
-    objectvariable.cpp \
-    preprocessing.cpp \
-    perspectivetransformation.cpp \
     dialogcameracalibration.cpp \
     clickdisplay.cpp \
     cvmatandqimage.cpp \
     processor.cpp \
+    datainputtrans.cpp \
     coordinatetransform.cpp \
+    datainputcam.cpp
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

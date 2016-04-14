@@ -11,6 +11,9 @@
 #include <string>
 #include <iostream>
 #include <QDebug>
+#include <QObject>
+#include <QList>
+#include <QPoint>
 #include "objectvariable.h"
 #include "playervisual.h"
 #include <opencv2/opencv.hpp>
@@ -22,8 +25,9 @@
 #include "systemperformancedialog.h"
 #include "trackingviewdialog.h"
 #include "coordinatetransform.h"
-#include "perspectivetransformation.h"
+//#include "perspectivetransformation.h"
 #include "processor.h"
+
 
 
 using namespace cv;
@@ -45,12 +49,13 @@ public:
     void updateDisplayFormationTeamB();
 
 public slots:
-    void mainGameDisplayClickEvent(QPoint& pos);
-    void mainGameDisplayRightClickEvent(QPoint& pos);
+    //void mainGameDisplayClickEvent(QPoint& pos);
+    //void mainGameDisplayRightClickEvent(QPoint& pos);
     void selectPlayerFromFormationA(QPoint& pos);
     void selectPlayerFromFormationB(QPoint& pos);
-    void updateTransformedRawData(QList<DataInputTrans>);
-    void displayTransformedInitialFrameObject(QVector<QList<DataInputTrans> >);
+    //void updateTransformedRawData(QList<DataInputTrans>);
+    //void displayTransformedInitialFrameObject(QVector<QList<DataInputTrans> >);
+    void displayDataTransformed(QVector<QList<DataInputTrans> > data);
 
 private slots:
     void on_actionTuning_Background_Model_triggered();
@@ -69,7 +74,7 @@ private slots:
 
     void on_actionVideo_2_triggered();
 
-    void on_actionVideo_3_triggered();
+    //void on_actionVideo_3_triggered();
 
     void on_pushButton_play_released();
         void on_pushButton_single_play_released();
@@ -83,6 +88,7 @@ private:
     SystemPerformanceDialog *mySPDialog;
     TrackingViewDialog *myTVDialog;
     BackgroundModelTuningDialog *myBMTDialog;
+    CoordinateTransform *myCoordinateTransform;
     Processor *myProcessor;
     QString filename;
     bool isFieldSelectionDialogInitialized;

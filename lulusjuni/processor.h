@@ -17,6 +17,7 @@
 #include <tracking.h>
 #include <iostream>
 #include <QDebug>
+#include "coordinatetransform.h"
 
 class Processor : public QObject
 { Q_OBJECT
@@ -27,6 +28,7 @@ private:
     VideoProcessor *myStream_1;
     VideoProcessor *myStream_2;
     Tracking *myTracking;
+    CoordinateTransform *myCoordinateTransform;
     QVector<QList<DataInputCam> > initialFrameObject;
     QVector<QList<DataInputCam> > unifiedInitialFrameObject;
     QList<double> myAssociationThresholds;
@@ -34,6 +36,7 @@ private:
     QVector<QList<QPoint> > myTrapeziumCoordinates;
     QVector<QList<DataInputCam> > allOutputDataCam;
     bool setData[2];
+    void initializeFirstFrameObject();
 public:
     Processor();
     ~Processor();
@@ -46,7 +49,9 @@ public slots:
     void updateSingleCameraViewImage_2(QVector<QImage>);
     void updateMaskCoordinate(QVector< QList<QPoint> >);
     void updateValueParameter(QVector< QVector<int> >);
-    void updateTrapeziumCoordinates(QVector<QList<QPoint> >);
+    //void updateTrapeziumCoordinates(QVector<QList<QPoint> >);
+    void updateObjectData_1(QList<DataInputCam>);
+    void updateObjectData_2(QList<DataInputCam>);
 
 public:
     void loadVideo(QString filename, int id);
@@ -67,6 +72,8 @@ signals:
     void updateMaskCoordinate_1(QList<QPoint>);
     void updateMaskCoordinate_2(QList<QPoint>);
     void setCameraViewImage(QVector<QVector<QImage> >);
+    void updateDataCamera(QVector<QList<DataInputCam> >);
+    void forwardTransformedRawData(QVector<QList<DataInputTrans> >);
 
 
 };

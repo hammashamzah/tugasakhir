@@ -19,7 +19,7 @@
 #include "kalmanpredictor.h"
 #include "generatematcam.h"
 #include "generatemattrans.h"
-#include "objassociate.h"
+//#include "objassociate.h"
 #include "objectvariable.h"
 #include <QObject>
 #include <QMutex>
@@ -50,7 +50,7 @@ public:
     TransformedObjectProcessor  *transformedObjectProcessor_2;
     KalmanPredictor             *kalmanPredictor_1;
     KalmanPredictor             *kalmancam2;
-    Associate                   *associate;
+    //Associate                   *associate;
     FusionDataforTrans         *fusion;
     DataSeparator               *inputTransform;
     DataSeparatorCam            *inputDataCurrent;

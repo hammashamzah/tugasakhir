@@ -5,7 +5,7 @@ Processor::Processor()
 	myStream_1 = new VideoProcessor();
 	myStream_2 = new VideoProcessor();
 	myCoordinateTransform = new CoordinateTransform();
-	myTracking = new Tracking() ;
+//	myTracking = new Tracking() ;
 	firstFrame_1_set = 0;
 	firstFrame_2_set = 0;
 	myTrackingInitialized = false;
@@ -30,16 +30,16 @@ Processor::Processor()
 	QObject::connect(myStream_1, SIGNAL(setObjectData(QList<DataInputCam>)), this, SLOT(updateObjectData_1(QList<DataInputCam>)));
     QObject::connect(myStream_2, SIGNAL(setObjectData(QList<DataInputCam>)), this, SLOT(updateObjectData_2(QList<DataInputCam>)));
     
-    QObject::connect(this, SIGNAL(updateDataCamera(QVector<QList<DataInputCam> >)), myTracking, SLOT(getDataCamera(QVector<QList<DataInputCam> >)));
+   // QObject::connect(this, SIGNAL(updateDataCamera(QVector<QList<DataInputCam> >)), myTracking, SLOT(getDataCamera(QVector<QList<DataInputCam> >)));
 
-    QObject::connect(this, SIGNAL(updateDataCamera(QVector<QList<DataInputCam> >)), myCoordinateTransform, SLOT(transformRawPosition(QVector<Qpoint> data_camera)));
+    QObject::connect(this, SIGNAL(updateDataCamera(QVector<QList<DataInputCam> >)), myCoordinateTransform, SLOT(transformToDisplay(QVector< QList<DataInputCam> >)));
 
-    QObject::connect(myCoordinateTransform, SIGNAL(sendTransformedRawData(QList<DataInputTrans>)), this, SIGNAL(forwardTransformedRawData(QList<DataInputTrans)));
+    QObject::connect(myCoordinateTransform, SIGNAL(sendTransformedToDisplay(QVector<QList<DataInputTrans> >)), this, SIGNAL(forwardTransformedRawData(QVector<QList<DataInputTrans> >)));
 
-    QObject::connect(myCoordinateTransform, SIGNAL(sendDataInputTransformed1(QList<Qlist<DataInputTrans> >)), myTracking, SIGNAL(toDataSeparatorCam_1(QList<QList<DataInputTrans> >));
-    QObject::connect(myCoordinateTransform, SIGNAL(sendDataInputTransformed2(QList<Qlist<DataInputTrans> >)), myTracking, SIGNAL(toDataSeparatorCam_2(QList<QList<DataInputTrans> >));
+    //QObject::connect(myCoordinateTransform, SIGNAL(sendDataInputTransformed1(QList<Qlist<DataInputTrans> >)), myTracking, SIGNAL(toDataSeparatorCam_1(QList<QList<DataInputTrans> >));
+    //QObject::connect(myCoordinateTransform, SIGNAL(sendDataInputTransformed2(QList<Qlist<DataInputTrans> >)), myTracking, SIGNAL(toDataSeparatorCam_2(QList<QList<DataInputTrans> >));
 
-    QObject::connect(myCoordinateTransform, SIGNAL(setTransformedInitialFrameObject(QVector<QList<DataInputTrans)), this, SIGNAL(forwardTransformedInitialFrameObject(QVector<QList<DataInputTrans> >)));
+    //QObject::connect(myCoordinateTransform, SIGNAL(setTransformedInitialFrameObject(QVector<QList<DataInputTrans)), this, SIGNAL(forwardTransformedInitialFrameObject(QVector<QList<DataInputTrans> >)));
     
 }
 
@@ -115,21 +115,21 @@ void Processor::msleep(int ms) {
 }
 
 void Processor::playSingleFrame() {
-    myTracking->process(myStream_1->getCurrentFrame());
+    //myTracking->process(myStream_1->getCurrentFrame());
     myStream_1->processSingleFrame();
     myStream_2->processSingleFrame();
 	emit setCameraViewImage(cameraViewImage);
 }
 
-void Processor::initializeFirstFrameObject(){
-	initialFrameObject.clear();
-	initialFrameObject.resize(2);
-	initialFrameObject[0] = myStream_1->getFirstFrameObject();
-	initialFrameObject[1] = myStream_2->getFirstFrameObject();
-	unifiedInitialFrameObject = myCoordinateTransform->initialIdentification(initialFrameObject);
-	myTrackingInitialized = true;
-	myTracking->setParameters(myStream1->getFrameRate(), myTrapeziumCoordinates, myAssociationThresholds,unifiedInitialFrameObject);
-}
+//void Processor::initializeFirstFrameObject(){
+//	initialFrameObject.clear();
+//	initialFrameObject.resize(2);
+//	initialFrameObject[0] = myStream_1->getFirstFrameObject();
+ //       initialFrameObject[1] = myStream_2->getFirstFrameObject();
+//	unifiedInitialFrameObject = myCoordinateTransform->initialIdentification(initialFrameObject);
+    //myTrackingInitialized = true;
+    //myTracking->setParameters(myStream1->getFrameRate(), myTrapeziumCoordinates, myAssociationThresholds,unifiedInitialFrameObject);
+//}
 
 void Processor::updateSingleCameraViewImage_1(QVector<QImage> value) {
 	cameraViewImage[0] = value;
@@ -139,18 +139,18 @@ void Processor::updateSingleCameraViewImage_2(QVector<QImage> value) {
 	cameraViewImage[1] = value;
 }
 
-void updateTrapeziumCoordinates(QVector<QList<QPoint> > value){
-	myTrapeziumCoordinates.clear();
-	myTrapeziumCoordinates.resize(2);
-	myTrapeziumCoordinates = value;
-}
+//void updateTrapeziumCoordinates(QVector<QList<QPoint> > value){
+//	myTrapeziumCoordinates.clear();
+//	myTrapeziumCoordinates.resize(2);
+//	myTrapeziumCoordinates = value;
+//}
 
-void updateObjectData_1(QList<DataInputCam> outputDataCam){
+void Processor::updateObjectData_1(QList<DataInputCam> outputDataCam){
 	allOutputDataCam[0] = outputDataCam;
 	setData[0] = true;
 }
 
-void updateObjectData_2(QList<DataInputCam> outputDataCam){
+void Processor::updateObjectData_2(QList<DataInputCam> outputDataCam){
 	allOutputDataCam[1] = outputDataCam;
 	setData[1] = true;
 	if(setData[0] && setData[1]){

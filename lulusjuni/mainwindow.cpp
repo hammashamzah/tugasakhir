@@ -4,7 +4,6 @@
 #include <string>
 #include <iostream>
 
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
@@ -14,29 +13,35 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     myTVDialog = new TrackingViewDialog(this);
     myBMTDialog = new BackgroundModelTuningDialog(this);
     myFSDialog = new FieldSelectionDialog(this);
+    myCoordinateTransform = new CoordinateTransform();
     myProcessor = new Processor();
 
     QObject::connect(myProcessor, SIGNAL(firstFrameImage(QVector<QImage>)), myFSDialog, SLOT(setFrame(QVector<QImage>)));
     QObject::connect(myFSDialog, SIGNAL(setMaskCoordinates(QVector< QList<QPoint> >)), myProcessor, SLOT(updateMaskCoordinate(QVector< QList<QPoint> >)));
-    QObject::connect(myFSDialog, SIGNAL(setTrapeziumCoordinates(QVector< QList<QPoint> >)), myProcessor, SLOT(updateTrapeziumCoordinates(QVector<QList<QPoint> >)));
+    //QObject::connect(myFSDialog, SIGNAL(setTrapeziumCoordinates(QVector< QList<QPoint> >)), myProcessor, SLOT(updateTrapeziumCoordinates(QVector<QList<QPoint> >)));
     QObject::connect(myProcessor, SIGNAL(setCameraViewImage(QVector< QVector<QImage> >)), myCVDialog, SLOT(updateCameraViewImage(QVector< QVector<QImage> >)));
     QObject::connect(myBMTDialog, SIGNAL(setValueParameter(QVector< QVector<int> >)), myProcessor, SLOT(updateValueParameter(QVector< QVector<int> >))); 
 
-    QObject::connect(ui->label_game_visual, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(mainGameDisplayClickEvent(QPoint&)));
-    QObject::connect(ui->label_formationTeamA, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationA(QPoint&)));
-    QObject::connect(ui->label_formationTeamB, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationB(QPoint&)));
-    QObject::connect(ui->label_game_visual, SIGNAL(sendRightClickPosition(QPoint&)),this, SLOT(mainGameDisplayRightClickEvent(QPoint&)));
+    //QObject::connect(ui->label_game_visual, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(mainGameDisplayClickEvent(QPoint&)));
+    //QObject::connect(ui->label_formationTeamA, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationA(QPoint&)));
+    //QObject::connect(ui->label_formationTeamB, SIGNAL(sendClickPosition(QPoint&)),this, SLOT(selectPlayerFromFormationB(QPoint&)));
+    //QObject::connect(ui->label_game_visual, SIGNAL(sendRightClickPosition(QPoint&)),this, SLOT(mainGameDisplayRightClickEvent(QPoint&)));
 
-    QObject::connect(myProcessor, SIGNAL(forwardTransformedRawData(QList<DataInputTrans>)), this, SLOT(updateTransformedRawData(QList<DataInputTrans>)));
+    QObject::connect(myProcessor, SIGNAL(forwardTransformedRawData(QVector<QList<DataInputTrans> >)), this, SLOT(displayDataTransformed(QVector<QList<DataInputTrans> >)));
 
-    QObject::connect(myProcessor, SIGNAL(forwardTransformedInitialFrameObject(QVector<QList<DataInputTrans> >)), this, SLOT(displayTransformedInitialFrameObject(QVector<QList<DataInputTrans> >)));
+    //Object::connect(myProcessor, SIGNAL(forwardTransformedInitialFrameObject(QVector<QList<DataInputTrans> >)), this, SLOT(displayTransformedInitialFrameObject(QVector<QList<DataInputTrans> >)));
 
+    QObject::connect(myFSDialog, SIGNAL(setLambdaValue(QVector<Mat>)), myCoordinateTransform, SLOT(saveTransformMatrix(QVector<Mat>)));
+    
+    QObject::connect(myProcessor, SIGNAL(updateDataCamera(QVector<QList<DataInputCam> >)), myCoordinateTransform, SLOT(transformToDisplay(QVector<QList<DataInputCam> >)));
+
+    QObject::connect(myCoordinateTransform, SIGNAL(sendTransformedToDisplay(QVector<QList<DataInputTrans> >)), this, SLOT(displayDataTransformed(QVector<QList<DataInputTrans> >)));
     Mat matrik;
     Mat posisi;
     QPoint P;
     QPoint Ptrans(5,2);
 
-    myPersTransDialog->show();
+    //myPersTransDialog->show();
     /*
     matrik=myPersTransDialog->getMatrix("lapangan.png");
     Ptrans = konversi.perspectiveTrans(P, matrik);
@@ -44,13 +49,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     cout<<Ptrans.x()<<" "<<Ptrans.y();
 
     */
-    setRandomPlayerProperties();
+    //setRandomPlayerProperties();
 
-    updateGameVisual();
-    teamA.setFormation(442);
-    teamB.setFormation(442);
-    updateDisplayFormationTeamA();
-    updateDisplayFormationTeamB();
+    //updateGameVisual();
+    //teamA.setFormation(442);
+    //teamB.setFormation(442);
+    //updateDisplayFormationTeamA();
+    //updateDisplayFormationTeamB();
 
 
 }
@@ -127,7 +132,7 @@ void MainWindow::on_pushButton_single_play_released() {
     myProcessor->playSingleFrame();
 }
 
-
+/*
 void MainWindow::mainGameDisplayClickEvent(QPoint &pos)
 {
     int isPlayer=false;
@@ -236,9 +241,8 @@ void MainWindow::updateGameVisual()
           else painterField.drawText(QPoint(player_visual[i].Position.x(), player_visual[i].Position.y()), "??");
      }
       ui->label_game_visual->setPixmap (pixmapField);
-      /*if(idToAssign<12) this->updateDisplayFormationTeamA();
-      else this->updateDisplayFormationTeamB();*/
-
+      if(idToAssign<12) this->updateDisplayFormationTeamA();
+      else this->updateDisplayFormationTeamB();
 }
 
 void MainWindow::setRandomPlayerProperties()
@@ -258,7 +262,7 @@ void MainWindow::setRandomPlayerProperties()
             player_visual[i].Position.setY(qrand() % (434-56) + 28);
     }
 }
-
+*/
 void MainWindow::selectPlayerFromFormationA(QPoint &pos)
 {
     /*
@@ -357,14 +361,38 @@ void MainWindow::updateDisplayFormationTeamB()
     */
 }
 
-void MainWindow::updateTransformedRawData(QList<DataInputTrans> value){
-
-
-
-}
 
 void displayTransformedInitialFrameObject(QVector<QList<DataInputTrans> >){
     //manual assignment job for initial frame
 
 
+}
+
+
+
+//hanya untuk demo ke pak doni
+void MainWindow::displayDataTransformed(QVector<QList<DataInputTrans> > data)
+{
+    QPixmap pixmapField("lapangan.png");   //ukuran pixmap
+    QPainter painterField(&pixmapField);
+    QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
+    QBrush brush(Qt::white);
+
+    painterField.setRenderHint(QPainter::Antialiasing, true);
+    painterField.setPen(pen);
+    for(int cameraId=0;cameraId<2;cameraId++)
+    {
+        for(int i=0; i<data.at(cameraId).size(); i++)
+        {
+              brush.setColor(Qt::red);
+              painterField.setBrush(brush);
+
+              painterField.drawRect(data.at(cameraId).at(i).Pos_trans.x, data.at(cameraId).at(i).Pos_trans.y, rect_player_size, rect_player_size);  //posisi x, y, dan ukuran elips
+              painterField.setFont(QFont ("Arial"));
+
+              painterField.drawText(QPoint(data.at(cameraId).at(i).Pos_trans.x, data.at(cameraId).at(i).Pos_trans.y), QString::number(data.at(cameraId).at(i).id)); //posisi x, y, dan ukuran elips
+         }
+    }
+
+      ui->label_game_visual->setPixmap (pixmapField);
 }

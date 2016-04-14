@@ -38,6 +38,16 @@
          <string>Camera 2 Trapezium</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Camera 1 Coordinate Transform</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Camera 2 Coordinate Transform</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
@@ -78,7 +88,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Set Masking...</string>
+            <string>Set...</string>
            </property>
           </widget>
          </item>
