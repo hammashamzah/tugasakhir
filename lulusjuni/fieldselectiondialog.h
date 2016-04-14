@@ -40,7 +40,7 @@ private:
 
 signals:
     void setMaskCoordinates(QVector<QList<QPoint> >);
-
+    void setTrapeziumCoordinates(QVector<QList<QPoint> >);
 };
 
 

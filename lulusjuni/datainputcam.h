@@ -10,6 +10,7 @@ class DataInputCam
 {
     public:
         DataInputCam();
+        DataInputCam(Point data);
         ~DataInputCam();
         int id;
         Point2f dataplayer;

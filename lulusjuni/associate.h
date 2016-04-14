@@ -16,14 +16,14 @@ using namespace std;
 class Associate:public QObject
 {
     Q_OBJECT
-    public: 
-        explicit Associate (QObject *parent = 0);
+    public:
         int validate;
-        Associate(bool);
+        Associate();
         ~Associate();
-        void accum_assoc(QList<DataInputCam>,QList<DataInputCam>);
+        void accum_assoc(QList<DataInputCam>, QList<DataInputCam>, int);
         Mat association_agrr;
         QList<QList<DataInputCam> > DataFinal;
+        double min;
 
     private:
         bool startAssociate;
@@ -49,7 +49,7 @@ class Associate:public QObject
         QList <DataInputCam> Outlier1;
         QList <DataInputCam> Outlier2;
 
-        QList<QList<QList<DataInputCam> > > ReadyOutlier;
+        QList<QList<DataInputCam> > ReadyOutlier;
         Mat assoc1;
         Mat assoc2;
         bool IsMatCam1,IsMatCam2,IsOccCam1,IsOccCam2,IsRemainCam1,IsRemainCam2;
@@ -64,7 +64,7 @@ class Associate:public QObject
         void sendDataFinal(QList<QList<DataInputCam> >);
         void sendDataFinalCam1(QList<DataInputCam>);
         void sendDataFinalCam2(QList<DataInputCam>);
-        void sendDataOutlier(QList<QList<QList<DataInputCam> > >);
+        void sendDataOutlier(QList<QList<DataInputCam> >);
 };
 
 

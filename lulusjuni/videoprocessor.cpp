@@ -108,7 +108,6 @@ void VideoProcessor::processSingleFrame()
 	        {
 	            rectangle(objectWithKeypointsFrame, boundRect[i].tl(), boundRect[i].br(), Scalar(255,255,255), 2, 8, 0) ;
 	        }
-	        qDebug
 		}
 
         qRawFrame = QtOcv::mat2Image_shared(frame).copy().rgbSwapped();
@@ -128,7 +127,9 @@ void VideoProcessor::processSingleFrame()
         //convert points to DataInputCam
         outputData.clear();
         for(int i =0; i < points.size(); i++){
-        	outputData.append(DataInputCam(points[i]));
+            DataInputCam temp(points[i]);
+            outputData.append(temp);
+            //outputData.append(DataInputCam(points[i]));
         }
 
         emit setObjectData(outputData);

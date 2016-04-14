@@ -14,6 +14,34 @@ TEMPLATE = app
 INCLUDEPATH += /usr/local/include/opencv
 LIBS += -L/usr/local/lib -lopencv_calib3d -lopencv_contrib -lopencv_core -lopencv_features2d -lopencv_flann -lopencv_gpu -lopencv_highgui -lopencv_imgproc -lopencv_legacy -lopencv_ml -lopencv_nonfree -lopencv_objdetect -lopencv_ocl -lopencv_photo -lopencv_stitching -lopencv_superres -lopencv_ts -lopencv_video -lopencv_videostab
 
+HEADERS  += mainwindow.h \
+    backgroundmodeltuningdialog.h \
+    fieldselectiondialog.h \
+    trackingviewdialog.h \
+    systemperformancedialog.h \
+    errorcalculationdialog.h \
+    cameraviewdialog.h \
+    videoprocessor.h \
+    matdisplay.h \
+    playervisual.h \
+    objectvariable.h \
+    LinkedList.h \
+    associate.h \
+    preprocessing.h \
+    node.h \
+    perspectivetransformation.h \
+    dialogcameracalibration.h \
+    clickdisplay.h \
+    cvmatandqimage.h \
+    processor.h \
+    Tracking.h \
+    fusiondatafortrans.h \
+    coordinatetransform.h \
+    tracking.h \
+    kalmanpredictor.h \
+    associate.h
+
+
 SOURCES += main.cpp\
     backgroundmodeltuningdialog.cpp \
     mainwindow.cpp \
@@ -26,46 +54,20 @@ SOURCES += main.cpp\
     matdisplay.cpp \
     playervisual.cpp \
     objectvariable.cpp \
-    KalmanObj.cpp \
     LinkedList.cpp \
-    ObjAssociate.cpp \
+    associate.cpp \
     preprocessing.cpp \
     node.cpp \
-    allaboutteam.cpp \
-    coordinateconverter.cpp \
     perspectivetransformation.cpp \
     dialogcameracalibration.cpp \
     clickdisplay.cpp \
     cvmatandqimage.cpp \
     processor.cpp \
     Tracking.cpp \
-    fusiondatafortrans.cpp
-
-HEADERS  += mainwindow.h \
-    backgroundmodeltuningdialog.h \
-    fieldselectiondialog.h \
-    trackingviewdialog.h \
-    systemperformancedialog.h \
-    errorcalculationdialog.h \
-    cameraviewdialog.h \
-    videoprocessor.h \
-    matdisplay.h \
-    playervisual.h \
-    objectvariable.h \
-    KalmanObj.h \
-    LinkedList.h \
-    ObjAssociate.h \
-    preprocessing.h \
-    node.h \
-    allaboutteam.h \
-    coordinateconverter.h \
-    perspectivetransformation.h \
-    dialogcameracalibration.h \
-    clickdisplay.h \
-    cvmatandqimage.h \
-    processor.h \
-    Tracking.h \
-    fusiondatafortrans.h
+    fusiondatafortrans.cpp \
+    coordinatetransform.cpp \
+    tracking.cpp \
+    kalmanpredictor.cpp
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

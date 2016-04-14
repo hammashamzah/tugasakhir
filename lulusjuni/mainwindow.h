@@ -22,7 +22,7 @@
 #include "fieldselectiondialog.h"
 #include "systemperformancedialog.h"
 #include "trackingviewdialog.h"
-#include "coordinateconverter.h"
+#include "coordinatetransform.h"
 #include "perspectivetransformation.h"
 #include "processor.h"
 
@@ -57,8 +57,8 @@ public slots:
     void mainGameDisplayRightClickEvent(QPoint& pos);
     void selectPlayerFromFormationA(QPoint& pos);
     void selectPlayerFromFormationB(QPoint& pos);
-    updateTransformedRawData(QList<DataInputTrans>);
-    displayTransformedInitialFrameObject(QVector<QList<DataInputTrans> >);
+    void updateTransformedRawData(QList<DataInputTrans>);
+    void displayTransformedInitialFrameObject(QVector<QList<DataInputTrans> >);
 
 private slots:
     void on_actionTuning_Background_Model_triggered();

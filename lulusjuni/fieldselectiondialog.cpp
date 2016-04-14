@@ -47,19 +47,19 @@ void FieldSelectionDialog::on_cameraSelectCombo_currentIndexChanged(int index)
             ui->imageView->setPixmap(QPixmap::fromImage(frameCamera.at(1)));
         }
         break;
-    }
     case 2:
         if (!frameCamera.at(0).isNull()) {
             ui->imageView->setAlignment(Qt::AlignCenter);
             ui->imageView->setPixmap(QPixmap::fromImage(frameCamera.at(0)));
         }
-    break;
+        break;
     case 3:
         if (!frameCamera.at(1).isNull()) {
             ui->imageView->setAlignment(Qt::AlignCenter);
             ui->imageView->setPixmap(QPixmap::fromImage(frameCamera.at(1)));
         }
-    break;
+        break;
+}
 }
 
 void FieldSelectionDialog::processMouse(QPoint &pos) {

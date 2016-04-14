@@ -21,7 +21,7 @@ public:
     void getMatrix(String imageFileName);
     ~perspectiveTransformation();
     int cameraId;
-    Qlist <Mat> lambda;
+    QList <Mat> lambda;
     QList <QSize> size_mat_camera;
 public slots:
     void get4Point(QPoint &pos);
@@ -35,7 +35,7 @@ private:
     Point2f clickedPoint[4];
 signals:
     void sendTransformMat(Mat&);
-    sendSizeMatCamera(QList <QSize>& size_mat_camera);
+    void sendSizeMatCamera(QList <QSize>& size_mat_camera);
 
 
 };

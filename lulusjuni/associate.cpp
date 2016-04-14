@@ -1,13 +1,6 @@
-#include "ObjAssociate.h"
+#include "associate.h"
 
-Associate::Associate(bool on){
-    startAssociate = on;
-    IsMatCam1 = false;
-    IsMatCam2 = false;
-    IsOccCam1 = false;
-    IsOccCam2 = false;
-    IsRemainCam1 = false;
-    IsRemainCam2 = false;
+Associate::Associate(){
 }
 
 Associate::~Associate(){
@@ -56,19 +49,18 @@ void Associate::remaindedDataCam2(QList<int> RemainCam2){
     IsRemainCam1 = true;
 }
 
-void Associate::accum_assoc(QList<DataInputCam> DataCam1,QList<DataInputCam> DataCam2){
+void Associate::accum_assoc(QList<DataInputCam> DataCam1,QList<DataInputCam> DataCam2, int threshold){
     association_agrr = Mat::zeros(JUMLAH_PLAYER,JUMLAH_PLAYER,CV_8U);
     cam1.clear();
     cam2.clear();
     cam1 = DataCam1;
     cam2 = DataCam2;
-    if(startAssociate)
+    //threshold outlier untuk masing-masing kamera atau untuk dua kamera?
+    min = threshold;
         while(!IsMatCam1 || !IsMatCam2 || !IsOccCam1 || !IsOccCam2 || !IsRemainCam1 || !IsRemainCam2){
-            QTest::qWait(100);
             if(IsMatCam1 && IsMatCam2 && IsOccCam1 && IsOccCam2 && IsRemainCam1 && IsRemainCam2){
                 break;
             }
-        }
         association_agrr = assoc1 + assoc2 ;
         mapping();
         handlerOutlier();
@@ -90,9 +82,9 @@ void Associate::accum_assoc(QList<DataInputCam> DataCam1,QList<DataInputCam> Dat
 void Associate::handlerOutlier(){
     double euclid_distance;
     int indicatedmin=0;
-    double min = Thresholdoutlier;
     QList<DataInputCam> buff;
     QList<DataInputCam> buffer;
+    //ini belum diganti lo ya, embek
     Outlier1.clear();
     Outlier2.clear();
     if(!remainData1.isEmpty()){
@@ -113,8 +105,8 @@ void Associate::handlerOutlier(){
                    buffer[k].id = buff.at(k).id;
                    buffer[k].dataplayer.x = cam1.at(remainData1.at(i)).dataplayer.x;
                    buffer[k].dataplayer.y = cam1.at(remainData1.at(i)).dataplayer.y;
-                   buffer[k].dataplayer.width = cam1.at(remainData1.at(i)).dataplayer.width;
-                   buffer[k].dataplayer.height = cam1.at(remainData1.at(i)).dataplayer.height;
+                   //buffer[k].dataplayer.width = cam1.at(remainData1.at(i)).dataplayer.width;
+                   //buffer[k].dataplayer.height = cam1.at(remainData1.at(i)).dataplayer.height;
                 
                }
             }
@@ -138,8 +130,8 @@ void Associate::handlerOutlier(){
                buffer[k].id = buff.at(k).id;
                buffer[k].dataplayer.x = cam2.at(remainData2.at(i)).dataplayer.x;
                buffer[k].dataplayer.y = cam2.at(remainData2.at(i)).dataplayer.y;
-               buffer[k].dataplayer.width = cam2.at(remainData2.at(i)).dataplayer.width;
-               buffer[k].dataplayer.height = cam2.at(remainData2.at(i)).dataplayer.height;
+               //buffer[k].dataplayer.width = cam2.at(remainData2.at(i)).dataplayer.width;
+               //buffer[k].dataplayer.height = cam2.at(remainData2.at(i)).dataplayer.height;
                 }
 
             }
@@ -158,8 +150,8 @@ void Associate::mapping(){
                     buffer.id = i;
                     buffer.dataplayer.x = cam1.at(j).dataplayer.x;
                     buffer.dataplayer.y = cam1.at(j).dataplayer.y;
-                    buffer.dataplayer.width =cam1.at(j).dataplayer.width;
-                    buffer.dataplayer.height =cam1.at(j).dataplayer.height;
+                    //buffer.dataplayer.width =cam1.at(j).dataplayer.width;
+                    //buffer.dataplayer.height =cam1.at(j).dataplayer.height;
                     buffer.flag = cam1.at(j).flag;
                     buffer.pixelSpeed.x =cam1.at(j).pixelSpeed.x;
                     buffer.pixelSpeed.y =cam1.at(j).pixelSpeed.y;
@@ -171,8 +163,8 @@ void Associate::mapping(){
                     buffer.id = i;
                     buffer.dataplayer.x = cam2.at(j).dataplayer.x;
                     buffer.dataplayer.y = cam2.at(j).dataplayer.y;
-                    buffer.dataplayer.width =cam2.at(j).dataplayer.width;
-                    buffer.dataplayer.height =cam2.at(j).dataplayer.height;
+                    //buffer.dataplayer.width =cam2.at(j).dataplayer.width;
+                    //buffer.dataplayer.height =cam2.at(j).dataplayer.height;
                     buffer.flag = cam2.at(j).flag;
                     buffer.pixelSpeed.x =cam2.at(j).pixelSpeed.x;
                     buffer.pixelSpeed.y =cam2.at(j).pixelSpeed.y;

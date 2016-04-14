@@ -42,8 +42,8 @@ void Tracking::setParameters(int frameRate, QVector<QList<QPoint> > trapeziumCoo
     QObject::connect(transformedObjectProcessor_2, SIGNAL(UpdateAssociate(Mat)), associate, SLOT(updateMatCam2(Mat)));
     QObject::connect(transformedObjectProcessor_1, SIGNAL(UpdateRemaindedData(QList<int>)), associate, SLOT(remaindedDataCam1(QList<int>)));
     QObject::connect(transformedObjectProcessor_2, SIGNAL(UpdateRemaindedData(QList<int>)), associate, SLOT(remaindedDataCam2(QList<int>)));
-    QObject::connect(inputTransform, SIGNAL(aendCamera1(QList<DataInputTrans>)), transformedObjectProcessor_1, SLOT(getDataTrans(QList<DataInputTrans> > )));
-    QObject::connect(inputTransform, SIGNAL(aendCamera2(QList<DataInputTrans>)), transformedObjectProcessor_2, SLOT(getDataTrans(QList<DataInputTrans> > )));
+    QObject::connect(inputTransform, SIGNAL(sendCamera1(QList<DataInputTrans>)), transformedObjectProcessor_1, SLOT(getDataTrans(QList<DataInputTrans> > )));
+    QObject::connect(inputTransform, SIGNAL(sendCamera2(QList<DataInputTrans>)), transformedObjectProcessor_2, SLOT(getDataTrans(QList<DataInputTrans> > )));
 
     /*keluaran associate menuju kalman */
     QObject::connect(associate, SIGNAL(sendDataFinalCam1(QList<DataInputCam>)), kalmanPredictor_1, SLOT(getDataCurr(QList<DataInputCam>)));
@@ -80,7 +80,7 @@ void Tracking::getDataCamera(QVector<QList<DataInputCam> > currentData) {
     data2 = currentData.at(1);
     cameraObjectProcessor_1->camAssociate(0, currentFrame, kalmanPredictor_1->predictionData, kalmanPredictor_1->previousData);
     cameraObjectProcessor_2->camAssociate(data1.length(), currentFrame, kalmanPredictor_2->predictionData, kalmanPredictor_2->previousData);
-    associate->accum_assoc(data1, data2);
+    associate->accum_assoc(data1, data2, associationThresholds[0]);
 }
 
 void Tracking::getDataOutlier(QList<QList<DataInputCam> > dataOutlier) {

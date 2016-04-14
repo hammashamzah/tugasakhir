@@ -12,7 +12,7 @@ void CoordinateTransform::processDataFoundLost(QList<QList<DataInputCam>> data_c
 {
     //data_camera[0] --> lost 
     //data_camera[1] -> found
-    QList<QList<DataInputTrans>> lostFoundTransformed;
+    QList<QList<DataInputTrans> > lostFoundTransformed;
     Point2f cam_coordinate;
     /*
     for (int i = 0; i <data_camera.size(); ++i)

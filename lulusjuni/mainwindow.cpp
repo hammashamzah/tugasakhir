@@ -261,6 +261,7 @@ void MainWindow::setRandomPlayerProperties()
 
 void MainWindow::selectPlayerFromFormationA(QPoint &pos)
 {
+    /*
     bool isPlayer=false;
     for(int id=0; id<=10; id++)
     {
@@ -279,10 +280,12 @@ void MainWindow::selectPlayerFromFormationA(QPoint &pos)
         idToAssign=999;
     }
     ui->positionLabel->setText(QString::number(pos.x())+"  "+QString::number(pos.y()));
+    */
 }
 
 void MainWindow::selectPlayerFromFormationB(QPoint &pos)
 {
+    /*
     bool isPlayer=false;
     for(int id=0; id<=10; id++)
     {
@@ -301,11 +304,12 @@ void MainWindow::selectPlayerFromFormationB(QPoint &pos)
         idToAssign=999;
     }
     ui->positionLabel->setText(QString::number(pos.x())+"  "+QString::number(pos.y()));
+    */
 }
 
 void MainWindow::updateDisplayFormationTeamA()
 {
-    QPixmap pixmapFieldTeam("lapanganTeamA.png");
+    /*QPixmap pixmapFieldTeam("lapanganTeamA.png");
     //qDebug()<<pixmapFieldTeam.width()<<' '<<pixmapFieldTeam.height();
     //qDebug()<<ui->label_formationTeamA->width()<<' '<<ui->label_formationTeamA->height();
     QPainter painterField(&pixmapFieldTeam);
@@ -324,11 +328,12 @@ void MainWindow::updateDisplayFormationTeamA()
 
    // painterField.
     ui->label_formationTeamA->setPixmap(pixmapFieldTeam);
-
+*/
 }
 
 void MainWindow::updateDisplayFormationTeamB()
 {
+    /*
     QPixmap pixmapFieldTeam("lapanganTeamA.png");
     //qDebug()<<pixmapFieldTeam.width()<<' '<<pixmapFieldTeam.height();
     //qDebug()<<ui->label_formationTeamB->width()<<' '<<ui->label_formationTeamB->height();
@@ -349,7 +354,7 @@ void MainWindow::updateDisplayFormationTeamB()
 
    // painterField.
     ui->label_formationTeamB->setPixmap(pixmapFieldTeam);
-
+    */
 }
 
 void MainWindow::updateTransformedRawData(QList<DataInputTrans> value){

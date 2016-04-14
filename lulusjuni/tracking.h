@@ -16,7 +16,7 @@
 #include "fusiondatafortrans.h"
 #include "dataseparator.h"
 #include "dataseparatorcam.h"
-#include "kalmanobj.h"
+#include "kalmanpredictor.h"
 #include "generatematcam.h"
 #include "generatemattrans.h"
 #include "objassociate.h"
@@ -42,7 +42,7 @@ public:
     ~Tracking();
     //fungsi untuk melakukan tracking
     void proc_Tracking(int Frame);
-    setParameters(int frameRate, QVector<QList<QPoint> > trapeziumCoordinate, QList<double> associationThresholds, QVector<QList<DataInputCam> > playerDataInitial);
+    void setParameters(int frameRate, QVector<QList<QPoint> > trapeziumCoordinate, QList<double> associationThresholds, QVector<QList<DataInputCam> > playerDataInitial);
 
     CameraObjectProcessor       *cameraObjectProcessor_1;
     CameraObjectProcessor       *cameraObjectProcessor_2;
