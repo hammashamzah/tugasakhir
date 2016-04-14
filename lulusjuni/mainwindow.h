@@ -14,7 +14,6 @@
 #include "objectvariable.h"
 #include "playervisual.h"
 #include <opencv2/opencv.hpp>
-#include <allaboutteam.h>
 #include "cameraviewdialog.h"
 #include "videoprocessor.h"
 #include "backgroundmodeltuningdialog.h"
@@ -41,16 +40,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    AllAboutTeam teamA;
-    AllAboutTeam teamB;
 
     void updateDisplayFormationTeamA();
     void updateDisplayFormationTeamB();
-    perspectiveTransformation *myPersTransDialog;
-
-
-
-
 
 public slots:
     void mainGameDisplayClickEvent(QPoint& pos);

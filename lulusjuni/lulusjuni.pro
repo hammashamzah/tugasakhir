@@ -25,21 +25,13 @@ HEADERS  += mainwindow.h \
     matdisplay.h \
     playervisual.h \
     objectvariable.h \
-    LinkedList.h \
-    associate.h \
     preprocessing.h \
-    node.h \
     perspectivetransformation.h \
     dialogcameracalibration.h \
     clickdisplay.h \
     cvmatandqimage.h \
     processor.h \
-    Tracking.h \
-    fusiondatafortrans.h \
     coordinatetransform.h \
-    tracking.h \
-    kalmanpredictor.h \
-    associate.h
 
 
 SOURCES += main.cpp\
@@ -54,20 +46,13 @@ SOURCES += main.cpp\
     matdisplay.cpp \
     playervisual.cpp \
     objectvariable.cpp \
-    LinkedList.cpp \
-    associate.cpp \
     preprocessing.cpp \
-    node.cpp \
     perspectivetransformation.cpp \
     dialogcameracalibration.cpp \
     clickdisplay.cpp \
     cvmatandqimage.cpp \
     processor.cpp \
-    Tracking.cpp \
-    fusiondatafortrans.cpp \
     coordinatetransform.cpp \
-    tracking.cpp \
-    kalmanpredictor.cpp
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \
