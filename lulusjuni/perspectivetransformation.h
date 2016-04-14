@@ -32,7 +32,7 @@ private slots:
 
 private:
     Ui::perspectiveTransformation *ui;
-    Point2f clickedPoint[4];
+    QList <Point2f> clickedPoint[4];
 signals:
     void sendTransformMat(Mat&);
     sendSizeMatCamera(QList <QSize>& size_mat_camera);

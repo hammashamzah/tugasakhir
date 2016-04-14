@@ -11,6 +11,9 @@
 #include <string>
 #include <iostream>
 #include <QDebug>
+#include <QObject>
+#include <QList>
+#include <QPoint>
 #include "objectvariable.h"
 #include "playervisual.h"
 #include <opencv2/opencv.hpp>

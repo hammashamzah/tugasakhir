@@ -1,8 +1,15 @@
 #ifndef COORDINATETRANSFORM_H
 #define COORDINATETRANSFORM_H
 
+#define PANJANG_LAPANGAN_ASLI 500
+#define LEBAR_LAPANGAN_ASLI 300
+
 #include <QObject>
-#include "objectvariable.h"
+#include <opencv2/opencv.hpp>
+#include <opencv2/core/core.hpp>
+#include <QPoint>
+#include <QList>
+using namespace cv;
 
 class CoordinateTransform : public QObject
 {
@@ -11,6 +18,8 @@ public:
     explicit CoordinateTransform(QObject *parent = 0);
     Mat transform_mat1;
     Mat transform_mat2;
+    QSize mat_camera1_size;
+    QSize mat_camera2_size;
     void processDataFoundLost(QList<QList<DataInputCam>> data_camera);
     Point2f TransformPointToGlobal(Point2f pos, int cameraID);
     Point2f TransformPointToCamera(Point2f picture_coordinate, Mat transform_matrix);

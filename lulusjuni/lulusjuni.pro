@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     cvmatandqimage.cpp \
     processor.cpp \
     Tracking.cpp \
-    fusiondatafortrans.cpp
+    fusiondatafortrans.cpp \
+    coordinatetransform.cpp
 
 HEADERS  += mainwindow.h \
     backgroundmodeltuningdialog.h \
@@ -65,7 +66,8 @@ HEADERS  += mainwindow.h \
     cvmatandqimage.h \
     processor.h \
     Tracking.h \
-    fusiondatafortrans.h
+    fusiondatafortrans.h \
+    coordinatetransform.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

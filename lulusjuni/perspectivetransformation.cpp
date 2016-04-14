@@ -49,13 +49,26 @@ void perspectiveTransformation::get4Point(QPoint &pos)
     }
 }
 
+
+void perspectiveTransformation::get4PointFromHammas(QList<QList<QPoint> > &pos)
+{
+    Point2f position;
+    for(int cameraId=0;cameraId<2;cameraId++)
+    {
+        for (int i=0;i<4;i++)
+        {
+            position.x = pos.at(cameraId).at(i).x();
+            position.y = pos.at(cameraId).at(i).y();
+            clickedPoint[cameraId][i].= position;
+        }
+    }
+}
+
 /* fungsi ini mentransformasi perspective */
 void perspectiveTransformation::getMatrix(Mat MatToBeTransformed)
 {
     //asumsi lebar lapangan adalah 0.5 panjang lapangan
     daouble size_ratio = 0.5;
-
-
 
     // Output Quadilateral or World plane coordinates
     Point2f outputQuad[4];
@@ -63,8 +76,8 @@ void perspectiveTransformation::getMatrix(Mat MatToBeTransformed)
     QList<Mat> lambda( 2, 4, CV_32FC1 );
 
     if(camera==1)
-        cameraID=0;
-    else cameraID=1;
+        cameraId=0;
+    else cameraId=1;
 
     size_mat_camera[cameraId].setWidth(clickedPoint[cameraId][3].x-clickedPoint[cameraId][4].x);
     size_mat_camera[cameraId].setHeight(size_ratio*size_mat_camera[cameraId].width(););
@@ -81,7 +94,7 @@ void perspectiveTransformation::getMatrix(Mat MatToBeTransformed)
     // Get the Perspective Transform Matrix i.e. lambda
     lambda[cameraId] = getPerspectiveTransform( clickedPoint[cameraId], outputQuad );
     //qDebug << "lambda = "<< endl << " "  << lambda << endl << endl;
-    dsize_mat_camera[cameraID].setWidth(clickedPoint[cameraId][3].x-clickedPoint[cameraId][4].x), );
+    //size_mat_camera[cameraID].setWidth(clickedPoint[cameraId][3].x-clickedPoint[cameraId][4].x), );
 }
 
 

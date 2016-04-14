@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     cout<<Ptrans.x()<<" "<<Ptrans.y();
 
     */
-    setRandomPlayerProperties();
+
 
     updateGameVisual();
     teamA.setFormation(442);
@@ -102,7 +102,6 @@ void MainWindow::on_actionVideo_1_triggered()
 	                                        tr("Open Video Stream 1"), ".",
                                             tr("Video Files (*.avi *.mpg *.mp4 *.MOV)"));
 	myProcessor->loadVideo(filename, 1);
-
 }
 
 void MainWindow::on_actionVideo_2_triggered()
@@ -126,8 +125,6 @@ void MainWindow::on_pushButton_play_released()
 void MainWindow::on_pushButton_single_play_released() {
     myProcessor->playSingleFrame();
 }
-
-
 void MainWindow::mainGameDisplayClickEvent(QPoint &pos)
 {
     int isPlayer=false;
@@ -362,4 +359,31 @@ void displayTransformedInitialFrameObject(QVector<QList<DataInputTrans> >){
     //manual assignment job for initial frame
 
 
+}
+
+//hanya untuk demo ke pak doni
+void displayDataTransformed(QVector<QList<DataInputCam> > data)
+{
+    QPixmap pixmapField("lapangan.png");   //ukuran pixmap
+    QPainter painterField(&pixmapField);
+    QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
+    QBrush brush(Qt::white);
+
+    painterField.setRenderHint(QPainter::Antialiasing, true);
+    painterField.setPen(pen);
+    for(int cameraId=0;cameraId<2;cameraId++)
+    {
+        for(int i=0; i<data.at(cameraId).size(); i++)
+        {
+              brush.setColor(Qt::red);
+              painterField.setBrush(brush);
+
+              painterField.drawRect(data.at(cameraId).at(i).dataplayer.x, data.at(cameraId).at(i).dataplayer.y, rect_player_size, rect_player_size);  //posisi x, y, dan ukuran elips
+              painterField.setFont(QFont ("Arial"));
+
+              painterField.drawText(QPoint(data.at(cameraId).at(i).dataplayer.x, data.at(cameraId).at(i).dataplayer.y), QString::number(data.at(cameraId).at(i).id)); //posisi x, y, dan ukuran elips
+         }
+    }
+
+      ui->label_game_visual->setPixmap (pixmapField);
 }
