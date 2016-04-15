@@ -378,7 +378,7 @@ void MainWindow::displayDataTransformed(QVector<QList<DataInputTrans> > data)
     QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
     QBrush brush(Qt::white);
 
-    painterField.setRenderHint(QPainter::Antialiasing, true);
+    /*painterField.setRenderHint(QPainter::Antialiasing, true);
     painterField.setPen(pen);
     for(int cameraId=0;cameraId<2;cameraId++)
     {
@@ -393,6 +393,6 @@ void MainWindow::displayDataTransformed(QVector<QList<DataInputTrans> > data)
               painterField.drawText(QPoint(data.at(cameraId).at(i).Pos_trans.x, data.at(cameraId).at(i).Pos_trans.y), QString::number(data.at(cameraId).at(i).id)); //posisi x, y, dan ukuran elips
          }
     }
-
       ui->label_game_visual->setPixmap (pixmapField);
+*/
 }

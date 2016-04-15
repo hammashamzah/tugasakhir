@@ -49,9 +49,7 @@ QImage VideoProcessor::getFirstFrame(){
 	setCurrentFrame(1);
 
     qFirstImage = QtOcv::mat2Image_shared(firstFrame).rgbSwapped().copy();
-    qDebug("Aku siap");
     return qFirstImage;
-    //emit firstFrameImage(qFirstImage);
 }
 
 void VideoProcessor::processSingleFrame()

@@ -47,6 +47,7 @@ signals:
 	//Signal to output frame to be displayed
 	void setSingleCameraViewImage(const QVector<QImage>);
 	void setObjectData(QList<DataInputCam>);
+
 public slots:
 	//update parameters
     void setValueParameter(QVector<int>);
@@ -70,8 +71,9 @@ public:
 	double getFrameRate();
 	double getCurrentFrame();
 	double getNumberOfFrames();
-	QImage getFirstFrame();
+    QImage getFirstFrame();
 	void processSingleFrame();
+
 
 private:
     void convertMatToQImage(Mat frame, QImage result);

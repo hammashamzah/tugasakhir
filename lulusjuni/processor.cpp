@@ -64,7 +64,6 @@ void Processor::loadVideo(QString filename, int id) {
 				msgBox.exec();
 			} else {
 				firstFrame[0] = myStream_1->getFirstFrame();
-				qDebug("Aku disini");
 				firstFrame_1_set = 1;
 			}
 		}
@@ -83,7 +82,7 @@ void Processor::loadVideo(QString filename, int id) {
 		break;
 	}
 	if (firstFrame_1_set && firstFrame_2_set) {
-		emit firstFrameImage(firstFrame);
+		emit firstFrameImage (firstFrame);
 	}
 }
 
