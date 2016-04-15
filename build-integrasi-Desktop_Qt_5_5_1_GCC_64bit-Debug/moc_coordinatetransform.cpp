@@ -21,8 +21,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_CoordinateTransform_t {
-    QByteArrayData data[16];
-    char stringdata0[298];
+    QByteArrayData data[15];
+    char stringdata0[284];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -40,24 +40,21 @@ QT_MOC_LITERAL(5, 76, 21), // "QList<QList<Player> >"
 QT_MOC_LITERAL(6, 98, 17), // "sendPlayerformed2"
 QT_MOC_LITERAL(7, 116, 23), // "sendTransformedPosition"
 QT_MOC_LITERAL(8, 140, 23), // "QVector<QList<Player> >"
-QT_MOC_LITERAL(9, 164, 18), // "getTransformMatrix"
-QT_MOC_LITERAL(10, 183, 10), // "QList<Mat>"
-QT_MOC_LITERAL(11, 194, 12), // "getImageSize"
-QT_MOC_LITERAL(12, 207, 12), // "QList<QSize>"
-QT_MOC_LITERAL(13, 220, 24), // "processTransformPosition"
-QT_MOC_LITERAL(14, 245, 28), // "setTransformationCoordinates"
-QT_MOC_LITERAL(15, 274, 23) // "QVector<QList<QPoint> >"
+QT_MOC_LITERAL(9, 164, 18), // "setTransformMatrix"
+QT_MOC_LITERAL(10, 183, 23), // "QVector<QList<QPoint> >"
+QT_MOC_LITERAL(11, 207, 25), // "transformationCoordinates"
+QT_MOC_LITERAL(12, 233, 12), // "setImageSize"
+QT_MOC_LITERAL(13, 246, 12), // "QList<QSize>"
+QT_MOC_LITERAL(14, 259, 24) // "processTransformPosition"
 
     },
     "CoordinateTransform\0sendTransformedRawData\0"
     "\0QList<Player>\0sendPlayerformed1\0"
     "QList<QList<Player> >\0sendPlayerformed2\0"
     "sendTransformedPosition\0QVector<QList<Player> >\0"
-    "getTransformMatrix\0QList<Mat>\0"
-    "getImageSize\0QList<QSize>\0"
-    "processTransformPosition\0"
-    "setTransformationCoordinates\0"
-    "QVector<QList<QPoint> >"
+    "setTransformMatrix\0QVector<QList<QPoint> >\0"
+    "transformationCoordinates\0setImageSize\0"
+    "QList<QSize>\0processTransformPosition"
 };
 #undef QT_MOC_LITERAL
 
@@ -67,7 +64,7 @@ static const uint qt_meta_data_CoordinateTransform[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -75,16 +72,15 @@ static const uint qt_meta_data_CoordinateTransform[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   54,    2, 0x06 /* Public */,
-       4,    1,   57,    2, 0x06 /* Public */,
-       6,    1,   60,    2, 0x06 /* Public */,
-       7,    1,   63,    2, 0x06 /* Public */,
+       1,    1,   49,    2, 0x06 /* Public */,
+       4,    1,   52,    2, 0x06 /* Public */,
+       6,    1,   55,    2, 0x06 /* Public */,
+       7,    1,   58,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       9,    1,   66,    2, 0x0a /* Public */,
-      11,    1,   69,    2, 0x0a /* Public */,
-      13,    1,   72,    2, 0x0a /* Public */,
-      14,    1,   75,    2, 0x0a /* Public */,
+       9,    1,   61,    2, 0x0a /* Public */,
+      12,    1,   64,    2, 0x0a /* Public */,
+      14,    1,   67,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    2,
@@ -93,10 +89,9 @@ static const uint qt_meta_data_CoordinateTransform[] = {
     QMetaType::Void, 0x80000000 | 8,    2,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 10,    2,
-    QMetaType::Void, 0x80000000 | 12,    2,
+    QMetaType::Void, 0x80000000 | 10,   11,
+    QMetaType::Void, 0x80000000 | 13,    2,
     QMetaType::Void, 0x80000000 | 8,    2,
-    QMetaType::Void, 0x80000000 | 15,    2,
 
        0        // eod
 };
@@ -111,27 +106,26 @@ void CoordinateTransform::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
         case 1: _t->sendPlayerformed1((*reinterpret_cast< QList<QList<Player> >(*)>(_a[1]))); break;
         case 2: _t->sendPlayerformed2((*reinterpret_cast< QList<QList<Player> >(*)>(_a[1]))); break;
         case 3: _t->sendTransformedPosition((*reinterpret_cast< QVector<QList<Player> >(*)>(_a[1]))); break;
-        case 4: _t->getTransformMatrix((*reinterpret_cast< QList<Mat>(*)>(_a[1]))); break;
-        case 5: _t->getImageSize((*reinterpret_cast< QList<QSize>(*)>(_a[1]))); break;
+        case 4: _t->setTransformMatrix((*reinterpret_cast< QVector<QList<QPoint> >(*)>(_a[1]))); break;
+        case 5: _t->setImageSize((*reinterpret_cast< QList<QSize>(*)>(_a[1]))); break;
         case 6: _t->processTransformPosition((*reinterpret_cast< QVector<QList<Player> >(*)>(_a[1]))); break;
-        case 7: _t->setTransformationCoordinates((*reinterpret_cast< QVector<QList<QPoint> >(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 4:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<QList<QPoint> > >(); break;
+            }
+            break;
         case 5:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QList<QSize> >(); break;
-            }
-            break;
-        case 7:
-            switch (*reinterpret_cast<int*>(_a[1])) {
-            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-            case 0:
-                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QVector<QList<QPoint> > >(); break;
             }
             break;
         }
@@ -190,13 +184,13 @@ int CoordinateTransform::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 7;
     }
     return _id;
 }

@@ -30,6 +30,10 @@ void FieldSelectionDialog::setFirstFrameImage(QVector<QImage> img) {
     ui->imageView->setAlignment(Qt::AlignCenter);
     frameCamera[0] = img.at(0);
     frameCamera[1] = img.at(1);
+    imageSize.clear();
+    imageSize.append(frameCamera[0].size()); 
+    imageSize.append(frameCamera[1].size());
+    emit sendImageSize(imageSize);
     if (currentCameraIndex == 0) {
         ui->imageView->setPixmap(QPixmap::fromImage(frameCamera.at(0)));
     }

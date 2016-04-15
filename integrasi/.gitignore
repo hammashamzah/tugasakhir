@@ -1,0 +1,12 @@
+*.o
+/moc_backgroundmodeltuningdialog.cpp
+/moc_cameraviewdialog.cpp
+/moc_clickdisplay.cpp
+/moc_coordinatetransform.cpp
+/moc_errorcalculationdialog.cpp
+/moc_fieldselectiondialog.cpp
+/moc_mainwindow.cpp
+/moc_objectdetector.cpp
+/moc_systemperformancedialog.cpp
+/moc_trackingviewdialog.cpp
+/moc_videoprocessor.cpp

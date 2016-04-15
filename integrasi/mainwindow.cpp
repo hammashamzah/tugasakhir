@@ -22,12 +22,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(myObjectDetector, SIGNAL(sendObjectData(QVector<QList<Player> >)), myCoordinateTransform, SLOT(processTransformPosition(QVector<QList<Player> >)));
     QObject::connect(myCoordinateTransform, SIGNAL(sendTransformedPosition(QVector<QList<Player> >)), this, SLOT(displayTransformedPosition(QVector<QList<Player> >)));
 
-    QObject::connect(myFSDialog, SIGNAL(sendTransformationCoordinates(QVector<QList<QPoint> >)), myCoordinateTransform, SLOT(setTransformationCoordinates(QVector<QList<QPoint> >)));
-
+    QObject::connect(myFSDialog, SIGNAL(sendTransformationCoordinates(QVector<QList<QPoint> >)), myCoordinateTransform, SLOT(setTransformMatrix(QVector<QList<QPoint> >)));
+    QObject::connect(myFSDialog, SIGNAL(sendImageSize(QList<QSize>)), myCoordinateTransform, SLOT(setImageSize(QList<QSize>)));
     QPixmap pixmapField("lapangan.png");
     ui->label_game_visual->setPixmap(pixmapField);
-
-
 }
 
 MainWindow::~MainWindow()
@@ -37,6 +35,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionTuning_Background_Model_triggered()
 {
+    qDebug("Kawan kawanmu sudah lulus");
     myBMTDialog->show();
 }
 
@@ -72,6 +71,7 @@ void MainWindow::on_actionVideo_1_triggered()
                                             tr("Open Video Stream 1"), ".",
                                             tr("Video Files (*.avi *.mpg *.mp4 *.MOV)"));
     myObjectDetector->loadVideo(filename, 1);
+
 
 }
 
@@ -118,17 +118,12 @@ void MainWindow::displayTransformedPosition(QVector<QList<Player> > transformedP
                                     RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
               painterField.setFont(QFont ("Arial"));
 
-              painterField.drawText(QPoint(transformedPosition.at(cameraId).at(i).pos.x, transformedPosition.at(cameraId).at(i).pos.y), QString::number(transformedPosition.at(cameraId).at(i).id)); //posisi x, y, dan ukuran elips
+              painterField.drawText(QPoint(transformedPosition.at(cameraId).at(i).pos.x*pixmapField.width()/GLOBAL_FIELD_LENGTH, transformedPosition.at(cameraId).at(i).pos.y*pixmapField.height()/GLOBAL_FIELD_WIDTH), QString::number(transformedPosition.at(cameraId).at(i).id)); //posisi x, y, dan ukuran elips
          }
     }
     ui->label_game_visual->setPixmap (pixmapField);
 }
 
-//hanya untuk debug
-void MainWindow::displayMousePosition(QPoint &pos)
-{
-    ui->positionLabel->setText(QString::number(pos.x())+", "+QString::number(pos.y()));
-}
 
 void MainWindow::setCameraViewFirstFrameImage(QVector<QImage> firstFrameImage){
     ui->label_stream_1->setAlignment(Qt::AlignCenter);

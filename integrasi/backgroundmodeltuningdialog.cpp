@@ -21,12 +21,19 @@ BackgroundModelTuningDialog::~BackgroundModelTuningDialog()
 void BackgroundModelTuningDialog::on_slider_min_area_1_valueChanged(int value)
 {
 	parameters[0][0] = value;
+    ui->min_area_1->setText(QString::number(value));
+    /*if(parameters[0][1] - parameters[0][0] <= 0){
+        parameters[0][1] = parameters[0][0];
+        ui->slider_max_area_1->valueChanged();
+    }
+    */
     emit sendValueParameter(parameters);
 }
 
 void BackgroundModelTuningDialog::on_slider_min_area_2_valueChanged(int value)
 {
 	parameters[1][0] = value;
+    ui->min_area_2->setText(QString::number(value));
     emit sendValueParameter(parameters);
 
 }
@@ -34,6 +41,7 @@ void BackgroundModelTuningDialog::on_slider_min_area_2_valueChanged(int value)
 void BackgroundModelTuningDialog::on_slider_max_area_1_valueChanged(int value)
 {
 	parameters[0][1] = value;
+    ui->max_area_1->setText(QString::number(value));
     emit sendValueParameter(parameters);
 
 }
@@ -41,6 +49,7 @@ void BackgroundModelTuningDialog::on_slider_max_area_1_valueChanged(int value)
 void BackgroundModelTuningDialog::on_slider_max_area_2_valueChanged(int value)
 {
 	parameters[1][1] = value;
+    ui->max_area_2->setText(QString::number(value));
     emit sendValueParameter(parameters);
 
 }
@@ -48,6 +57,7 @@ void BackgroundModelTuningDialog::on_slider_max_area_2_valueChanged(int value)
 void BackgroundModelTuningDialog::on_slider_morp_element_size_1_valueChanged(int value)
 {
 	parameters[0][2] = value;
+    ui->morph_1->setText(QString::number(value));
     emit sendValueParameter(parameters);
 
 }
@@ -55,6 +65,7 @@ void BackgroundModelTuningDialog::on_slider_morp_element_size_1_valueChanged(int
 void BackgroundModelTuningDialog::on_slider_morp_element_size_2_valueChanged(int value)
 {
 	parameters[1][2] = value;
+    ui->morph_2->setText(QString::number(value));
     emit sendValueParameter(parameters);
 
 }
@@ -62,6 +73,7 @@ void BackgroundModelTuningDialog::on_slider_morp_element_size_2_valueChanged(int
 void BackgroundModelTuningDialog::on_slider_gaussian_size_1_valueChanged(int value)
 {
 	parameters[0][3] = value;
+    ui->gaussian_1->setText(QString::number(value));
     emit sendValueParameter(parameters);
 
 }
@@ -69,6 +81,7 @@ void BackgroundModelTuningDialog::on_slider_gaussian_size_1_valueChanged(int val
 void BackgroundModelTuningDialog::on_slider_gaussian_size_2_valueChanged(int value)
 {
 	parameters[1][3] = value;
+    ui->gaussian_2->setText(QString::number(value));
     emit sendValueParameter(parameters);
 
 }

@@ -19,7 +19,7 @@ public slots:
 public:
     explicit FieldSelectionDialog(QWidget *parent = 0);
     ~FieldSelectionDialog();
-
+    QList<QSize> imageSize;
 private slots:
     void on_cameraSelectCombo_currentIndexChanged(int index);
     void on_pushButton_set_released();
@@ -43,6 +43,7 @@ signals:
     void sendMaskCoordinates(QVector<QList<QPoint> >);
     void sendTrapeziumCoordinates(QVector<QList<QPoint> >);
     void sendTransformationCoordinates(QVector<QList<QPoint> >);
+    void sendImageSize(QList<QSize>);
 };
 
 

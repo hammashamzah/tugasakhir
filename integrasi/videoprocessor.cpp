@@ -12,7 +12,7 @@ VideoProcessor::VideoProcessor()
 	morphElementSize = 3;
 	gaussianSize = 3;
 	isSetMask = false;
-    mode = 0;
+	mode = 1;
 	allFrames.resize(6);
 }
 //destructor
@@ -56,16 +56,23 @@ QImage VideoProcessor::getFirstFrame(){
 
 void VideoProcessor::processSingleFrame()
 {
-		//set parameters based on tuning from background model tuning window
+        //set parameters based on tuning from background model tuning window
 		params.filterByArea = true;
 		params.filterByInertia = false;
 		params.filterByConvexity = false;
 		params.filterByColor = false;
 		params.filterByCircularity = false;
-		params.minArea = minArea;
-		params.maxArea = maxArea;
+		if(minArea > 0){
+			params.minArea = minArea;
+		}
+
+		if(maxArea > 0){
+			params.maxArea = maxArea;
+		}
 		SimpleBlobDetector blob_detector(params);
-		morphElement = getStructuringElement(2, Size(morphElementSize, morphElementSize));
+        if(morphElementSize > 0){
+			morphElement = getStructuringElement(2, Size(morphElementSize, morphElementSize));
+		}
 
 		if (!capture->read(frame))
 		{
@@ -85,10 +92,12 @@ void VideoProcessor::processSingleFrame()
         }
 		//update the background model
 		pMOG2->operator()(maskedFrame, objectFrame);
-
-		morphologyEx(objectFrame, openedFrame, 2, morphElement);
-		GaussianBlur(openedFrame, bluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
-
+        if(morphElementSize > 0){
+        	morphologyEx(objectFrame, openedFrame, 2, morphElement);
+		}
+		if(gaussianSize > 0){
+			GaussianBlur(openedFrame, bluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
+		}
         frame.copyTo(objectWithKeypointsFrame);
 
 		if(mode == 0){
@@ -156,11 +165,8 @@ void VideoProcessor::setValueParameter(QVector<int> value){
 	gaussianSize = value.at(3);
 }
 
-
 void VideoProcessor::getMaskCoordinate(QList<QPoint> maskPoints){
     numberOfMaskPoints = maskPoints.count();
-    QString message = "Number of points is: " + QString::number(numberOfMaskPoints);
-    qDebug() << message;
 	//clean coordinate of mask
     for (int j = 0; j < 10; j++)
 	{

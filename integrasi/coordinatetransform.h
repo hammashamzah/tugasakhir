@@ -22,12 +22,11 @@ public:
     ~CoordinateTransform();
     Mat transform_mat1;
     Mat transform_mat2;
-    QSize image_size_1;
-    QSize image_size_2;
     Point2f transformPointToGlobal(Point2f pos, int cameraID);
     Point2f transformPointToCamera(Point2f picture_coordinate, Mat transform_matrix);
     Point2f transformCamera1ToGlobal(Point2f camera_coordinate, Mat transform_matrix);
     Point2f transformCamera2ToGlobal(Point2f camera_coordinate, Mat transform_matrix);
+    QSize imageSize[2];
 signals:
     void sendTransformedRawData(QList<Player>);
     void sendPlayerformed1(QList<QList<Player> >);
@@ -35,10 +34,9 @@ signals:
     void sendTransformedPosition(QVector<QList<Player> >);
 
 public slots:
-    void getTransformMatrix(QList<Mat>);
-    void getImageSize(QList<QSize>);
+    void setTransformMatrix(QVector<QList<QPoint> > transformationCoordinates);
+    void setImageSize(QList<QSize>);
     void processTransformPosition(QVector<QList<Player> >);
-    void setTransformationCoordinates(QVector<QList<QPoint> >);
 };
 
 #endif // COORDINATETRANSFORM_H

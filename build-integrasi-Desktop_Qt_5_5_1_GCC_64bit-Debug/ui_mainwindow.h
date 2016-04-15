@@ -50,8 +50,8 @@ public:
     QVBoxLayout *verticalLayout_3;
     ClickDisplay *label_game_visual;
     QHBoxLayout *horizontalLayout_5;
-    QLabel *label_stream_1;
-    QLabel *label_stream_2;
+    ClickDisplay *label_stream_1;
+    ClickDisplay *label_stream_2;
     QHBoxLayout *horizontalLayout_4;
     QVBoxLayout *verticalLayout;
     QPushButton *pushButton_play;
@@ -132,14 +132,14 @@ public:
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setSpacing(6);
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
-        label_stream_1 = new QLabel(centralWidget);
+        label_stream_1 = new ClickDisplay(centralWidget);
         label_stream_1->setObjectName(QStringLiteral("label_stream_1"));
         label_stream_1->setMinimumSize(QSize(320, 240));
         label_stream_1->setStyleSheet(QStringLiteral("Background-color: #000;"));
 
         horizontalLayout_5->addWidget(label_stream_1);
 
-        label_stream_2 = new QLabel(centralWidget);
+        label_stream_2 = new ClickDisplay(centralWidget);
         label_stream_2->setObjectName(QStringLiteral("label_stream_2"));
         label_stream_2->setMinimumSize(QSize(320, 240));
         label_stream_2->setStyleSheet(QStringLiteral("Background-color: #000;"));
@@ -280,7 +280,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1043, 25));
+        menuBar->setGeometry(QRect(0, 0, 1043, 17));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuEdit = new QMenu(menuBar);

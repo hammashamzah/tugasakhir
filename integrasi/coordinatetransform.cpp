@@ -30,18 +30,12 @@ void CoordinateTransform::processTransformPosition(QVector<QList<Player> > data)
     }
     emit sendTransformedPosition(data);
 }
-//slot dari dialog untuk menyimpan nilai transformer
-void CoordinateTransform::getTransformMatrix(QList<Mat> transformer)
-{
-    transform_mat1= transformer.at(0);
-    transform_mat2= transformer.at(1);
-}
 
 //slot untuk menyimpan informasi mat camera dari dialog ke variabel lokal
-void CoordinateTransform::getImageSize(QList<QSize> mat_size)
+void CoordinateTransform::setImageSize(QList<QSize> value)
 {
-    image_size_1=mat_size.at(0);
-    image_size_2=mat_size.at(0);
+    imageSize[0] = value.at(0);
+    imageSize[1] = value.at(1);
 }
 
 Point2f CoordinateTransform::transformPointToCamera(Point2f picture_coordinate, Mat transform_matrix)
@@ -62,8 +56,8 @@ Point2f CoordinateTransform::transformPointToCamera(Point2f picture_coordinate, 
 Point2f CoordinateTransform::transformCamera1ToGlobal(Point2f camera_coordinate, Mat transform_matrix)
 {
     Point2f dst;
-       dst.x =transformPointToCamera(camera_coordinate, transform_matrix).x * GLOBAL_FIELD_LENGTH / 2 / image_size_1.width();
-       dst.y =transformPointToCamera(camera_coordinate, transform_matrix).y * GLOBAL_FIELD_WIDTH / image_size_2.height();
+       dst.x =transformPointToCamera(camera_coordinate, transform_matrix).x * GLOBAL_FIELD_LENGTH / 2 / imageSize[0].width();
+       dst.y =transformPointToCamera(camera_coordinate, transform_matrix).y * GLOBAL_FIELD_WIDTH / imageSize[0].height();
        return dst;
 }
 
@@ -71,14 +65,15 @@ Point2f CoordinateTransform::transformCamera2ToGlobal(Point2f camera_coordinate,
 {
     Point2f dst;
         int offset=GLOBAL_FIELD_LENGTH/2;
-        dst.x =transformPointToCamera(camera_coordinate, transform_matrix).x * GLOBAL_FIELD_LENGTH / 2 / image_size_2.width()+offset;
-        dst.y =transformPointToCamera(camera_coordinate, transform_matrix).y * GLOBAL_FIELD_WIDTH / image_size_2.height();
+        dst.x =transformPointToCamera(camera_coordinate, transform_matrix).x * GLOBAL_FIELD_LENGTH / 2 / imageSize[1].width()+offset;
+        dst.y =transformPointToCamera(camera_coordinate, transform_matrix).y * GLOBAL_FIELD_WIDTH / imageSize[1].height();
         return dst;
 }
 
 
 
-void CoordinateTransform::setTransformationCoordinates(QVector<QList<QPoint> > transformationCoordinates){
+
+void CoordinateTransform::setTransformMatrix(QVector<QList<QPoint> > transformationCoordinates){
  //asumsi lebar lapangan adalah 0.5 panjang lapangan
     double size_ratio = 0.5;
 
@@ -90,17 +85,14 @@ void CoordinateTransform::setTransformationCoordinates(QVector<QList<QPoint> > t
     lambda.resize(2);
 
     for (int cameraId = 0; cameraId < 2; cameraId++) {
-        //size_mat_camera[cameraId].setWidth(clickedPoint[cameraId][3].x - clickedPoint[cameraId][4].x);
-        //size_mat_camera[cameraId].setHeight(size_ratio * size_mat_camera[cameraId].width(););
-
         // Set the lambda matrix the same type and size as input
-        lambda[cameraId] = Mat::zeros( 1920, 1080, CV_8UC1);
+        lambda[cameraId] = Mat::zeros( 3, 3, CV_8UC1);
 
         // The 4 points where the mapping is to be done , from top-left in clockwise order
         outputQuad[0] = Point2f( 0, 0 );
-        outputQuad[1] = Point2f( 1920 , 0);
-        outputQuad[2] = Point2f( 1920, 1080);
-        outputQuad[3] = Point2f( 0, 1080);
+        outputQuad[1] = Point2f( imageSize[cameraId].width() , 0);
+        outputQuad[2] = Point2f( imageSize[cameraId].width(), imageSize[cameraId].height());
+        outputQuad[3] = Point2f( 0, imageSize[cameraId].height());
 
         Point2f temp[4];
 
@@ -115,9 +107,8 @@ void CoordinateTransform::setTransformationCoordinates(QVector<QList<QPoint> > t
 
         // Get the Perspective Transform Matrix i.e. lambda
         lambda[cameraId] = getPerspectiveTransform(temp, outputQuad );
-        //qDebug << "lambda = "<< endl << " "  << lambda << endl << endl;
-        //size_mat_camera[cameraID].setWidth(clickedPoint[cameraId][3].x-clickedPoint[cameraId][4].x), );
         
     }
-
-    emit setLambdaValue(lambda);
+        transform_mat1 = lambda[0];
+        transform_mat2 = lambda[1];
+}
