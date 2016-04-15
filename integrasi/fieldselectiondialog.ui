@@ -38,12 +38,22 @@
          <string>Camera 2 Trapezium</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Camera 1 Transformation</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Camera 2 Transformation</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="ClickDisplay" name="imageView" native="true">
+        <widget class="ClickDisplay" name="imageView">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -59,10 +69,10 @@
          <property name="styleSheet">
           <string notr="true">Background-color: #000;</string>
          </property>
-         <property name="text" stdset="0">
+         <property name="text">
           <string/>
          </property>
-         <property name="scaledContents" stdset="0">
+         <property name="scaledContents">
           <bool>true</bool>
          </property>
         </widget>
@@ -119,8 +129,8 @@
  <customwidgets>
   <customwidget>
    <class>ClickDisplay</class>
-   <extends>QWidget</extends>
-   <header>clickdisplay.h</header>
+   <extends>QLabel</extends>
+   <header location="global">clickdisplay.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

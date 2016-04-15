@@ -89,7 +89,7 @@ void VideoProcessor::processSingleFrame()
 		morphologyEx(objectFrame, openedFrame, 2, morphElement);
 		GaussianBlur(openedFrame, bluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
 
-        objectWithKeypointsFrame = frame;
+        frame.copyTo(objectWithKeypointsFrame);
 
 		if(mode == 0){
 			blob_detector.detect(bluredFrame, keypoints);
@@ -127,13 +127,11 @@ void VideoProcessor::processSingleFrame()
         //convert points to Player
         outputData.clear();
         for(int i =0; i < points.size(); i++){
-            Player temp(points[i]);
-            outputData.append(temp);
-            //outputData.append(Player(points[i]));
+            outputData.append(Player(points[i]));
         }
 
-        emit setObjectData(outputData);
-        emit setSingleCameraViewImage(allFrames);
+        emit sendCameraObjectData(outputData);
+        emit sendSingleCameraViewImage(allFrames);
 
 }
 
@@ -172,13 +170,11 @@ void VideoProcessor::getMaskCoordinate(QList<QPoint> maskPoints){
 	if(numberOfMaskPoints > 2 && numberOfMaskPoints <= 10){
 		int i= 0;
         foreach(QPoint point, maskPoints){
-			qDebug() << point;
             maskPoint[0][i] = Point(point.x(), point.y());
 			i++;
 		}
 		isSetMask = true;
 	}else{
-        qDebug("Too many points, Baby");
 		isSetMask = false;
 	}
 }

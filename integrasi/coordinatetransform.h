@@ -26,11 +26,13 @@ signals:
     void sendTransformedRawData(QList<Player>);
     void sendPlayerformed1(QList<QList<Player> >);
     void sendPlayerformed2(QList<QList<Player> >);
+    void sendTransformedPosition(QVector<QList<Player> >);
 
 public slots:
     void getTransformMatrix(QList<Mat>);
     void getImageSize(QList<QSize>);
-    void processTransformPosition(QVector<QPoint>);
+    void processTransformPosition(QVector<QList<Player> >);
+    void setTransformationCoordinates(QVector<QList<QPoint> >);
 };
 
 #endif // COORDINATETRANSFORM_H

@@ -61,12 +61,12 @@ public:
     QLabel *label_23;
     QHBoxLayout *horizontalLayout_11;
     QLabel *label_24;
-    QSlider *slider_gaussian_size_4;
+    QSlider *slider_pixel_threshold_1;
     QLabel *label_25;
     QLabel *label_26;
     QHBoxLayout *horizontalLayout_12;
     QLabel *label_27;
-    QSlider *slider_gaussian_size_5;
+    QSlider *slider_transformed_threshold_1;
     QLabel *label_28;
     QGroupBox *groupBox_2;
     QVBoxLayout *verticalLayout_2;
@@ -97,12 +97,12 @@ public:
     QLabel *label_29;
     QHBoxLayout *horizontalLayout_13;
     QLabel *label_30;
-    QSlider *slider_gaussian_size_6;
+    QSlider *slider_pixel_threshold_2;
     QLabel *label_31;
     QLabel *label_34;
     QHBoxLayout *horizontalLayout_14;
     QLabel *label_32;
-    QSlider *slider_gaussian_size_7;
+    QSlider *slider_transformed_threshold_2;
     QLabel *label_33;
     QHBoxLayout *horizontalLayout_33;
     QLabel *label_91;
@@ -310,17 +310,17 @@ public:
 
         horizontalLayout_11->addWidget(label_24);
 
-        slider_gaussian_size_4 = new QSlider(groupBox);
-        slider_gaussian_size_4->setObjectName(QStringLiteral("slider_gaussian_size_4"));
-        sizePolicy1.setHeightForWidth(slider_gaussian_size_4->sizePolicy().hasHeightForWidth());
-        slider_gaussian_size_4->setSizePolicy(sizePolicy1);
-        slider_gaussian_size_4->setMinimum(3);
-        slider_gaussian_size_4->setMaximum(15);
-        slider_gaussian_size_4->setOrientation(Qt::Horizontal);
-        slider_gaussian_size_4->setTickPosition(QSlider::TicksBelow);
-        slider_gaussian_size_4->setTickInterval(1);
+        slider_pixel_threshold_1 = new QSlider(groupBox);
+        slider_pixel_threshold_1->setObjectName(QStringLiteral("slider_pixel_threshold_1"));
+        sizePolicy1.setHeightForWidth(slider_pixel_threshold_1->sizePolicy().hasHeightForWidth());
+        slider_pixel_threshold_1->setSizePolicy(sizePolicy1);
+        slider_pixel_threshold_1->setMinimum(3);
+        slider_pixel_threshold_1->setMaximum(15);
+        slider_pixel_threshold_1->setOrientation(Qt::Horizontal);
+        slider_pixel_threshold_1->setTickPosition(QSlider::TicksBelow);
+        slider_pixel_threshold_1->setTickInterval(1);
 
-        horizontalLayout_11->addWidget(slider_gaussian_size_4);
+        horizontalLayout_11->addWidget(slider_pixel_threshold_1);
 
         label_25 = new QLabel(groupBox);
         label_25->setObjectName(QStringLiteral("label_25"));
@@ -345,17 +345,17 @@ public:
 
         horizontalLayout_12->addWidget(label_27);
 
-        slider_gaussian_size_5 = new QSlider(groupBox);
-        slider_gaussian_size_5->setObjectName(QStringLiteral("slider_gaussian_size_5"));
-        sizePolicy1.setHeightForWidth(slider_gaussian_size_5->sizePolicy().hasHeightForWidth());
-        slider_gaussian_size_5->setSizePolicy(sizePolicy1);
-        slider_gaussian_size_5->setMinimum(3);
-        slider_gaussian_size_5->setMaximum(15);
-        slider_gaussian_size_5->setOrientation(Qt::Horizontal);
-        slider_gaussian_size_5->setTickPosition(QSlider::TicksBelow);
-        slider_gaussian_size_5->setTickInterval(1);
+        slider_transformed_threshold_1 = new QSlider(groupBox);
+        slider_transformed_threshold_1->setObjectName(QStringLiteral("slider_transformed_threshold_1"));
+        sizePolicy1.setHeightForWidth(slider_transformed_threshold_1->sizePolicy().hasHeightForWidth());
+        slider_transformed_threshold_1->setSizePolicy(sizePolicy1);
+        slider_transformed_threshold_1->setMinimum(3);
+        slider_transformed_threshold_1->setMaximum(15);
+        slider_transformed_threshold_1->setOrientation(Qt::Horizontal);
+        slider_transformed_threshold_1->setTickPosition(QSlider::TicksBelow);
+        slider_transformed_threshold_1->setTickInterval(1);
 
-        horizontalLayout_12->addWidget(slider_gaussian_size_5);
+        horizontalLayout_12->addWidget(slider_transformed_threshold_1);
 
         label_28 = new QLabel(groupBox);
         label_28->setObjectName(QStringLiteral("label_28"));
@@ -549,17 +549,17 @@ public:
 
         horizontalLayout_13->addWidget(label_30);
 
-        slider_gaussian_size_6 = new QSlider(groupBox_2);
-        slider_gaussian_size_6->setObjectName(QStringLiteral("slider_gaussian_size_6"));
-        sizePolicy1.setHeightForWidth(slider_gaussian_size_6->sizePolicy().hasHeightForWidth());
-        slider_gaussian_size_6->setSizePolicy(sizePolicy1);
-        slider_gaussian_size_6->setMinimum(3);
-        slider_gaussian_size_6->setMaximum(15);
-        slider_gaussian_size_6->setOrientation(Qt::Horizontal);
-        slider_gaussian_size_6->setTickPosition(QSlider::TicksBelow);
-        slider_gaussian_size_6->setTickInterval(1);
+        slider_pixel_threshold_2 = new QSlider(groupBox_2);
+        slider_pixel_threshold_2->setObjectName(QStringLiteral("slider_pixel_threshold_2"));
+        sizePolicy1.setHeightForWidth(slider_pixel_threshold_2->sizePolicy().hasHeightForWidth());
+        slider_pixel_threshold_2->setSizePolicy(sizePolicy1);
+        slider_pixel_threshold_2->setMinimum(3);
+        slider_pixel_threshold_2->setMaximum(15);
+        slider_pixel_threshold_2->setOrientation(Qt::Horizontal);
+        slider_pixel_threshold_2->setTickPosition(QSlider::TicksBelow);
+        slider_pixel_threshold_2->setTickInterval(1);
 
-        horizontalLayout_13->addWidget(slider_gaussian_size_6);
+        horizontalLayout_13->addWidget(slider_pixel_threshold_2);
 
         label_31 = new QLabel(groupBox_2);
         label_31->setObjectName(QStringLiteral("label_31"));
@@ -584,17 +584,17 @@ public:
 
         horizontalLayout_14->addWidget(label_32);
 
-        slider_gaussian_size_7 = new QSlider(groupBox_2);
-        slider_gaussian_size_7->setObjectName(QStringLiteral("slider_gaussian_size_7"));
-        sizePolicy1.setHeightForWidth(slider_gaussian_size_7->sizePolicy().hasHeightForWidth());
-        slider_gaussian_size_7->setSizePolicy(sizePolicy1);
-        slider_gaussian_size_7->setMinimum(3);
-        slider_gaussian_size_7->setMaximum(15);
-        slider_gaussian_size_7->setOrientation(Qt::Horizontal);
-        slider_gaussian_size_7->setTickPosition(QSlider::TicksBelow);
-        slider_gaussian_size_7->setTickInterval(1);
+        slider_transformed_threshold_2 = new QSlider(groupBox_2);
+        slider_transformed_threshold_2->setObjectName(QStringLiteral("slider_transformed_threshold_2"));
+        sizePolicy1.setHeightForWidth(slider_transformed_threshold_2->sizePolicy().hasHeightForWidth());
+        slider_transformed_threshold_2->setSizePolicy(sizePolicy1);
+        slider_transformed_threshold_2->setMinimum(3);
+        slider_transformed_threshold_2->setMaximum(15);
+        slider_transformed_threshold_2->setOrientation(Qt::Horizontal);
+        slider_transformed_threshold_2->setTickPosition(QSlider::TicksBelow);
+        slider_transformed_threshold_2->setTickInterval(1);
 
-        horizontalLayout_14->addWidget(slider_gaussian_size_7);
+        horizontalLayout_14->addWidget(slider_transformed_threshold_2);
 
         label_33 = new QLabel(groupBox_2);
         label_33->setObjectName(QStringLiteral("label_33"));

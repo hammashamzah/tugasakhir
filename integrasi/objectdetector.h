@@ -29,6 +29,7 @@ private:
     QVector<QList<Player> > unifiedInitialFrameObject;
     QList<double> myAssociationThresholds;
     bool myTrackingInitialized;
+    QVector <QImage> firstFrame;
     QVector<QList<QPoint> > myTrapeziumCoordinates;
     QVector<QList<Player> > allOutputDataCam;
     bool setData[2];
@@ -42,7 +43,7 @@ protected:
 public slots:
     void updateSingleCameraViewImage_1(QVector<QImage>);
     void updateSingleCameraViewImage_2(QVector<QImage>);
-    void updateMaskCoordinate(QVector< QList<QPoint> >);
+    void setMaskCoordinate(QVector< QList<QPoint> >);
     void updateValueParameter(QVector< QVector<int> >);
     void updateTrapeziumCoordinates(QVector<QList<QPoint> >);
     void updateObjectData_1(QList<Player>);
@@ -55,19 +56,18 @@ public:
     bool Stop();
     void playSingleFrame();
 
-    QVector<QImage> firstFrame;
+    QVector<QImage> firstFrameImage;
 
     QVector< QVector<QImage> > cameraViewImage;
-    int firstFrame_1_set;
-    int firstFrame_2_set;
+    bool isSetFirstFrame[2];
 signals:
-    void firstFrameImage(QVector<QImage>);
+    void sendFirstFrameImage(QVector<QImage>);
     void updateValueParameter_1(QVector<int>);
     void updateValueParameter_2(QVector<int>);
-    void updateMaskCoordinate_1(QList<QPoint>);
-    void updateMaskCoordinate_2(QList<QPoint>);
-    void setCameraViewImage(QVector<QVector<QImage> >);
-    void sendDataCamera(QVector<QList<Player> >);
+    void setMaskCoordinate_1(QList<QPoint>);
+    void setMaskCoordinate_2(QList<QPoint>);
+    void sendCameraViewImage(QVector<QVector<QImage> >);
+    void sendObjectData(QVector<QList<Player> >);
 
 
 };

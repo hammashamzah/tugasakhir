@@ -19,7 +19,7 @@
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
-#include "clickdisplay.h"
+#include <clickdisplay.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -61,7 +61,7 @@ public:
         imageView->setSizePolicy(sizePolicy);
         imageView->setMinimumSize(QSize(320, 240));
         imageView->setStyleSheet(QStringLiteral("Background-color: #000;"));
-        imageView->setProperty("scaledContents", QVariant(true));
+        imageView->setScaledContents(true);
 
         verticalLayout->addWidget(imageView);
 
@@ -115,8 +115,10 @@ public:
          << QApplication::translate("FieldSelectionDialog", "Camera 2", 0)
          << QApplication::translate("FieldSelectionDialog", "Camera 1 Trapezium", 0)
          << QApplication::translate("FieldSelectionDialog", "Camera 2 Trapezium", 0)
+         << QApplication::translate("FieldSelectionDialog", "Camera 1 Transformation", 0)
+         << QApplication::translate("FieldSelectionDialog", "Camera 2 Transformation", 0)
         );
-        imageView->setProperty("text", QVariant(QString()));
+        imageView->setText(QString());
         pushButton_set->setText(QApplication::translate("FieldSelectionDialog", "Set Masking...", 0));
         pushButton_apply->setText(QApplication::translate("FieldSelectionDialog", "Apply", 0));
         pushButton_ok->setText(QApplication::translate("FieldSelectionDialog", "Ok", 0));

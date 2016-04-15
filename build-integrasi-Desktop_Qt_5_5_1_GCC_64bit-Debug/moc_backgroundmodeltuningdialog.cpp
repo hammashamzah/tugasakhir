@@ -21,7 +21,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_BackgroundModelTuningDialog_t {
     QByteArrayData data[18];
-    char stringdata0[580];
+    char stringdata0[581];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -31,27 +31,27 @@ struct qt_meta_stringdata_BackgroundModelTuningDialog_t {
 static const qt_meta_stringdata_BackgroundModelTuningDialog_t qt_meta_stringdata_BackgroundModelTuningDialog = {
     {
 QT_MOC_LITERAL(0, 0, 27), // "BackgroundModelTuningDialog"
-QT_MOC_LITERAL(1, 28, 17), // "setValueParameter"
-QT_MOC_LITERAL(2, 46, 0), // ""
-QT_MOC_LITERAL(3, 47, 22), // "QVector<QVector<int> >"
-QT_MOC_LITERAL(4, 70, 42), // "on_slider_morp_element_size_1..."
-QT_MOC_LITERAL(5, 113, 5), // "value"
-QT_MOC_LITERAL(6, 119, 38), // "on_slider_gaussian_size_1_val..."
-QT_MOC_LITERAL(7, 158, 33), // "on_slider_min_area_2_valueCha..."
-QT_MOC_LITERAL(8, 192, 33), // "on_slider_max_area_2_valueCha..."
-QT_MOC_LITERAL(9, 226, 42), // "on_slider_morp_element_size_2..."
-QT_MOC_LITERAL(10, 269, 38), // "on_slider_gaussian_size_2_val..."
-QT_MOC_LITERAL(11, 308, 27), // "on_pushButton_load_released"
-QT_MOC_LITERAL(12, 336, 33), // "on_slider_min_area_1_valueCha..."
-QT_MOC_LITERAL(13, 370, 33), // "on_slider_max_area_1_valueCha..."
-QT_MOC_LITERAL(14, 404, 40), // "on_slider_pixel_threshold_1_v..."
-QT_MOC_LITERAL(15, 445, 46), // "on_slider_transformed_thresho..."
-QT_MOC_LITERAL(16, 492, 40), // "on_slider_pixel_threshold_2_v..."
-QT_MOC_LITERAL(17, 533, 46) // "on_slider_transformed_thresho..."
+QT_MOC_LITERAL(1, 28, 18), // "sendValueParameter"
+QT_MOC_LITERAL(2, 47, 0), // ""
+QT_MOC_LITERAL(3, 48, 22), // "QVector<QVector<int> >"
+QT_MOC_LITERAL(4, 71, 42), // "on_slider_morp_element_size_1..."
+QT_MOC_LITERAL(5, 114, 5), // "value"
+QT_MOC_LITERAL(6, 120, 38), // "on_slider_gaussian_size_1_val..."
+QT_MOC_LITERAL(7, 159, 33), // "on_slider_min_area_2_valueCha..."
+QT_MOC_LITERAL(8, 193, 33), // "on_slider_max_area_2_valueCha..."
+QT_MOC_LITERAL(9, 227, 42), // "on_slider_morp_element_size_2..."
+QT_MOC_LITERAL(10, 270, 38), // "on_slider_gaussian_size_2_val..."
+QT_MOC_LITERAL(11, 309, 27), // "on_pushButton_load_released"
+QT_MOC_LITERAL(12, 337, 33), // "on_slider_min_area_1_valueCha..."
+QT_MOC_LITERAL(13, 371, 33), // "on_slider_max_area_1_valueCha..."
+QT_MOC_LITERAL(14, 405, 40), // "on_slider_pixel_threshold_1_v..."
+QT_MOC_LITERAL(15, 446, 46), // "on_slider_transformed_thresho..."
+QT_MOC_LITERAL(16, 493, 40), // "on_slider_pixel_threshold_2_v..."
+QT_MOC_LITERAL(17, 534, 46) // "on_slider_transformed_thresho..."
 
     },
     "BackgroundModelTuningDialog\0"
-    "setValueParameter\0\0QVector<QVector<int> >\0"
+    "sendValueParameter\0\0QVector<QVector<int> >\0"
     "on_slider_morp_element_size_1_valueChanged\0"
     "value\0on_slider_gaussian_size_1_valueChanged\0"
     "on_slider_min_area_2_valueChanged\0"
@@ -126,7 +126,7 @@ void BackgroundModelTuningDialog::qt_static_metacall(QObject *_o, QMetaObject::C
         BackgroundModelTuningDialog *_t = static_cast<BackgroundModelTuningDialog *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->setValueParameter((*reinterpret_cast< QVector<QVector<int> >(*)>(_a[1]))); break;
+        case 0: _t->sendValueParameter((*reinterpret_cast< QVector<QVector<int> >(*)>(_a[1]))); break;
         case 1: _t->on_slider_morp_element_size_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->on_slider_gaussian_size_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: _t->on_slider_min_area_2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
@@ -158,7 +158,7 @@ void BackgroundModelTuningDialog::qt_static_metacall(QObject *_o, QMetaObject::C
         void **func = reinterpret_cast<void **>(_a[1]);
         {
             typedef void (BackgroundModelTuningDialog::*_t)(QVector<QVector<int> > );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&BackgroundModelTuningDialog::setValueParameter)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&BackgroundModelTuningDialog::sendValueParameter)) {
                 *result = 0;
             }
         }
@@ -202,7 +202,7 @@ int BackgroundModelTuningDialog::qt_metacall(QMetaObject::Call _c, int _id, void
 }
 
 // SIGNAL 0
-void BackgroundModelTuningDialog::setValueParameter(QVector<QVector<int> > _t1)
+void BackgroundModelTuningDialog::sendValueParameter(QVector<QVector<int> > _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

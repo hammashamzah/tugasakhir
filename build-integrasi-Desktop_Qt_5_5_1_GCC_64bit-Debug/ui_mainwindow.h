@@ -73,7 +73,6 @@ public:
     QLabel *positionLabel;
     QMenuBar *menuBar;
     QMenu *menuFile;
-    QMenu *menuLoad_Video;
     QMenu *menuEdit;
     QMenu *menuView;
     QMenu *menuPerformance;
@@ -207,6 +206,7 @@ public:
         sizePolicy2.setHeightForWidth(label_formationTeamA->sizePolicy().hasHeightForWidth());
         label_formationTeamA->setSizePolicy(sizePolicy2);
         label_formationTeamA->setMinimumSize(QSize(220, 150));
+        label_formationTeamA->setStyleSheet(QStringLiteral("Background-color: #000;"));
         label_formationTeamA->setScaledContents(true);
 
         horizontalLayout_4->addWidget(label_formationTeamA);
@@ -217,6 +217,7 @@ public:
         label_formationTeamB->setSizePolicy(sizePolicy2);
         label_formationTeamB->setMinimumSize(QSize(220, 150));
         label_formationTeamB->setLayoutDirection(Qt::LeftToRight);
+        label_formationTeamB->setStyleSheet(QStringLiteral("Background-color: #000;"));
         label_formationTeamB->setScaledContents(true);
 
         horizontalLayout_4->addWidget(label_formationTeamB);
@@ -282,8 +283,6 @@ public:
         menuBar->setGeometry(QRect(0, 0, 1043, 25));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
-        menuLoad_Video = new QMenu(menuFile);
-        menuLoad_Video->setObjectName(QStringLiteral("menuLoad_Video"));
         menuEdit = new QMenu(menuBar);
         menuEdit->setObjectName(QStringLiteral("menuEdit"));
         menuView = new QMenu(menuBar);
@@ -305,10 +304,8 @@ public:
         menuBar->addAction(menuView->menuAction());
         menuBar->addAction(menuPerformance->menuAction());
         menuBar->addAction(menuAbout->menuAction());
-        menuFile->addAction(menuLoad_Video->menuAction());
-        menuLoad_Video->addAction(actionVideo_1);
-        menuLoad_Video->addAction(actionVideo_2);
-        menuLoad_Video->addAction(actionVideo_3);
+        menuFile->addAction(actionVideo_1);
+        menuFile->addAction(actionVideo_2);
         menuEdit->addAction(actionTuning_Background_Model);
         menuEdit->addAction(actionField_Selection);
         menuView->addAction(actionPer_Camera_Raw_View);
@@ -340,15 +337,14 @@ public:
         pushButton_single_play->setText(QApplication::translate("MainWindow", "Single Frame Play", 0));
         current_time_1->setText(QApplication::translate("MainWindow", "00:00", 0));
         max_time_1->setText(QApplication::translate("MainWindow", "00:00", 0));
-        label_formationTeamA->setText(QApplication::translate("MainWindow", "FormationTeamA", 0));
-        label_formationTeamB->setText(QApplication::translate("MainWindow", "FormationTeamB", 0));
+        label_formationTeamA->setText(QString());
+        label_formationTeamB->setText(QString());
         groupBox->setTitle(QApplication::translate("MainWindow", "Player Performance", 0));
         idLabel->setText(QApplication::translate("MainWindow", "ID", 0));
         playerNameLabel->setText(QApplication::translate("MainWindow", "Player Name", 0));
         playerSpeedLabel->setText(QApplication::translate("MainWindow", "Player Speed", 0));
         positionLabel->setText(QApplication::translate("MainWindow", "Position", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
-        menuLoad_Video->setTitle(QApplication::translate("MainWindow", "Load Video", 0));
         menuEdit->setTitle(QApplication::translate("MainWindow", "Setting", 0));
         menuView->setTitle(QApplication::translate("MainWindow", "View", 0));
         menuPerformance->setTitle(QApplication::translate("MainWindow", "Performance", 0));

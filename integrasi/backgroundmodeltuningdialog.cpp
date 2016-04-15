@@ -21,81 +21,81 @@ BackgroundModelTuningDialog::~BackgroundModelTuningDialog()
 void BackgroundModelTuningDialog::on_slider_min_area_1_valueChanged(int value)
 {
 	parameters[0][0] = value;
-    emit setValueParameter(parameters);
+    emit sendValueParameter(parameters);
 }
 
 void BackgroundModelTuningDialog::on_slider_min_area_2_valueChanged(int value)
 {
 	parameters[1][0] = value;
-    emit setValueParameter(parameters);
+    emit sendValueParameter(parameters);
 
 }
 
 void BackgroundModelTuningDialog::on_slider_max_area_1_valueChanged(int value)
 {
 	parameters[0][1] = value;
-    emit setValueParameter(parameters);
+    emit sendValueParameter(parameters);
 
 }
 
 void BackgroundModelTuningDialog::on_slider_max_area_2_valueChanged(int value)
 {
 	parameters[1][1] = value;
-    emit setValueParameter(parameters);
+    emit sendValueParameter(parameters);
 
 }
 
 void BackgroundModelTuningDialog::on_slider_morp_element_size_1_valueChanged(int value)
 {
 	parameters[0][2] = value;
-    emit setValueParameter(parameters);
+    emit sendValueParameter(parameters);
 
 }
 
 void BackgroundModelTuningDialog::on_slider_morp_element_size_2_valueChanged(int value)
 {
 	parameters[1][2] = value;
-    emit setValueParameter(parameters);
+    emit sendValueParameter(parameters);
 
 }
 
 void BackgroundModelTuningDialog::on_slider_gaussian_size_1_valueChanged(int value)
 {
 	parameters[0][3] = value;
-    emit setValueParameter(parameters);
+    emit sendValueParameter(parameters);
 
 }
 
 void BackgroundModelTuningDialog::on_slider_gaussian_size_2_valueChanged(int value)
 {
 	parameters[1][3] = value;
-    emit setValueParameter(parameters);
+    emit sendValueParameter(parameters);
 
 }
 
 void BackgroundModelTuningDialog::on_slider_pixel_threshold_1_valueChanged(int value)
 {
     parameters[0][4] = value;
-    emit setValueParameter(parameters);
+    emit sendValueParameter(parameters);
 }
 
 void BackgroundModelTuningDialog::on_slider_transformed_threshold_1_valueChanged(int value)
 {
     parameters[0][5] = value;
-    emit setValueParameter(parameters);
+    emit sendValueParameter(parameters);
 }
 
 void BackgroundModelTuningDialog::on_slider_pixel_threshold_2_valueChanged(int value)
 {
     parameters[1][4] = value;
-    emit setValueParameter(parameters);
+    emit sendValueParameter(parameters);
 }
 
 
 void BackgroundModelTuningDialog::on_slider_transformed_threshold_2_valueChanged(int value)
 {
     parameters[1][5] = value;
-    emit setValueParameter(parameters);
+    emit sendValueParameter(parameters);
 }
 
 

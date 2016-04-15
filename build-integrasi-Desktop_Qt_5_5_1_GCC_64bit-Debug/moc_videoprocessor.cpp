@@ -22,7 +22,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_VideoProcessor_t {
     QByteArrayData data[10];
-    char stringdata0[148];
+    char stringdata0[156];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,19 +32,19 @@ struct qt_meta_stringdata_VideoProcessor_t {
 static const qt_meta_stringdata_VideoProcessor_t qt_meta_stringdata_VideoProcessor = {
     {
 QT_MOC_LITERAL(0, 0, 14), // "VideoProcessor"
-QT_MOC_LITERAL(1, 15, 24), // "setSingleCameraViewImage"
-QT_MOC_LITERAL(2, 40, 0), // ""
-QT_MOC_LITERAL(3, 41, 15), // "QVector<QImage>"
-QT_MOC_LITERAL(4, 57, 13), // "setObjectData"
-QT_MOC_LITERAL(5, 71, 13), // "QList<Player>"
-QT_MOC_LITERAL(6, 85, 17), // "setValueParameter"
-QT_MOC_LITERAL(7, 103, 12), // "QVector<int>"
-QT_MOC_LITERAL(8, 116, 17), // "getMaskCoordinate"
-QT_MOC_LITERAL(9, 134, 13) // "QList<QPoint>"
+QT_MOC_LITERAL(1, 15, 25), // "sendSingleCameraViewImage"
+QT_MOC_LITERAL(2, 41, 0), // ""
+QT_MOC_LITERAL(3, 42, 15), // "QVector<QImage>"
+QT_MOC_LITERAL(4, 58, 20), // "sendCameraObjectData"
+QT_MOC_LITERAL(5, 79, 13), // "QList<Player>"
+QT_MOC_LITERAL(6, 93, 17), // "setValueParameter"
+QT_MOC_LITERAL(7, 111, 12), // "QVector<int>"
+QT_MOC_LITERAL(8, 124, 17), // "getMaskCoordinate"
+QT_MOC_LITERAL(9, 142, 13) // "QList<QPoint>"
 
     },
-    "VideoProcessor\0setSingleCameraViewImage\0"
-    "\0QVector<QImage>\0setObjectData\0"
+    "VideoProcessor\0sendSingleCameraViewImage\0"
+    "\0QVector<QImage>\0sendCameraObjectData\0"
     "QList<Player>\0setValueParameter\0"
     "QVector<int>\0getMaskCoordinate\0"
     "QList<QPoint>"
@@ -89,8 +89,8 @@ void VideoProcessor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         VideoProcessor *_t = static_cast<VideoProcessor *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->setSingleCameraViewImage((*reinterpret_cast< const QVector<QImage>(*)>(_a[1]))); break;
-        case 1: _t->setObjectData((*reinterpret_cast< QList<Player>(*)>(_a[1]))); break;
+        case 0: _t->sendSingleCameraViewImage((*reinterpret_cast< const QVector<QImage>(*)>(_a[1]))); break;
+        case 1: _t->sendCameraObjectData((*reinterpret_cast< QList<Player>(*)>(_a[1]))); break;
         case 2: _t->setValueParameter((*reinterpret_cast< QVector<int>(*)>(_a[1]))); break;
         case 3: _t->getMaskCoordinate((*reinterpret_cast< QList<QPoint>(*)>(_a[1]))); break;
         default: ;
@@ -125,13 +125,13 @@ void VideoProcessor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         void **func = reinterpret_cast<void **>(_a[1]);
         {
             typedef void (VideoProcessor::*_t)(const QVector<QImage> );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&VideoProcessor::setSingleCameraViewImage)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&VideoProcessor::sendSingleCameraViewImage)) {
                 *result = 0;
             }
         }
         {
             typedef void (VideoProcessor::*_t)(QList<Player> );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&VideoProcessor::setObjectData)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&VideoProcessor::sendCameraObjectData)) {
                 *result = 1;
             }
         }
@@ -175,14 +175,14 @@ int VideoProcessor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void VideoProcessor::setSingleCameraViewImage(const QVector<QImage> _t1)
+void VideoProcessor::sendSingleCameraViewImage(const QVector<QImage> _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
 // SIGNAL 1
-void VideoProcessor::setObjectData(QList<Player> _t1)
+void VideoProcessor::sendCameraObjectData(QList<Player> _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);

@@ -22,7 +22,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ObjectDetector_t {
     QByteArrayData data[24];
-    char stringdata0[479];
+    char stringdata0[475];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,41 +32,41 @@ struct qt_meta_stringdata_ObjectDetector_t {
 static const qt_meta_stringdata_ObjectDetector_t qt_meta_stringdata_ObjectDetector = {
     {
 QT_MOC_LITERAL(0, 0, 14), // "ObjectDetector"
-QT_MOC_LITERAL(1, 15, 15), // "firstFrameImage"
-QT_MOC_LITERAL(2, 31, 0), // ""
-QT_MOC_LITERAL(3, 32, 15), // "QVector<QImage>"
-QT_MOC_LITERAL(4, 48, 22), // "updateValueParameter_1"
-QT_MOC_LITERAL(5, 71, 12), // "QVector<int>"
-QT_MOC_LITERAL(6, 84, 22), // "updateValueParameter_2"
-QT_MOC_LITERAL(7, 107, 22), // "updateMaskCoordinate_1"
-QT_MOC_LITERAL(8, 130, 13), // "QList<QPoint>"
-QT_MOC_LITERAL(9, 144, 22), // "updateMaskCoordinate_2"
-QT_MOC_LITERAL(10, 167, 18), // "setCameraViewImage"
-QT_MOC_LITERAL(11, 186, 25), // "QVector<QVector<QImage> >"
-QT_MOC_LITERAL(12, 212, 14), // "sendDataCamera"
-QT_MOC_LITERAL(13, 227, 23), // "QVector<QList<Player> >"
-QT_MOC_LITERAL(14, 251, 29), // "updateSingleCameraViewImage_1"
-QT_MOC_LITERAL(15, 281, 29), // "updateSingleCameraViewImage_2"
-QT_MOC_LITERAL(16, 311, 20), // "updateMaskCoordinate"
-QT_MOC_LITERAL(17, 332, 23), // "QVector<QList<QPoint> >"
-QT_MOC_LITERAL(18, 356, 20), // "updateValueParameter"
-QT_MOC_LITERAL(19, 377, 22), // "QVector<QVector<int> >"
-QT_MOC_LITERAL(20, 400, 26), // "updateTrapeziumCoordinates"
-QT_MOC_LITERAL(21, 427, 18), // "updateObjectData_1"
-QT_MOC_LITERAL(22, 446, 13), // "QList<Player>"
-QT_MOC_LITERAL(23, 460, 18) // "updateObjectData_2"
+QT_MOC_LITERAL(1, 15, 19), // "sendFirstFrameImage"
+QT_MOC_LITERAL(2, 35, 0), // ""
+QT_MOC_LITERAL(3, 36, 15), // "QVector<QImage>"
+QT_MOC_LITERAL(4, 52, 22), // "updateValueParameter_1"
+QT_MOC_LITERAL(5, 75, 12), // "QVector<int>"
+QT_MOC_LITERAL(6, 88, 22), // "updateValueParameter_2"
+QT_MOC_LITERAL(7, 111, 19), // "setMaskCoordinate_1"
+QT_MOC_LITERAL(8, 131, 13), // "QList<QPoint>"
+QT_MOC_LITERAL(9, 145, 19), // "setMaskCoordinate_2"
+QT_MOC_LITERAL(10, 165, 19), // "sendCameraViewImage"
+QT_MOC_LITERAL(11, 185, 25), // "QVector<QVector<QImage> >"
+QT_MOC_LITERAL(12, 211, 14), // "sendObjectData"
+QT_MOC_LITERAL(13, 226, 23), // "QVector<QList<Player> >"
+QT_MOC_LITERAL(14, 250, 29), // "updateSingleCameraViewImage_1"
+QT_MOC_LITERAL(15, 280, 29), // "updateSingleCameraViewImage_2"
+QT_MOC_LITERAL(16, 310, 17), // "setMaskCoordinate"
+QT_MOC_LITERAL(17, 328, 23), // "QVector<QList<QPoint> >"
+QT_MOC_LITERAL(18, 352, 20), // "updateValueParameter"
+QT_MOC_LITERAL(19, 373, 22), // "QVector<QVector<int> >"
+QT_MOC_LITERAL(20, 396, 26), // "updateTrapeziumCoordinates"
+QT_MOC_LITERAL(21, 423, 18), // "updateObjectData_1"
+QT_MOC_LITERAL(22, 442, 13), // "QList<Player>"
+QT_MOC_LITERAL(23, 456, 18) // "updateObjectData_2"
 
     },
-    "ObjectDetector\0firstFrameImage\0\0"
+    "ObjectDetector\0sendFirstFrameImage\0\0"
     "QVector<QImage>\0updateValueParameter_1\0"
     "QVector<int>\0updateValueParameter_2\0"
-    "updateMaskCoordinate_1\0QList<QPoint>\0"
-    "updateMaskCoordinate_2\0setCameraViewImage\0"
-    "QVector<QVector<QImage> >\0sendDataCamera\0"
+    "setMaskCoordinate_1\0QList<QPoint>\0"
+    "setMaskCoordinate_2\0sendCameraViewImage\0"
+    "QVector<QVector<QImage> >\0sendObjectData\0"
     "QVector<QList<Player> >\0"
     "updateSingleCameraViewImage_1\0"
     "updateSingleCameraViewImage_2\0"
-    "updateMaskCoordinate\0QVector<QList<QPoint> >\0"
+    "setMaskCoordinate\0QVector<QList<QPoint> >\0"
     "updateValueParameter\0QVector<QVector<int> >\0"
     "updateTrapeziumCoordinates\0"
     "updateObjectData_1\0QList<Player>\0"
@@ -132,16 +132,16 @@ void ObjectDetector::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         ObjectDetector *_t = static_cast<ObjectDetector *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->firstFrameImage((*reinterpret_cast< QVector<QImage>(*)>(_a[1]))); break;
+        case 0: _t->sendFirstFrameImage((*reinterpret_cast< QVector<QImage>(*)>(_a[1]))); break;
         case 1: _t->updateValueParameter_1((*reinterpret_cast< QVector<int>(*)>(_a[1]))); break;
         case 2: _t->updateValueParameter_2((*reinterpret_cast< QVector<int>(*)>(_a[1]))); break;
-        case 3: _t->updateMaskCoordinate_1((*reinterpret_cast< QList<QPoint>(*)>(_a[1]))); break;
-        case 4: _t->updateMaskCoordinate_2((*reinterpret_cast< QList<QPoint>(*)>(_a[1]))); break;
-        case 5: _t->setCameraViewImage((*reinterpret_cast< QVector<QVector<QImage> >(*)>(_a[1]))); break;
-        case 6: _t->sendDataCamera((*reinterpret_cast< QVector<QList<Player> >(*)>(_a[1]))); break;
+        case 3: _t->setMaskCoordinate_1((*reinterpret_cast< QList<QPoint>(*)>(_a[1]))); break;
+        case 4: _t->setMaskCoordinate_2((*reinterpret_cast< QList<QPoint>(*)>(_a[1]))); break;
+        case 5: _t->sendCameraViewImage((*reinterpret_cast< QVector<QVector<QImage> >(*)>(_a[1]))); break;
+        case 6: _t->sendObjectData((*reinterpret_cast< QVector<QList<Player> >(*)>(_a[1]))); break;
         case 7: _t->updateSingleCameraViewImage_1((*reinterpret_cast< QVector<QImage>(*)>(_a[1]))); break;
         case 8: _t->updateSingleCameraViewImage_2((*reinterpret_cast< QVector<QImage>(*)>(_a[1]))); break;
-        case 9: _t->updateMaskCoordinate((*reinterpret_cast< QVector<QList<QPoint> >(*)>(_a[1]))); break;
+        case 9: _t->setMaskCoordinate((*reinterpret_cast< QVector<QList<QPoint> >(*)>(_a[1]))); break;
         case 10: _t->updateValueParameter((*reinterpret_cast< QVector<QVector<int> >(*)>(_a[1]))); break;
         case 11: _t->updateTrapeziumCoordinates((*reinterpret_cast< QVector<QList<QPoint> >(*)>(_a[1]))); break;
         case 12: _t->updateObjectData_1((*reinterpret_cast< QList<Player>(*)>(_a[1]))); break;
@@ -234,7 +234,7 @@ void ObjectDetector::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         void **func = reinterpret_cast<void **>(_a[1]);
         {
             typedef void (ObjectDetector::*_t)(QVector<QImage> );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjectDetector::firstFrameImage)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjectDetector::sendFirstFrameImage)) {
                 *result = 0;
             }
         }
@@ -252,25 +252,25 @@ void ObjectDetector::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         }
         {
             typedef void (ObjectDetector::*_t)(QList<QPoint> );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjectDetector::updateMaskCoordinate_1)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjectDetector::setMaskCoordinate_1)) {
                 *result = 3;
             }
         }
         {
             typedef void (ObjectDetector::*_t)(QList<QPoint> );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjectDetector::updateMaskCoordinate_2)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjectDetector::setMaskCoordinate_2)) {
                 *result = 4;
             }
         }
         {
             typedef void (ObjectDetector::*_t)(QVector<QVector<QImage> > );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjectDetector::setCameraViewImage)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjectDetector::sendCameraViewImage)) {
                 *result = 5;
             }
         }
         {
             typedef void (ObjectDetector::*_t)(QVector<QList<Player> > );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjectDetector::sendDataCamera)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ObjectDetector::sendObjectData)) {
                 *result = 6;
             }
         }
@@ -314,7 +314,7 @@ int ObjectDetector::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void ObjectDetector::firstFrameImage(QVector<QImage> _t1)
+void ObjectDetector::sendFirstFrameImage(QVector<QImage> _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
@@ -335,28 +335,28 @@ void ObjectDetector::updateValueParameter_2(QVector<int> _t1)
 }
 
 // SIGNAL 3
-void ObjectDetector::updateMaskCoordinate_1(QList<QPoint> _t1)
+void ObjectDetector::setMaskCoordinate_1(QList<QPoint> _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 3, _a);
 }
 
 // SIGNAL 4
-void ObjectDetector::updateMaskCoordinate_2(QList<QPoint> _t1)
+void ObjectDetector::setMaskCoordinate_2(QList<QPoint> _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 4, _a);
 }
 
 // SIGNAL 5
-void ObjectDetector::setCameraViewImage(QVector<QVector<QImage> > _t1)
+void ObjectDetector::sendCameraViewImage(QVector<QVector<QImage> > _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 5, _a);
 }
 
 // SIGNAL 6
-void ObjectDetector::sendDataCamera(QVector<QList<Player> > _t1)
+void ObjectDetector::sendObjectData(QVector<QList<Player> > _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 6, _a);

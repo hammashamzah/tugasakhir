@@ -44,8 +44,8 @@ private:
 
 signals:
 	//Signal to output frame to be displayed
-	void setSingleCameraViewImage(const QVector<QImage>);
-	void setObjectData(QList<Player>);
+    void sendSingleCameraViewImage(const QVector<QImage>);
+	void sendCameraObjectData(QList<Player>);
 public slots:
 	//update parameters
     void setValueParameter(QVector<int>);

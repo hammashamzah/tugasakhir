@@ -46,7 +46,7 @@ private:
     Ui::BackgroundModelTuningDialog *ui;
     QVector<QVector<int> > parameters;
 signals:
-    void setValueParameter(QVector< QVector<int> >);
+    void sendValueParameter(QVector< QVector<int> >);
 
 
 };

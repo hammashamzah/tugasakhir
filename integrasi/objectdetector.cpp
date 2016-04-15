@@ -4,8 +4,8 @@ ObjectDetector::ObjectDetector()
 {
 	myStream_1 = new VideoProcessor();
 	myStream_2 = new VideoProcessor();
-	firstFrame_1_set = 0;
-	firstFrame_2_set = 0;
+	isSetFirstFrame[0] = false;
+	isSetFirstFrame[1] = false;
 	myTrackingInitialized = false;
 	//alocate size of qvector
     setData[0] = false;
@@ -13,22 +13,21 @@ ObjectDetector::ObjectDetector()
 
     allOutputDataCam.resize(2);
 
-	firstFrame.resize(2);
+	firstFrameImage.resize(2);
 	cameraViewImage.resize(2);
     cameraViewImage[0].resize(6);
     cameraViewImage[1].resize(6);
 
     QObject::connect(this, SIGNAL(updateValueParameter_1(QVector<int>)), myStream_1, SLOT(setValueParameter(QVector<int>)));
     QObject::connect(this, SIGNAL(updateValueParameter_2(QVector<int>)), myStream_2, SLOT(setValueParameter(QVector<int>)));
-    QObject::connect(this, SIGNAL(updateMaskCoordinate_1(QList<QPoint>)), myStream_1, SLOT(getMaskCoordinate(QList<QPoint>)));
-    QObject::connect(this, SIGNAL(updateMaskCoordinate_2(QList<QPoint>)), myStream_2, SLOT(getMaskCoordinate(QList<QPoint>)));
-    QObject::connect(myStream_1, SIGNAL(setSingleCameraViewImage(QVector<QImage>)), this, SLOT(updateSingleCameraViewImage_1(QVector<QImage>)));
-    QObject::connect(myStream_2, SIGNAL(setSingleCameraViewImage(QVector<QImage>)), this, SLOT(updateSingleCameraViewImage_2(QVector<QImage>)));
+    QObject::connect(this, SIGNAL(setMaskCoordinate_1(QList<QPoint>)), myStream_1, SLOT(getMaskCoordinate(QList<QPoint>)));
+    QObject::connect(this, SIGNAL(setMaskCoordinate_2(QList<QPoint>)), myStream_2, SLOT(getMaskCoordinate(QList<QPoint>)));
+    QObject::connect(myStream_1, SIGNAL(sendSingleCameraViewImage(QVector<QImage>)), this, SLOT(updateSingleCameraViewImage_1(QVector<QImage>)));
+    QObject::connect(myStream_2, SIGNAL(sendSingleCameraViewImage(QVector<QImage>)), this, SLOT(updateSingleCameraViewImage_2(QVector<QImage>)));
 
-	QObject::connect(myStream_1, SIGNAL(setObjectData(QList<Player>)), this, SLOT(updateObjectData_1(QList<Player>)));
-    QObject::connect(myStream_2, SIGNAL(setObjectData(QList<Player>)), this, SLOT(updateObjectData_2(QList<Player>)));
+	QObject::connect(myStream_1, SIGNAL(sendCameraObjectData(QList<Player>)), this, SLOT(updateObjectData_1(QList<Player>)));
+    QObject::connect(myStream_2, SIGNAL(sendCameraObjectData(QList<Player>)), this, SLOT(updateObjectData_2(QList<Player>)));
 
-    
 }
 
 ObjectDetector::~ObjectDetector()
@@ -51,9 +50,8 @@ void ObjectDetector::loadVideo(QString filename, int id) {
 				msgBox.setText("The selected video could not be opened!");
 				msgBox.exec();
 			} else {
-				firstFrame[0] = myStream_1->getFirstFrame();
-				qDebug("Aku disini");
-				firstFrame_1_set = 1;
+				firstFrameImage[0] = myStream_1->getFirstFrame();
+				isSetFirstFrame[0] = true;
 			}
 		}
 		break;
@@ -64,14 +62,14 @@ void ObjectDetector::loadVideo(QString filename, int id) {
 				msgBox.setText("The selected video could not be opened!");
 				msgBox.exec();
 			} else {
-                firstFrame[1] = (myStream_2->getFirstFrame());
-				firstFrame_2_set = 1;
+                firstFrameImage[1] = (myStream_2->getFirstFrame());
+				isSetFirstFrame[1] = true;
 			}
 		}
 		break;
 	}
-	if (firstFrame_1_set && firstFrame_2_set) {
-		emit firstFrameImage(firstFrame);
+	if (isSetFirstFrame[0] && isSetFirstFrame[1]) {
+		emit sendFirstFrameImage(firstFrameImage);
 	}
 }
 
@@ -92,9 +90,9 @@ void ObjectDetector::updateValueParameter(QVector< QVector<int> > parameters) {
 }
 
 
-void ObjectDetector::updateMaskCoordinate(QVector< QList<QPoint> > masks) {
-	emit updateMaskCoordinate_1(masks.at(0));
-	emit updateMaskCoordinate_2(masks.at(1));
+void ObjectDetector::setMaskCoordinate(QVector< QList<QPoint> > masks) {
+    emit setMaskCoordinate_1(masks.at(0));
+    emit setMaskCoordinate_2(masks.at(1));
 }
 
 void ObjectDetector::msleep(int ms) {
@@ -105,7 +103,7 @@ void ObjectDetector::msleep(int ms) {
 void ObjectDetector::playSingleFrame() {
     myStream_1->processSingleFrame();
     myStream_2->processSingleFrame();
-	emit setCameraViewImage(cameraViewImage);
+	emit sendCameraViewImage(cameraViewImage);
 }
 
 /*void ObjectDetector::initializeFirstFrameObject(){
@@ -142,6 +140,6 @@ void ObjectDetector::updateObjectData_2(QList<Player> outputDataCam){
 	allOutputDataCam[1] = outputDataCam;
 	setData[1] = true;
 	if(setData[0] && setData[1]){
-        emit sendDataCamera(allOutputDataCam);
+        emit sendObjectData(allOutputDataCam);
 	}
 }

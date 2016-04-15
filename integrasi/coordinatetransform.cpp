@@ -14,7 +14,7 @@ CoordinateTransform::~CoordinateTransform()
  *          dengan koordinat global lapangan*/
 
 
-void CoordinateTransform::processTransformPosition(QVector<QPoint> data_camera)
+void CoordinateTransform::processTransformPosition(QVector<QList<Player> > data_camera)
 {
     //vector 0 -> kamera 1; vector 1 camera 2
     QList<Player> transformed;
@@ -69,4 +69,9 @@ Point2f CoordinateTransform::transformCamera2ToGlobal(Point2f camera_coordinate,
     Point2f dst;
    //= TransformPointToCamera(camera_coordinate, transform_matrix1)*PANJANG_LAPANGAN_ASLI/mat_camera1_size.width();
     return dst;
+}
+
+
+void CoordinateTransform::setTransformationCoordinates(QVector<QList<QPoint> > transformationCoordinates){
+
 }

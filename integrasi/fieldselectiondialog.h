@@ -15,7 +15,7 @@ class FieldSelectionDialog : public QDialog
 public slots:
     void processMouse(QPoint& pos);
     void processClick(QPoint& pos);
-    void setFrame(QVector<QImage>);
+    void setFirstFrameImage(QVector<QImage>);
 public:
     explicit FieldSelectionDialog(QWidget *parent = 0);
     ~FieldSelectionDialog();
@@ -31,16 +31,18 @@ private:
     QList<QPoint> clickCoordinates;
     QVector<QList<QPoint> > listOfClickCoordinates;
     QVector<QList<QPoint> > listOfTrapeziumCoordinates;
+    QVector<QList<QPoint> > listOfTransformationCoordinates;
 //    QPoint clickCoordinates[4];
     //cv::Point maskPoint[10];
     int currentCameraIndex;
     int entryMode;
     int entryCounter;
-    bool set[2];
+    bool set[4];
 
 signals:
-    void setMaskCoordinates(QVector<QList<QPoint> >);
-    void setTrapeziumCoordinates(QVector<QList<QPoint> >);
+    void sendMaskCoordinates(QVector<QList<QPoint> >);
+    void sendTrapeziumCoordinates(QVector<QList<QPoint> >);
+    void sendTransformationCoordinates(QVector<QList<QPoint> >);
 };
 
 

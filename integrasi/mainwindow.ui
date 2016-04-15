@@ -154,8 +154,11 @@
               <height>150</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">Background-color: #000;</string>
+            </property>
             <property name="text">
-             <string>FormationTeamA</string>
+             <string/>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -179,8 +182,11 @@
             <property name="layoutDirection">
              <enum>Qt::LeftToRight</enum>
             </property>
+            <property name="styleSheet">
+             <string notr="true">Background-color: #000;</string>
+            </property>
             <property name="text">
-             <string>FormationTeamB</string>
+             <string/>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -272,15 +278,8 @@
     <property name="title">
      <string>File</string>
     </property>
-    <widget class="QMenu" name="menuLoad_Video">
-     <property name="title">
-      <string>Load Video</string>
-     </property>
-     <addaction name="actionVideo_1"/>
-     <addaction name="actionVideo_2"/>
-     <addaction name="actionVideo_3"/>
-    </widget>
-    <addaction name="menuLoad_Video"/>
+    <addaction name="actionVideo_1"/>
+    <addaction name="actionVideo_2"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">

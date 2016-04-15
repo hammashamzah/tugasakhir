@@ -746,7 +746,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QSlider" name="slider_pixel_threshold_2">
+           <widget class="QSlider" name="slider_threshold_2">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
               <horstretch>0</horstretch>
