@@ -24,8 +24,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(myObjectDetector, SIGNAL(updateDataCamera(QVector<QList<Player> >)), myCoordinateTransform, SLOT(processTransformPosition(QVector<QList<Player> >)));
 
     QObject::connect(myCoordinateTransform, SIGNAL(sendTransformedPosition(QVector<QList<Player> >)), this, SLOT(displayTransformedPosition(QVector<QList<Player> >)));
+    QObject::connect(ui->label_game_visual, SIGNAL(sendMousePosition(QPoint&)), this, SLOT(displayMousePosition(QPoint&)));
 
-
+    QPixmap pixmapField("lapangan.png");
+    ui->label_game_visual->setPixmap(pixmapField);
 
 
 }
@@ -97,6 +99,35 @@ void MainWindow::on_pushButton_single_play_released() {
     myObjectDetector->playSingleFrame();
 }
 
-void MainWindow::displayTransformedPosition(QVector<QList<Player> > transformedPosition){
+void MainWindow::displayTransformedPosition(QVector<QList<Player> > transformedPosition)
+{
+    QPixmap pixmapField("lapangan.png");   //ukuran pixmap
+    QPainter painterField(&pixmapField);
+    QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
+    QBrush brush(Qt::white);
 
+    painterField.setRenderHint(QPainter::Antialiasing, true);
+    painterField.setPen(pen);
+    for(int cameraId=0;cameraId<2;cameraId++)
+    {
+        for(int i=0; i<transformedPosition.at(cameraId).size(); i++)
+        {
+              brush.setColor(Qt::red);
+              painterField.setBrush(brush);
+
+              painterField.drawRect(transformedPosition.at(cameraId).at(i).pos.x*pixmapField.width()/GLOBAL_FIELD_LENGTH,
+                                    transformedPosition.at(cameraId).at(i).pos.y*pixmapField.height()/GLOBAL_FIELD_WIDTH,
+                                    RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
+              painterField.setFont(QFont ("Arial"));
+
+              painterField.drawText(QPoint(transformedPosition.at(cameraId).at(i).pos.x, transformedPosition.at(cameraId).at(i).pos.y), QString::number(transformedPosition.at(cameraId).at(i).id)); //posisi x, y, dan ukuran elips
+         }
+    }
+    ui->label_game_visual->setPixmap (pixmapField);
+}
+
+//hanya untuk debug
+void MainWindow::displayMousePosition(QPoint &pos)
+{
+    ui->positionLabel->setText(QString::number(pos.x())+", "+QString::number(pos.y()));
 }

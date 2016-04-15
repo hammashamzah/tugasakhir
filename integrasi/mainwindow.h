@@ -1,5 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#define RECT_PLAYER_SIZE 10
+
 
 //std part
 #include <iostream>
@@ -48,6 +50,8 @@ public:
 
 public slots:
     void displayTransformedPosition(QVector<QList<Player> >);
+
+    void displayMousePosition(QPoint &);
 private slots:
     //menu file edit dll
     void on_actionTuning_Background_Model_triggered();

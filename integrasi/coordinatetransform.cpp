@@ -14,59 +14,91 @@ CoordinateTransform::~CoordinateTransform()
  *          dengan koordinat global lapangan*/
 
 
-void CoordinateTransform::processTransformPosition(QVector<QPoint> data_camera)
+void CoordinateTransform::processTransformPosition(QVector<QList<Player> > data)
 {
-    //vector 0 -> kamera 1; vector 1 camera 2
-    QList<Player> transformed;
-    //process
-
-    emit sendTransformedRawData(transformed);
+    QVector<QList<Player> > dataTransformed;
+    dataTransformed.resize(2);
+    Player playerTransformed;
+    Point2f point_coordinate;
+    for(int cameraId=0; cameraId<dataTransformed.size(); cameraId++)
+    {
+        for(int i=0; i<data.at(cameraId).size() ; i++)
+        {
+            point_coordinate.x = data.at(cameraId).at(i).pos.x;
+            point_coordinate.y = data.at(cameraId).at(i).pos.y;
+            if(cameraId==0)  playerTransformed.pos = transformCamera1ToGlobal(point_coordinate, transform_mat1);
+            else playerTransformed.pos= transformCamera2ToGlobal(point_coordinate, transform_mat2);
+            playerTransformed.id=data[cameraId][i].id;
+            dataTransformed[cameraId].append(playerTransformed);
+        }
+    }
+    emit sendTransformedPosition(dataTransformed);
 }
 //slot dari dialog untuk menyimpan nilai transformer
 void CoordinateTransform::getTransformMatrix(QList<Mat> transformer)
 {
-    //belum selesai
+    transform_mat1= transformer.at(0);
+    transform_mat2= transformer.at(1);
 }
 
 //slot untuk menyimpan informasi mat camera dari dialog ke variabel lokal
 void CoordinateTransform::getImageSize(QList<QSize> mat_size)
 {
-
-}
-
-
-Point2f CoordinateTransform::transformPointToGlobal(Point2f pos, int cameraID)
-{
-  Point2f embek;
-  return embek;
+    image_size_1=mat_size.at(0);
+    image_size_2=mat_size.at(0);
 }
 
 Point2f CoordinateTransform::transformPointToCamera(Point2f picture_coordinate, Mat transform_matrix)
 {
     Point2f dst;
-    /*Mat result;
-        Point2f dst;
+    Mat result;
         double src[3]={(double)picture_coordinate.x, (double)picture_coordinate.y, 1};
         Mat src_coordinate = Mat(3,1,CV_64FC1, src);
 
         result=transform_matrix*src_coordinate;
 
-        dst.setX((int)(result.at<double>(0,0)/result.at<double>(0,2)));
-        dst.setY((int)(result.at<double>(0,1)/result.at<double>(0,2)));
-*/
+        dst.x=((int)(result.at<double>(0,0)/result.at<double>(0,2)));
+        dst.y=((int)(result.at<double>(0,1)/result.at<double>(0,2)));
+
         return dst;
 }
 
 Point2f CoordinateTransform::transformCamera1ToGlobal(Point2f camera_coordinate, Mat transform_matrix)
 {
-   Point2f dst;
-   //= TransformPointToCamera(camera_coordinate, transform_matrix1)*PANJANG_LAPANGAN_ASLI/mat_camera1_size.width();
-    return dst;
+    Point2f dst;
+       dst.x =transformPointToCamera(camera_coordinate, transform_matrix).x * GLOBAL_FIELD_LENGTH / 2 / image_size_1.width();
+       dst.y =transformPointToCamera(camera_coordinate, transform_matrix).y * GLOBAL_FIELD_WIDTH / image_size_2.height();
+       return dst;
 }
 
 Point2f CoordinateTransform::transformCamera2ToGlobal(Point2f camera_coordinate, Mat transform_matrix)
 {
     Point2f dst;
-   //= TransformPointToCamera(camera_coordinate, transform_matrix1)*PANJANG_LAPANGAN_ASLI/mat_camera1_size.width();
-    return dst;
+        int offset=GLOBAL_FIELD_LENGTH/2;
+        dst.x =transformPointToCamera(camera_coordinate, transform_matrix).x * GLOBAL_FIELD_LENGTH / 2 / image_size_2.width()+offset;
+        dst.y =transformPointToCamera(camera_coordinate, transform_matrix).y * GLOBAL_FIELD_WIDTH / image_size_2.height();
+        return dst;
 }
+
+
+
+//hanya untuk debug
+/*
+QVector<QList<Player> > CoordinateTransform::dummyDataInput()
+{
+    //set random value of player
+    QVector<QList<Player> > dummyPlayer;
+    Player playerSet;
+    dummyPlayer.resize(2);
+        for(int i=0; i<dummyPlayer.size(); i++)
+        {
+            for(int j=0;j<11;j++)
+            {
+                playerSet.id=j+999;
+                playerSet.pos.x=(qrand() % (640-68)+34);
+                playerSet.pos.y=(qrand() % (434-56) + 28);
+                dummyPlayer[i].append(playerSet);
+            }
+        }
+}
+*/
