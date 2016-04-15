@@ -18,21 +18,17 @@ void CoordinateTransform::processTransformPosition(QVector<QList<Player> > data)
 {
     QVector<QList<Player> > dataTransformed;
     dataTransformed.resize(2);
-    Player playerTransformed;
-    Point2f point_coordinate;
     for(int cameraId=0; cameraId<dataTransformed.size(); cameraId++)
     {
         for(int i=0; i<data.at(cameraId).size() ; i++)
         {
-            point_coordinate.x = data.at(cameraId).at(i).pos.x;
-            point_coordinate.y = data.at(cameraId).at(i).pos.y;
-            if(cameraId==0)  playerTransformed.pos = transformCamera1ToGlobal(point_coordinate, transform_mat1);
-            else playerTransformed.pos= transformCamera2ToGlobal(point_coordinate, transform_mat2);
-            playerTransformed.id=data[cameraId][i].id;
-            dataTransformed[cameraId].append(playerTransformed);
+            if(cameraId==0)
+                data[cameraId][i].pos = transformCamera1ToGlobal(data[cameraId][i].pos, transform_mat1);
+            else
+                data[cameraId][i].pos = transformCamera2ToGlobal(data[cameraId][i].pos, transform_mat2);
         }
     }
-    emit sendTransformedPosition(dataTransformed);
+    emit sendTransformedPosition(data);
 }
 //slot dari dialog untuk menyimpan nilai transformer
 void CoordinateTransform::getTransformMatrix(QList<Mat> transformer)
