@@ -1,5 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#define RECT_PLAYER_SIZE 10
+
 
 //std part
 #include <iostream>
