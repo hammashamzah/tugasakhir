@@ -5,12 +5,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     ui->setupUi(this);
     //initialize windows
-    myCVDialog = new CameraViewDialog(this);
-    myECDialog = new ErrorCalculationDialog(this);
-    mySPDialog = new SystemPerformanceDialog(this);
-    myTVDialog = new TrackingViewDialog(this);
-    myBMTDialog = new BackgroundModelTuningDialog(this);
-    myFSDialog = new FieldSelectionDialog(this);
+    myCVDialog = new CameraViewDialog();
+    myECDialog = new ErrorCalculationDialog();
+    mySPDialog = new SystemPerformanceDialog();
+    myTVDialog = new TrackingViewDialog();
+    myBMTDialog = new BackgroundModelTuningDialog();
+    myFSDialog = new FieldSelectionDialog();
     myObjectDetector = new ObjectDetector();
     myCoordinateTransform = new CoordinateTransform();
 
@@ -33,7 +33,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionTuning_Background_Model_triggered()
 {
-    myBMTDialog->setWindowFlags(Qt::Dialog);
+    //myBMTDialog->setWindowFlags(Qt::Dialog);
     myBMTDialog->show();
 }
 
