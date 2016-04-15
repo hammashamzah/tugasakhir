@@ -1,21 +1,24 @@
-#ifndef DATAINPUTCAM_H
-#define DATAINPUTCAM_H
+#ifndef PLAYER_H
+#define PLAYER_H
 #include <opencv/cv.h>
 #include <opencv2/core/core.hpp>
 
 using namespace cv;
 using namespace std;
 
-class DataInputCam
+class Player
 {
     public:
-        DataInputCam();
-        DataInputCam(Point data);
-        ~DataInputCam();
+    	//constructor
+        Player();
+        Player(Point data);
+        //destructor
+        ~Player();
+        //variable
         int id;
-        Point2f dataplayer;
-        Point2f pixelSpeed;
-        bool flag;
+        cv::Point2f pos;
+        cv::Point2f speed;
+        cv::Point2f acceleration;
 };
 
-#endif // DATAINPUTCAM_H
+#endif // PLAYER_H

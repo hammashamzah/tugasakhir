@@ -53,12 +53,6 @@ public:
 
 
 public slots:
-    void mainGameDisplayClickEvent(QPoint& pos);
-    void mainGameDisplayRightClickEvent(QPoint& pos);
-    void selectPlayerFromFormationA(QPoint& pos);
-    void selectPlayerFromFormationB(QPoint& pos);
-    void updateTransformedRawData(QList<DataInputTrans>);
-    void displayTransformedInitialFrameObject(QVector<QList<DataInputTrans> >);
 
 private slots:
     void on_actionTuning_Background_Model_triggered();
