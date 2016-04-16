@@ -60,7 +60,7 @@ public:
     void setCurrentFrame(int value);
     int getNumberOfFrames();
     int getFrameRate();
-
+    int getCurrentFrame();
     QVector<QImage> firstFrameImage;
 
     QVector< QVector<QImage> > cameraViewImage;

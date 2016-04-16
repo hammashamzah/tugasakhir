@@ -145,6 +145,9 @@ int ObjectDetector::getFrameRate(){
 	return (int)myStream_1->getFrameRate();
 }
 
+int ObjectDetector::getCurrentFrame(){
+	return (int)myStream_1->getCurrentFrame();
+}
 /*void ObjectDetector::initializeFirstFrameObject(){
 	initialFrameObject.clear();
 	initialFrameObject.resize(2);
@@ -156,7 +159,6 @@ int ObjectDetector::getFrameRate(){
 }
 */
 void ObjectDetector::updateSingleCameraViewImage_1(QVector<QImage> value) {
-	qDebug("Data 1 set");
 	cameraViewImage[0] = value;
 	setImage[0] = true;
 	if (setImage[0] && setImage[1]) {
@@ -167,7 +169,6 @@ void ObjectDetector::updateSingleCameraViewImage_1(QVector<QImage> value) {
 }
 
 void ObjectDetector::updateSingleCameraViewImage_2(QVector<QImage> value) {
-	qDebug("Data 2 set");
 	cameraViewImage[1] = value;
 	setImage[1] = true;
 	if (setImage[0] && setImage[1]) {

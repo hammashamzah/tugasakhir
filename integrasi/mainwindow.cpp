@@ -92,7 +92,8 @@ void MainWindow::on_actionVideo_2_triggered()
     videoLoaded[1] = true;
     if(videoLoaded[0] && videoLoaded[1]){
         ui->slider_global_frame->setEnabled(true);
-        ui->slider_global_frame->setMaximum(myObjectDetector->getNumberOfFrames() / (int)myObjectDetector->getFrameRate());
+        ui->slider_global_frame->setMaximum(myObjectDetector->getNumberOfFrames());
+        ui->label_max_time->setText(getFormattedTime((int)myObjectDetector->getNumberOfFrames()/(int)myObjectDetector->getFrameRate()));
     }
 }
 
@@ -129,6 +130,9 @@ void MainWindow::displayTransformedPosition(QVector<QList<Player> > transformedP
          }
     }
     ui->label_game_visual->setPixmap (pixmapField);
+
+    //update waktu
+    ui->label_current_time->setText(getFormattedTime(myObjectDetector->getCurrentFrame() / myObjectDetector->getFrameRate()));
 }
 
 
