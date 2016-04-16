@@ -18,6 +18,7 @@ void CoordinateTransform::processTransformPosition(QVector<QList<Player> > data)
 {
     QVector<QList<Player> > dataTransformed;
     dataTransformed.resize(2);
+    playerImageCoordinate=data;
     for(int cameraId=0; cameraId<dataTransformed.size(); cameraId++)
     {
         for(int i=0; i<data.at(cameraId).size() ; i++)
@@ -70,9 +71,6 @@ Point2f CoordinateTransform::transformCamera2ToGlobal(Point2f camera_coordinate,
         return dst;
 }
 
-
-
-
 void CoordinateTransform::setTransformMatrix(QVector<QList<QPoint> > transformationCoordinates){
  //asumsi lebar lapangan adalah 0.5 panjang lapangan
     double size_ratio = 0.5;
@@ -111,4 +109,23 @@ void CoordinateTransform::setTransformMatrix(QVector<QList<QPoint> > transformat
     }
         transform_mat1 = lambda[0];
         transform_mat2 = lambda[1];
+}
+
+void CoordinateTransform::returnAssignedPlayer(QVector<QList<Player> > assigned_player)
+{
+   for(int cameraId=0; cameraId < playerImageCoordinate.size(); cameraId++)
+    {
+        for(int i=0;i<playerImageCoordinate.at(cameraId).size() && !playerImageCoordinate.at(cameraId).isEmpty() ;i++)
+        {
+            if(assigned_player.at(cameraId).at(i).id<23 && assigned_player.at(cameraId).at(i).id!=0)
+                playerImageCoordinate[cameraId][i].id=assigned_player.at(cameraId).at(i).id;
+
+            else
+            {
+                playerImageCoordinate[cameraId].removeAt(i);
+                i--;
+            }
+        }
+    }
+    emit sendPlayerIdAssigned(playerImageCoordinate);
 }

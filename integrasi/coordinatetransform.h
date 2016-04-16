@@ -16,6 +16,7 @@ class CoordinateTransform : public QObject
 {   Q_OBJECT
 
 private:
+    QVector<QList<Player> > playerImageCoordinate;
 
 public:
     CoordinateTransform();
@@ -27,16 +28,19 @@ public:
     Point2f transformCamera1ToGlobal(Point2f camera_coordinate, Mat transform_matrix);
     Point2f transformCamera2ToGlobal(Point2f camera_coordinate, Mat transform_matrix);
     QSize imageSize[2];
+
 signals:
     void sendTransformedRawData(QList<Player>);
     void sendPlayerformed1(QList<QList<Player> >);
     void sendPlayerformed2(QList<QList<Player> >);
     void sendTransformedPosition(QVector<QList<Player> >);
+    void sendPlayerIdAssigned(QVector<QList<Player> >);
 
 public slots:
     void setTransformMatrix(QVector<QList<QPoint> > transformationCoordinates);
     void setImageSize(QList<QSize>);
     void processTransformPosition(QVector<QList<Player> >);
+    void returnAssignedPlayer(QVector<QList<Player> >);
 };
 
 #endif // COORDINATETRANSFORM_H

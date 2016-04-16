@@ -1,7 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #define RECT_PLAYER_SIZE 10
-
+#define GLOBAL_FIELD_LENGTH 100
+#define GLOBAL_FIELD_WIDTH 50
 
 //std part
 #include <iostream>
@@ -15,6 +16,7 @@
 #include <QTime>
 #include <QLabel>
 #include <QDebug>
+#include <QListWidgetItem>
 
 //opencv part
 #include <opencv2/opencv.hpp>
@@ -50,7 +52,9 @@ public:
 
 public slots:
     void displayTransformedPosition(QVector<QList<Player> >);
+    void initListPlayer();
     void setCameraViewFirstFrameImage(QVector<QImage>);
+
 private slots:
     //menu file edit dll
     void on_actionTuning_Background_Model_triggered();
@@ -66,7 +70,12 @@ private slots:
     void on_pushButton_single_play_released();
 
     //slot
+    void assignIdFromList(QPoint& pos);
 
+    void on_listTeamA_itemClicked(QListWidgetItem *item);
+
+
+    void on_listTeamB_itemClicked(QListWidgetItem *item);
 
     void on_pushButton_initialize_object_released();
 
@@ -76,9 +85,11 @@ private slots:
 
     void on_slider_global_frame_valueChanged(int value);
 
+    void on_pushButton_send_id_clicked();
+
 private:
     Ui::MainWindow *ui;
-    //initialize windowa
+    //initialize windows
     CameraViewDialog *myCVDialog;
     ErrorCalculationDialog *myECDialog;
     FieldSelectionDialog *myFSDialog;
@@ -92,6 +103,17 @@ private:
     QString filename;
     bool videoLoaded[2];
     QString getFormattedTime(int timeInSeconds);
+    int idToAssign;
+    bool isIdAssigned[22];
+    QVector<QList<Player> > playerDisplayed;
+    int assignedId;
+    //hanya untuk debug
+    QVector<QList<Player> > setRandomPlayer();   
+    //Internal Procedure
+    void displayModifiedId(QVector<QList<Player> > modifiedId);
+
+signals:
+       void sendAllIdAssigned(QVector<QList<Player> >);
 };
 
 #endif // MAINWINDOW_H

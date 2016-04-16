@@ -49,6 +49,7 @@ public slots:
     void updateTrapeziumCoordinates(QVector<QList<QPoint> >);
     void updateObjectData_1(QList<Player>);
     void updateObjectData_2(QList<Player>);
+    void showPlayerIdAssigned(QVector<QList<Player> >);
 
 public:
     void loadVideo(QString filename, int id);

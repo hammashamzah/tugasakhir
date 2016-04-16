@@ -24,12 +24,20 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     QObject::connect(myFSDialog, SIGNAL(sendTransformationCoordinates(QVector<QList<QPoint> >)), myCoordinateTransform, SLOT(setTransformMatrix(QVector<QList<QPoint> >)));
     QObject::connect(myFSDialog, SIGNAL(sendImageSize(QList<QSize>)), myCoordinateTransform, SLOT(setImageSize(QList<QSize>)));
-    QPixmap pixmapField("lapangan.png");
-    ui->label_game_visual->setPixmap(pixmapField);
+    
+    QObject::connect(ui->label_game_visual, SIGNAL(sendRightClickPosition(QPoint&)),this, SLOT(assignIdFromList(QPoint&)));
+    QObject::connect(this, SIGNAL(sendAllIdAssigned(playerIdAssigned)), myCoordinateTransform, SLOT(returnAssignedPlayer(QVector<QList<Player> >)));
+
+    QObject::connect(myCoordinateTransform, SIGNAL(sendPlayerIdAssigned(QVector<QList<Player> >)), myObjectDetector, SLOT(showPlayerIdAssigned(QVector<QList<Player> >)));
 
     ui->slider_global_frame->setEnabled(false);
     videoLoaded[0] = false;
     videoLoaded[1] = false;
+    //click event
+
+
+    initListPlayer();
+    assignedId=0;
 }
 
 MainWindow::~MainWindow()
@@ -105,6 +113,37 @@ void MainWindow::on_pushButton_single_play_released() {
     myObjectDetector->playSingleFrame();
 }
 
+void MainWindow::displayModifiedId(QVector<QList<Player> > modifiedId)
+{
+    QPixmap pixmapField("lapangan.png");   //ukuran pixmap
+    QPainter painterField(&pixmapField);
+    QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
+    QBrush brush(Qt::white);
+
+    playerDisplayed=modifiedId;
+
+    painterField.setRenderHint(QPainter::Antialiasing, true);
+    painterField.setPen(pen);
+    for(int cameraId=0;cameraId<playerDisplayed.size();cameraId++)
+    {
+        for(int i=0; i<playerDisplayed.at(cameraId).size(); i++)
+        {
+            playerDisplayed[cameraId][i].pos.x=(modifiedId.at(cameraId).at(i).pos.x);
+            playerDisplayed[cameraId][i].pos.y=(modifiedId.at(cameraId).at(i).pos.y);
+
+            brush.setColor(Qt::red);
+              painterField.setBrush(brush);
+
+              painterField.drawRect( playerDisplayed[cameraId][i].pos.x, playerDisplayed[cameraId][i].pos.y, RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
+              painterField.setFont(QFont ("Arial"));
+
+              painterField.drawText(QPoint(playerDisplayed[cameraId][i].pos.x, playerDisplayed[cameraId][i].pos.y), QString::number(playerDisplayed.at(cameraId).at(i).id)); //posisi x, y, dan ukuran elips
+        }
+
+    }
+    ui->label_game_visual->setPixmap(pixmapField);
+}
+
 void MainWindow::displayTransformedPosition(QVector<QList<Player> > transformedPosition)
 {
     QPixmap pixmapField("lapangan.png");   //ukuran pixmap
@@ -112,29 +151,46 @@ void MainWindow::displayTransformedPosition(QVector<QList<Player> > transformedP
     QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
     QBrush brush(Qt::white);
 
+    playerDisplayed=transformedPosition;
     painterField.setRenderHint(QPainter::Antialiasing, true);
     painterField.setPen(pen);
-    for(int cameraId=0;cameraId<2;cameraId++)
+    for(int cameraId=0;cameraId<transformedPosition.size();cameraId++)
     {
         for(int i=0; i<transformedPosition.at(cameraId).size(); i++)
         {
-              brush.setColor(Qt::red);
+            playerDisplayed[cameraId][i].pos.x=(transformedPosition.at(cameraId).at(i).pos.x*pixmapField.width()/GLOBAL_FIELD_LENGTH);
+            playerDisplayed[cameraId][i].pos.y=(transformedPosition.at(cameraId).at(i).pos.y*pixmapField.height()/GLOBAL_FIELD_WIDTH);
+
+            brush.setColor(Qt::red);
               painterField.setBrush(brush);
 
-              painterField.drawRect(transformedPosition.at(cameraId).at(i).pos.x*pixmapField.width()/GLOBAL_FIELD_LENGTH,
-                                    transformedPosition.at(cameraId).at(i).pos.y*pixmapField.height()/GLOBAL_FIELD_WIDTH,
-                                    RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
+              painterField.drawRect( playerDisplayed[cameraId][i].pos.x, playerDisplayed[cameraId][i].pos.y, RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
               painterField.setFont(QFont ("Arial"));
+              painterField.drawText(QPoint(playerDisplayed.at(cameraId).at(i).pos.x, playerDisplayed.at(cameraId).at(i).pos.y), QString::number(playerDisplayed.at(cameraId).at(i).id)); //posisi x, y, dan ukuran elips
 
-              painterField.drawText(QPoint(transformedPosition.at(cameraId).at(i).pos.x*pixmapField.width()/GLOBAL_FIELD_LENGTH, transformedPosition.at(cameraId).at(i).pos.y*pixmapField.height()/GLOBAL_FIELD_WIDTH), QString::number(transformedPosition.at(cameraId).at(i).id)); //posisi x, y, dan ukuran elips
-         }
+        }
+
     }
-    ui->label_game_visual->setPixmap (pixmapField);
-
-    //update waktu
-    ui->label_current_time->setText(getFormattedTime(myObjectDetector->getCurrentFrame() / myObjectDetector->getFrameRate()));
+    ui->label_game_visual->setPixmap(pixmapField);
+    //qDebug()<< "displayed "<< playerDisplayed.at(0).at(1).pos.y ;
 }
 
+void MainWindow::initListPlayer()
+{
+    ui->listTeamA->clear();
+    ui->listTeamB->clear();
+    for(int cameraId=0; cameraId<2; cameraId++)
+    {
+        for(int i =0; i<11;i++)
+        {
+            if (cameraId==0)
+                ui->listTeamA->insertItem(i, QString::number(i));
+            else
+                ui->listTeamB->insertItem(i, QString::number(i));
+        }
+    }
+
+}
 
 void MainWindow::setCameraViewFirstFrameImage(QVector<QImage> firstFrameImage){
     ui->label_stream_1->setAlignment(Qt::AlignCenter);
@@ -173,4 +229,68 @@ QString MainWindow::getFormattedTime(int timeInSeconds){
         return t.toString("mm:ss");
     else
         return t.toString("h:mm:ss");
+}
+
+void MainWindow::assignIdFromList(QPoint& pos)
+{
+    qDebug()<<"right click pos "<<pos.x()<<" "<<pos.y();
+    int JUMLAH_PLAYER=22;
+    if(idToAssign<JUMLAH_PLAYER)
+        {
+        for(int cameraId=0; cameraId<playerDisplayed.size();cameraId++)
+        {
+                for(int i=0;i<playerDisplayed.at(cameraId).size();i++)
+                {
+                        if((pos.x()>=playerDisplayed.at(cameraId).at(i).pos.x && pos.x()<=playerDisplayed.at(cameraId).at(i).pos.x+10)
+                                && (pos.y()>=playerDisplayed.at(cameraId).at(i).pos.y && pos.y()<=playerDisplayed.at(cameraId).at(i).pos.y+10))
+                        {
+                            playerDisplayed[cameraId][i].id=idToAssign;
+
+                            displayModifiedId(playerDisplayed);
+
+                            //idToSigned default
+                            idToAssign=999;
+                        }
+                }
+            }
+        }
+}
+void MainWindow::on_listTeamA_itemClicked(QListWidgetItem *item)
+{
+    idToAssign=item->text().toInt();
+    qDebug("idAToAssigned = ");
+    qDebug()<<idToAssign;
+}
+
+void MainWindow::on_listTeamB_itemClicked(QListWidgetItem *item)
+{
+    idToAssign=item->text().toInt()+11;
+    qDebug("idBToAssigned = ");
+    qDebug()<<idToAssign;
+}
+
+QVector<QList<Player> > MainWindow::setRandomPlayer()
+{
+//set random value of player
+    QVector<QList<Player> > dummyPlayer;
+    Player playerSet;
+    dummyPlayer.resize(2);
+        for(int i=0; i<dummyPlayer.size(); i++)
+        {
+            for(int j=0;j<11;j++)
+            {
+                playerSet.id=100+(i+1)*j;
+                playerSet.pos.x=qrand()%100;
+                playerSet.pos.y=qrand()%50;
+                dummyPlayer[i].append(playerSet);
+            }
+        }
+
+        qDebug()<<dummyPlayer.at(1).size();
+        return (dummyPlayer);
+}
+
+void MainWindow::on_pushButton_send_id_clicked()
+{
+    emit sendAllIdAssigned(playerDisplayed);
 }

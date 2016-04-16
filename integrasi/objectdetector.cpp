@@ -32,7 +32,6 @@ ObjectDetector::ObjectDetector()
 	QObject::connect(myStream_1, SIGNAL(sendCameraObjectData(QList<Player>)), this, SLOT(updateObjectData_1(QList<Player>)));
 	QObject::connect(myStream_2, SIGNAL(sendCameraObjectData(QList<Player>)), this, SLOT(updateObjectData_2(QList<Player>)));
 
-
 }
 
 ObjectDetector::~ObjectDetector()
@@ -196,5 +195,15 @@ void ObjectDetector::updateObjectData_2(QList<Player> outputDataCam) {
 	setData[1] = true;
 	if (setData[0] && setData[1]) {
 		emit sendObjectData(allOutputDataCam);
+	}
+}
+
+void ObjectDetector::showPlayerIdAssigned(QVector<QList<Player> > assignedPlayerData){
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < assignedPlayerData[i].size(); ++j)
+		{
+			qDebug() << assignedPlayerData[i][j].id << assignedPlayerData[i][j].pos.x << assignedPlayerData[i][j].pos.y;
+		}
 	}
 }
