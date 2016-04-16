@@ -136,19 +136,19 @@ void FieldSelectionDialog::fileHandler(QString filename, int mode) {
             listOfClickCoordinates[1].clear();
             numberOfMaskPoints[1] = lines.at(1).count(QLatin1Char(' ')) / 2;
             for (int i = 0; i < (numberOfMaskPoints[1]); i++) {
-                listOfClickCoordinates[1].append(QPoint((lines.at(1)).section(" ",2*i,2*i).toInt(),(lines.at(0)).section(" ",2*i + 1,2*i + 1).toInt()));
+                listOfClickCoordinates[1].append(QPoint((lines.at(1)).section(" ",2*i,2*i).toInt(),(lines.at(1)).section(" ",2*i + 1,2*i + 1).toInt()));
             }
 
             listOfTransformationCoordinates[0].clear();
             numberOfTransformationPoints[0] = lines.at(2).count(QLatin1Char(' ')) / 2;
             for (int i = 0; i < (numberOfTransformationPoints[0]); i++) {
-                listOfTransformationCoordinates[0].append(QPoint((lines.at(2)).section(" ",2*i,2*i).toInt(),(lines.at(0)).section(" ",2*i + 1,2*i + 1).toInt()));
+                listOfTransformationCoordinates[0].append(QPoint((lines.at(2)).section(" ",2*i,2*i).toInt(),(lines.at(2)).section(" ",2*i + 1,2*i + 1).toInt()));
             }
 
             listOfTransformationCoordinates[1].clear();
             numberOfTransformationPoints[1] = lines.at(3).count(QLatin1Char(' ')) / 2;
             for (int i = 0; i < (numberOfTransformationPoints[1]); i++) {
-                listOfTransformationCoordinates[1].append(QPoint((lines.at(3)).section(" ",2*i,2*i).toInt(),(lines.at(0)).section(" ",2*i + 1,2*i + 1).toInt()));
+                listOfTransformationCoordinates[1].append(QPoint((lines.at(3)).section(" ",2*i,2*i).toInt(),(lines.at(3)).section(" ",2*i + 1,2*i + 1).toInt()));
             }
         }
     file.close();
