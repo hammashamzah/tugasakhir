@@ -16,6 +16,7 @@
 #include <QTime>
 #include <QLabel>
 #include <QDebug>
+#include <QListWidgetItem>
 
 //opencv part
 #include <opencv2/opencv.hpp>
@@ -53,6 +54,7 @@ public slots:
     void displayTransformedPosition(QVector<QList<Player> >);
     void initListPlayer();
     void setCameraViewFirstFrameImage(QVector<QImage>);
+    void setOriginIdPlayer(QVector<QList<Player> > );
 
 private slots:
     //menu file edit dll
@@ -69,11 +71,18 @@ private slots:
     void on_pushButton_single_play_released();
 
     //slot
+    void assignIdFromList(QPoint& pos);
 
+    void on_listTeamA_itemClicked(QListWidgetItem *item);
+
+
+    void on_listTeamB_itemClicked(QListWidgetItem *item);
+
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
-    //initialize windowa
+    //initialize windows
     CameraViewDialog *myCVDialog;
     ErrorCalculationDialog *myECDialog;
     FieldSelectionDialog *myFSDialog;
@@ -85,9 +94,19 @@ private:
     CoordinateTransform *myCoordinateTransform;
     //intialize temp filename variable
     QString filename;
-
+    int idToAssign;
+    bool isIdAssigned[22];
+    QVector<QList<Player> > playerDisplayed;
+    QVector<QList<Player> > playerOrigin;
+    int assignedId;
     //hanya untuk debug
-    QVector<QList<Player> > setRandomPlayer();
+    QVector<QList<Player> > setRandomPlayer();   
+    //Internal Procedure
+    void displayModifiedId(QVector<QList<Player> > modifiedId);
+
+signals:
+       void sendAllIdAssigned(QVector<QList<Player> >);
+
 };
 
 #endif // MAINWINDOW_H

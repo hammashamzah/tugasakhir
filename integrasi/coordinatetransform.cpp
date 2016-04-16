@@ -18,6 +18,7 @@ void CoordinateTransform::processTransformPosition(QVector<QList<Player> > data)
 {
     QVector<QList<Player> > dataTransformed;
     dataTransformed.resize(2);
+    emit sendDataOrigin(data);
     for(int cameraId=0; cameraId<dataTransformed.size(); cameraId++)
     {
         for(int i=0; i<data.at(cameraId).size() ; i++)

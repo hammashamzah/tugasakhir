@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1132</width>
-    <height>628</height>
+    <height>633</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -79,7 +79,7 @@
            <widget class="QListWidget" name="listTeamA"/>
           </item>
           <item>
-           <widget class="QLabel" name="label_game_visual">
+           <widget class="ClickDisplay" name="label_game_visual">
             <property name="minimumSize">
              <size>
               <width>320</width>
@@ -133,7 +133,7 @@
            <property name="title">
             <string>Player Performance</string>
            </property>
-           <widget class="QWidget" name="">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
               <x>0</x>
@@ -197,6 +197,13 @@
                 </widget>
                </item>
                <item>
+                <widget class="QPushButton" name="pushButton">
+                 <property name="text">
+                  <string>Send ID</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <layout class="QHBoxLayout" name="horizontalLayout">
                  <item>
                   <widget class="QLabel" name="current_time_1">
@@ -246,9 +253,6 @@
     </item>
    </layout>
    <zorder></zorder>
-   <zorder>label_game_visual</zorder>
-   <zorder>listTeamA</zorder>
-   <zorder>listTeamB</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

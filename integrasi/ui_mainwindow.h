@@ -54,12 +54,12 @@ public:
     ClickDisplay *label_stream_2;
     QHBoxLayout *horizontalLayout_2;
     QListWidget *listTeamA;
-    QLabel *label_game_visual;
+    ClickDisplay *label_game_visual;
     QListWidget *listTeamB;
     QVBoxLayout *verticalLayout_2;
     QSplitter *splitter;
     QGroupBox *groupBox;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QVBoxLayout *verticalLayout_4;
     QGridLayout *gridLayout_2;
     QLabel *idLabel;
@@ -69,6 +69,7 @@ public:
     QVBoxLayout *verticalLayout;
     QPushButton *pushButton_play;
     QPushButton *pushButton_single_play;
+    QPushButton *pushButton;
     QHBoxLayout *horizontalLayout;
     QLabel *current_time_1;
     QSlider *time_slider_1;
@@ -86,7 +87,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1132, 628);
+        MainWindow->resize(1132, 633);
         MainWindow->setAutoFillBackground(false);
         actionVideo_1 = new QAction(MainWindow);
         actionVideo_1->setObjectName(QStringLiteral("actionVideo_1"));
@@ -154,7 +155,7 @@ public:
 
         horizontalLayout_2->addWidget(listTeamA);
 
-        label_game_visual = new QLabel(centralWidget);
+        label_game_visual = new ClickDisplay(centralWidget);
         label_game_visual->setObjectName(QStringLiteral("label_game_visual"));
         label_game_visual->setMinimumSize(QSize(320, 240));
         label_game_visual->setMaximumSize(QSize(480, 320));
@@ -184,10 +185,10 @@ public:
         groupBox->setObjectName(QStringLiteral("groupBox"));
         groupBox->setMinimumSize(QSize(120, 0));
         groupBox->setMaximumSize(QSize(240, 16777215));
-        widget = new QWidget(groupBox);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(0, 20, 121, 381));
-        verticalLayout_4 = new QVBoxLayout(widget);
+        layoutWidget = new QWidget(groupBox);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(0, 20, 121, 381));
+        verticalLayout_4 = new QVBoxLayout(layoutWidget);
         verticalLayout_4->setSpacing(6);
         verticalLayout_4->setContentsMargins(11, 11, 11, 11);
         verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
@@ -195,7 +196,7 @@ public:
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setSpacing(6);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        idLabel = new QLabel(widget);
+        idLabel = new QLabel(layoutWidget);
         idLabel->setObjectName(QStringLiteral("idLabel"));
         QFont font;
         font.setPointSize(9);
@@ -203,17 +204,17 @@ public:
 
         gridLayout_2->addWidget(idLabel, 0, 0, 1, 1);
 
-        playerNameLabel = new QLabel(widget);
+        playerNameLabel = new QLabel(layoutWidget);
         playerNameLabel->setObjectName(QStringLiteral("playerNameLabel"));
 
         gridLayout_2->addWidget(playerNameLabel, 1, 0, 1, 1);
 
-        playerSpeedLabel = new QLabel(widget);
+        playerSpeedLabel = new QLabel(layoutWidget);
         playerSpeedLabel->setObjectName(QStringLiteral("playerSpeedLabel"));
 
         gridLayout_2->addWidget(playerSpeedLabel, 2, 0, 1, 1);
 
-        positionLabel = new QLabel(widget);
+        positionLabel = new QLabel(layoutWidget);
         positionLabel->setObjectName(QStringLiteral("positionLabel"));
 
         gridLayout_2->addWidget(positionLabel, 3, 0, 1, 1);
@@ -224,20 +225,25 @@ public:
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        pushButton_play = new QPushButton(widget);
+        pushButton_play = new QPushButton(layoutWidget);
         pushButton_play->setObjectName(QStringLiteral("pushButton_play"));
 
         verticalLayout->addWidget(pushButton_play);
 
-        pushButton_single_play = new QPushButton(widget);
+        pushButton_single_play = new QPushButton(layoutWidget);
         pushButton_single_play->setObjectName(QStringLiteral("pushButton_single_play"));
 
         verticalLayout->addWidget(pushButton_single_play);
 
+        pushButton = new QPushButton(layoutWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+
+        verticalLayout->addWidget(pushButton);
+
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        current_time_1 = new QLabel(widget);
+        current_time_1 = new QLabel(layoutWidget);
         current_time_1->setObjectName(QStringLiteral("current_time_1"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
@@ -247,13 +253,13 @@ public:
 
         horizontalLayout->addWidget(current_time_1);
 
-        time_slider_1 = new QSlider(widget);
+        time_slider_1 = new QSlider(layoutWidget);
         time_slider_1->setObjectName(QStringLiteral("time_slider_1"));
         time_slider_1->setOrientation(Qt::Horizontal);
 
         horizontalLayout->addWidget(time_slider_1);
 
-        max_time_1 = new QLabel(widget);
+        max_time_1 = new QLabel(layoutWidget);
         max_time_1->setObjectName(QStringLiteral("max_time_1"));
         sizePolicy1.setHeightForWidth(max_time_1->sizePolicy().hasHeightForWidth());
         max_time_1->setSizePolicy(sizePolicy1);
@@ -277,9 +283,6 @@ public:
         gridLayout->addLayout(horizontalLayout_3, 0, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
-        label_game_visual->raise();
-        listTeamA->raise();
-        listTeamB->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 1132, 17));
@@ -342,6 +345,7 @@ public:
         positionLabel->setText(QApplication::translate("MainWindow", "Position", 0));
         pushButton_play->setText(QApplication::translate("MainWindow", "Play", 0));
         pushButton_single_play->setText(QApplication::translate("MainWindow", "Single Frame Play", 0));
+        pushButton->setText(QApplication::translate("MainWindow", "Send ID", 0));
         current_time_1->setText(QApplication::translate("MainWindow", "00:00", 0));
         max_time_1->setText(QApplication::translate("MainWindow", "00:00", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
