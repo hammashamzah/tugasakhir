@@ -1,7 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #define RECT_PLAYER_SIZE 10
-
+#define GLOBAL_FIELD_LENGTH 100
+#define GLOBAL_FIELD_WIDTH 50
 
 //std part
 #include <iostream>
@@ -50,7 +51,9 @@ public:
 
 public slots:
     void displayTransformedPosition(QVector<QList<Player> >);
+    void initListPlayer();
     void setCameraViewFirstFrameImage(QVector<QImage>);
+
 private slots:
     //menu file edit dll
     void on_actionTuning_Background_Model_triggered();
@@ -82,6 +85,9 @@ private:
     CoordinateTransform *myCoordinateTransform;
     //intialize temp filename variable
     QString filename;
+
+    //hanya untuk debug
+    QVector<QList<Player> > setRandomPlayer();
 };
 
 #endif // MAINWINDOW_H
