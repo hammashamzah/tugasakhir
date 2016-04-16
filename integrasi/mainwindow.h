@@ -51,6 +51,7 @@ public:
 public slots:
     void displayTransformedPosition(QVector<QList<Player> >);
     void setCameraViewFirstFrameImage(QVector<QImage>);
+    void updateCameraViewFrameImage(QVector< QVector<QImage> >);
 private slots:
     //menu file edit dll
     void on_actionTuning_Background_Model_triggered();
@@ -64,6 +65,7 @@ private slots:
     //button slot
     void on_pushButton_play_released();
     void on_pushButton_single_play_released();
+
 
     //slot
 

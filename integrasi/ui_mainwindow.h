@@ -135,6 +135,8 @@ public:
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         label_stream_1 = new ClickDisplay(centralWidget);
         label_stream_1->setObjectName(QStringLiteral("label_stream_1"));
+        sizePolicy.setHeightForWidth(label_stream_1->sizePolicy().hasHeightForWidth());
+        label_stream_1->setSizePolicy(sizePolicy);
         label_stream_1->setMinimumSize(QSize(320, 240));
         label_stream_1->setStyleSheet(QStringLiteral("Background-color: #000;"));
 
@@ -142,6 +144,8 @@ public:
 
         label_stream_2 = new ClickDisplay(centralWidget);
         label_stream_2->setObjectName(QStringLiteral("label_stream_2"));
+        sizePolicy.setHeightForWidth(label_stream_2->sizePolicy().hasHeightForWidth());
+        label_stream_2->setSizePolicy(sizePolicy);
         label_stream_2->setMinimumSize(QSize(320, 240));
         label_stream_2->setStyleSheet(QStringLiteral("Background-color: #000;"));
 

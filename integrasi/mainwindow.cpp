@@ -17,7 +17,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(myObjectDetector, SIGNAL(sendFirstFrameImage(QVector<QImage>)), myFSDialog, SLOT(setFirstFrameImage(QVector<QImage>)));
     QObject::connect(myObjectDetector, SIGNAL(sendFirstFrameImage(QVector<QImage>)), this, SLOT(setCameraViewFirstFrameImage(QVector<QImage>)));
     QObject::connect(myFSDialog, SIGNAL(sendMaskCoordinates(QVector< QList<QPoint> >)), myObjectDetector, SLOT(setMaskCoordinate(QVector< QList<QPoint> >)));
+   
     QObject::connect(myObjectDetector, SIGNAL(sendCameraViewImage(QVector< QVector<QImage> >)), myCVDialog, SLOT(updateCameraViewImage(QVector< QVector<QImage> >)));
+    QObject::connect(myObjectDetector, SIGNAL(sendCameraViewImage(QVector< QVector<QImage> >)), this, SLOT(updateCameraViewFrameImage(QVector< QVector<QImage> >)));
+   
     QObject::connect(myBMTDialog, SIGNAL(sendValueParameter(QVector< QVector<int> >)), myObjectDetector, SLOT(updateValueParameter(QVector< QVector<int> >)));
     QObject::connect(myObjectDetector, SIGNAL(sendObjectData(QVector<QList<Player> >)), myCoordinateTransform, SLOT(processTransformPosition(QVector<QList<Player> >)));
     QObject::connect(myCoordinateTransform, SIGNAL(sendTransformedPosition(QVector<QList<Player> >)), this, SLOT(displayTransformedPosition(QVector<QList<Player> >)));
@@ -133,6 +136,7 @@ void MainWindow::displayTransformedPosition(QVector<QList<Player> > transformedP
 
     //update waktu
     ui->label_current_time->setText(getFormattedTime(myObjectDetector->getCurrentFrame() / myObjectDetector->getFrameRate()));
+    ui->slider_global_frame->setValue(myObjectDetector->getCurrentFrame());
 }
 
 
@@ -141,6 +145,13 @@ void MainWindow::setCameraViewFirstFrameImage(QVector<QImage> firstFrameImage){
     ui->label_stream_1->setPixmap(QPixmap::fromImage((firstFrameImage[0]).scaled(ui->label_stream_1->size(),Qt::KeepAspectRatio, Qt::FastTransformation)));
     ui->label_stream_2->setAlignment(Qt::AlignCenter);
     ui->label_stream_2->setPixmap(QPixmap::fromImage((firstFrameImage[1]).scaled(ui->label_stream_2->size(),Qt::KeepAspectRatio, Qt::FastTransformation)));
+}
+
+void MainWindow::updateCameraViewFrameImage(QVector< QVector<QImage> > frameImage){
+    ui->label_stream_1->setAlignment(Qt::AlignCenter);
+    ui->label_stream_1->setPixmap(QPixmap::fromImage((frameImage[0][5]).scaled(ui->label_stream_1->size(),Qt::KeepAspectRatio, Qt::FastTransformation)));
+    ui->label_stream_2->setAlignment(Qt::AlignCenter);
+    ui->label_stream_2->setPixmap(QPixmap::fromImage((frameImage[1][5]).scaled(ui->label_stream_2->size(),Qt::KeepAspectRatio, Qt::FastTransformation)));
 }
 
 void MainWindow::on_pushButton_initialize_object_released()

@@ -10,10 +10,10 @@ VideoProcessor::VideoProcessor(QObject *parent): QThread(parent)
     
 	stop = true;
     pMOG2 = new BackgroundSubtractorMOG2();
-	minArea = 0;
-	maxArea = 200;
-	morphElementSize = 3;
-	gaussianSize = 3;
+    minArea = 0;
+    maxArea = 200;
+    morphElementSize = 3;
+    gaussianSize = 3;
 	isSetMask = false;
 	mode = 0;
 	allFrames.resize(6);
@@ -67,6 +67,9 @@ void VideoProcessor::processSingleFrame()
 		params.filterByConvexity = false;
 		params.filterByColor = false;
 		params.filterByCircularity = false;
+        if(minArea == 0 && maxArea == 0){
+            params.filterByArea = false;
+        }
 		if(minArea > 0){
 			params.minArea = minArea;
 		}
@@ -93,16 +96,24 @@ void VideoProcessor::processSingleFrame()
             fillPoly(mask, ppt, npt, 1, Scalar(255,255,255), 8);
             frame.copyTo(maskedFrame, mask);
         }else{
-            maskedFrame = frame;
+            qDebug("0");
+            frame.copyTo(maskedFrame);
         }
 		//update the background model
 		pMOG2->operator()(maskedFrame, objectFrame);
         if(morphElementSize > 0){
         	morphologyEx(objectFrame, openedFrame, 2, morphElement);
-		}
+        }else{
+            qDebug("1");
+            objectFrame.copyTo(openedFrame);
+        }
 		if(gaussianSize > 0){
 			GaussianBlur(openedFrame, bluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
-		}
+        }else{
+            qDebug("2");
+            openedFrame.copyTo(bluredFrame);
+        }
+        qDebug("3");
         frame.copyTo(objectWithKeypointsFrame);
 
 		if(mode == 0){
@@ -150,7 +161,7 @@ void VideoProcessor::processSingleFrame()
 }
 
 void VideoProcessor::run(){
-	int delay = (1000/frameRate);
+    int delay = (3000/frameRate);
 	while(!stop){
 		processSingleFrame();
 		this->msleep(delay);

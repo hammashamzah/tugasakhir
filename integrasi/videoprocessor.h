@@ -27,7 +27,7 @@ private:
 	QWaitCondition condition;
 	int frameRate;
 	VideoCapture *capture;
-	Mat frame, objectFrame, mask, maskedFrame, openedFrame, bluredFrame, objectWithKeypointsFrame;
+    Mat frame, objectFrame, mask, maskedFrame, openedFrame, bluredFrame, objectWithKeypointsFrame;
 	QImage qRawFrame, qMaskedFrame, qObjectFrame, qOpenedFrame, qBluredFrame, qObjectWithKeypointsFrame;
     SimpleBlobDetector::Params params;
 	Ptr<BackgroundSubtractor> pMOG2;
