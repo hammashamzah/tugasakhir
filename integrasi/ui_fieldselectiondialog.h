@@ -26,32 +26,30 @@ QT_BEGIN_NAMESPACE
 class Ui_FieldSelectionDialog
 {
 public:
-    QVBoxLayout *verticalLayout_3;
-    QVBoxLayout *verticalLayout_2;
-    QComboBox *cameraSelectCombo;
     QVBoxLayout *verticalLayout;
+    QComboBox *cameraSelectCombo;
     ClickDisplay *imageView;
     QHBoxLayout *horizontalLayout;
     QPushButton *pushButton_set;
     QPushButton *pushButton_apply;
     QPushButton *pushButton_ok;
+    QHBoxLayout *horizontalLayout_2;
+    QPushButton *pushButton_load_file;
+    QPushButton *pushButton_load_default_file;
+    QPushButton *pushButton_save_file;
 
     void setupUi(QDialog *FieldSelectionDialog)
     {
         if (FieldSelectionDialog->objectName().isEmpty())
             FieldSelectionDialog->setObjectName(QStringLiteral("FieldSelectionDialog"));
         FieldSelectionDialog->resize(848, 583);
-        verticalLayout_3 = new QVBoxLayout(FieldSelectionDialog);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        verticalLayout = new QVBoxLayout(FieldSelectionDialog);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         cameraSelectCombo = new QComboBox(FieldSelectionDialog);
         cameraSelectCombo->setObjectName(QStringLiteral("cameraSelectCombo"));
 
-        verticalLayout_2->addWidget(cameraSelectCombo);
+        verticalLayout->addWidget(cameraSelectCombo);
 
-        verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         imageView = new ClickDisplay(FieldSelectionDialog);
         imageView->setObjectName(QStringLiteral("imageView"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
@@ -94,11 +92,25 @@ public:
 
         verticalLayout->addLayout(horizontalLayout);
 
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        pushButton_load_file = new QPushButton(FieldSelectionDialog);
+        pushButton_load_file->setObjectName(QStringLiteral("pushButton_load_file"));
 
-        verticalLayout_2->addLayout(verticalLayout);
+        horizontalLayout_2->addWidget(pushButton_load_file);
+
+        pushButton_load_default_file = new QPushButton(FieldSelectionDialog);
+        pushButton_load_default_file->setObjectName(QStringLiteral("pushButton_load_default_file"));
+
+        horizontalLayout_2->addWidget(pushButton_load_default_file);
+
+        pushButton_save_file = new QPushButton(FieldSelectionDialog);
+        pushButton_save_file->setObjectName(QStringLiteral("pushButton_save_file"));
+
+        horizontalLayout_2->addWidget(pushButton_save_file);
 
 
-        verticalLayout_3->addLayout(verticalLayout_2);
+        verticalLayout->addLayout(horizontalLayout_2);
 
 
         retranslateUi(FieldSelectionDialog);
@@ -122,6 +134,9 @@ public:
         pushButton_set->setText(QApplication::translate("FieldSelectionDialog", "Set Masking...", 0));
         pushButton_apply->setText(QApplication::translate("FieldSelectionDialog", "Apply", 0));
         pushButton_ok->setText(QApplication::translate("FieldSelectionDialog", "Ok", 0));
+        pushButton_load_file->setText(QApplication::translate("FieldSelectionDialog", "Load from File...", 0));
+        pushButton_load_default_file->setText(QApplication::translate("FieldSelectionDialog", "Load from Default File", 0));
+        pushButton_save_file->setText(QApplication::translate("FieldSelectionDialog", "Save to File...", 0));
     } // retranslateUi
 
 };

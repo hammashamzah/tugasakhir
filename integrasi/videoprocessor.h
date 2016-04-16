@@ -14,10 +14,12 @@
 #include <cvmatandqimage.h>
 #include <iostream>
 #include <QDebug>
+#include <QList>
+#include <QVector>
 #include "player.h"
 using namespace cv;
 
-class VideoProcessor : public QObject
+class VideoProcessor : public QThread
 {	Q_OBJECT
 private:
 	bool stop;
@@ -56,7 +58,7 @@ protected:
 	void maskImage();
 public:
 	//Constructor
-    VideoProcessor();
+    VideoProcessor(QObject *parent = 0);
 	//Destructor
 	~VideoProcessor();
 	//Load a video from memory
@@ -64,6 +66,13 @@ public:
 	//check if the player has been stopped
 	//set video properties
 	void setCurrentFrame( int frameNumber);
+
+	//Play the processor
+    void Play();
+    //Stop the processor
+    void Stop();
+    //check if the player has been stopped
+    bool isStopped() const;
 
 	//Get video properties
 	double getFrameRate();

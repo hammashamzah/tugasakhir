@@ -3,6 +3,11 @@
 
 #include <QDialog>
 #include <iostream>
+#include <QString>
+#include <QFile>
+#include <QFileDialog>
+#include <QTextStream>
+#include <QDebug>
 
 namespace Ui {  
 class FieldSelectionDialog;
@@ -20,10 +25,18 @@ public:
     explicit FieldSelectionDialog(QWidget *parent = 0);
     ~FieldSelectionDialog();
     QList<QSize> imageSize;
+    void fileHandler(QString filename, int mode);
+    QString filename;
 private slots:
     void on_cameraSelectCombo_currentIndexChanged(int index);
     void on_pushButton_set_released();
     void on_pushButton_apply_released();
+
+    void on_pushButton_load_file_released();
+
+    void on_pushButton_load_default_file_released();
+
+    void on_pushButton_save_file_released();
 
 private:
     Ui::FieldSelectionDialog *ui;
@@ -32,6 +45,8 @@ private:
     QVector<QList<QPoint> > listOfClickCoordinates;
     QVector<QList<QPoint> > listOfTrapeziumCoordinates;
     QVector<QList<QPoint> > listOfTransformationCoordinates;
+    int numberOfMaskPoints[2];
+    int numberOfTransformationPoints[2];
 //    QPoint clickCoordinates[4];
     //cv::Point maskPoint[10];
     int currentCameraIndex;

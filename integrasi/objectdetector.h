@@ -15,12 +15,12 @@
 #include <cvmatandqimage.h>
 #include <videoprocessor.h>
 #include <iostream>
+#include <player.h>
 #include <QDebug>
 
 class ObjectDetector : public QObject
 { Q_OBJECT
 private:
-    bool stop;
     QMutex mutex;
     QWaitCondition condition;
     VideoProcessor *myStream_1;
@@ -33,6 +33,7 @@ private:
     QVector<QList<QPoint> > myTrapeziumCoordinates;
     QVector<QList<Player> > allOutputDataCam;
     bool setData[2];
+    bool setImage[2];
 public:
     ObjectDetector();
     ~ObjectDetector();
@@ -53,8 +54,12 @@ public:
     void loadVideo(QString filename, int id);
     void Play();
     bool isStopped();
-    bool Stop();
+    void stop();
     void playSingleFrame();
+    void playContinously();
+    void setCurrentFrame(int value);
+    int getNumberOfFrames();
+    int getFrameRate();
 
     QVector<QImage> firstFrameImage;
 

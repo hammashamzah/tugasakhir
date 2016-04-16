@@ -68,6 +68,14 @@ private slots:
     //slot
 
 
+    void on_pushButton_initialize_object_released();
+
+    void on_slider_global_frame_sliderPressed();
+
+    void on_slider_global_frame_sliderReleased();
+
+    void on_slider_global_frame_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     //initialize windowa
@@ -82,6 +90,8 @@ private:
     CoordinateTransform *myCoordinateTransform;
     //intialize temp filename variable
     QString filename;
+    bool videoLoaded[2];
+    QString getFormattedTime(int timeInSeconds);
 };
 
 #endif // MAINWINDOW_H

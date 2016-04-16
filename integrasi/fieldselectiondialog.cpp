@@ -14,7 +14,7 @@ FieldSelectionDialog::FieldSelectionDialog(QWidget *parent) :
     {
         set[i] = false;
     }
-    
+
     frameCamera.resize(2);
     listOfClickCoordinates.resize(2);
     listOfTrapeziumCoordinates.resize(2);
@@ -31,7 +31,7 @@ void FieldSelectionDialog::setFirstFrameImage(QVector<QImage> img) {
     frameCamera[0] = img.at(0);
     frameCamera[1] = img.at(1);
     imageSize.clear();
-    imageSize.append(frameCamera[0].size()); 
+    imageSize.append(frameCamera[0].size());
     imageSize.append(frameCamera[1].size());
     emit sendImageSize(imageSize);
     if (currentCameraIndex == 0) {
@@ -117,4 +117,93 @@ void FieldSelectionDialog::on_pushButton_apply_released()
         emit sendTransformationCoordinates(listOfTransformationCoordinates);
     }
 
+}
+
+void FieldSelectionDialog::fileHandler(QString filename, int mode) {
+    QFile file(filename);
+    qDebug() << filename;
+    switch (mode) {
+    case 1: //loading mode
+        if (file.open(QIODevice::ReadOnly)) {
+            QStringList lines = QString(file.readAll()).split(QRegExp("[\r\n]"));
+            
+            listOfClickCoordinates[0].clear();
+            numberOfMaskPoints[0] = lines.at(0).count(QLatin1Char(' ')) / 2;
+            for (int i = 0; i < (numberOfMaskPoints[0]); i++) {
+                listOfClickCoordinates[0].append(QPoint((lines.at(0)).section(" ",2*i,2*i).toInt(),(lines.at(0)).section(" ",2*i + 1,2*i + 1).toInt()));
+            }
+
+            listOfClickCoordinates[1].clear();
+            numberOfMaskPoints[1] = lines.at(1).count(QLatin1Char(' ')) / 2;
+            for (int i = 0; i < (numberOfMaskPoints[1]); i++) {
+                listOfClickCoordinates[1].append(QPoint((lines.at(1)).section(" ",2*i,2*i).toInt(),(lines.at(0)).section(" ",2*i + 1,2*i + 1).toInt()));
+            }
+
+            listOfTransformationCoordinates[0].clear();
+            numberOfTransformationPoints[0] = lines.at(2).count(QLatin1Char(' ')) / 2;
+            for (int i = 0; i < (numberOfTransformationPoints[0]); i++) {
+                listOfTransformationCoordinates[0].append(QPoint((lines.at(2)).section(" ",2*i,2*i).toInt(),(lines.at(0)).section(" ",2*i + 1,2*i + 1).toInt()));
+            }
+
+            listOfTransformationCoordinates[1].clear();
+            numberOfTransformationPoints[1] = lines.at(3).count(QLatin1Char(' ')) / 2;
+            for (int i = 0; i < (numberOfTransformationPoints[1]); i++) {
+                listOfTransformationCoordinates[1].append(QPoint((lines.at(3)).section(" ",2*i,2*i).toInt(),(lines.at(0)).section(" ",2*i + 1,2*i + 1).toInt()));
+            }
+        }
+    file.close();
+    emit sendMaskCoordinates(listOfClickCoordinates);
+    //emit sendTrapeziumCoordinates(listOfTrapeziumCoordinates);
+    emit sendTransformationCoordinates(listOfTransformationCoordinates);
+    break;
+case 2: //saving mode
+    if (file.open(QIODevice::WriteOnly)) {
+        QTextStream stream(&file);
+        if (set[0] && set[1] && set[2] && set[3]) {
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < listOfClickCoordinates[i].size(); j++)
+                {
+                    stream << listOfClickCoordinates[i][j].x() << " " << listOfClickCoordinates[i][j].y() << " ";
+                }
+                stream << "\n";
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < listOfTransformationCoordinates[i].size(); j++)
+                {
+                    stream << listOfTransformationCoordinates[i][j].x() << " " << listOfTransformationCoordinates[i][j].y() << " ";
+                }
+                stream << "\n";
+            }
+        }
+    }
+
+    file.close();
+
+        break;
+}
+
+
+}
+
+void FieldSelectionDialog::on_pushButton_load_file_released()
+{
+    filename = QFileDialog::getOpenFileName(this,
+                                            tr("Open Masking Coordinate File"), ".",
+                                            tr("Masking Coordinate File (*.txt)"));
+    fileHandler(filename, 1);
+}
+
+void FieldSelectionDialog::on_pushButton_load_default_file_released()
+{
+    filename = QString("maskingcoordinate.txt");
+    fileHandler(filename, 1);
+}
+
+void FieldSelectionDialog::on_pushButton_save_file_released()
+{
+    filename = QFileDialog::getSaveFileName(this, tr("Save Masking Coordinate File"), "maskingcoordinate.txt",
+                                            tr("Masking Coordinate File (*.txt)"));
+    fileHandler(filename, 2);
 }

@@ -56,10 +56,11 @@ public:
     QVBoxLayout *verticalLayout;
     QPushButton *pushButton_play;
     QPushButton *pushButton_single_play;
+    QPushButton *pushButton_initialize_object;
     QHBoxLayout *horizontalLayout;
-    QLabel *current_time_1;
-    QSlider *time_slider_1;
-    QLabel *max_time_1;
+    QLabel *label_current_time;
+    QSlider *slider_global_frame;
+    QLabel *label_max_time;
     ClickDisplay *label_formationTeamA;
     ClickDisplay *label_formationTeamB;
     QVBoxLayout *verticalLayout_2;
@@ -165,31 +166,36 @@ public:
 
         verticalLayout->addWidget(pushButton_single_play);
 
+        pushButton_initialize_object = new QPushButton(centralWidget);
+        pushButton_initialize_object->setObjectName(QStringLiteral("pushButton_initialize_object"));
+
+        verticalLayout->addWidget(pushButton_initialize_object);
+
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        current_time_1 = new QLabel(centralWidget);
-        current_time_1->setObjectName(QStringLiteral("current_time_1"));
+        label_current_time = new QLabel(centralWidget);
+        label_current_time->setObjectName(QStringLiteral("label_current_time"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(current_time_1->sizePolicy().hasHeightForWidth());
-        current_time_1->setSizePolicy(sizePolicy1);
+        sizePolicy1.setHeightForWidth(label_current_time->sizePolicy().hasHeightForWidth());
+        label_current_time->setSizePolicy(sizePolicy1);
 
-        horizontalLayout->addWidget(current_time_1);
+        horizontalLayout->addWidget(label_current_time);
 
-        time_slider_1 = new QSlider(centralWidget);
-        time_slider_1->setObjectName(QStringLiteral("time_slider_1"));
-        time_slider_1->setOrientation(Qt::Horizontal);
+        slider_global_frame = new QSlider(centralWidget);
+        slider_global_frame->setObjectName(QStringLiteral("slider_global_frame"));
+        slider_global_frame->setOrientation(Qt::Horizontal);
 
-        horizontalLayout->addWidget(time_slider_1);
+        horizontalLayout->addWidget(slider_global_frame);
 
-        max_time_1 = new QLabel(centralWidget);
-        max_time_1->setObjectName(QStringLiteral("max_time_1"));
-        sizePolicy1.setHeightForWidth(max_time_1->sizePolicy().hasHeightForWidth());
-        max_time_1->setSizePolicy(sizePolicy1);
+        label_max_time = new QLabel(centralWidget);
+        label_max_time->setObjectName(QStringLiteral("label_max_time"));
+        sizePolicy1.setHeightForWidth(label_max_time->sizePolicy().hasHeightForWidth());
+        label_max_time->setSizePolicy(sizePolicy1);
 
-        horizontalLayout->addWidget(max_time_1);
+        horizontalLayout->addWidget(label_max_time);
 
 
         verticalLayout->addLayout(horizontalLayout);
@@ -280,7 +286,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1043, 17));
+        menuBar->setGeometry(QRect(0, 0, 1043, 25));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuEdit = new QMenu(menuBar);
@@ -335,8 +341,9 @@ public:
         label_stream_2->setText(QString());
         pushButton_play->setText(QApplication::translate("MainWindow", "Play", 0));
         pushButton_single_play->setText(QApplication::translate("MainWindow", "Single Frame Play", 0));
-        current_time_1->setText(QApplication::translate("MainWindow", "00:00", 0));
-        max_time_1->setText(QApplication::translate("MainWindow", "00:00", 0));
+        pushButton_initialize_object->setText(QApplication::translate("MainWindow", "Initialize Object", 0));
+        label_current_time->setText(QApplication::translate("MainWindow", "00:00", 0));
+        label_max_time->setText(QApplication::translate("MainWindow", "00:00", 0));
         label_formationTeamA->setText(QString());
         label_formationTeamB->setText(QString());
         groupBox->setTitle(QApplication::translate("MainWindow", "Player Performance", 0));

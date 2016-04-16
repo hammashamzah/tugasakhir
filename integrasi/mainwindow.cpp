@@ -26,6 +26,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(myFSDialog, SIGNAL(sendImageSize(QList<QSize>)), myCoordinateTransform, SLOT(setImageSize(QList<QSize>)));
     QPixmap pixmapField("lapangan.png");
     ui->label_game_visual->setPixmap(pixmapField);
+
+    ui->slider_global_frame->setEnabled(false);
+    videoLoaded[0] = false;
+    videoLoaded[1] = false;
 }
 
 MainWindow::~MainWindow()
@@ -35,7 +39,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionTuning_Background_Model_triggered()
 {
-    qDebug("Kawan kawanmu sudah lulus");
     myBMTDialog->show();
 }
 
@@ -71,6 +74,11 @@ void MainWindow::on_actionVideo_1_triggered()
                                             tr("Open Video Stream 1"), ".",
                                             tr("Video Files (*.avi *.mpg *.mp4 *.MOV)"));
     myObjectDetector->loadVideo(filename, 1);
+    videoLoaded[0] = true;
+    if(videoLoaded[0] && videoLoaded[1]){
+        ui->slider_global_frame->setEnabled(true);
+        ui->slider_global_frame->setMaximum(myObjectDetector->getNumberOfFrames() / (int)myObjectDetector->getFrameRate());
+    }
 
 
 }
@@ -81,17 +89,16 @@ void MainWindow::on_actionVideo_2_triggered()
                                             tr("Open Video Stream 2"), ".",
                                             tr("Video Files (*.avi *.mpg *.mp4 *.MOV)"));
     myObjectDetector->loadVideo(filename, 2);
+    videoLoaded[1] = true;
+    if(videoLoaded[0] && videoLoaded[1]){
+        ui->slider_global_frame->setEnabled(true);
+        ui->slider_global_frame->setMaximum(myObjectDetector->getNumberOfFrames() / (int)myObjectDetector->getFrameRate());
+    }
 }
 
 void MainWindow::on_pushButton_play_released()
 {
-    /*if (myObjectDetector->isStopped())
-    {
-        myObjectDetector->playContinously();
-    } else
-    {
-        myObjectDetector->Stop();
-    }*/
+    myObjectDetector->playContinously();
 }
 void MainWindow::on_pushButton_single_play_released() {
     myObjectDetector->playSingleFrame();
@@ -130,4 +137,36 @@ void MainWindow::setCameraViewFirstFrameImage(QVector<QImage> firstFrameImage){
     ui->label_stream_1->setPixmap(QPixmap::fromImage((firstFrameImage[0]).scaled(ui->label_stream_1->size(),Qt::KeepAspectRatio, Qt::FastTransformation)));
     ui->label_stream_2->setAlignment(Qt::AlignCenter);
     ui->label_stream_2->setPixmap(QPixmap::fromImage((firstFrameImage[1]).scaled(ui->label_stream_2->size(),Qt::KeepAspectRatio, Qt::FastTransformation)));
+}
+
+void MainWindow::on_pushButton_initialize_object_released()
+{
+
+}
+
+void MainWindow::on_slider_global_frame_sliderPressed()
+{
+    myObjectDetector->stop();
+}
+
+void MainWindow::on_slider_global_frame_sliderReleased()
+{
+    myObjectDetector->playContinously();
+}
+
+void MainWindow::on_slider_global_frame_valueChanged(int value)
+{
+    myObjectDetector->setCurrentFrame(value);
+    ui->label_current_time->setText(getFormattedTime(value/(int)myObjectDetector->getFrameRate()));
+}
+
+QString MainWindow::getFormattedTime(int timeInSeconds){
+    int seconds = (int) (timeInSeconds) % 60 ;
+    int minutes = (int) ((timeInSeconds / 60) % 60);
+    int hours   = (int) ((timeInSeconds / (60*60)) % 24);
+    QTime t(hours, minutes, seconds);
+    if (hours == 0 )
+        return t.toString("mm:ss");
+    else
+        return t.toString("h:mm:ss");
 }

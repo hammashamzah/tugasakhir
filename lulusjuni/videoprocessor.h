@@ -18,7 +18,7 @@
 
 using namespace cv;
 
-class VideoProcessor : public QObject
+class VideoProcessor : public QThread
 {	Q_OBJECT
 private:
 	bool stop;
@@ -54,10 +54,9 @@ public slots:
 protected:
 	void run();
 	void msleep(int ms);
-	void maskImage();
 public:
 	//Constructor
-    VideoProcessor();
+    VideoProcessor(QObject *parent = 0);
 	//Destructor
 	~VideoProcessor();
 	//Load a video from memory
@@ -65,17 +64,21 @@ public:
 	//check if the player has been stopped
 	//set video properties
 	void setCurrentFrame( int frameNumber);
-
+	//Play the processor
+    void Play();
+    //Stop the processor
+    void Stop();
+    //check if the player has been stopped
+    bool isStopped() const;
 	//Get video properties
 	double getFrameRate();
 	double getCurrentFrame();
 	double getNumberOfFrames();
 	QImage getFirstFrame();
+	//run single frame process
 	void processSingleFrame();
 
 private:
-    void convertMatToQImage(Mat frame, QImage result);
-    void maskImage(Mat& frame, Mat& maskedFrame);
 	Point maskPoint[1][10];
 	int numberOfMaskPoints;
 	bool isSetMask;

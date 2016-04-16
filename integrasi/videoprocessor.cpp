@@ -3,8 +3,11 @@
 
 using namespace cv;
 
-VideoProcessor::VideoProcessor()
+VideoProcessor::VideoProcessor(QObject *parent): QThread(parent)
 {
+    qRegisterMetaType<QVector<QImage> >("QVector<QImage>");
+    qRegisterMetaType<QList<Player> >("QList<Player>");
+    
 	stop = true;
     pMOG2 = new BackgroundSubtractorMOG2();
 	minArea = 0;
@@ -12,8 +15,9 @@ VideoProcessor::VideoProcessor()
 	morphElementSize = 3;
 	gaussianSize = 3;
 	isSetMask = false;
-	mode = 1;
+	mode = 0;
 	allFrames.resize(6);
+
 }
 //destructor
 VideoProcessor::~VideoProcessor()
@@ -53,6 +57,7 @@ QImage VideoProcessor::getFirstFrame(){
     return qFirstImage;
     //emit firstFrameImage(qFirstImage);
 }
+
 
 void VideoProcessor::processSingleFrame()
 {
@@ -144,6 +149,14 @@ void VideoProcessor::processSingleFrame()
 
 }
 
+void VideoProcessor::run(){
+	int delay = (1000/frameRate);
+	while(!stop){
+		processSingleFrame();
+		this->msleep(delay);
+	}
+}
+
 double VideoProcessor::getCurrentFrame() {
 	return capture->get(CV_CAP_PROP_POS_FRAMES);
 }
@@ -185,27 +198,26 @@ void VideoProcessor::getMaskCoordinate(QList<QPoint> maskPoints){
 	}
 }
 
-void VideoProcessor::maskImage(){
-    mask = Mat::ones(frame.size(), CV_8UC3) * 255;
-	if(isSetMask){
-	    const Point * ppt[1] = {maskPoint[0]};
-	    int npt[] = {numberOfMaskPoints};
-	    fillPoly(mask, ppt, npt, 1, Scalar(0,0,0), 8);
-	}
-	mask = Mat::zeros(frame.size(), CV_8UC3) - mask;
-	maskedFrame = frame.mul(mask);
+void VideoProcessor::msleep(int ms) {
+    struct timespec ts = { ms / 1000, (ms % 1000) * 1000 * 1000 };
+    nanosleep(&ts, NULL);
 }
 
-void VideoProcessor::maskImage(Mat& frame, Mat& maskedFrame){
-    mask = Mat::zeros(frame.size(), CV_8UC3);
-	if(isSetMask){
-	    const Point * ppt[1] = {maskPoint[0]};
-	    int npt[] = {numberOfMaskPoints};
-	    fillPoly(mask, ppt, npt, 1, Scalar(255,255,255), 8);
-		frame.copyTo(maskedFrame, mask);
-	}else{
-		maskedFrame = frame;
-	}
+void VideoProcessor::Play()
+{
+    if (!isRunning()) {
+        if (isStopped()) {
+            stop = false;
+        }
+        start(NormalPriority);
+    }
 }
 
+void VideoProcessor::Stop()
+{
+    stop = true;
+}
 
+bool VideoProcessor::isStopped() const {
+    return this->stop;
+}
