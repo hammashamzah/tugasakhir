@@ -54,6 +54,7 @@ public slots:
     void displayTransformedPosition(QVector<QList<Player> >);
     void initListPlayer();
     void setCameraViewFirstFrameImage(QVector<QImage>);
+    void updateCameraViewFrameImage(QVector< QVector<QImage> > image);
 
 private slots:
     //menu file edit dll

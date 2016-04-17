@@ -1,18 +1,34 @@
 #include "player.h"
 
-Player::Player(Point data)
+Player::Player(){
+
+}
+
+Player::Player(int identity, int frame, int cameraId, Point2f position){
+	id = identity;
+    framePosition = frame;
+    camera = cameraId;
+    pos = position;
+    speed = Point2f(0,0);
+    transformedPos = Point2f(0,0);
+    transformedSpeed = Point2f(0,0);
+}
+
+Player::Player(int identity, int frame, int cameraId, Point2f position, Point2f inputSpeed, Point2f inputTransformedPos, Point2f inputTransformedSpeed)
 {
-	id = 0;
-    pos = data;
+	id = identity;
+    framePosition = frame;
+    camera = cameraId;
+    pos = position;
+    speed = inputSpeed;
+    transformedPos = inputTransformedPos;
+    transformedSpeed = inputTransformedSpeed;
+
 }
 
-Player::Player() {
-	id = 0;
-	pos = Point2f(0,0);
-	speed = Point2f(0,0);
-	acceleration = Point2f(0,0);
+Player::Player(Point2f position){
+    pos = position;
 }
-
 
 Player::~Player()
 {

@@ -43,7 +43,6 @@ private:
     int morphElementSize;
     int gaussianSize;
     int mode;
-
 signals:
 	//Signal to output frame to be displayed
     void sendSingleCameraViewImage(const QVector<QImage>);

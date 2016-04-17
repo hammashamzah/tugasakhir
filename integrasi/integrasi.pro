@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     systemperformancedialog.cpp \
     trackingviewdialog.cpp \
     videoprocessor.cpp \
-    objectdetector.cpp
+    objectdetector.cpp \
+    datalogger.cpp
 
 HEADERS  += mainwindow.h \
     backgroundmodeltuningdialog.h \
@@ -41,7 +42,8 @@ HEADERS  += mainwindow.h \
     systemperformancedialog.h \
     trackingviewdialog.h \
     videoprocessor.h \
-    objectdetector.h
+    objectdetector.h \
+    datalogger.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

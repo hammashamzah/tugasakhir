@@ -184,11 +184,13 @@ public:
         splitter->setOrientation(Qt::Vertical);
         groupBox = new QGroupBox(splitter);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setMinimumSize(QSize(120, 0));
+        sizePolicy.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
+        groupBox->setSizePolicy(sizePolicy);
+        groupBox->setMinimumSize(QSize(200, 0));
         groupBox->setMaximumSize(QSize(240, 16777215));
         layoutWidget = new QWidget(groupBox);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(0, 20, 141, 381));
+        layoutWidget->setGeometry(QRect(0, 20, 201, 381));
         verticalLayout_4 = new QVBoxLayout(layoutWidget);
         verticalLayout_4->setSpacing(6);
         verticalLayout_4->setContentsMargins(11, 11, 11, 11);
@@ -246,35 +248,6 @@ public:
 
         verticalLayout->addWidget(pushButton_initialize_object);
 
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        label_current_time = new QLabel(layoutWidget);
-        label_current_time->setObjectName(QStringLiteral("label_current_time"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(label_current_time->sizePolicy().hasHeightForWidth());
-        label_current_time->setSizePolicy(sizePolicy1);
-
-        horizontalLayout->addWidget(label_current_time);
-
-        slider_global_frame = new QSlider(layoutWidget);
-        slider_global_frame->setObjectName(QStringLiteral("slider_global_frame"));
-        slider_global_frame->setOrientation(Qt::Horizontal);
-
-        horizontalLayout->addWidget(slider_global_frame);
-
-        label_max_time = new QLabel(layoutWidget);
-        label_max_time->setObjectName(QStringLiteral("label_max_time"));
-        sizePolicy1.setHeightForWidth(label_max_time->sizePolicy().hasHeightForWidth());
-        label_max_time->setSizePolicy(sizePolicy1);
-
-        horizontalLayout->addWidget(label_max_time);
-
-
-        verticalLayout->addLayout(horizontalLayout);
-
 
         verticalLayout_4->addLayout(verticalLayout);
 
@@ -287,6 +260,35 @@ public:
 
 
         gridLayout->addLayout(horizontalLayout_3, 0, 0, 1, 1);
+
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        label_current_time = new QLabel(centralWidget);
+        label_current_time->setObjectName(QStringLiteral("label_current_time"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(label_current_time->sizePolicy().hasHeightForWidth());
+        label_current_time->setSizePolicy(sizePolicy1);
+
+        horizontalLayout->addWidget(label_current_time);
+
+        slider_global_frame = new QSlider(centralWidget);
+        slider_global_frame->setObjectName(QStringLiteral("slider_global_frame"));
+        slider_global_frame->setOrientation(Qt::Horizontal);
+
+        horizontalLayout->addWidget(slider_global_frame);
+
+        label_max_time = new QLabel(centralWidget);
+        label_max_time->setObjectName(QStringLiteral("label_max_time"));
+        sizePolicy1.setHeightForWidth(label_max_time->sizePolicy().hasHeightForWidth());
+        label_max_time->setSizePolicy(sizePolicy1);
+
+        horizontalLayout->addWidget(label_max_time);
+
+
+        gridLayout->addLayout(horizontalLayout, 1, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
