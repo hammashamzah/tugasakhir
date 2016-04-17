@@ -28,7 +28,12 @@ SOURCES += main.cpp\
     trackingviewdialog.cpp \
     videoprocessor.cpp \
     objectdetector.cpp \
-    datalogger.cpp
+    datalogger.cpp \
+    dynamicassociation.cpp \
+    kalmandynamic.cpp \
+    searchplayerdata.cpp \
+    unitdynamicassociate.cpp \
+    datawindow.cpp
 
 HEADERS  += mainwindow.h \
     backgroundmodeltuningdialog.h \
@@ -43,7 +48,13 @@ HEADERS  += mainwindow.h \
     trackingviewdialog.h \
     videoprocessor.h \
     objectdetector.h \
-    datalogger.h
+    datalogger.h \
+    dynamicassociation.h \
+    kalmandynamic.h \
+    kalmandynamictoplevel.h \
+    searchplayerdata.h \
+    unitdynamicassociate.h \
+    datawindow.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \
@@ -51,7 +62,8 @@ FORMS    += mainwindow.ui \
     errorcalculationdialog.ui \
     fieldselectiondialog.ui \
     systemperformancedialog.ui \
-    trackingviewdialog.ui
+    trackingviewdialog.ui \
+    datawindow.ui
 
 DISTFILES += \
     integrasi.pro.user

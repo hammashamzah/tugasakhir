@@ -1,9 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#define JUMLAH_OBJECT_MAX 50
-#define BOBOT_PREDICTIONS 0.3
-#define stateNum_mot 6
-#define measureNum_mot 6
+
+
 
 
 #include <opencv/cv.h>

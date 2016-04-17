@@ -73,7 +73,6 @@ Point2f CoordinateTransform::transformCamera2ToGlobal(Point2f camera_coordinate,
 
 void CoordinateTransform::setTransformMatrix(QVector<QList<QPoint> > transformationCoordinates){
  //asumsi lebar lapangan adalah 0.5 panjang lapangan
-    double size_ratio = 0.5;
 
     // Output Quadilateral or World plane coordinates
     cv::Point2f outputQuad[4];

@@ -7,8 +7,8 @@ BackgroundModelTuningDialog::BackgroundModelTuningDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     parameters.resize(2);
-    parameters[0].resize(6);
-    parameters[1].resize(6);
+    parameters[0].resize(7);
+    parameters[1].resize(7);
     parameters[0].fill(0);
     parameters[1].fill(0);
 }
@@ -86,28 +86,47 @@ void BackgroundModelTuningDialog::on_slider_gaussian_size_2_valueChanged(int val
 
 }
 
-void BackgroundModelTuningDialog::on_slider_pixel_threshold_1_valueChanged(int value)
+void BackgroundModelTuningDialog::on_slider_occlusion_threshold_1_valueChanged(int value)
+{
+    parameters[0][5] = value;
+    ui->occlusion_1->setText(QString::number(value));
+    emit sendValueParameter(parameters);
+}
+
+void BackgroundModelTuningDialog::on_slider_occlusion_threshold_2_valueChanged(int value)
+{
+    parameters[1][5] = value;
+    ui->occlusion_2->setText(QString::number(value));
+    emit sendValueParameter(parameters);
+}
+
+void BackgroundModelTuningDialog::on_slider_association_threshold_1_valueChanged(int value)
 {
     parameters[0][4] = value;
+    ui->association_1->setText(QString::number(value));
+    emit sendValueParameter(parameters);
+}
+
+void BackgroundModelTuningDialog::on_slider_association_threshold_2_valueChanged(int value)
+{
+    parameters[1][4] = value;
+    ui->association_2->setText(QString::number(value));
     emit sendValueParameter(parameters);
 }
 
 void BackgroundModelTuningDialog::on_slider_transformed_threshold_1_valueChanged(int value)
 {
-    parameters[0][5] = value;
+    parameters[0][6] = value;
+    ui->transformed_1->setText(QString::number(value));
     emit sendValueParameter(parameters);
 }
 
-void BackgroundModelTuningDialog::on_slider_pixel_threshold_2_valueChanged(int value)
-{
-    parameters[1][4] = value;
-    emit sendValueParameter(parameters);
-}
 
 
 void BackgroundModelTuningDialog::on_slider_transformed_threshold_2_valueChanged(int value)
 {
-    parameters[1][5] = value;
+    parameters[1][6] = value;
+    ui->transformed_2->setText(QString::number(value));
     emit sendValueParameter(parameters);
 }
 
@@ -147,4 +166,6 @@ void BackgroundModelTuningDialog::on_pushButton_load_released()
     }
 */
 }
+
+
 

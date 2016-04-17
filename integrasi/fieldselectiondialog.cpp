@@ -139,21 +139,33 @@ void FieldSelectionDialog::fileHandler(QString filename, int mode) {
                 listOfClickCoordinates[1].append(QPoint((lines.at(1)).section(" ",2*i,2*i).toInt(),(lines.at(1)).section(" ",2*i + 1,2*i + 1).toInt()));
             }
 
+            listOfTrapeziumCoordinates[1].clear();
+            numberOfMaskPoints[1] = lines.at(2).count(QLatin1Char(' ')) / 2;
+            for (int i = 0; i < (numberOfMaskPoints[1]); i++) {
+                listOfClickCoordinates[1].append(QPoint((lines.at(2)).section(" ",2*i,2*i).toInt(),(lines.at(2)).section(" ",2*i + 1,2*i + 1).toInt()));
+            }
+
+            listOfTrapeziumCoordinates[1].clear();
+            numberOfMaskPoints[1] = lines.at(3).count(QLatin1Char(' ')) / 2;
+            for (int i = 0; i < (numberOfMaskPoints[1]); i++) {
+                listOfClickCoordinates[1].append(QPoint((lines.at(3)).section(" ",2*i,2*i).toInt(),(lines.at(3)).section(" ",2*i + 1,2*i + 1).toInt()));
+            }
+
             listOfTransformationCoordinates[0].clear();
-            numberOfTransformationPoints[0] = lines.at(2).count(QLatin1Char(' ')) / 2;
+            numberOfTransformationPoints[0] = lines.at(4).count(QLatin1Char(' ')) / 2;
             for (int i = 0; i < (numberOfTransformationPoints[0]); i++) {
-                listOfTransformationCoordinates[0].append(QPoint((lines.at(2)).section(" ",2*i,2*i).toInt(),(lines.at(2)).section(" ",2*i + 1,2*i + 1).toInt()));
+                listOfTransformationCoordinates[0].append(QPoint((lines.at(4)).section(" ",2*i,2*i).toInt(),(lines.at(4)).section(" ",2*i + 1,2*i + 1).toInt()));
             }
 
             listOfTransformationCoordinates[1].clear();
-            numberOfTransformationPoints[1] = lines.at(3).count(QLatin1Char(' ')) / 2;
+            numberOfTransformationPoints[1] = lines.at(5).count(QLatin1Char(' ')) / 2;
             for (int i = 0; i < (numberOfTransformationPoints[1]); i++) {
-                listOfTransformationCoordinates[1].append(QPoint((lines.at(3)).section(" ",2*i,2*i).toInt(),(lines.at(3)).section(" ",2*i + 1,2*i + 1).toInt()));
+                listOfTransformationCoordinates[1].append(QPoint((lines.at(5)).section(" ",2*i,2*i).toInt(),(lines.at(5)).section(" ",2*i + 1,2*i + 1).toInt()));
             }
         }
     file.close();
     emit sendMaskCoordinates(listOfClickCoordinates);
-    //emit sendTrapeziumCoordinates(listOfTrapeziumCoordinates);
+    emit sendTrapeziumCoordinates(listOfTrapeziumCoordinates);
     emit sendTransformationCoordinates(listOfTransformationCoordinates);
     break;
 case 2: //saving mode
@@ -165,6 +177,14 @@ case 2: //saving mode
                 for (int j = 0; j < listOfClickCoordinates[i].size(); j++)
                 {
                     stream << listOfClickCoordinates[i][j].x() << " " << listOfClickCoordinates[i][j].y() << " ";
+                }
+                stream << "\n";
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < listOfTrapeziumCoordinates[i].size(); j++)
+                {
+                    stream << listOfTrapeziumCoordinates[i][j].x() << " " << listOfTrapeziumCoordinates[i][j].y() << " ";
                 }
                 stream << "\n";
             }

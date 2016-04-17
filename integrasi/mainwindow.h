@@ -34,6 +34,7 @@
 #include "systemperformancedialog.h"
 #include "trackingviewdialog.h"
 #include "cameraviewdialog.h"
+#include "dynamicassociation.h"
 
 using namespace cv;
 using namespace std;
@@ -55,6 +56,8 @@ public slots:
     void initListPlayer();
     void setCameraViewFirstFrameImage(QVector<QImage>);
     void updateCameraViewFrameImage(QVector< QVector<QImage> > image);
+    void setValueParameter(QVector< QVector<int> > valueParameter);
+    void setTrapeziumCoordinates(QVector<QList<QPoint> > trapeziumCoordinates);
 
 private slots:
     //menu file edit dll
@@ -97,6 +100,7 @@ private:
     SystemPerformanceDialog *mySPDialog;
     TrackingViewDialog *myTVDialog;
     BackgroundModelTuningDialog *myBMTDialog;
+    DynamicAssociation *myDynamicAssociation;
     //initialize processor
     ObjectDetector *myObjectDetector;
     CoordinateTransform *myCoordinateTransform;
@@ -112,6 +116,10 @@ private:
     QVector<QList<Player> > setRandomPlayer();   
     //Internal Procedure
     void displayModifiedId(QVector<QList<Player> > modifiedId);
+    bool isSetTrapezium, isSetThresholds;
+    QVector<QVector<int> > myValueParameter;
+    QVector<QList<QPoint> > myTrapeziumCoordinates;
+
 
 signals:
        void sendAllIdAssigned(QVector<QList<Player> >);
