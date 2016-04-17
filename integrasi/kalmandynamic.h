@@ -19,15 +19,16 @@
 using namespace std;
 using namespace cv;
 
-class KalmanDynamic:public QObject
+class KalmanDynamic: public QObject
 {
         Q_OBJECT
     public:
-    	Player* player;
+        Player* player;
         SearchPlayerData* searchingdata;
         KalmanDynamic(QList<QPoint> trapeziumCoordinate,double fr);
         ~KalmanDynamic();
-		        
+                
+        void processDataCurrent(QList<Player>);
         
         QList <Player> previousData;
         QList <Player> predictionData;
@@ -61,8 +62,6 @@ class KalmanDynamic:public QObject
         void track_size(double &pred_w, double &pred_h,Player reff,Player current);
         void track_ind2Dmotion(Player curr_cond, Point2f &pre_pos,Point2f &pre_veloc,Point2f &pre_Acce,Point2f &post_pos,Point2f &post_veloc,Point2f &post_Acce);
 
-    public slots:
-        void getDataCurr(QList<Player>);
     signals:
         void sendPrediction(QList<Player>);
         void sendPrevious(QList<Player>);

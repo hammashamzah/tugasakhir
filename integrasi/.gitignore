@@ -10,3 +10,4 @@
 /moc_systemperformancedialog.cpp
 /moc_trackingviewdialog.cpp
 /moc_videoprocessor.cpp
+*.mp4

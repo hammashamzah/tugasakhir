@@ -19,17 +19,19 @@ void CoordinateTransform::processTransformPosition(QVector<QList<Player> > data)
     QVector<QList<Player> > dataTransformed;
     dataTransformed.resize(2);
     playerImageCoordinate=data;
-    for(int cameraId=0; cameraId<dataTransformed.size(); cameraId++)
+    for(int cameraId=0; cameraId<playerImageCoordinate.size(); cameraId++)
     {
-        for(int i=0; i<data.at(cameraId).size() ; i++)
+        for(int i=0; i<playerImageCoordinate.at(cameraId).size() ; i++)
         {
-            if(cameraId==0)
-                data[cameraId][i].pos = transformCamera1ToGlobal(data[cameraId][i].pos, transform_mat1);
-            else
-                data[cameraId][i].pos = transformCamera2ToGlobal(data[cameraId][i].pos, transform_mat2);
+            if(cameraId==0){
+                playerImageCoordinate[cameraId][i].transformedPos = transformCamera1ToGlobal(playerImageCoordinate[cameraId][i].pos, transform_mat1);
+            }
+            else{
+                playerImageCoordinate[cameraId][i].transformedPos = transformCamera2ToGlobal(playerImageCoordinate[cameraId][i].pos, transform_mat2);
+            }
         }
     }
-    emit sendTransformedPosition(data);
+    emit sendTransformedPosition(playerImageCoordinate);
 }
 
 //slot untuk menyimpan informasi mat camera dari dialog ke variabel lokal

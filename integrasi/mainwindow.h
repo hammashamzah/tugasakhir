@@ -35,6 +35,7 @@
 #include "trackingviewdialog.h"
 #include "cameraviewdialog.h"
 #include "dynamicassociation.h"
+#include "datawindow.h"
 
 using namespace cv;
 using namespace std;
@@ -50,6 +51,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+    bool isSetTrapezium;
+    bool isSetThresholds;
 
 public slots:
     void displayTransformedPosition(QVector<QList<Player> >);
@@ -69,6 +73,7 @@ private slots:
     void on_actionTracking_View_triggered();
     void on_actionVideo_1_triggered();
     void on_actionVideo_2_triggered();
+    void on_actionData_View_triggered();
     //button slot
     void on_pushButton_play_released();
     void on_pushButton_single_play_released();
@@ -91,6 +96,8 @@ private slots:
 
     void on_pushButton_send_id_clicked();
 
+    void on_pushButton_load_default_video_released();
+
 private:
     Ui::MainWindow *ui;
     //initialize windows
@@ -101,6 +108,7 @@ private:
     TrackingViewDialog *myTVDialog;
     BackgroundModelTuningDialog *myBMTDialog;
     DynamicAssociation *myDynamicAssociation;
+    DataWindow *myDVDialog;
     //initialize processor
     ObjectDetector *myObjectDetector;
     CoordinateTransform *myCoordinateTransform;
@@ -116,7 +124,6 @@ private:
     QVector<QList<Player> > setRandomPlayer();   
     //Internal Procedure
     void displayModifiedId(QVector<QList<Player> > modifiedId);
-    bool isSetTrapezium, isSetThresholds;
     QVector<QVector<int> > myValueParameter;
     QVector<QList<QPoint> > myTrapeziumCoordinates;
 

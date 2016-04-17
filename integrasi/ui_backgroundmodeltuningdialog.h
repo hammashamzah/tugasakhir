@@ -110,6 +110,7 @@ public:
     QLabel *label_92;
     QHBoxLayout *horizontalLayout_32;
     QPushButton *pushButton_load;
+    QPushButton *pushButton_load_default_setting;
     QPushButton *pushButton_save;
     QHBoxLayout *horizontalLayout_34;
     QSpacerItem *horizontalSpacer;
@@ -681,6 +682,11 @@ public:
 
         horizontalLayout_32->addWidget(pushButton_load);
 
+        pushButton_load_default_setting = new QPushButton(BackgroundModelTuningDialog);
+        pushButton_load_default_setting->setObjectName(QStringLiteral("pushButton_load_default_setting"));
+
+        horizontalLayout_32->addWidget(pushButton_load_default_setting);
+
         pushButton_save = new QPushButton(BackgroundModelTuningDialog);
         pushButton_save->setObjectName(QStringLiteral("pushButton_save"));
 
@@ -765,6 +771,7 @@ public:
         label_91->setText(QApplication::translate("BackgroundModelTuningDialog", "Status: ", 0));
         label_92->setText(QApplication::translate("BackgroundModelTuningDialog", "Unknown", 0));
         pushButton_load->setText(QApplication::translate("BackgroundModelTuningDialog", "Load Settings from File...", 0));
+        pushButton_load_default_setting->setText(QApplication::translate("BackgroundModelTuningDialog", "Load Default Setting File...", 0));
         pushButton_save->setText(QApplication::translate("BackgroundModelTuningDialog", "Save Settings to File...", 0));
     } // retranslateUi
 

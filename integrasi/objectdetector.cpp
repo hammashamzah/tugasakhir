@@ -197,13 +197,3 @@ void ObjectDetector::updateObjectData_2(QList<Player> outputDataCam) {
 		emit sendObjectData(allOutputDataCam);
 	}
 }
-
-void ObjectDetector::showPlayerIdAssigned(QVector<QList<Player> > assignedPlayerData){
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < assignedPlayerData[i].size(); ++j)
-		{
-			qDebug() << assignedPlayerData[i][j].id << assignedPlayerData[i][j].pos.x << assignedPlayerData[i][j].pos.y;
-		}
-	}
-}

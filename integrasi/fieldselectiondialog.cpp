@@ -113,7 +113,7 @@ void FieldSelectionDialog::on_pushButton_apply_released()
     if (set[0] && set[1] && set[2] && set[3]) {
 
         emit sendMaskCoordinates(listOfClickCoordinates);
-        //emit sendTrapeziumCoordinates(listOfTrapeziumCoordinates);
+        emit sendTrapeziumCoordinates(listOfTrapeziumCoordinates);
         emit sendTransformationCoordinates(listOfTransformationCoordinates);
     }
 
@@ -121,7 +121,6 @@ void FieldSelectionDialog::on_pushButton_apply_released()
 
 void FieldSelectionDialog::fileHandler(QString filename, int mode) {
     QFile file(filename);
-    qDebug() << filename;
     switch (mode) {
     case 1: //loading mode
         if (file.open(QIODevice::ReadOnly)) {
@@ -139,16 +138,16 @@ void FieldSelectionDialog::fileHandler(QString filename, int mode) {
                 listOfClickCoordinates[1].append(QPoint((lines.at(1)).section(" ",2*i,2*i).toInt(),(lines.at(1)).section(" ",2*i + 1,2*i + 1).toInt()));
             }
 
-            listOfTrapeziumCoordinates[1].clear();
+            listOfTrapeziumCoordinates[0].clear();
             numberOfMaskPoints[1] = lines.at(2).count(QLatin1Char(' ')) / 2;
             for (int i = 0; i < (numberOfMaskPoints[1]); i++) {
-                listOfClickCoordinates[1].append(QPoint((lines.at(2)).section(" ",2*i,2*i).toInt(),(lines.at(2)).section(" ",2*i + 1,2*i + 1).toInt()));
+                listOfTrapeziumCoordinates[0].append(QPoint((lines.at(2)).section(" ",2*i,2*i).toInt(),(lines.at(2)).section(" ",2*i + 1,2*i + 1).toInt()));
             }
 
             listOfTrapeziumCoordinates[1].clear();
             numberOfMaskPoints[1] = lines.at(3).count(QLatin1Char(' ')) / 2;
             for (int i = 0; i < (numberOfMaskPoints[1]); i++) {
-                listOfClickCoordinates[1].append(QPoint((lines.at(3)).section(" ",2*i,2*i).toInt(),(lines.at(3)).section(" ",2*i + 1,2*i + 1).toInt()));
+                listOfTrapeziumCoordinates[1].append(QPoint((lines.at(3)).section(" ",2*i,2*i).toInt(),(lines.at(3)).section(" ",2*i + 1,2*i + 1).toInt()));
             }
 
             listOfTransformationCoordinates[0].clear();

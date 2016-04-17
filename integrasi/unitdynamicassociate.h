@@ -5,6 +5,7 @@
 #include <QList>
 #include <QObject>
 #include <QPoint>
+#include <QDebug>
 
 #define BOBOT_PREDICTIONS 0.3
 

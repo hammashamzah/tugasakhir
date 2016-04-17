@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1132</width>
-    <height>652</height>
+    <width>1198</width>
+    <height>677</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -216,6 +216,13 @@
                  </property>
                 </widget>
                </item>
+               <item>
+                <widget class="QPushButton" name="pushButton_load_default_video">
+                 <property name="text">
+                  <string>Load Default Video</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </item>
             </layout>
@@ -273,7 +280,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1132</width>
+     <width>1198</width>
      <height>25</height>
     </rect>
    </property>
@@ -297,6 +304,7 @@
     </property>
     <addaction name="actionPer_Camera_Raw_View"/>
     <addaction name="actionTracking_View"/>
+    <addaction name="actionData_View"/>
    </widget>
    <widget class="QMenu" name="menuPerformance">
     <property name="title">
@@ -368,6 +376,11 @@
   <action name="actionTracking_View">
    <property name="text">
     <string>Tracking View</string>
+   </property>
+  </action>
+  <action name="actionData_View">
+   <property name="text">
+    <string>Data View</string>
    </property>
   </action>
  </widget>

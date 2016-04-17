@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     myFSDialog = new FieldSelectionDialog();
     myObjectDetector = new ObjectDetector();
     myCoordinateTransform = new CoordinateTransform();
+    myDVDialog = new DataWindow();
 
     isSetTrapezium = false;
     isSetThresholds = false;
@@ -22,20 +23,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(myFSDialog, SIGNAL(sendMaskCoordinates(QVector< QList<QPoint> >)), myObjectDetector, SLOT(setMaskCoordinate(QVector< QList<QPoint> >)));
     QObject::connect(myObjectDetector, SIGNAL(sendCameraViewImage(QVector< QVector<QImage> >)), myCVDialog, SLOT(updateCameraViewImage(QVector< QVector<QImage> >)));
     QObject::connect(myObjectDetector, SIGNAL(sendCameraViewImage(QVector<QVector<QImage> >)), this, SLOT(updateCameraViewFrameImage(QVector< QVector<QImage> >)));
+
     QObject::connect(myBMTDialog, SIGNAL(sendValueParameter(QVector< QVector<int> >)), myObjectDetector, SLOT(updateValueParameter(QVector< QVector<int> >)));
     QObject::connect(myBMTDialog, SIGNAL(sendValueParameter(QVector< QVector<int> >)), this, SLOT(setValueParameter(QVector< QVector<int> >)));
-    QObject::connect(myCoordinateTransform, SIGNAL(sendTransformedPosition(QList<Player>)), this, SLOT(displayTransformedPosition(QList<Player>)));
-    QObject::connect()
-    QObject::connect(myFSDialog, SIGNAL(sendTransformationCoordinates(QList<QPoint>)), myCoordinateTransform, SLOT(setTransformMatrix(QList<QPoint>)));
+    QObject::connect(myCoordinateTransform, SIGNAL(sendTransformedPosition(QVector<QList<Player> >)), this, SLOT(displayTransformedPosition(QVector<QList<Player> >)));
+    QObject::connect(myFSDialog, SIGNAL(sendTransformationCoordinates(QVector<QList<QPoint> >)), myCoordinateTransform, SLOT(setTransformMatrix(QVector<QList<QPoint> >)));
     QObject::connect(myFSDialog, SIGNAL(sendImageSize(QList<QSize>)), myCoordinateTransform, SLOT(setImageSize(QList<QSize>)));
-
     QObject::connect(ui->label_game_visual, SIGNAL(sendRightClickPosition(QPoint&)), this, SLOT(assignIdFromList(QPoint&)));
     QObject::connect(this, SIGNAL(sendAllIdAssigned(QVector<QList<Player> >)), myCoordinateTransform, SLOT(returnAssignedPlayer(QVector<QList<Player> >)));
-
-    QObject::connect(myCoordinateTransform, SIGNAL(sendPlayerIdAssigned(QVector<QList<Player> >)), myObjectDetector, SLOT(showPlayerIdAssigned(QVector<QList<Player> >)));
-
-    QObject::connect(myObjectDetector, SIGNAL(sendObjectData(QVector<QList<Player> >)), myDynamicAssociation, SLOT(getCurrentData(QVector<QList<Player> >)));
-
     QObject::connect(myFSDialog, SIGNAL(sendTrapeziumCoordinates(QVector<QList<QPoint> >)), this, SLOT(setTrapeziumCoordinates(QVector<QList<QPoint> >)));
 
     ui->slider_global_frame->setEnabled(false);
@@ -43,6 +38,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     videoLoaded[1] = false;
     //click event
 
+    QPixmap pixmapField("lapangan.png");
+    ui->label_game_visual->setPixmap(pixmapField);
 
     initListPlayer();
     assignedId = 0;
@@ -56,6 +53,8 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionTuning_Background_Model_triggered()
 {
     myBMTDialog->show();
+    qDebug() << "value set";
+    isSetThresholds = true;
 }
 
 void MainWindow::on_actionPer_Camera_Raw_View_triggered()
@@ -77,11 +76,17 @@ void MainWindow::on_actionSystem_Performance_Testing_Metrics_triggered()
 void MainWindow::on_actionField_Selection_triggered()
 {
     myFSDialog->show();
+    qDebug() << "trapezium set";
+    isSetTrapezium = true;
 }
 
 void MainWindow::on_actionTracking_View_triggered()
 {
     myTVDialog->show();
+}
+
+void MainWindow::on_actionData_View_triggered() {
+    myDVDialog->show();
 }
 
 void MainWindow::on_actionVideo_1_triggered()
@@ -113,6 +118,7 @@ void MainWindow::on_actionVideo_2_triggered()
     }
 }
 
+
 void MainWindow::on_pushButton_play_released()
 {
     myObjectDetector->playContinously();
@@ -136,16 +142,16 @@ void MainWindow::displayModifiedId(QVector<QList<Player> > modifiedId)
     {
         for (int i = 0; i < playerDisplayed.at(cameraId).size(); i++)
         {
-            playerDisplayed[cameraId][i].pos.x = (modifiedId.at(cameraId).at(i).pos.x);
-            playerDisplayed[cameraId][i].pos.y = (modifiedId.at(cameraId).at(i).pos.y);
+            playerDisplayed[cameraId][i].transformedPos.x = (modifiedId.at(cameraId).at(i).transformedPos.x);
+            playerDisplayed[cameraId][i].transformedPos.y = (modifiedId.at(cameraId).at(i).transformedPos.y);
 
             brush.setColor(Qt::red);
             painterField.setBrush(brush);
 
-            painterField.drawRect( playerDisplayed[cameraId][i].pos.x, playerDisplayed[cameraId][i].pos.y, RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
+            painterField.drawRect( playerDisplayed[cameraId][i].transformedPos.x, playerDisplayed[cameraId][i].transformedPos.y, RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
             painterField.setFont(QFont ("Arial"));
 
-            painterField.drawText(QPoint(playerDisplayed[cameraId][i].pos.x, playerDisplayed[cameraId][i].pos.y), QString::number(playerDisplayed.at(cameraId).at(i).id)); //posisi x, y, dan ukuran elips
+            painterField.drawText(QPoint(playerDisplayed[cameraId][i].transformedPos.x, playerDisplayed[cameraId][i].transformedPos.y), QString::number(playerDisplayed.at(cameraId).at(i).id)); //posisi x, y, dan ukuran elips
         }
 
     }
@@ -154,6 +160,7 @@ void MainWindow::displayModifiedId(QVector<QList<Player> > modifiedId)
 
 void MainWindow::displayTransformedPosition(QVector<QList<Player> > transformedPosition)
 {
+
     QPixmap pixmapField("lapangan.png");   //ukuran pixmap
     QPainter painterField(&pixmapField);
     QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
@@ -166,15 +173,15 @@ void MainWindow::displayTransformedPosition(QVector<QList<Player> > transformedP
     {
         for (int i = 0; i < transformedPosition.at(cameraId).size(); i++)
         {
-            playerDisplayed[cameraId][i].pos.x = (transformedPosition.at(cameraId).at(i).pos.x * pixmapField.width() / GLOBAL_FIELD_LENGTH);
-            playerDisplayed[camdisplayTransformedPositioneraId][i].pos.y = (transformedPosition.at(cameraId).at(i).pos.y * pixmapField.height() / GLOBAL_FIELD_WIDTH);
+            playerDisplayed[cameraId][i].transformedPos.x = (transformedPosition.at(cameraId).at(i).transformedPos.x * pixmapField.width() / GLOBAL_FIELD_LENGTH);
+            playerDisplayed[cameraId][i].transformedPos.y = (transformedPosition.at(cameraId).at(i).transformedPos.y * pixmapField.height() / GLOBAL_FIELD_WIDTH);
 
             brush.setColor(Qt::red);
             painterField.setBrush(brush);
 
-            painterField.drawRect( playerDisplayed[cameraId][i].pos.x, playerDisplayed[cameraId][i].pos.y, RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
+            painterField.drawRect( playerDisplayed[cameraId][i].transformedPos.x, playerDisplayed[cameraId][i].transformedPos.y, RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
             painterField.setFont(QFont ("Arial"));
-            painterField.drawText(QPoint(playerDisplayed.at(cameraId).at(i).pos.x, playerDisplayed.at(cameraId).at(i).pos.y), QString::number(playerDisplayed.at(cameraId).at(i).id)); //posisi x, y, dan ukuran elips
+            painterField.drawText(QPoint(playerDisplayed.at(cameraId).at(i).transformedPos.x, playerDisplayed.at(cameraId).at(i).transformedPos.y), QString::number(playerDisplayed.at(cameraId).at(i).id)); //posisi x, y, dan ukuran elips
 
         }
 
@@ -249,8 +256,8 @@ void MainWindow::assignIdFromList(QPoint& pos)
         {
             for (int i = 0; i < playerDisplayed.at(cameraId).size(); i++)
             {
-                if ((pos.x() >= playerDisplayed.at(cameraId).at(i).pos.x && pos.x() <= playerDisplayed.at(cameraId).at(i).pos.x + 10)
-                        && (pos.y() >= playerDisplayed.at(cameraId).at(i).pos.y && pos.y() <= playerDisplayed.at(cameraId).at(i).pos.y + 10))
+                if ((pos.x() >= playerDisplayed.at(cameraId).at(i).transformedPos.x && pos.x() <= playerDisplayed.at(cameraId).at(i).transformedPos.x + 10)
+                        && (pos.y() >= playerDisplayed.at(cameraId).at(i).transformedPos.y && pos.y() <= playerDisplayed.at(cameraId).at(i).transformedPos.y + 10))
                 {
                     playerDisplayed[cameraId][i].id = idToAssign;
 
@@ -311,19 +318,35 @@ void MainWindow::updateCameraViewFrameImage(QVector< QVector<QImage> > image) {
 
 void MainWindow::setValueParameter(QVector< QVector<int> > valueParameter) {
     myValueParameter = valueParameter;
-    isSetThresholds = true;
+        qDebug() << "framerate: " << myObjectDetector->getFrameRate();
     if (isSetThresholds && isSetTrapezium) {
-        myDynamicAssociation = new DynamicAssociation(myTrapeziumCoordinates, myValueParameter[0][4], myValueParameter[1][4], myValueParameter[0][5], myValueParameter[1][5], myObjectDetector->getFrameRate());
-        QObject::connect(myDynamicAssociation, SIGNAL(sendDataAggregate(QList<Player>)), myCoordinateTransform, SLOT(processTransformPosition(QList<Player>)));
+        myDynamicAssociation = new DynamicAssociation(myTrapeziumCoordinates, myValueParameter[0][5], myValueParameter[1][5], myValueParameter[0][4], myValueParameter[1][4], myObjectDetector->getFrameRate());
+        QObject::connect(myObjectDetector, SIGNAL(sendObjectData(QVector<QList<Player> >)), myDynamicAssociation, SLOT(getCurrentData(QVector<QList<Player> >)));
+        QObject::connect(myDynamicAssociation, SIGNAL(sendDataAggregate(QVector<QList<Player> >)), myCoordinateTransform, SLOT(processTransformPosition(QVector<QList<Player> >)));
+        QObject::connect(myCoordinateTransform, SIGNAL(sendPlayerIdAssigned(QVector<QList<Player> >)), myDynamicAssociation, SLOT(processAssignedData(QVector<QList<Player> >)));
+        qDebug() << "connection accomplished";
+
     }
 }
 
 void MainWindow::setTrapeziumCoordinates(QVector<QList<QPoint> > trapeziumCoordinates) {
     myTrapeziumCoordinates = trapeziumCoordinates;
-    isSetTrapezium = true;
+    qDebug() << "framerate: " << myObjectDetector->getFrameRate();
     if (isSetThresholds && isSetTrapezium) {
-        myDynamicAssociation = new DynamicAssociation(myTrapeziumCoordinates, myValueParameter[0][4], myValueParameter[1][4], myValueParameter[0][5], myValueParameter[1][5], myObjectDetector->getFrameRate());
-        QObject::connect(myDynamicAssociation, SIGNAL(sendDataAggregate(QList<Player>)), myCoordinateTransform, SLOT(processTransformPosition(QList<Player>)));
-
+        myDynamicAssociation = new DynamicAssociation(myTrapeziumCoordinates, myValueParameter[0][5], myValueParameter[1][5], myValueParameter[0][4], myValueParameter[1][4], myObjectDetector->getFrameRate());
+        QObject::connect(myObjectDetector, SIGNAL(sendObjectData(QVector<QList<Player> >)), myDynamicAssociation, SLOT(getCurrentData(QVector<QList<Player> >)));
+        QObject::connect(myDynamicAssociation, SIGNAL(sendDataAggregate(QVector<QList<Player> >)), myCoordinateTransform, SLOT(processTransformPosition(QVector<QList<Player> >)));
+        QObject::connect(myCoordinateTransform, SIGNAL(sendPlayerIdAssigned(QVector<QList<Player> >)), myDynamicAssociation, SLOT(processAssignedData(QVector<QList<Player> >)));
+        qDebug() << "connection accomplished";
     }
+}
+
+void MainWindow::on_pushButton_load_default_video_released()
+{
+    QString filename1 = QString("sebelah-kiri.mp4");
+    QString filename2 = QString("sebelah-kanan.mp4");
+    myObjectDetector->loadVideo(filename1, 1);
+    myObjectDetector->loadVideo(filename2, 2);
+    ui->slider_global_frame->setEnabled(true);
+    ui->slider_global_frame->setMaximum(myObjectDetector->getNumberOfFrames() / (int)myObjectDetector->getFrameRate());
 }

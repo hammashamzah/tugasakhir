@@ -11,7 +11,7 @@
 #include <QSize>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
-
+#include <QDebug>
 class CoordinateTransform : public QObject
 {   Q_OBJECT
 
@@ -31,8 +31,6 @@ public:
 
 signals:
     void sendTransformedRawData(QList<Player>);
-    void sendPlayerformed1(QList<QList<Player> >);
-    void sendPlayerformed2(QList<QList<Player> >);
     void sendTransformedPosition(QVector<QList<Player> >);
     void sendPlayerIdAssigned(QVector<QList<Player> >);
 

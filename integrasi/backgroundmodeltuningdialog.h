@@ -2,6 +2,11 @@
 #define BACKGROUNDMODELTUNINGDIALOG_H
 
 #include <QDialog>
+#include <QFileDialog>
+#include <QString>
+#include <QFile>
+#include <QStringList>
+#include <QTextStream>
 
 namespace Ui {
 class BackgroundModelTuningDialog;
@@ -30,6 +35,7 @@ public slots:
     void on_slider_gaussian_size_2_valueChanged(int value);
 
     void on_pushButton_load_released();
+    void on_pushButton_save_released();
 
     void on_slider_min_area_1_valueChanged(int value);
 
@@ -39,6 +45,7 @@ public slots:
 
     void on_slider_transformed_threshold_2_valueChanged(int value);
 private:
+    void loadSetting(QString filename);
     Ui::BackgroundModelTuningDialog *ui;
     QVector<QVector<int> > parameters;
 signals:
@@ -49,8 +56,8 @@ private slots:
     void on_slider_occlusion_threshold_1_valueChanged(int value);
     void on_slider_occlusion_threshold_2_valueChanged(int value);
     void on_slider_association_threshold_1_valueChanged(int value);
-    void on_slider_association_threshold_2_objectNameChanged(const QString &objectName);
     void on_slider_association_threshold_2_valueChanged(int value);
+    void on_pushButton_load_default_setting_released();
 };
 
 #endif // BACKGROUNDMODELTUNINGDIALOG_H

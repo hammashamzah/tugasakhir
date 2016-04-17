@@ -16,9 +16,9 @@ public:
 	DataLogger();
 	~DataLogger();
 	QList<QList<Player> > dataLog;
-	void saveToFile();
-	void loadFromFile();
-public slot:
+	void saveToFile(QString filename);
+	void loadFromFile(QString filename);
+public slots:
 	void add(QList<Player> newPlayer);
 private:
 	QString filename;

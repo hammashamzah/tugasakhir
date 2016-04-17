@@ -7,7 +7,7 @@
 #include <QObject>
 #include <QPoint>
 #include <QVector>
-
+#include <QDebug>
 
 class DynamicAssociation: public QObject
 {
@@ -27,7 +27,7 @@ public:
     QList<Player> previousDataCam2;
     QList<Player> predictionDataCam1;
     QList<Player> predictionDataCam2;
-    QList<Player> dataAggregate;
+    QVector<QList<Player> >dataAggregate;
     QList<Player> temp1;
     QList<Player> temp2;
     QList<Player> newData1;
@@ -42,10 +42,9 @@ public slots:
     void getNewDataCam2(QList<Player>);
     void getAssociatedDataCam1(QList<Player>);
     void getAssociatedDataCam2(QList<Player>);
+    void processAssignedData(QVector<QList<Player> >);
 signals:
-    void sendDataAgrregate(QList<Player>);
-    void sendDataAssociatedCamera_1(QList<Player>);
-    void sendDataAssociatedCamera_2(QList<Player>);
+    void sendDataAggregate(QVector<QList<Player> >);
 };
 
 #endif // DYNAMIASSOCIATION_H

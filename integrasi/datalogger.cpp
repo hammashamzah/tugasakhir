@@ -25,12 +25,8 @@ void DataLogger::add(QList<Player> newPlayer) {
 		}
 	}
 }
-void DataLogger::saveToFile() {
-    filename = "match.log";
-    //file dialog dipanggil di window yang bersesuaian
-    //filename = QFileDialog::getSaveFileName(this, tr("Save Log File"), "Match Log.log",
-    //                                        tr("Log File (*.log)"));
-	QFile file(filename);
+void DataLogger::saveToFile(QString filename) {
+    QFile file(filename);
 	if (file.open(QIODevice::WriteOnly)) {
 		QTextStream stream(&file);
 
@@ -54,11 +50,8 @@ void DataLogger::saveToFile() {
 	file.close();
 }
 
-void DataLogger::loadFromFile() {
+void DataLogger::loadFromFile(QString filename) {
     filename = "match.log";
-    //filename = QFileDialog::getOpenFileName(this,
-    //                                        tr("Open Log File"), ".",
-    //                                        tr("Log File (*.log)"));
 	QFile file(filename);
 	if (file.open(QIODevice::ReadOnly)) {
 		dataLog.clear();

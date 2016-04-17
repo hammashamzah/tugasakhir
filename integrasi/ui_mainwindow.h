@@ -45,6 +45,7 @@ public:
     QAction *actionPer_Camera_Raw_View;
     QAction *actionField_Selection;
     QAction *actionTracking_View;
+    QAction *actionData_View;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QHBoxLayout *horizontalLayout_3;
@@ -71,6 +72,7 @@ public:
     QPushButton *pushButton_single_play;
     QPushButton *pushButton_send_id;
     QPushButton *pushButton_initialize_object;
+    QPushButton *pushButton_load_default_video;
     QHBoxLayout *horizontalLayout;
     QLabel *label_current_time;
     QSlider *slider_global_frame;
@@ -88,7 +90,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1132, 652);
+        MainWindow->resize(1198, 677);
         MainWindow->setAutoFillBackground(false);
         actionVideo_1 = new QAction(MainWindow);
         actionVideo_1->setObjectName(QStringLiteral("actionVideo_1"));
@@ -108,6 +110,8 @@ public:
         actionField_Selection->setObjectName(QStringLiteral("actionField_Selection"));
         actionTracking_View = new QAction(MainWindow);
         actionTracking_View->setObjectName(QStringLiteral("actionTracking_View"));
+        actionData_View = new QAction(MainWindow);
+        actionData_View->setObjectName(QStringLiteral("actionData_View"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -248,6 +252,11 @@ public:
 
         verticalLayout->addWidget(pushButton_initialize_object);
 
+        pushButton_load_default_video = new QPushButton(layoutWidget);
+        pushButton_load_default_video->setObjectName(QStringLiteral("pushButton_load_default_video"));
+
+        verticalLayout->addWidget(pushButton_load_default_video);
+
 
         verticalLayout_4->addLayout(verticalLayout);
 
@@ -293,7 +302,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1132, 25));
+        menuBar->setGeometry(QRect(0, 0, 1198, 25));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuEdit = new QMenu(menuBar);
@@ -323,6 +332,7 @@ public:
         menuEdit->addAction(actionField_Selection);
         menuView->addAction(actionPer_Camera_Raw_View);
         menuView->addAction(actionTracking_View);
+        menuView->addAction(actionData_View);
         menuPerformance->addAction(actionError_Calculation);
         menuPerformance->addAction(actionSystem_Performance_Testing_Metrics);
 
@@ -343,6 +353,7 @@ public:
         actionPer_Camera_Raw_View->setText(QApplication::translate("MainWindow", "Per Camera Raw View", 0));
         actionField_Selection->setText(QApplication::translate("MainWindow", "Field Selection", 0));
         actionTracking_View->setText(QApplication::translate("MainWindow", "Tracking View", 0));
+        actionData_View->setText(QApplication::translate("MainWindow", "Data View", 0));
         label_stream_1->setText(QString());
         label_stream_2->setText(QString());
         label_game_visual->setText(QString());
@@ -355,6 +366,7 @@ public:
         pushButton_single_play->setText(QApplication::translate("MainWindow", "Single Frame Play", 0));
         pushButton_send_id->setText(QApplication::translate("MainWindow", "Send ID", 0));
         pushButton_initialize_object->setText(QApplication::translate("MainWindow", "Initialize Object", 0));
+        pushButton_load_default_video->setText(QApplication::translate("MainWindow", "Load Default Video", 0));
         label_current_time->setText(QApplication::translate("MainWindow", "00:00", 0));
         label_max_time->setText(QApplication::translate("MainWindow", "00:00", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
