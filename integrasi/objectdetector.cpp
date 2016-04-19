@@ -5,8 +5,8 @@ ObjectDetector::ObjectDetector()
 	qRegisterMetaType<QVector<QImage> >("QVector<QImage>");
 	qRegisterMetaType<QList<Player> >("QList<Player>");
 
-	myStream_1 = new VideoProcessor();
-	myStream_2 = new VideoProcessor();
+    myStream_1 = new VideoProcessor();
+    myStream_2 = new VideoProcessor();
 	isSetFirstFrame[0] = false;
 	isSetFirstFrame[1] = false;
 	myTrackingInitialized = false;
@@ -169,6 +169,7 @@ void ObjectDetector::updateSingleCameraViewImage_1(QVector<QImage> value) {
 
 void ObjectDetector::updateSingleCameraViewImage_2(QVector<QImage> value) {
 	cameraViewImage[1] = value;
+
 	setImage[1] = true;
 	if (setImage[0] && setImage[1]) {
 		emit sendCameraViewImage(cameraViewImage);
@@ -192,6 +193,9 @@ void ObjectDetector::updateObjectData_1(QList<Player> outputDataCam) {
 
 void ObjectDetector::updateObjectData_2(QList<Player> outputDataCam) {
 	allOutputDataCam[1] = outputDataCam;
+    for(int i = 0; i < allOutputDataCam[1].size(); i++){
+        allOutputDataCam[1][i].camera = 1;
+    }
 	setData[1] = true;
 	if (setData[0] && setData[1]) {
 		emit sendObjectData(allOutputDataCam);

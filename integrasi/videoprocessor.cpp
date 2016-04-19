@@ -141,7 +141,7 @@ void VideoProcessor::processSingleFrame()
         //convert points to Player
         outputData.clear();
         for(int i =0; i < points.size(); i++){
-            outputData.append(Player(points[i]));
+            outputData.append(Player(999, (int)this->getCurrentFrame(), 0, Point2f(points[i].x,points[i].y)));
         }
 
         emit sendCameraObjectData(outputData);

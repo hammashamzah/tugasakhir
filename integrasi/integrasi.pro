@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     kalmandynamic.cpp \
     searchplayerdata.cpp \
     unitdynamicassociate.cpp \
-    datawindow.cpp
+    datawindow.cpp \
+    kalmanobject.cpp
 
 HEADERS  += mainwindow.h \
     backgroundmodeltuningdialog.h \
@@ -54,7 +55,8 @@ HEADERS  += mainwindow.h \
     kalmandynamictoplevel.h \
     searchplayerdata.h \
     unitdynamicassociate.h \
-    datawindow.h
+    datawindow.h \
+    kalmanobject.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

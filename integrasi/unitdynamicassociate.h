@@ -13,32 +13,34 @@ class UnitDynamicAssociate:public QObject
 {
 	Q_OBJECT
 public:
-    UnitDynamicAssociate(QList<QPoint> trapeziumCoordinate, double associationThreshold, double occlusionThreshold);
+    UnitDynamicAssociate(QList<QPoint> trapeziumCoordinate, float associationThreshold, float occlusionThreshold);
     ~UnitDynamicAssociate();
     void dataCameraAssociation(QList<Player> previous,QList<Player> current,QList<Player> prediction,int firstID);
     int lastID;
 private:
     SearchPlayerData* searchingdata;
-	double Euclid_x,Euclid_y;
-    double th_y;
-    double th_xka,th_xki;
+	float Euclid_x,Euclid_y;
+    float th_y;
+    float th_xka,th_xki;
 
 	int first_ID;
-    double xo,yo;
-    double XDL,XDR,XUL,XUR,YDL,YDR,YUL,YUR;
-    double occlusionTh;
-    double associationTh;
-    QList <Player> curr;
+    float xo,yo;
+    float XDL,XDR,XUL,XUR,YDL,YDR,YUL,YUR;
+    float occlusionTh;
+    float associationTh;
+    QList <Player> current;
     QList <Player> previous;
-    QList <Player> pred;
+    QList <Player> prediction;
     QList <int> potentially_Lost;
     QList <Player> potentially_New;
+    bool isPreviousObjectAssociated;
+    bool isPreviousObjectOccluded;
 
-    double threshold_coef(double y);
-    void find_threshold_x(double &x_kanan,double &x_kiri,double y,double x,double y_m);
-    double find_threshold_y(double y);
-    void find_threshold_xocc(double &x_kanan,double &x_kiri,double y,double x,double y_m);
-    double find_threshold_yocc(double y);
+    float threshold_coef(float y);
+    void find_threshold_x(float &x_kanan,float &x_kiri,float y,float x,float y_m);
+    float find_threshold_y(float y);
+    void find_threshold_xocc(float &x_kanan,float &x_kiri,float y,float x,float y_m);
+    float find_threshold_yocc(float y);
 	void  dataAssociating();
 	void  occlusionHandler();	
 signals:

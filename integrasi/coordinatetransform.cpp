@@ -118,7 +118,7 @@ void CoordinateTransform::returnAssignedPlayer(QVector<QList<Player> > assigned_
     {
         for(int i=0;i<playerImageCoordinate.at(cameraId).size() && !playerImageCoordinate.at(cameraId).isEmpty() ;i++)
         {
-            if(assigned_player.at(cameraId).at(i).id<23 && assigned_player.at(cameraId).at(i).id!=0)
+            if(assigned_player.at(cameraId).at(i).id<23 && assigned_player.at(cameraId).at(i).id!=99)
                 playerImageCoordinate[cameraId][i].id=assigned_player.at(cameraId).at(i).id;
 
             else

@@ -67,7 +67,8 @@ SOURCES       = main.cpp \
 		kalmandynamic.cpp \
 		searchplayerdata.cpp \
 		unitdynamicassociate.cpp \
-		datawindow.cpp moc_mainwindow.cpp \
+		datawindow.cpp \
+		kalmanobject.cpp moc_mainwindow.cpp \
 		moc_backgroundmodeltuningdialog.cpp \
 		moc_cameraviewdialog.cpp \
 		moc_errorcalculationdialog.cpp \
@@ -83,7 +84,8 @@ SOURCES       = main.cpp \
 		moc_kalmandynamic.cpp \
 		moc_searchplayerdata.cpp \
 		moc_unitdynamicassociate.cpp \
-		moc_datawindow.cpp
+		moc_datawindow.cpp \
+		moc_kalmanobject.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		backgroundmodeltuningdialog.o \
@@ -104,6 +106,7 @@ OBJECTS       = main.o \
 		searchplayerdata.o \
 		unitdynamicassociate.o \
 		datawindow.o \
+		kalmanobject.o \
 		moc_mainwindow.o \
 		moc_backgroundmodeltuningdialog.o \
 		moc_cameraviewdialog.o \
@@ -120,7 +123,8 @@ OBJECTS       = main.o \
 		moc_kalmandynamic.o \
 		moc_searchplayerdata.o \
 		moc_unitdynamicassociate.o \
-		moc_datawindow.o
+		moc_datawindow.o \
+		moc_kalmanobject.o
 DIST          = integrasi.pro.user \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/common/unix.conf \
@@ -275,7 +279,8 @@ DIST          = integrasi.pro.user \
 		kalmandynamictoplevel.h \
 		searchplayerdata.h \
 		unitdynamicassociate.h \
-		datawindow.h main.cpp \
+		datawindow.h \
+		kalmanobject.h main.cpp \
 		mainwindow.cpp \
 		backgroundmodeltuningdialog.cpp \
 		cameraviewdialog.cpp \
@@ -294,7 +299,8 @@ DIST          = integrasi.pro.user \
 		kalmandynamic.cpp \
 		searchplayerdata.cpp \
 		unitdynamicassociate.cpp \
-		datawindow.cpp
+		datawindow.cpp \
+		kalmanobject.cpp
 QMAKE_TARGET  = integrasi
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = integrasi
@@ -616,8 +622,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h backgroundmodeltuningdialog.h cameraviewdialog.h errorcalculationdialog.h fieldselectiondialog.h clickdisplay.h player.h coordinatetransform.h cvmatandqimage.h systemperformancedialog.h trackingviewdialog.h videoprocessor.h objectdetector.h datalogger.h dynamicassociation.h kalmandynamic.h kalmandynamictoplevel.h searchplayerdata.h unitdynamicassociate.h datawindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp backgroundmodeltuningdialog.cpp cameraviewdialog.cpp errorcalculationdialog.cpp fieldselectiondialog.cpp clickdisplay.cpp player.cpp coordinatetransform.cpp cvmatandqimage.cpp systemperformancedialog.cpp trackingviewdialog.cpp videoprocessor.cpp objectdetector.cpp datalogger.cpp dynamicassociation.cpp kalmandynamic.cpp searchplayerdata.cpp unitdynamicassociate.cpp datawindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h backgroundmodeltuningdialog.h cameraviewdialog.h errorcalculationdialog.h fieldselectiondialog.h clickdisplay.h player.h coordinatetransform.h cvmatandqimage.h systemperformancedialog.h trackingviewdialog.h videoprocessor.h objectdetector.h datalogger.h dynamicassociation.h kalmandynamic.h kalmandynamictoplevel.h searchplayerdata.h unitdynamicassociate.h datawindow.h kalmanobject.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp backgroundmodeltuningdialog.cpp cameraviewdialog.cpp errorcalculationdialog.cpp fieldselectiondialog.cpp clickdisplay.cpp player.cpp coordinatetransform.cpp cvmatandqimage.cpp systemperformancedialog.cpp trackingviewdialog.cpp videoprocessor.cpp objectdetector.cpp datalogger.cpp dynamicassociation.cpp kalmandynamic.cpp searchplayerdata.cpp unitdynamicassociate.cpp datawindow.cpp kalmanobject.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui backgroundmodeltuningdialog.ui cameraviewdialog.ui errorcalculationdialog.ui fieldselectiondialog.ui systemperformancedialog.ui trackingviewdialog.ui datawindow.ui $(DISTDIR)/
 
 
@@ -641,9 +647,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_backgroundmodeltuningdialog.cpp moc_cameraviewdialog.cpp moc_errorcalculationdialog.cpp moc_fieldselectiondialog.cpp moc_clickdisplay.cpp moc_coordinatetransform.cpp moc_systemperformancedialog.cpp moc_trackingviewdialog.cpp moc_videoprocessor.cpp moc_objectdetector.cpp moc_datalogger.cpp moc_dynamicassociation.cpp moc_kalmandynamic.cpp moc_searchplayerdata.cpp moc_unitdynamicassociate.cpp moc_datawindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_backgroundmodeltuningdialog.cpp moc_cameraviewdialog.cpp moc_errorcalculationdialog.cpp moc_fieldselectiondialog.cpp moc_clickdisplay.cpp moc_coordinatetransform.cpp moc_systemperformancedialog.cpp moc_trackingviewdialog.cpp moc_videoprocessor.cpp moc_objectdetector.cpp moc_datalogger.cpp moc_dynamicassociation.cpp moc_kalmandynamic.cpp moc_searchplayerdata.cpp moc_unitdynamicassociate.cpp moc_datawindow.cpp moc_kalmanobject.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_backgroundmodeltuningdialog.cpp moc_cameraviewdialog.cpp moc_errorcalculationdialog.cpp moc_fieldselectiondialog.cpp moc_clickdisplay.cpp moc_coordinatetransform.cpp moc_systemperformancedialog.cpp moc_trackingviewdialog.cpp moc_videoprocessor.cpp moc_objectdetector.cpp moc_datalogger.cpp moc_dynamicassociation.cpp moc_kalmandynamic.cpp moc_searchplayerdata.cpp moc_unitdynamicassociate.cpp moc_datawindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_backgroundmodeltuningdialog.cpp moc_cameraviewdialog.cpp moc_errorcalculationdialog.cpp moc_fieldselectiondialog.cpp moc_clickdisplay.cpp moc_coordinatetransform.cpp moc_systemperformancedialog.cpp moc_trackingviewdialog.cpp moc_videoprocessor.cpp moc_objectdetector.cpp moc_datalogger.cpp moc_dynamicassociation.cpp moc_kalmandynamic.cpp moc_searchplayerdata.cpp moc_unitdynamicassociate.cpp moc_datawindow.cpp moc_kalmanobject.cpp
 moc_mainwindow.cpp: /home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
@@ -801,11 +807,12 @@ moc_mainwindow.cpp: /home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QMainWindo
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QSize \
 		backgroundmodeltuningdialog.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
-		errorcalculationdialog.h \
-		fieldselectiondialog.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QString \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QFile \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QStringList \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QTextStream \
+		errorcalculationdialog.h \
+		fieldselectiondialog.h \
 		systemperformancedialog.h \
 		trackingviewdialog.h \
 		cameraviewdialog.h \
@@ -816,7 +823,6 @@ moc_mainwindow.cpp: /home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QMainWindo
 		datawindow.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
 		datalogger.h \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QStringList \
 		mainwindow.h
 	/home/hammas/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/media/data/dev/code/lulusjuni/integrasi -I/usr/local/include/opencv -I/home/hammas/Qt5.5.1/5.5/gcc_64/include -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore mainwindow.h -o moc_mainwindow.cpp
 
@@ -923,6 +929,14 @@ moc_backgroundmodeltuningdialog.cpp: /home/hammas/Qt5.5.1/5.5/gcc_64/include/QtW
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QFileDialog \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qfiledialog.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdir.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfileinfo.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QString \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QFile \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QStringList \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QTextStream \
 		backgroundmodeltuningdialog.h
 	/home/hammas/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/media/data/dev/code/lulusjuni/integrasi -I/usr/local/include/opencv -I/home/hammas/Qt5.5.1/5.5/gcc_64/include -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore backgroundmodeltuningdialog.h -o moc_backgroundmodeltuningdialog.cpp
 
@@ -1429,6 +1443,18 @@ moc_coordinatetransform.cpp: player.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QSize \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QDebug \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
 		coordinatetransform.h
 	/home/hammas/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/media/data/dev/code/lulusjuni/integrasi -I/usr/local/include/opencv -I/home/hammas/Qt5.5.1/5.5/gcc_64/include -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore coordinatetransform.h -o moc_coordinatetransform.cpp
 
@@ -2048,9 +2074,21 @@ moc_dynamicassociation.cpp: unitdynamicassociate.h \
 		player.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QDebug \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
 		kalmandynamic.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QVector \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
 		dynamicassociation.h
 	/home/hammas/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/media/data/dev/code/lulusjuni/integrasi -I/usr/local/include/opencv -I/home/hammas/Qt5.5.1/5.5/gcc_64/include -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore dynamicassociation.h -o moc_dynamicassociation.cpp
 
@@ -2231,6 +2269,19 @@ moc_unitdynamicassociate.cpp: searchplayerdata.h \
 		player.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QDebug \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
 		unitdynamicassociate.h
 	/home/hammas/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/media/data/dev/code/lulusjuni/integrasi -I/usr/local/include/opencv -I/home/hammas/Qt5.5.1/5.5/gcc_64/include -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore unitdynamicassociate.h -o moc_unitdynamicassociate.cpp
 
@@ -2350,6 +2401,66 @@ moc_datawindow.cpp: /home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
 		datawindow.h
 	/home/hammas/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/media/data/dev/code/lulusjuni/integrasi -I/usr/local/include/opencv -I/home/hammas/Qt5.5.1/5.5/gcc_64/include -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore datawindow.h -o moc_datawindow.cpp
+
+moc_kalmanobject.cpp: /home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QList \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		player.h \
+		kalmanobject.h
+	/home/hammas/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/hammas/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/media/data/dev/code/lulusjuni/integrasi -I/usr/local/include/opencv -I/home/hammas/Qt5.5.1/5.5/gcc_64/include -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore kalmanobject.h -o moc_kalmanobject.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -2764,11 +2875,12 @@ main.o: main.cpp mainwindow.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QSize \
 		backgroundmodeltuningdialog.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
-		errorcalculationdialog.h \
-		fieldselectiondialog.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QString \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QFile \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QStringList \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QTextStream \
+		errorcalculationdialog.h \
+		fieldselectiondialog.h \
 		systemperformancedialog.h \
 		trackingviewdialog.h \
 		cameraviewdialog.h \
@@ -2779,7 +2891,6 @@ main.o: main.cpp mainwindow.h \
 		datawindow.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
 		datalogger.h \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QStringList \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QApplication \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qapplication.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreapplication.h \
@@ -2947,11 +3058,12 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QSize \
 		backgroundmodeltuningdialog.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
-		errorcalculationdialog.h \
-		fieldselectiondialog.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QString \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QFile \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QStringList \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QTextStream \
+		errorcalculationdialog.h \
+		fieldselectiondialog.h \
 		systemperformancedialog.h \
 		trackingviewdialog.h \
 		cameraviewdialog.h \
@@ -2962,8 +3074,48 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		datawindow.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
 		datalogger.h \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QStringList \
-		ui_mainwindow.h
+		ui_mainwindow.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QVariant \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QAction \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qaction.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QApplication \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qeventloop.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qguiapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qinputmethod.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QButtonGroup \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGridLayout \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGroupBox \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgroupbox.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHBoxLayout \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QListWidget \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QMenu \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qmenu.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QMenuBar \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qmenubar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QPushButton \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QSlider \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QSplitter \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsplitter.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QStatusBar \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstatusbar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QToolBar \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtoolbar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QVBoxLayout \
+		clickdisplay.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/QMouseEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 backgroundmodeltuningdialog.o: backgroundmodeltuningdialog.cpp backgroundmodeltuningdialog.h \
@@ -3070,7 +3222,64 @@ backgroundmodeltuningdialog.o: backgroundmodeltuningdialog.cpp backgroundmodeltu
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
-		ui_backgroundmodeltuningdialog.h
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QFileDialog \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qfiledialog.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdir.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfileinfo.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QString \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QFile \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QStringList \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QTextStream \
+		ui_backgroundmodeltuningdialog.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QVariant \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QAction \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qaction.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qicon.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QApplication \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qeventloop.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qguiapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qinputmethod.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QButtonGroup \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialogButtonBox \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialogbuttonbox.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGroupBox \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgroupbox.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qframe.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHBoxLayout \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvalidator.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qregularexpression.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyle.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QLabel \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlabel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QPushButton \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QSlider \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QSpacerItem \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QVBoxLayout
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o backgroundmodeltuningdialog.o backgroundmodeltuningdialog.cpp
 
 cameraviewdialog.o: cameraviewdialog.cpp cameraviewdialog.h \
@@ -3184,7 +3393,50 @@ cameraviewdialog.o: cameraviewdialog.cpp cameraviewdialog.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QTime \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdatetime.h \
-		ui_cameraviewdialog.h
+		ui_cameraviewdialog.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QVariant \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QAction \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qaction.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qicon.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QApplication \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qeventloop.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qguiapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qinputmethod.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QButtonGroup \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHBoxLayout \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qframe.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvalidator.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qregularexpression.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyle.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QLabel \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlabel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QScrollArea \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qscrollarea.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QVBoxLayout \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cameraviewdialog.o cameraviewdialog.cpp
 
 errorcalculationdialog.o: errorcalculationdialog.cpp errorcalculationdialog.h \
@@ -3291,7 +3543,61 @@ errorcalculationdialog.o: errorcalculationdialog.cpp errorcalculationdialog.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
-		ui_errorcalculationdialog.h
+		ui_errorcalculationdialog.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QVariant \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QAction \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qaction.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qicon.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QApplication \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qeventloop.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qguiapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qinputmethod.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QButtonGroup \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGroupBox \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgroupbox.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qframe.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHBoxLayout \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvalidator.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qregularexpression.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyle.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QLabel \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlabel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QLineEdit \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlineedit.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtextcursor.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtextformat.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtextoption.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QPushButton \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QRadioButton \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qradiobutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QVBoxLayout \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o errorcalculationdialog.o errorcalculationdialog.cpp
 
 fieldselectiondialog.o: fieldselectiondialog.cpp fieldselectiondialog.h \
@@ -3406,7 +3712,56 @@ fieldselectiondialog.o: fieldselectiondialog.cpp fieldselectiondialog.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfileinfo.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QTextStream \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QDebug \
-		ui_fieldselectiondialog.h
+		ui_fieldselectiondialog.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QVariant \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QAction \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qaction.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qicon.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QApplication \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qeventloop.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qguiapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qinputmethod.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QButtonGroup \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QComboBox \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qcombobox.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvalidator.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qregularexpression.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyle.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qframe.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHBoxLayout \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QPushButton \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QVBoxLayout \
+		clickdisplay.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QLabel \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlabel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/QMouseEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fieldselectiondialog.o fieldselectiondialog.cpp
 
 clickdisplay.o: clickdisplay.cpp clickdisplay.h \
@@ -3582,7 +3937,19 @@ coordinatetransform.o: coordinatetransform.cpp coordinatetransform.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QVector \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QSize \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QDebug \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o coordinatetransform.o coordinatetransform.cpp
 
 cvmatandqimage.o: cvmatandqimage.cpp cvmatandqimage.h \
@@ -3776,7 +4143,39 @@ systemperformancedialog.o: systemperformancedialog.cpp systemperformancedialog.h
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
-		ui_systemperformancedialog.h
+		ui_systemperformancedialog.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QVariant \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QAction \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qaction.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qicon.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QApplication \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qeventloop.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qguiapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qinputmethod.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QButtonGroup \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qframe.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvalidator.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qregularexpression.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyle.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qrubberband.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o systemperformancedialog.o systemperformancedialog.cpp
 
 trackingviewdialog.o: trackingviewdialog.cpp trackingviewdialog.h \
@@ -3883,7 +4282,62 @@ trackingviewdialog.o: trackingviewdialog.cpp trackingviewdialog.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
-		ui_trackingviewdialog.h
+		ui_trackingviewdialog.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QVariant \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QAction \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qaction.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qicon.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QApplication \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qeventloop.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qguiapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qinputmethod.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QButtonGroup \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QComboBox \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qcombobox.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvalidator.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qregularexpression.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyle.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qframe.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGridLayout \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHBoxLayout \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QLabel \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlabel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QPushButton \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QRadioButton \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qradiobutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTextEdit \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtextedit.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtextdocument.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtextoption.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtextcursor.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qtextformat.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QVBoxLayout
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o trackingviewdialog.o trackingviewdialog.cpp
 
 videoprocessor.o: videoprocessor.cpp videoprocessor.h \
@@ -4291,9 +4745,21 @@ dynamicassociation.o: dynamicassociation.cpp dynamicassociation.h \
 		player.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QDebug \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
 		kalmandynamic.h \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QVector \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QVector
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o dynamicassociation.o dynamicassociation.cpp
 
 kalmandynamic.o: kalmandynamic.cpp kalmandynamic.h \
@@ -4473,7 +4939,20 @@ unitdynamicassociate.o: unitdynamicassociate.cpp unitdynamicassociate.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QList \
 		player.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
-		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QDebug \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o unitdynamicassociate.o unitdynamicassociate.cpp
 
 datawindow.o: datawindow.cpp datawindow.h \
@@ -4591,8 +5070,108 @@ datawindow.o: datawindow.cpp datawindow.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QTextStream \
 		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
-		ui_datawindow.h
+		ui_datawindow.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QVariant \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QAction \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qaction.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qicon.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QApplication \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qeventloop.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qguiapplication.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qinputmethod.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QButtonGroup \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHBoxLayout \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qframe.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtGui/qvalidator.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qregularexpression.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyle.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabbar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/QPushButton \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractbutton.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datawindow.o datawindow.cpp
+
+kalmanobject.o: kalmanobject.cpp kalmanobject.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QList \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/QPoint \
+		/home/hammas/Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		player.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o kalmanobject.o kalmanobject.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
@@ -4644,6 +5223,9 @@ moc_unitdynamicassociate.o: moc_unitdynamicassociate.cpp
 
 moc_datawindow.o: moc_datawindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_datawindow.o moc_datawindow.cpp
+
+moc_kalmanobject.o: moc_kalmanobject.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_kalmanobject.o moc_kalmanobject.cpp
 
 ####### Install
 

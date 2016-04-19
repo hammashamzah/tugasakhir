@@ -301,7 +301,7 @@ public:
         sizePolicy1.setHeightForWidth(slider_occlusion_threshold_1->sizePolicy().hasHeightForWidth());
         slider_occlusion_threshold_1->setSizePolicy(sizePolicy1);
         slider_occlusion_threshold_1->setMinimum(0);
-        slider_occlusion_threshold_1->setMaximum(20);
+        slider_occlusion_threshold_1->setMaximum(200);
         slider_occlusion_threshold_1->setSliderPosition(0);
         slider_occlusion_threshold_1->setOrientation(Qt::Horizontal);
         slider_occlusion_threshold_1->setTickPosition(QSlider::TicksBelow);
@@ -337,7 +337,7 @@ public:
         sizePolicy1.setHeightForWidth(slider_association_threshold_1->sizePolicy().hasHeightForWidth());
         slider_association_threshold_1->setSizePolicy(sizePolicy1);
         slider_association_threshold_1->setMinimum(0);
-        slider_association_threshold_1->setMaximum(10);
+        slider_association_threshold_1->setMaximum(100);
         slider_association_threshold_1->setSliderPosition(0);
         slider_association_threshold_1->setOrientation(Qt::Horizontal);
         slider_association_threshold_1->setTickPosition(QSlider::TicksBelow);
@@ -561,7 +561,7 @@ public:
         sizePolicy1.setHeightForWidth(slider_occlusion_threshold_2->sizePolicy().hasHeightForWidth());
         slider_occlusion_threshold_2->setSizePolicy(sizePolicy1);
         slider_occlusion_threshold_2->setMinimum(0);
-        slider_occlusion_threshold_2->setMaximum(20);
+        slider_occlusion_threshold_2->setMaximum(200);
         slider_occlusion_threshold_2->setSliderPosition(0);
         slider_occlusion_threshold_2->setOrientation(Qt::Horizontal);
         slider_occlusion_threshold_2->setTickPosition(QSlider::TicksBelow);
@@ -597,7 +597,7 @@ public:
         sizePolicy1.setHeightForWidth(slider_association_threshold_2->sizePolicy().hasHeightForWidth());
         slider_association_threshold_2->setSizePolicy(sizePolicy1);
         slider_association_threshold_2->setMinimum(0);
-        slider_association_threshold_2->setMaximum(10);
+        slider_association_threshold_2->setMaximum(100);
         slider_association_threshold_2->setSliderPosition(0);
         slider_association_threshold_2->setOrientation(Qt::Horizontal);
         slider_association_threshold_2->setTickPosition(QSlider::TicksBelow);
@@ -739,10 +739,10 @@ public:
         label_13->setText(QApplication::translate("BackgroundModelTuningDialog", "15", 0));
         label_23->setText(QApplication::translate("BackgroundModelTuningDialog", "Pixel Threshold of Occlusion", 0));
         occlusion_1->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
-        label_25->setText(QApplication::translate("BackgroundModelTuningDialog", "20", 0));
+        label_25->setText(QApplication::translate("BackgroundModelTuningDialog", "200", 0));
         label_37->setText(QApplication::translate("BackgroundModelTuningDialog", "Pixel Threshold of Association", 0));
         association_1->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
-        label_36->setText(QApplication::translate("BackgroundModelTuningDialog", "10", 0));
+        label_36->setText(QApplication::translate("BackgroundModelTuningDialog", "100", 0));
         label_26->setText(QApplication::translate("BackgroundModelTuningDialog", "Transformed Threshold of Occlusion", 0));
         transformed_1->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
         label_28->setText(QApplication::translate("BackgroundModelTuningDialog", "15", 0));
@@ -761,10 +761,10 @@ public:
         label_95->setText(QApplication::translate("BackgroundModelTuningDialog", "15", 0));
         label_29->setText(QApplication::translate("BackgroundModelTuningDialog", "Pixel Threshold of Occlusion", 0));
         occlusion_2->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
-        label_31->setText(QApplication::translate("BackgroundModelTuningDialog", "20", 0));
+        label_31->setText(QApplication::translate("BackgroundModelTuningDialog", "200", 0));
         label_38->setText(QApplication::translate("BackgroundModelTuningDialog", "Pixel Threshold of Association", 0));
         association_2->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
-        label_40->setText(QApplication::translate("BackgroundModelTuningDialog", "10", 0));
+        label_40->setText(QApplication::translate("BackgroundModelTuningDialog", "100", 0));
         label_34->setText(QApplication::translate("BackgroundModelTuningDialog", "Transformed Threshold of Occlusion", 0));
         transformed_2->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
         label_33->setText(QApplication::translate("BackgroundModelTuningDialog", "15", 0));

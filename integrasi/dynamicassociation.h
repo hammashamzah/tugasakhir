@@ -13,14 +13,13 @@ class DynamicAssociation: public QObject
 {
     Q_OBJECT
 public:
+    DynamicAssociation(QVector<QList<QPoint> > trapeziumCoordinate, double thresholdAssociationCam1, double thresholdAssociationCam2, double thresholdOcclusionCam1, double thresholdOcclusionCam2, double frameRate);
+    ~DynamicAssociation();
+    int maximumIdOnList(QList<Player>);
     UnitDynamicAssociate *cam_1_Processor;
     UnitDynamicAssociate *cam_2_Processor;
     KalmanDynamic *kalmanProcessor_1;
     KalmanDynamic *kalmanProcessor_2;
-    DynamicAssociation(QVector<QList<QPoint> > trapeziumCoordinate, double thresholdAssociationCam1, double thresholdAssociationCam2, double thresholdOcclusionCam1, double thresholdOcclusionCam2, double frameRate);
-    ~DynamicAssociation();
-    bool isSetPreviousData, isSetPredictionData;
-    bool isSetNewCam1, isSetNewCam2, isSetAssociateCam1, isSetAssociateCam2;
     QList<Player> currentDataCam1;
     QList<Player> currentDataCam2;
     QList<Player> previousDataCam1;
@@ -34,6 +33,9 @@ public:
     QList<Player> newData2;
     QList<Player> associateData1;
     QList<Player> associateData2;
+    bool isIdAssigned;
+    bool isSetPreviousData, isSetPredictionData;
+    bool isSetNewCam1, isSetNewCam2, isSetAssociateCam1, isSetAssociateCam2;
 private:
 
 public slots:
