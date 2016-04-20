@@ -52,7 +52,6 @@ HEADERS  += mainwindow.h \
     datalogger.h \
     dynamicassociation.h \
     kalmandynamic.h \
-    kalmandynamictoplevel.h \
     searchplayerdata.h \
     unitdynamicassociate.h \
     datawindow.h \
