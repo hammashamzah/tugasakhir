@@ -44,7 +44,7 @@ void DynamicAssociation::getCurrentData(QVector<QList<Player> > currentData) {
 		qDebug() << "Besar data prediction untuk diasosiasi: " << predictionDataCam1.size() << " " << previousDataCam2.size();
 		qDebug() << "Maksimum id: " << maximumIdOnList(temp);
 
-		
+
 		cam_1_Processor->dataCameraAssociation(previousDataCam1, currentDataCam1, predictionDataCam1, maximumIdOnList(temp) + 1);
 		cam_2_Processor->dataCameraAssociation(previousDataCam2, currentDataCam2, predictionDataCam2, cam_1_Processor->lastID + 1);
 	}

@@ -22,20 +22,17 @@ using namespace std;
 class KalmanObject
 {
 public:
-    KalmanObject(Player currentData, double interval);
+    KalmanObject(Player currentData, float interval);
     ~KalmanObject();
-    void process(Player currentData);
+    void processData(Player currentData);
     int id;
     Player prediction;
-private:
+    Mat measurement;
     int counter;
-    double frameInterval;
-    Mat state;
-    Mat statePost;
+    float frameInterval;
     KalmanFilter KF;
-    Player previousData;
-    Player current;
-    Player measurement;
+    Player previous;
+private:
 };
 
 #endif // KALMANOBJECT_H

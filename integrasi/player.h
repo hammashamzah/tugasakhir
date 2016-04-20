@@ -29,6 +29,7 @@ public:
     cv::Point2f acceleration;
     cv::Point2f transformedPos;
     cv::Point2f transformedSpeed;
+
 };
 
 #endif // PLAYER_H
