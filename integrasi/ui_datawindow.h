@@ -13,47 +13,93 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "freezetablewidget.h"
 
 QT_BEGIN_NAMESPACE
 
 class Ui_DataWindow
 {
 public:
-    QWidget *widget;
+    QGridLayout *gridLayout;
+    QVBoxLayout *verticalLayout_2;
+    FreezeTableWidget *tableView_result;
+    QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout_2;
+    QPushButton *pushButton_cut;
+    QPushButton *pushButton_paste;
+    QPushButton *pushButton_refresh;
     QHBoxLayout *horizontalLayout;
+    QPushButton *pushButton_save;
     QPushButton *pushButton_display_data;
     QPushButton *pushButton_load;
-    QPushButton *pushButton_save;
 
     void setupUi(QWidget *DataWindow)
     {
         if (DataWindow->objectName().isEmpty())
             DataWindow->setObjectName(QStringLiteral("DataWindow"));
-        DataWindow->resize(1107, 758);
-        widget = new QWidget(DataWindow);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(330, 530, 325, 28));
-        horizontalLayout = new QHBoxLayout(widget);
+        DataWindow->resize(468, 439);
+        gridLayout = new QGridLayout(DataWindow);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
+        tableView_result = new FreezeTableWidget(DataWindow);
+        tableView_result->setObjectName(QStringLiteral("tableView_result"));
+
+        verticalLayout_2->addWidget(tableView_result);
+
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        pushButton_cut = new QPushButton(DataWindow);
+        pushButton_cut->setObjectName(QStringLiteral("pushButton_cut"));
+
+        horizontalLayout_2->addWidget(pushButton_cut);
+
+        pushButton_paste = new QPushButton(DataWindow);
+        pushButton_paste->setObjectName(QStringLiteral("pushButton_paste"));
+
+        horizontalLayout_2->addWidget(pushButton_paste);
+
+        pushButton_refresh = new QPushButton(DataWindow);
+        pushButton_refresh->setObjectName(QStringLiteral("pushButton_refresh"));
+
+        horizontalLayout_2->addWidget(pushButton_refresh);
+
+
+        verticalLayout->addLayout(horizontalLayout_2);
+
+        horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        pushButton_display_data = new QPushButton(widget);
+        pushButton_save = new QPushButton(DataWindow);
+        pushButton_save->setObjectName(QStringLiteral("pushButton_save"));
+
+        horizontalLayout->addWidget(pushButton_save);
+
+        pushButton_display_data = new QPushButton(DataWindow);
         pushButton_display_data->setObjectName(QStringLiteral("pushButton_display_data"));
 
         horizontalLayout->addWidget(pushButton_display_data);
 
-        pushButton_load = new QPushButton(widget);
+        pushButton_load = new QPushButton(DataWindow);
         pushButton_load->setObjectName(QStringLiteral("pushButton_load"));
 
         horizontalLayout->addWidget(pushButton_load);
 
-        pushButton_save = new QPushButton(widget);
-        pushButton_save->setObjectName(QStringLiteral("pushButton_save"));
 
-        horizontalLayout->addWidget(pushButton_save);
+        verticalLayout->addLayout(horizontalLayout);
+
+
+        verticalLayout_2->addLayout(verticalLayout);
+
+
+        gridLayout->addLayout(verticalLayout_2, 0, 0, 1, 1);
 
 
         retranslateUi(DataWindow);
@@ -64,9 +110,12 @@ public:
     void retranslateUi(QWidget *DataWindow)
     {
         DataWindow->setWindowTitle(QApplication::translate("DataWindow", "Form", 0));
+        pushButton_cut->setText(QApplication::translate("DataWindow", "Cut", 0));
+        pushButton_paste->setText(QApplication::translate("DataWindow", "Paste", 0));
+        pushButton_refresh->setText(QApplication::translate("DataWindow", "Refresh", 0));
+        pushButton_save->setText(QApplication::translate("DataWindow", "Save to File", 0));
         pushButton_display_data->setText(QApplication::translate("DataWindow", "Display Data", 0));
         pushButton_load->setText(QApplication::translate("DataWindow", "Load From File", 0));
-        pushButton_save->setText(QApplication::translate("DataWindow", "Save to File", 0));
     } // retranslateUi
 
 };

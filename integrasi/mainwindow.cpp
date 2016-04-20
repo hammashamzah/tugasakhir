@@ -43,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     initListPlayer();
     assignedId = 0;
+    myDVDialog->show();
 }
 
 MainWindow::~MainWindow()
@@ -350,3 +351,4 @@ void MainWindow::on_pushButton_load_default_video_released()
     ui->slider_global_frame->setEnabled(true);
     ui->slider_global_frame->setMaximum(myObjectDetector->getNumberOfFrames() / (int)myObjectDetector->getFrameRate());
 }
+
