@@ -4,8 +4,9 @@ Player::Player(){
 
 }
 
-Player::Player(int identity, int frame, int cameraId, Point2f position){
-	id = identity;
+Player::Player(int frame, int cameraId, Point2f position){
+	isValid = false;
+    id = 0;
     framePosition = frame;
     camera = cameraId;
     pos = position;
@@ -17,6 +18,7 @@ Player::Player(int identity, int frame, int cameraId, Point2f position){
 
 Player::Player(int identity, int frame, int cameraId, Point2f position, Point2f inputSpeed, Point2f inputTransformedPos, Point2f inputTransformedSpeed)
 {
+    isValid = true;
 	id = identity;
     framePosition = frame;
     camera = cameraId;
@@ -29,6 +31,7 @@ Player::Player(int identity, int frame, int cameraId, Point2f position, Point2f 
 }
 
 Player::Player(int identity, int frame,int cameraId,Point2f position,Point2f inputSpeed,Point2f inputAcceleration){
+    isValid = true;
     id = identity;
     framePosition = frame;
     camera = cameraId;
@@ -40,6 +43,7 @@ Player::Player(int identity, int frame,int cameraId,Point2f position,Point2f inp
 }
 
 Player::Player(Point2f position){
+    isValid = false;
     pos = position;
     
 }

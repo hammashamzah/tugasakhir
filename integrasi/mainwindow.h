@@ -62,6 +62,7 @@ public slots:
     void updateCameraViewFrameImage(QVector< QVector<QImage> > image);
     void setValueParameter(QVector< QVector<int> > valueParameter);
     void setTrapeziumCoordinates(QVector<QList<QPoint> > trapeziumCoordinates);
+    void displayAssignedTransformedPosition(QVector<QList<Player> > assignedTransformedPosition);
 
 private slots:
     //menu file edit dll
@@ -123,7 +124,7 @@ private:
     //hanya untuk debug
     QVector<QList<Player> > setRandomPlayer();   
     //Internal Procedure
-    void displayModifiedId(QVector<QList<Player> > modifiedId);
+    void displayModifiedId();
     QVector<QVector<int> > myValueParameter;
     QVector<QList<QPoint> > myTrapeziumCoordinates;
 

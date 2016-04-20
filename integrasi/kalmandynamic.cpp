@@ -1,11 +1,13 @@
 #include "kalmandynamic.h"
-
-KalmanDynamic::KalmanDynamic(double frameRate) {
-    interval = 1.0 / (double)frameRate;
-    searchingdata = new SearchPlayerData();
+KalmanDynamic::KalmanDynamic(){
 }
+
 KalmanDynamic::~KalmanDynamic() {
 
+}
+
+void KalmanDynamic::setParameters(double frameRate){
+    interval = 1.0 / (double)frameRate;
 }
 void KalmanDynamic::processDataCurrent(QList<Player> currentDataInput) {
     predictionData.clear();
@@ -37,6 +39,7 @@ void KalmanDynamic::processDataCurrent(QList<Player> currentDataInput) {
             }
         }
     }
+    //kapan ini mungkin terjadi ya?
     for (int i = 0; i < previousData.size(); i++) {
         for (int j = 0; j < kalmanProcessor.size(); j++) {
             if (kalmanProcessor.at(j).id == previousData.at(i).id) {
@@ -52,9 +55,11 @@ void KalmanDynamic::setInitialData(QList<Player> initialData) {
     //destroy all previous kalman filter
     kalmanProcessor.clear();
     //set new kalman filter
+
     for(int i = 0; i < initialData.size() && !initialData.isEmpty(); i++){
         KalmanObject temp(initialData.at(i), interval); 
         kalmanProcessor.append(temp);
     }
-    qDebug() << "Inisiasi kalman dinami' dilanjutken";
+    qDebug() << "jumlah init data"<<initialData.size();
+    //qDebug() << "Inisiasi kalman dinami' dilanjutken";
 }

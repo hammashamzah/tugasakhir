@@ -13,8 +13,11 @@ class DynamicAssociation: public QObject
 {
     Q_OBJECT
 public:
-    DynamicAssociation(QVector<QList<QPoint> > trapeziumCoordinate, double thresholdAssociationCam1, double thresholdAssociationCam2, double thresholdOcclusionCam1, double thresholdOcclusionCam2, double frameRate);
+    DynamicAssociation();
     ~DynamicAssociation();
+    void setParameters(QVector<QList<QPoint> > trapeziumCoordinate, double thresholdAssociationCam1,
+                       double thresholdAssociationCam2, double thresholdOcclusionCam1,
+                       double thresholdOcclusionCam2, double frameRate);
     int maximumIdOnList(QList<Player>);
     UnitDynamicAssociate *cam_1_Processor;
     UnitDynamicAssociate *cam_2_Processor;

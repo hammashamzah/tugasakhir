@@ -28,6 +28,7 @@ public:
     Point2f transformCamera1ToGlobal(Point2f camera_coordinate, Mat transform_matrix);
     Point2f transformCamera2ToGlobal(Point2f camera_coordinate, Mat transform_matrix);
     QSize imageSize[2];
+    QVector<QList<Player> > assignedPlayer;
 
 signals:
     void sendTransformedRawData(QList<Player>);

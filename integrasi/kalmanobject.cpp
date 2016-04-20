@@ -6,7 +6,6 @@ KalmanObject::KalmanObject(Player currentData, double interval)
     counter = 0;
     frameInterval = interval; //seconds
     previousData = currentData;
-
     //initialize kalman filter
     Mat transitionMatrix = (Mat_<float>(NUMBER_OF_MEASUREMENT, NUMBER_OF_STATE) << 1, 0,    frameInterval,          0,      0.5 * frameInterval * frameInterval,            0,
                             0, 1,            0,  frameInterval,                            0, 0.5 * frameInterval * frameInterval,

@@ -11,7 +11,7 @@ class Player
 public:
     //constructor
     Player();
-    Player(int identity, int frame, int cameraId, Point2f position);
+    Player(int frame, int cameraId, Point2f position);
     Player(int identity, int frame, int cameraId, Point2f position,
            Point2f inputSpeed, Point2f inputTransformedPos, Point2f inputTransformedSpeed);
     Player(Point2f position);
@@ -19,6 +19,7 @@ public:
     //destructor
     ~Player();
     //variable
+    bool isValid;
     int id;
     int framePosition;
     int camera;

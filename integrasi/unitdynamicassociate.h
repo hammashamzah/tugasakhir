@@ -13,8 +13,9 @@ class UnitDynamicAssociate:public QObject
 {
 	Q_OBJECT
 public:
-    UnitDynamicAssociate(QList<QPoint> trapeziumCoordinate, float associationThreshold, float occlusionThreshold);
+    UnitDynamicAssociate();
     ~UnitDynamicAssociate();
+    void setParameters(QList<QPoint> trapeziumCoordinate, float associationThreshold, float occlusionThreshold);
     void dataCameraAssociation(QList<Player> previous,QList<Player> current,QList<Player> prediction,int firstID);
     int lastID;
 private:
@@ -34,7 +35,8 @@ private:
     QList <int> potentially_Lost;
     QList <Player> potentially_New;
     bool isPreviousObjectAssociated;
-    bool isPreviousObjectOccluded;
+    bool isCurrentObjectOccluded;
+    int indexMatchedPrevious;
 
     float threshold_coef(float y);
     void find_threshold_x(float &x_kanan,float &x_kiri,float y,float x,float y_m);

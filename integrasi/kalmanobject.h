@@ -13,6 +13,7 @@
 #include <QList>
 #include <QObject>
 #include <QPoint>
+#include <QDebug>
 #include "player.h"
 
 using namespace cv;

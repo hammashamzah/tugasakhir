@@ -24,8 +24,9 @@ class KalmanDynamic: public QObject
 public:
     Player* player;
     SearchPlayerData* searchingdata;
-    KalmanDynamic(double frameRate);
+    KalmanDynamic();
     ~KalmanDynamic();
+    void setParameters(double frameRate);
     void setInitialData(QList<Player> initialData);
     void processDataCurrent(QList<Player>);
     QList <Player> previousData;

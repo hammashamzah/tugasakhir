@@ -147,16 +147,7 @@ int ObjectDetector::getFrameRate(){
 int ObjectDetector::getCurrentFrame(){
 	return (int)myStream_1->getCurrentFrame();
 }
-/*void ObjectDetector::initializeFirstFrameObject(){
-	initialFrameObject.clear();
-	initialFrameObject.resize(2);
-	initialFrameObject[0] = myStream_1->getFirstFrameObject();
-	initialFrameObject[1] = myStream_2->getFirstFrameObject();
-	unifiedInitialFrameObject = myCoordinateTransform->initialIdentification(initialFrameObject);
-	myTrackingInitialized = true;
-	myTracking->setParameters(myStream1->getFrameRate(), myTrapeziumCoordinates, myAssociationThresholds,unifiedInitialFrameObject);
-}
-*/
+
 void ObjectDetector::updateSingleCameraViewImage_1(QVector<QImage> value) {
 	cameraViewImage[0] = value;
 	setImage[0] = true;
