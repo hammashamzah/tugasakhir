@@ -31,6 +31,7 @@ public:
     void processDataCurrent(QList<Player>);
     QList <Player> previousData;
     QList <Player> predictionData;
+    int indexOfMatchingKalmanFilter;
 private:
     double interval;
     QList <Player> currentData;

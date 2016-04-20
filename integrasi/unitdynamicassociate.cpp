@@ -108,7 +108,7 @@ void UnitDynamicAssociate::dataAssociating() {
                 potentially_Lost.append(i);
             } else {
                 isPreviousObjectAssociated = false;
-                for (int j = 0; j < current.size() ; j++) {
+                for (int j = 0; (j < current.size()) && !current.isEmpty(); j++) {
                     if (indexMatchedPrediction > 0) {
                         Euclid_x = BOBOT_PREDICTIONS * prediction.at(indexMatchedPrediction).pos.x + (1 - BOBOT_PREDICTIONS) * previous.at(i).pos.x - current.at(j).pos.x;
                         Euclid_y = abs(BOBOT_PREDICTIONS * prediction.at(indexMatchedPrediction).pos.y + (1 - BOBOT_PREDICTIONS) * previous.at(i).pos.y - current.at(j).pos.y);
@@ -136,6 +136,7 @@ void UnitDynamicAssociate::dataAssociating() {
                         previous[i].framePosition  = current.at(j).framePosition;
                         previous[i].camera = current.at(j).camera;
                         current.removeAt(j);
+                        j--;
                         isPreviousObjectAssociated = true;
                     } else {
                         qDebug() << "tidak berasosiasi: " << i << " " << j;
@@ -154,38 +155,52 @@ void UnitDynamicAssociate::occlusionHandler() {
     if (previous.isEmpty() && prediction.isEmpty()) {
         previous.append(current);
     } else {
+        qDebug() << "Masuk occlusion handler";
         if (current.isEmpty()) {
             //destroy all of potentially lost
             for (int i = 0; i < potentially_Lost.size(); i++) {
-                previous.removeAt(potentially_Lost.at(i));
+                for (int k = 0; k < previous.size(); k++) {
+                    if (previous.at(k).id == potentially_Lost.at(i)) {
+                        indexMatchedPrevious = k;
+                        break;
+                    }
+                }
+                previous.removeAt(indexMatchedPrevious);
             }
         } else {
             int h = first_ID;
-            for (int i = 0; i < current.size() && !potentially_Lost.isEmpty(); i++) {
-                isCurrentObjectOccluded = false;
-                for (int j = 0; j < potentially_Lost.size() && !potentially_Lost.isEmpty(); j++) {
-                    //find in previous player with the same id as potentially lost
-                    for (int k = 0; k < previous.size(); k++) {
-                        if (previous.at(k).id == potentially_Lost.at(j)) {
-                            indexMatchedPrevious = k;
-                        break;
+            for (int i = 0; i < current.size(); i++) {
+                if (!potentially_Lost.isEmpty()) {
+                    isCurrentObjectOccluded = false;
+                    for (int j = 0; (j < potentially_Lost.size()) && !potentially_Lost.isEmpty(); j++) {
+                        //find in previous player with the same id as potentially lost
+                        for (int k = 0; k < previous.size(); k++) {
+                            if (previous.at(k).id == potentially_Lost.at(j)) {
+                                indexMatchedPrevious = k;
+                                break;
+                            }
+                        }
+                        Euclid_x = current.at(i).pos.x - previous.at(indexMatchedPrevious).pos.x;
+                        Euclid_y = abs(current.at(i).pos.y - previous.at(indexMatchedPrevious).pos.y);
+                        find_threshold_xocc(th_xka, th_xki, current.at(i).pos.y, current.at(i).pos.x, previous.at(indexMatchedPrevious).pos.y);
+                        th_y = find_threshold_yocc(current.at(i).pos.y);
+                        if (Euclid_y < th_y && ((Euclid_x <= 0 && Euclid_x >= th_xki) || (Euclid_x >= 0 && Euclid_x <= th_xka))) {
+                            qDebug() << "object occluded: " << j << " " << i;
+                            previous[indexMatchedPrevious].pos.x = current.at(i).pos.x;
+                            previous[indexMatchedPrevious].pos.y = current.at(i).pos.y;
+                            previous[indexMatchedPrevious].framePosition = current.at(i).framePosition;
+                            previous[indexMatchedPrevious].camera = current.at(i).camera;
+                            potentially_Lost.removeAt(j);
+                            j--;
+                            isCurrentObjectOccluded = true;
                         }
                     }
-                    Euclid_x = current.at(i).pos.x - previous.at(indexMatchedPrevious).pos.x;
-                    Euclid_y = abs(current.at(i).pos.y - previous.at(indexMatchedPrevious).pos.y);
-                    find_threshold_xocc(th_xka, th_xki, current.at(i).pos.y, current.at(i).pos.x, previous.at(indexMatchedPrevious).pos.y);
-                    th_y = find_threshold_yocc(current.at(i).pos.y);
-                    if (Euclid_y < th_y && ((Euclid_x <= 0 && Euclid_x >= th_xki) || (Euclid_x >= 0 && Euclid_x <= th_xka))) {
-                        qDebug() << "object occluded: " << j << " " << i;
-                        previous[indexMatchedPrevious].pos.x = current.at(j).pos.x;
-                        previous[indexMatchedPrevious].pos.y = current.at(j).pos.y;
-                        previous[indexMatchedPrevious].framePosition = current.at(j).framePosition;
-                        previous[indexMatchedPrevious].camera = current.at(j).camera;
-                        potentially_Lost.removeAt(j);
-                        isCurrentObjectOccluded = true;
+                    if (!isCurrentObjectOccluded) {
+                        current[i].id = h;
+                        potentially_New.append(current.at(i));
+                        h++;
                     }
-                }
-                if (!isCurrentObjectOccluded) {
+                }else{
                     current[i].id = h;
                     potentially_New.append(current.at(i));
                     h++;
@@ -193,7 +208,7 @@ void UnitDynamicAssociate::occlusionHandler() {
             }
             if (!potentially_Lost.isEmpty()) {
                 for (int i = 0; i < potentially_Lost.size(); i++) {
-                    previous.removeAt(potentially_Lost.at(i));
+                    previous.removeAt(indexMatchedPrevious);
                 }
             }
 
