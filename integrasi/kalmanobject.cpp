@@ -2,7 +2,7 @@
 
 KalmanObject::KalmanObject(Player currentData, float interval)
 {
-    KalmanFilter KF(6, 2, 0, CV_32F);
+    KF.init(6, 2, 0, CV_32F);
     id = currentData.id;
     frameInterval = interval; //seconds
     previous.id = currentData.id;
@@ -39,6 +39,7 @@ KalmanObject::KalmanObject(Player currentData, float interval)
                             0, 0,   0,                             0,                       1,                                                            0,
                             0, 0,   0,                             0,                       0,                                                            1
                            );
+    qDebug() << "transition: " << KF.transitionMatrix.type();
     KF.statePost.at<float>(0) = (float)currentData.pos.x;
     KF.statePost.at<float>(1) = (float)currentData.pos.y;
     KF.statePost.at<float>(2) = 0;
@@ -49,6 +50,13 @@ KalmanObject::KalmanObject(Player currentData, float interval)
     setIdentity(KF.processNoiseCov, Scalar::all(1e-1));
     setIdentity(KF.measurementNoiseCov, Scalar::all(5));
     setIdentity(KF.errorCovPost, Scalar::all(0.1));
+
+    qDebug() << "measurement: " << KF.measurementMatrix.type();
+    qDebug() << "processnoise: " << KF.processNoiseCov.type();
+    qDebug() << "measurementnoise: " << KF.measurementNoiseCov.type();
+    qDebug() << "errorcovpost: " << KF.errorCovPost.type();
+
+
     qDebug() << "Kalman Filter initialized";
 }
 
@@ -64,6 +72,11 @@ void KalmanObject::processData(Player currentData) {
              << previous.pos.y << " " << currentData.speed.x << " " << currentData.speed.y << " "
              << previous.speed.x << " " << previous.speed.y << " " << frameInterval;;
     Mat_<float> measurement(2, 1);
+
+    qDebug() << "measurement: " << KF.measurementMatrix.type();
+    qDebug() << "processnoise: " << KF.processNoiseCov.type();
+    qDebug() << "measurementnoise: " << KF.measurementNoiseCov.type();
+    qDebug() << "errorcovpost: " << KF.errorCovPost.type();
 
     measurement(0) = currentData.pos.x;
     measurement(1) = currentData.pos.y;
@@ -104,3 +117,44 @@ void KalmanObject::processData(Player currentData) {
     qDebug() << "selesai sini";
 }
 
+std::string KalmanObject::getImageType(int number)
+{
+    // find type
+    int imgTypeInt = number%8;
+    std::string imgTypeString;
+
+    switch (imgTypeInt)
+    {
+        case 0:
+            imgTypeString = "8U";
+            break;
+        case 1:
+            imgTypeString = "8S";
+            break;
+        case 2:
+            imgTypeString = "16U";
+            break;
+        case 3:
+            imgTypeString = "16S";
+            break;
+        case 4:
+            imgTypeString = "32S";
+            break;
+        case 5:
+            imgTypeString = "32F";
+            break;
+        case 6:
+            imgTypeString = "64F";
+            break;
+        default:
+            break;
+    }
+
+    // find channel
+    int channel = (number/8) + 1;
+
+    std::stringstream type;
+    type<<"CV_"<<imgTypeString<<"C"<<channel;
+
+    return type.str();
+}
