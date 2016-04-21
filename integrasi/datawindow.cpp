@@ -7,14 +7,24 @@ QWidget(parent),
 ui(new Ui::DataWindow)
 {
     ui->setupUi(this);
-
+    //connect signal and SLOT
     connect(ui->tableView_result, SIGNAL(activated(const QModelIndex &)), this, SLOT(onTableClicked(const QModelIndex &)));
 
+    //set configuration
     ui->pushButton_load->setEnabled(false);
     ui->pushButton_save->setEnabled(false);
+
+    //construct model to used
     model =new QStandardItemModel();
-    showResult(this->setRandomQList());
+
+    tempPlayersData=setRandomQList();
+    showResult(tempPlayersData);
     ui->tableView_result->Begin(model);
+}
+
+DataWindow::~DataWindow()
+{
+    delete ui;
 }
 
 void DataWindow::PlayBack()
@@ -34,7 +44,7 @@ void DataWindow::PlayBack()
 
     scene->addLine(TopLine,mypen);
     scene->addLine(RightLine,mypen);
-    scene->addLine(LeftLine,mypen); 
+    scene->addLine(LeftLine,mypen);
     scene->addLine(BottomLine,mypen);
 
     int ItemCount = 25;
@@ -50,70 +60,86 @@ void DataWindow::PlayBack()
     timer->start(10);    */
 }
 
+void DataWindow::getItemSelected()
+{
+    idSelected = ui->tableView_result->getIndexesSelected().at(0).row();
+    frameSelected.clear();
+    for(int i=0;i<ui->tableView_result->getIndexesSelected().size();i++)
+    {
+        frameSelected.append(ui->tableView_result->getIndexesSelected().at(i).column());
+    }
+
+}
+
 void DataWindow::showResult(QVector<QList<Player> > resultData)
 {
-/*    QFile file("grades.txt");
-    if (file.open(QFile::ReadOnly)) {
-        QString line = file.readLine(200);
-        QStringList list = line.simplified().split(",");
-        model->setHorizontalHeaderLabels(list);
-
-        int row = 0;
-        QStandardItem *newItem = 0;
-        while (file.canReadLine()) {
-            line = file.readLine(200);
-            if (!line.startsWith("#") && line.contains(",")) {
-                list= line.simplified().split(",");
-                for (int col = 0; col < list.length(); ++col){
-                    newItem = new QStandardItem(list.at(col));
-                    model->setItem(row, col, newItem);
-                }
-                ++row;
-            }
-        }
-    }
-    file.close();*/
-
     QStandardItem *newItem = 0;
 
-
+    model->clear();
+    QList<QString> labels;
+    for(int frame=0;frame<54000;frame++)
+    {
+        if (frame==0) labels.append("ID");
+        else labels.append("Frame"+QString::number(frame));
+    }
+    model->setHorizontalHeaderLabels(labels);
     for (int id = 0; id < resultData.size(); ++id)
     {
         for (int rec = 0; rec < resultData.at(id).size(); ++rec)
         {
-            newItem = new QStandardItem(QString::number(1));
-            newItem->setDragEnabled(true);
-            newItem->setDropEnabled(true);            
-            model->setItem(id, rec, newItem);
+            if (rec==0) newItem = new QStandardItem(QString::number(id));
+            else newItem = new QStandardItem(QString::number(1));
+            switch (id) {
+            case 0:
+                newItem->setBackground(QBrush(QColor(Qt::blue)));
+                break;
+            case 1:
+                newItem->setBackground(QBrush(QColor(Qt::red)));
+                break;
+            case 2:
+                newItem->setBackground(QBrush(QColor(Qt::yellow)));
+                break;
+            case 3:
+                newItem->setBackground(QBrush(QColor(Qt::cyan)));
+                break;
+            case 4:
+                newItem->setBackground(QBrush(QColor(Qt::magenta)));
+                break;
+            case 5:
+                newItem->setBackground(QBrush(QColor(Qt::gray)));
+                break;
+            case 6:
+                newItem->setBackground(QBrush(QColor(Qt::green)));
+                break;
+            case 7:
+                newItem->setBackground(QBrush(QColor(Qt::darkBlue)));
+                break;
+            case 8:
+                newItem->setBackground(QBrush(QColor(Qt::darkCyan)));
+                break;
+            case 9:
+                newItem->setBackground(QBrush(QColor(Qt::darkGray)));
+                break;
+            case 10:
+                newItem->setBackground(QBrush(QColor(Qt::darkGreen)));
+                break;
+            case 11:
+                newItem->setBackground(QBrush(QColor(Qt::darkMagenta)));
+                break;
+            case 12:
+                newItem->setBackground(QBrush(QColor(Qt::darkRed)));
+                break;
+            case 13:
+                newItem->setBackground(QBrush(QColor(Qt::darkYellow)));
+                break;
+
+            default:
+                break;
+            }
+
+            model->setItem(id, resultData.at(id).at(rec).framePosition, newItem);
         }
     }
-    /*QPen mypen(Qt::blue);
-    mypen.setWidth(5);
-    //painter.setPen(Qt::blue);
-    QGraphicsScene *scene=new QGraphicsScene(0, 0, 20000, 20000);
-    for(int j=1;j<=500;j++)
-    {
-        QGraphicsTextItem *textItem = new QGraphicsTextItem;
-
-        textItem->setPlainText(QString::number(j));
-        textItem->setPos(20,25*j-10);
-        scene->addItem(textItem);
-        for(int i=1;i<500;i++)
-        {
-    QPainter painter(this);
-            QGraphicsLineItem *lineItem = new QGraphicsLineItem;
-            lineItem->setLine(50+20*i, 25*j, 50+20*i+5, 25*j);
-            lineItem->setPen(mypen);
-            scene->addItem(lineItem);
-        }
-    }
-
-    ui->graphicsView->setScene(scene);
-    */
-}
-DataWindow::~DataWindow()
-{
-    delete ui;
 }
 
 void DataWindow::on_pushButton_display_data_released()
@@ -146,43 +172,40 @@ void DataWindow::dataEntryFinished(){
     ui->pushButton_save->setEnabled(true);
 }
 
-void GridScene::drawBackground(QPainter *painter, const QRectF &rect)
-{
-    const int gridSize = 25;
-
-    qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
-    qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
-
-    QVarLengthArray<QLineF, 100> lines;
-
-    for (qreal x = left; x < rect.right(); x += gridSize)
-        lines.append(QLineF(x, rect.top(), x, rect.bottom()));
-    for (qreal y = top; y < rect.bottom(); y += gridSize)
-        lines.append(QLineF(rect.left(), y, rect.right(), y));
-
-    //qDebug() << lines.size();
-
-    painter->drawLines(lines.data(), lines.size());
-}
-
 void DataWindow::on_pushButton_cut_clicked()
 {
-    tempPlayerRec.clear();
-    for (int frame = ui->tableView_result->getIndexesSelected().; frame < ui->tableView_result->getIndexesSelected().size(); ++frame)
+    tempSinglePlayerRec.clear();
+    getItemSelected();
+    qDebug()<<idSelected;
+    qDebug()<<frameSelected;
+
+    //copy selected to temp and then remove it
+    for(int i=0;i<frameSelected.size();i++)
     {
-       model->setData(ui->tableView_result->getIndexesSelected().at(i),QString::number(0));
-       
+        //update model
+        model->setItem(idSelected,frameSelected.at(i), new QStandardItem(QString::null));
+        //looking for frame number in QList Rec of Player and copy that
+        for(int j=0;j<tempPlayersData.at(idSelected).size();j++)
+        {
+            if(tempPlayersData.at(idSelected).at(j).framePosition==frameSelected.at(i))
+            {
+                tempSinglePlayerRec.append(tempPlayersData.at(idSelected).at(j));
+                tempPlayersData[idSelected].removeAt(j);
+            }
+        }
     }
 }
 
 void DataWindow::on_pushButton_paste_clicked()
 {
-
+    getItemSelected();
+    tempPlayersData[idSelected].append(tempSinglePlayerRec);
+    showResult(tempPlayersData);
 }
 
 void DataWindow::on_pushButton_refresh_clicked()
 {
-    showResult(this->setRandomQList());
+    showResult(tempPlayersData);
     ui->tableView_result->Begin(model);
 }
 
@@ -196,12 +219,12 @@ void DataWindow::onTableClicked(const QModelIndex &index)
 QVector<QList<Player> > DataWindow::setRandomQList()
 {
     QVector<QList<Player> > playerData;
-    playerData.resize(100);
+    playerData.resize(20);
     Player playerUnit;
 
-    for (int i = 0; i < 100; ++i)
+    for (int i = 0; i < 20; ++i)
     {
-        for (int j = 0; j < 100; ++j)
+        for (int j = 0; j < 20; ++j)
         {
             playerUnit.id = i;
             playerUnit.framePosition = j;

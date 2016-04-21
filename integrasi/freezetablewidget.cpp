@@ -70,7 +70,6 @@ void FreezeTableWidget::Begin(QAbstractItemModel * model)
 		verticalScrollBar(), SLOT(setValue(int)));
 	connect(verticalScrollBar(), SIGNAL(valueChanged(int)),
 		frozenTableView->verticalScrollBar(), SLOT(setValue(int)));
-
 }
 
 //! [constructor]
@@ -170,7 +169,7 @@ void FreezeTableWidget::updateFrozenTableGeometry()
 
 QList<QModelIndex> FreezeTableWidget::getIndexesSelected()
 {
-    return this->selectedIndexes();
+    return (selectedIndexes());
 }
 
 //! [geometry]

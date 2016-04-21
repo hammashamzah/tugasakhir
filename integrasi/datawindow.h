@@ -32,8 +32,13 @@ public:
 private:
 	Ui::DataWindow *ui;
 	DataLogger myDataLogger;
-	QList<Player> tempPlayerRec;
-    QList<QList<Player> > playerData;
+    QList<Player> tempSinglePlayerRec;
+    QVector<QList<Player> > playerData;
+    QVector<QList<Player> > tempPlayersData;
+    int idSelected;
+    QList<int> frameSelected;
+    void getItemSelected();
+
     /*QGraphicsScene *scene;
     QTimer *timer;
     PlayerVisual *item;*/
@@ -41,6 +46,7 @@ private:
 public slots:
 	void dataEntryFinished();
 	void addData(QList<Player> newData);
+
 
 private slots:
 	void on_pushButton_display_data_released();
@@ -53,6 +59,7 @@ private slots:
 
     void on_pushButton_refresh_clicked();
     void onTableClicked(const QModelIndex &);
+
 
 public slots:
 
