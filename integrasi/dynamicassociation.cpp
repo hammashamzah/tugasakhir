@@ -39,10 +39,10 @@ void DynamicAssociation::getCurrentData(QVector<QList<Player> > currentData) {
 	} else {
 		temp.append(previousDataCam1);
 		temp.append(previousDataCam2);
-		qDebug() << "Besar data previous untuk diasosiasi: " << previousDataCam1.size() << " " << previousDataCam2.size();
-		qDebug() << "Besar data current untuk diasosiasi: " << currentDataCam1.size() << " " << currentDataCam2.size();
-		qDebug() << "Besar data prediction untuk diasosiasi: " << predictionDataCam1.size() << " " << previousDataCam2.size();
-		qDebug() << "Maksimum id: " << maximumIdOnList(temp);
+		//qDebug()() << "Besar data previous untuk diasosiasi: " << previousDataCam1.size() << " " << previousDataCam2.size();
+		//qDebug()() << "Besar data current untuk diasosiasi: " << currentDataCam1.size() << " " << currentDataCam2.size();
+		//qDebug()() << "Besar data prediction untuk diasosiasi: " << predictionDataCam1.size() << " " << previousDataCam2.size();
+		//qDebug()() << "Maksimum id: " << maximumIdOnList(temp);
 
 
 		cam_1_Processor->dataCameraAssociation(previousDataCam1, currentDataCam1, predictionDataCam1, maximumIdOnList(temp) + 1);
@@ -83,12 +83,12 @@ void DynamicAssociation::getNewDataCam2(QList<Player> newDataCam2) {
 }
 void DynamicAssociation::getAssociatedDataCam1(QList<Player>associatedDataCam1) {
 	associateData1.clear();
-	////qDebug() << "Size of previous 1: " << associatedDataCam1.size();
+	//////qDebug()() << "Size of previous 1: " << associatedDataCam1.size();
 	associateData1.append(associatedDataCam1);
 	isSetAssociateCam1 = true;
 }
 void DynamicAssociation::getAssociatedDataCam2(QList<Player>associatedDataCam2) {
-	////qDebug() << "Size of previous 2: " << associatedDataCam2.size();
+	//////qDebug()() << "Size of previous 2: " << associatedDataCam2.size();
 	associateData2.clear();
 	associateData2.append(associatedDataCam2);
 	isSetAssociateCam2 = true;
@@ -107,7 +107,7 @@ void DynamicAssociation::processAssignedData(QVector<QList<Player> > assignedDat
 	predictionDataCam2.clear();
 	predictionDataCam1 = kalmanProcessor_1->predictionData;
 	predictionDataCam2 = kalmanProcessor_2->predictionData;;
-	qDebug() << "process assigned finished";
+	//qDebug()() << "process assigned finished";
 }
 
 int DynamicAssociation::maximumIdOnList(QList<Player> listOfPlayer) {

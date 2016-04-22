@@ -51,6 +51,7 @@ public slots:
     void updateObjectData_2(QList<Player>);
 public:
     void loadVideo(QString filename, int id);
+    void updateBackgroundModelUsingImage(QString filename, int id);
     void Play();
     bool isStopped();
     void stop();
@@ -61,7 +62,6 @@ public:
     int getFrameRate();
     int getCurrentFrame();
     QVector<QImage> firstFrameImage;
-
     QVector< QVector<QImage> > cameraViewImage;
     bool isSetFirstFrame[2];
 signals:

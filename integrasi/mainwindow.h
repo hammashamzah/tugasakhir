@@ -99,6 +99,10 @@ private slots:
 
     void on_pushButton_load_default_video_released();
 
+    void on_pushButton_initialize_background_model_released();
+    void on_actionFirst_Image_1_triggered();
+    void on_actionFirst_Image_2_triggered();
+
 private:
     Ui::MainWindow *ui;
     //initialize windows

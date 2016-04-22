@@ -144,7 +144,7 @@
              <rect>
               <x>0</x>
               <y>20</y>
-              <width>201</width>
+              <width>212</width>
               <height>381</height>
              </rect>
             </property>
@@ -210,9 +210,9 @@
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="pushButton_initialize_object">
+                <widget class="QPushButton" name="pushButton_initialize_background_model">
                  <property name="text">
-                  <string>Initialize Object</string>
+                  <string>Initialize Background Model</string>
                  </property>
                 </widget>
                </item>
@@ -290,6 +290,8 @@
     </property>
     <addaction name="actionVideo_1"/>
     <addaction name="actionVideo_2"/>
+    <addaction name="actionFirst_Image_1"/>
+    <addaction name="actionFirst_Image_2"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -381,6 +383,16 @@
   <action name="actionData_View">
    <property name="text">
     <string>Data View</string>
+   </property>
+  </action>
+  <action name="actionFirst_Image_1">
+   <property name="text">
+    <string>First Image 1</string>
+   </property>
+  </action>
+  <action name="actionFirst_Image_2">
+   <property name="text">
+    <string>First Image 2</string>
    </property>
   </action>
  </widget>

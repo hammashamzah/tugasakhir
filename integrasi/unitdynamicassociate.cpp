@@ -71,14 +71,14 @@ void UnitDynamicAssociate::dataAssociating() {
 
     if (!(previous.isEmpty() && prediction.isEmpty())) {
         for (int i = 0; i < previous.size() && !current.isEmpty(); i++) {
-            qDebug() << "iterasi previous data ke: " << i;
+            //qDebug()() << "iterasi previous data ke: " << i;
             QString temp1 = "Current Data: ";
             for (int a = 0; a < current.size(); a++)
             {
                 temp1 += " ";
                 temp1 += QString::number(current.at(a).id);
             }
-            qDebug() << temp1;
+            //qDebug()() << temp1;
 
             QString temp2 = "Previous Data: ";
             for (int b = 0; b < previous.size(); b++)
@@ -86,14 +86,14 @@ void UnitDynamicAssociate::dataAssociating() {
                 temp2 += " ";
                 temp2 += QString::number(previous.at(b).id);
             }
-            qDebug() << temp2;
+            //qDebug()() << temp2;
             QString temp3 = "Prediction Data: ";
             for (int c = 0; c < prediction.size(); c++)
             {
                 temp3 += " ";
                 temp3 += QString::number(prediction.at(c).id);
             }
-            qDebug() << temp3;
+            //qDebug()() << temp3;
             int indexMatchedPrediction = -1;
             //find matched prediction id
             for (int j = 0; j < prediction.size(); j++) {
@@ -102,7 +102,7 @@ void UnitDynamicAssociate::dataAssociating() {
                     break;
                 }
             }
-            qDebug() << "indexMatchedPrediction: " << indexMatchedPrediction;
+            //qDebug()() << "indexMatchedPrediction: " << indexMatchedPrediction;
             if (current.isEmpty()) {
                 //set all previous data as potentially lost
                 potentially_Lost.append(i);
@@ -129,7 +129,7 @@ void UnitDynamicAssociate::dataAssociating() {
 
                     if ((Euclid_y < th_y) && ((Euclid_x <= 0 && Euclid_x >= th_xki) || (Euclid_x >= 0 && Euclid_x <= th_xka))) {
                         //associated
-                        qDebug() << "object associated" << " " << i << " " << j;
+                        //qDebug()() << "object associated" << " " << i << " " << j;
                         previous[i].pos = current.at(j).pos;
                         previous[i].speed = current.at(j).speed;
                         previous[i].acceleration = current.at(j).acceleration;
@@ -139,12 +139,12 @@ void UnitDynamicAssociate::dataAssociating() {
                         j--;
                         isPreviousObjectAssociated = true;
                     } else {
-                        qDebug() << "tidak berasosiasi: " << i << " " << j;
+                        //qDebug()() << "tidak berasosiasi: " << i << " " << j;
                     }
                 }
             }
             if (!isPreviousObjectAssociated) {
-                qDebug() << "Object " << i << " with id " << previous.at(i).id << " is potentially lost";
+                //qDebug()() << "Object " << i << " with id " << previous.at(i).id << " is potentially lost";
                 potentially_Lost.append(i);
             }
         }
@@ -155,7 +155,7 @@ void UnitDynamicAssociate::occlusionHandler() {
     if (previous.isEmpty() && prediction.isEmpty()) {
         previous.append(current);
     } else {
-        qDebug() << "Masuk occlusion handler";
+        //qDebug()() << "Masuk occlusion handler";
         if (current.isEmpty()) {
             //destroy all of potentially lost
             for (int i = 0; i < potentially_Lost.size(); i++) {
@@ -185,7 +185,7 @@ void UnitDynamicAssociate::occlusionHandler() {
                         find_threshold_xocc(th_xka, th_xki, current.at(i).pos.y, current.at(i).pos.x, previous.at(indexMatchedPrevious).pos.y);
                         th_y = find_threshold_yocc(current.at(i).pos.y);
                         if (Euclid_y < th_y && ((Euclid_x <= 0 && Euclid_x >= th_xki) || (Euclid_x >= 0 && Euclid_x <= th_xka))) {
-                            qDebug() << "object occluded: " << j << " " << i;
+                            //qDebug()() << "object occluded: " << j << " " << i;
                             previous[indexMatchedPrevious].pos.x = current.at(i).pos.x;
                             previous[indexMatchedPrevious].pos.y = current.at(i).pos.y;
                             previous[indexMatchedPrevious].framePosition = current.at(i).framePosition;

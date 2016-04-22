@@ -58,7 +58,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionTuning_Background_Model_triggered()
 {
     myBMTDialog->show();
-    ////qDebug() << "value set";
+    //////qDebug()() << "value set";
     isSetThresholds = true;
 }
 
@@ -81,7 +81,7 @@ void MainWindow::on_actionSystem_Performance_Testing_Metrics_triggered()
 void MainWindow::on_actionField_Selection_triggered()
 {
     myFSDialog->show();
-    ////qDebug() << "trapezium set";
+    //////qDebug()() << "trapezium set";
     isSetTrapezium = true;
 }
 
@@ -123,6 +123,47 @@ void MainWindow::on_actionVideo_2_triggered()
     }
 }
 
+void MainWindow::on_actionFirst_Image_1_triggered() {
+    filename = QFileDialog::getOpenFileName(this,
+                                            tr("Open Background Model Image 1"), ".",
+                                            tr("Image Files (*.jpeg *.jpg *.png)"));
+    myObjectDetector->updateBackgroundModelUsingImage(filename, 1);
+}
+
+void MainWindow::on_actionFirst_Image_2_triggered() {
+    filename = QFileDialog::getOpenFileName(this,
+                                            tr("Open Background Model Image 1"), ".",
+                                            tr("Image Files (*.jpeg *.jpg *.png)"));
+    myObjectDetector->updateBackgroundModelUsingImage(filename, 2);
+
+}
+
+void MainWindow::on_pushButton_load_default_video_released()
+{
+    QString filename1 = QString("sebelah-kiri.mp4");
+    QString filename2 = QString("sebelah-kanan.mp4");
+
+    myObjectDetector->loadVideo(filename1, 1);
+    myObjectDetector->loadVideo(filename2, 2);
+
+    ui->slider_global_frame->setEnabled(true);
+    ui->slider_global_frame->setMaximum(myObjectDetector->getNumberOfFrames() / (int)myObjectDetector->getFrameRate());
+    ui->label_max_time->setText(getFormattedTime((int)myObjectDetector->getNumberOfFrames() / (int)myObjectDetector->getFrameRate()));
+}
+
+
+void MainWindow::on_pushButton_initialize_background_model_released()
+{
+    QString filename1 = QString("sebelah-kiri.jpg");
+    QString filename2 = QString("sebelah-kanan.jpg");
+    myObjectDetector->updateBackgroundModelUsingImage(filename1, 1);
+    myObjectDetector->updateBackgroundModelUsingImage(filename2, 2);
+}
+
+void MainWindow::on_pushButton_send_id_clicked()
+{
+    emit sendAllIdAssigned(playerDisplayed);
+}
 
 void MainWindow::on_pushButton_play_released()
 {
@@ -131,6 +172,41 @@ void MainWindow::on_pushButton_play_released()
 void MainWindow::on_pushButton_single_play_released() {
     myObjectDetector->playSingleFrame();
 }
+
+
+void MainWindow::on_listTeamA_itemClicked(QListWidgetItem *item)
+{
+    idToAssign = item->text().toInt();
+    //qDebug()() << "idAToAssigned = " << idToAssign;
+}
+
+void MainWindow::on_listTeamB_itemClicked(QListWidgetItem *item)
+{
+    idToAssign = item->text().toInt() + 11;
+    //qDebug()() << "idBToAssigned = " << idToAssign;
+}
+
+void MainWindow::on_pushButton_initialize_object_released()
+{
+
+}
+
+void MainWindow::on_slider_global_frame_sliderPressed()
+{
+    myObjectDetector->stop();
+}
+
+void MainWindow::on_slider_global_frame_sliderReleased()
+{
+    myObjectDetector->playContinously();
+}
+
+void MainWindow::on_slider_global_frame_valueChanged(int value)
+{
+    myObjectDetector->setCurrentFrame(value);
+    ui->label_current_time->setText(getFormattedTime(value / (int)myObjectDetector->getFrameRate()));
+}
+
 
 void MainWindow::displayModifiedId()
 {
@@ -186,12 +262,12 @@ void MainWindow::displayTransformedPosition(QVector<QList<Player> > transformedP
         }
     }
     ui->label_game_visual->setPixmap(pixmapField);
-    //////qDebug()<< "displayed "<< playerDisplayed.at(0).at(1).pos.y ;
+    ////////qDebug()()<< "displayed "<< playerDisplayed.at(0).at(1).pos.y ;
 }
 
 void MainWindow::assignIdFromList(QPoint& pos)
 {
-    ////qDebug() << "right click pos " << pos.x() << " " << pos.y();
+    //////qDebug()() << "right click pos " << pos.x() << " " << pos.y();
     int JUMLAH_PLAYER = 22;
     for (int cameraId = 0; cameraId < playerDisplayed.size(); cameraId++)
     {
@@ -233,26 +309,7 @@ void MainWindow::setCameraViewFirstFrameImage(QVector<QImage> firstFrameImage) {
     ui->label_stream_2->setPixmap(QPixmap::fromImage((firstFrameImage[1]).scaled(ui->label_stream_2->size(), Qt::KeepAspectRatio, Qt::FastTransformation)));
 }
 
-void MainWindow::on_pushButton_initialize_object_released()
-{
 
-}
-
-void MainWindow::on_slider_global_frame_sliderPressed()
-{
-    myObjectDetector->stop();
-}
-
-void MainWindow::on_slider_global_frame_sliderReleased()
-{
-    myObjectDetector->playContinously();
-}
-
-void MainWindow::on_slider_global_frame_valueChanged(int value)
-{
-    myObjectDetector->setCurrentFrame(value);
-    ui->label_current_time->setText(getFormattedTime(value / (int)myObjectDetector->getFrameRate()));
-}
 
 QString MainWindow::getFormattedTime(int timeInSeconds) {
     int seconds = (int) (timeInSeconds) % 60 ;
@@ -265,18 +322,6 @@ QString MainWindow::getFormattedTime(int timeInSeconds) {
         return t.toString("h:mm:ss");
 }
 
-
-void MainWindow::on_listTeamA_itemClicked(QListWidgetItem *item)
-{
-    idToAssign = item->text().toInt();
-    qDebug() << "idAToAssigned = " << idToAssign;
-}
-
-void MainWindow::on_listTeamB_itemClicked(QListWidgetItem *item)
-{
-    idToAssign = item->text().toInt() + 11;
-    qDebug() << "idBToAssigned = " << idToAssign;
-}
 
 QVector<QList<Player> > MainWindow::setRandomPlayer()
 {
@@ -297,10 +342,6 @@ QVector<QList<Player> > MainWindow::setRandomPlayer()
     return (dummyPlayer);
 }
 
-void MainWindow::on_pushButton_send_id_clicked()
-{
-    emit sendAllIdAssigned(playerDisplayed);
-}
 
 void MainWindow::updateCameraViewFrameImage(QVector< QVector<QImage> > image) {
     ui->label_stream_1->setAlignment(Qt::AlignCenter);
@@ -312,7 +353,7 @@ void MainWindow::updateCameraViewFrameImage(QVector< QVector<QImage> > image) {
 
 void MainWindow::setValueParameter(QVector< QVector<int> > valueParameter) {
     myValueParameter = valueParameter;
-    ////qDebug() << "framerate: " << myObjectDetector->getFrameRate();
+    //////qDebug()() << "framerate: " << myObjectDetector->getFrameRate();
     if (isSetThresholds && isSetTrapezium) {
         myDynamicAssociation->setParameters(myTrapeziumCoordinates, myValueParameter[0][5], myValueParameter[1][5], myValueParameter[0][4], myValueParameter[1][4], myObjectDetector->getFrameRate());
     }
@@ -320,23 +361,17 @@ void MainWindow::setValueParameter(QVector< QVector<int> > valueParameter) {
 
 void MainWindow::setTrapeziumCoordinates(QVector<QList<QPoint> > trapeziumCoordinates) {
     myTrapeziumCoordinates = trapeziumCoordinates;
-    ////qDebug() << "framerate: " << myObjectDetector->getFrameRate();
+    //////qDebug()() << "framerate: " << myObjectDetector->getFrameRate();
     if (isSetThresholds && isSetTrapezium) {
         myDynamicAssociation->setParameters(myTrapeziumCoordinates, myValueParameter[0][5], myValueParameter[1][5], myValueParameter[0][4], myValueParameter[1][4], myObjectDetector->getFrameRate());
     }
 }
 
-void MainWindow::on_pushButton_load_default_video_released()
-{
-    QString filename1 = QString("sebelah-kiri.mp4");
-    QString filename2 = QString("sebelah-kanan.mp4");
-    myObjectDetector->loadVideo(filename1, 1);
-    myObjectDetector->loadVideo(filename2, 2);
-    ui->slider_global_frame->setEnabled(true);
-    ui->slider_global_frame->setMaximum(myObjectDetector->getNumberOfFrames() / (int)myObjectDetector->getFrameRate());
-}
+
 
 void MainWindow::displayAssignedTransformedPosition(QVector<QList<Player> > assignedTransformedPosition) {
     playerDisplayed = assignedTransformedPosition;
     displayModifiedId();
 }
+
+

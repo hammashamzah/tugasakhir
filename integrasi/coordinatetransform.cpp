@@ -119,8 +119,8 @@ void CoordinateTransform::returnAssignedPlayer(QVector<QList<Player> > assigned_
     assignedPlayer.resize(2);
     assignedPlayer[0] = assigned_player.at(0);
     assignedPlayer[1] = assigned_player.at(1);
-    qDebug() << "size sebelum dibersihkan: " << assignedPlayer[0].size()
-             << " " << assignedPlayer[1].size();
+    //qDebug()() << "size sebelum dibersihkan: " << assignedPlayer[0].size()
+    //        << " " << assignedPlayer[1].size();
     for (int cameraId = 0; cameraId < assignedPlayer.size(); cameraId++)
     {
         for (int i = 0; i < assignedPlayer.at(cameraId).size() && !assignedPlayer.at(cameraId).isEmpty() ; i++)
@@ -131,7 +131,7 @@ void CoordinateTransform::returnAssignedPlayer(QVector<QList<Player> > assigned_
             }
         }
     }
-    qDebug() << "size setelah dibersihkan: " << assignedPlayer.size() << " " << assignedPlayer[0].size()
-             << " " << assignedPlayer[1].size();
+    //qDebug()() << "size setelah dibersihkan: " << assignedPlayer.size() << " " << assignedPlayer[0].size()
+    //         << " " << assignedPlayer[1].size();
     emit sendPlayerIdAssigned(assignedPlayer);
 }

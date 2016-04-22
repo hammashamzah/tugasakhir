@@ -29,27 +29,27 @@ private:
 	VideoCapture *capture;
 	Mat frame, objectFrame, mask, maskedFrame, openedFrame, bluredFrame, objectWithKeypointsFrame;
 	QImage qRawFrame, qMaskedFrame, qObjectFrame, qOpenedFrame, qBluredFrame, qObjectWithKeypointsFrame;
-    SimpleBlobDetector::Params params;
+	SimpleBlobDetector::Params params;
 	Ptr<BackgroundSubtractor> pMOG2;
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 	vector<KeyPoint> keypoints;
 	vector<Point2f> points;
-    QList<Player> outputData;
-    Mat morphElement;
-    QVector<QImage> allFrames;
-    int minArea;
-    int maxArea;
-    int morphElementSize;
-    int gaussianSize;
-    int mode;
+	QList<Player> outputData;
+	Mat morphElement;
+	QVector<QImage> allFrames;
+	int minArea;
+	int maxArea;
+	int morphElementSize;
+	int gaussianSize;
+	int mode;
 signals:
 	//Signal to output frame to be displayed
-    void sendSingleCameraViewImage(const QVector<QImage>);
+	void sendSingleCameraViewImage(const QVector<QImage>);
 	void sendCameraObjectData(QList<Player>);
 public slots:
 	//update parameters
-    void setValueParameter(QVector<int>);
+	void setValueParameter(QVector<int>);
 	void getMaskCoordinate(QList<QPoint>);
 protected:
 	void run();
@@ -57,21 +57,21 @@ protected:
 	void maskImage();
 public:
 	//Constructor
-    VideoProcessor(QObject *parent = 0);
+	VideoProcessor(QObject *parent = 0);
 	//Destructor
 	~VideoProcessor();
 	//Load a video from memory
 	bool loadVideo(string filename);
+	bool loadImageForBackgroundModel(String filename);
 	//check if the player has been stopped
 	//set video properties
 	void setCurrentFrame( int frameNumber);
-
 	//Play the processor
-    void Play();
-    //Stop the processor
-    void Stop();
-    //check if the player has been stopped
-    bool isStopped() const;
+	void Play();
+	//Stop the processor
+	void Stop();
+	//check if the player has been stopped
+	bool isStopped() const;
 
 	//Get video properties
 	double getFrameRate();
@@ -81,8 +81,8 @@ public:
 	void processSingleFrame();
 
 private:
-    void convertMatToQImage(Mat frame, QImage result);
-    void maskImage(Mat& frame, Mat& maskedFrame);
+	void convertMatToQImage(Mat frame, QImage result);
+	void maskImage(Mat& frame, Mat& maskedFrame);
 	Point maskPoint[1][10];
 	int numberOfMaskPoints;
 	bool isSetMask;
