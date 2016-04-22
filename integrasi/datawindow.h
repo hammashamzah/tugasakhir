@@ -1,5 +1,6 @@
 #ifndef DATAWINDOW_H
 #define DATAWINDOW_H
+#define TOTAL_FRAME 40
 
 #include <QWidget>
 #include "datalogger.h"
@@ -38,7 +39,8 @@ private:
     int idSelected;
     QList<int> frameSelected;
     void getItemSelected();
-
+    int frame;
+    QTimer *timer;
     /*QGraphicsScene *scene;
     QTimer *timer;
     PlayerVisual *item;*/
@@ -60,6 +62,12 @@ private slots:
     void on_pushButton_refresh_clicked();
     void onTableClicked(const QModelIndex &);
 
+    void updatePosition();
+
+
+    void on_pushButton_playbackStart_clicked();
+
+    void on_slider_playback_valueChanged(int value);
 
 public slots:
 
