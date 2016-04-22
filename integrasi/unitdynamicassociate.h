@@ -18,14 +18,19 @@ public:
     void setParameters(QList<QPoint> trapeziumCoordinate, float associationThreshold, float occlusionThreshold);
     void dataCameraAssociation(QList<Player> previous,QList<Player> current,QList<Player> prediction,int firstID);
     int lastID;
+    float xo_1,yo_1;
+    float xo_2,yo_2;
+    float Euclid_r;
 private:
     SearchPlayerData* searchingdata;
+    float sub_proc_varx;
+    float sub_proc_vary;
 	float Euclid_x,Euclid_y;
     float th_y;
     float th_xka,th_xki;
 
 	int first_ID;
-    float xo,yo;
+
     float XDL,XDR,XUL,XUR,YDL,YDR,YUL,YUR;
     float occlusionTh;
     float associationTh;
@@ -34,9 +39,11 @@ private:
     QList <Player> prediction;
     QList <int> potentially_Lost;
     QList <Player> potentially_New;
+    QList <Player> lostData;
     bool isPreviousObjectAssociated;
     bool isCurrentObjectOccluded;
     int indexMatchedPrevious;
+    int indexMatchedPrediction;
 
     float threshold_coef(float y);
     void find_threshold_x(float &x_kanan,float &x_kiri,float y,float x,float y_m);

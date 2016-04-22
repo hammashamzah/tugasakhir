@@ -58,7 +58,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionTuning_Background_Model_triggered()
 {
     myBMTDialog->show();
-    ////qDebug() << "value set";
+    //////qDebug() << "value set";
     isSetThresholds = true;
 }
 
@@ -81,7 +81,7 @@ void MainWindow::on_actionSystem_Performance_Testing_Metrics_triggered()
 void MainWindow::on_actionField_Selection_triggered()
 {
     myFSDialog->show();
-    ////qDebug() << "trapezium set";
+    //////qDebug() << "trapezium set";
     isSetTrapezium = true;
 }
 
@@ -186,13 +186,13 @@ void MainWindow::displayTransformedPosition(QVector<QList<Player> > transformedP
         }
     }
     ui->label_game_visual->setPixmap(pixmapField);
-    //////qDebug()<< "displayed "<< playerDisplayed.at(0).at(1).pos.y ;
+    ////////qDebug()<< "displayed "<< playerDisplayed.at(0).at(1).pos.y ;
 }
 
 void MainWindow::assignIdFromList(QPoint& pos)
 {
-    ////qDebug() << "right click pos " << pos.x() << " " << pos.y();
-    int JUMLAH_PLAYER = 22;
+    //////qDebug() << "right click pos " << pos.x() << " " << pos.y();
+    //int JUMLAH_PLAYER = 22;
     for (int cameraId = 0; cameraId < playerDisplayed.size(); cameraId++)
     {
         for (int i = 0; i < playerDisplayed.at(cameraId).size(); i++)
@@ -269,13 +269,13 @@ QString MainWindow::getFormattedTime(int timeInSeconds) {
 void MainWindow::on_listTeamA_itemClicked(QListWidgetItem *item)
 {
     idToAssign = item->text().toInt();
-    qDebug() << "idAToAssigned = " << idToAssign;
+    //qDebug() << "idAToAssigned = " << idToAssign;
 }
 
 void MainWindow::on_listTeamB_itemClicked(QListWidgetItem *item)
 {
     idToAssign = item->text().toInt() + 11;
-    qDebug() << "idBToAssigned = " << idToAssign;
+    //qDebug() << "idBToAssigned = " << idToAssign;
 }
 
 QVector<QList<Player> > MainWindow::setRandomPlayer()
@@ -312,7 +312,7 @@ void MainWindow::updateCameraViewFrameImage(QVector< QVector<QImage> > image) {
 
 void MainWindow::setValueParameter(QVector< QVector<int> > valueParameter) {
     myValueParameter = valueParameter;
-    ////qDebug() << "framerate: " << myObjectDetector->getFrameRate();
+    //////qDebug() << "framerate: " << myObjectDetector->getFrameRate();
     if (isSetThresholds && isSetTrapezium) {
         myDynamicAssociation->setParameters(myTrapeziumCoordinates, myValueParameter[0][5], myValueParameter[1][5], myValueParameter[0][4], myValueParameter[1][4], myObjectDetector->getFrameRate());
     }
@@ -320,7 +320,7 @@ void MainWindow::setValueParameter(QVector< QVector<int> > valueParameter) {
 
 void MainWindow::setTrapeziumCoordinates(QVector<QList<QPoint> > trapeziumCoordinates) {
     myTrapeziumCoordinates = trapeziumCoordinates;
-    ////qDebug() << "framerate: " << myObjectDetector->getFrameRate();
+    //////qDebug() << "framerate: " << myObjectDetector->getFrameRate();
     if (isSetThresholds && isSetTrapezium) {
         myDynamicAssociation->setParameters(myTrapeziumCoordinates, myValueParameter[0][5], myValueParameter[1][5], myValueParameter[0][4], myValueParameter[1][4], myObjectDetector->getFrameRate());
     }

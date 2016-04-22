@@ -10,30 +10,30 @@ void KalmanDynamic::setParameters(double frameRate) {
     interval = 1.0 / (double)frameRate;
 }
 void KalmanDynamic::processDataCurrent(QList<Player> currentDataInput) {
-    qDebug() << "Debug Kalman Filter";
-    qDebug() << "Size of previous data: " << previousData.size();
+    //qDebug() << "Debug Kalman Filter";
+    //qDebug() << "Size of previous data: " << previousData.size();
     QString temp1 = "List of id on previous data: ";
     for (int i = 0; i < previousData.size(); i++)
     {
         temp1 += QString::number(currentDataInput.at(i).id);
         temp1 += " ";
     }
-    qDebug() << temp1;
-    qDebug() << "Size of current data: " << currentDataInput.size();
+    //qDebug() << temp1;
+    //qDebug() << "Size of current data: " << currentDataInput.size();
     QString temp2 = "List of id on current data: ";
     for (int i = 0; i < currentDataInput.size(); i++)
     {
         temp2 += QString::number(currentDataInput.at(i).id);
         temp2 += " ";
     }
-    qDebug() << temp2;
+    //qDebug() << temp2;
 
-    qDebug() << "Finished Debug Kalman Filter";
+    //qDebug() << "Finished Debug Kalman Filter";
 
     //previousData.clear();
     //previousData.append(currentDataInput);
     
-    qDebug() << "assigning data accomplished";
+    //qDebug() << "assigning data accomplished";
     for (int i = 0; i < currentDataInput.size(); i++) {
         int indexOfMatchingPreviousData = -1;
         for (int j = 0; j < previousData.size(); j++) {
@@ -42,9 +42,9 @@ void KalmanDynamic::processDataCurrent(QList<Player> currentDataInput) {
                 break;
             }
         }
-        qDebug() << "Index of Matching Previous Data: " << QString::number(indexOfMatchingPreviousData);
+        //qDebug() << "Index of Matching Previous Data: " << QString::number(indexOfMatchingPreviousData);
         if (indexOfMatchingPreviousData == -1) {
-            qDebug() << "Construct new kalman object";
+            //qDebug() << "Construct new kalman object";
             //construct new kalmanObject
             kalmanProcessor.append(KalmanObject(currentDataInput.at(i), interval));
         } else { //data is available on previous data, so the associated kalman object is already built
@@ -56,12 +56,12 @@ void KalmanDynamic::processDataCurrent(QList<Player> currentDataInput) {
                         indexOfMatchingKalmanFilter = x;
                     }
                 }
-                qDebug() << "Index of Matching Kalman Filter: " << QString::number(indexOfMatchingKalmanFilter);
+                //qDebug() << "Index of Matching Kalman Filter: " << QString::number(indexOfMatchingKalmanFilter);
 
-                qDebug() << "id of kalman pilter: " << kalmanProcessor[indexOfMatchingKalmanFilter].id;
+                //qDebug() << "id of kalman pilter: " << kalmanProcessor[indexOfMatchingKalmanFilter].id;
                 Player temp = currentDataInput.at(i);
                 (kalmanProcessor[indexOfMatchingKalmanFilter]).processData(temp);
-                qDebug() << "clear comrade";
+                //qDebug() << "clear comrade";
                 previousData.removeAt(indexOfMatchingPreviousData);
                 //predictionData.append(kalmanProcessor.at(indexOfMatchingKalmanFilter).prediction);
         }
@@ -93,6 +93,6 @@ void KalmanDynamic::setInitialData(QList<Player> initialData) {
     for (int i = 0; i < initialData.size() && !initialData.isEmpty(); i++) {
         kalmanProcessor.append(KalmanObject(initialData.at(i), interval));
     }
-    qDebug() << "jumlah kalman filter diinisiasi" << kalmanProcessor.size();
-    //qDebug() << "Inisiasi kalman dinami' dilanjutken";
+    //qDebug() << "jumlah kalman filter diinisiasi" << kalmanProcessor.size();
+    ////qDebug() << "Inisiasi kalman dinami' dilanjutken";
 }

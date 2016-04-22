@@ -39,7 +39,7 @@ KalmanObject::KalmanObject(Player currentData, float interval)
                             0, 0,   0,                             0,                       1,                                                            0,
                             0, 0,   0,                             0,                       0,                                                            1
                            );
-    qDebug() << "transition: " << KF.transitionMatrix.type();
+    //qDebug() << "transition: " << KF.transitionMatrix.type();
     KF.statePost.at<float>(0) = (float)currentData.pos.x;
     KF.statePost.at<float>(1) = (float)currentData.pos.y;
     KF.statePost.at<float>(2) = 0;
@@ -51,13 +51,13 @@ KalmanObject::KalmanObject(Player currentData, float interval)
     setIdentity(KF.measurementNoiseCov, Scalar::all(5));
     setIdentity(KF.errorCovPost, Scalar::all(0.1));
 
-    qDebug() << "measurement: " << KF.measurementMatrix.type();
-    qDebug() << "processnoise: " << KF.processNoiseCov.type();
-    qDebug() << "measurementnoise: " << KF.measurementNoiseCov.type();
-    qDebug() << "errorcovpost: " << KF.errorCovPost.type();
+    //qDebug() << "measurement: " << KF.measurementMatrix.type();
+    //qDebug() << "processnoise: " << KF.processNoiseCov.type();
+    //qDebug() << "measurementnoise: " << KF.measurementNoiseCov.type();
+    //qDebug() << "errorcovpost: " << KF.errorCovPost.type();
 
 
-    qDebug() << "Kalman Filter initialized";
+    //qDebug() << "Kalman Filter initialized";
 }
 
 KalmanObject::~KalmanObject()
@@ -66,17 +66,17 @@ KalmanObject::~KalmanObject()
 }
 
 void KalmanObject::processData(Player currentData) {
-    qDebug() << "Masuk sini bos";
+    //qDebug() << "Masuk sini bos";
     //generate measurement
-    qDebug() << currentData.pos.x << " " << currentData.pos.y << " " << previous.pos.x << " "
-             << previous.pos.y << " " << currentData.speed.x << " " << currentData.speed.y << " "
-             << previous.speed.x << " " << previous.speed.y << " " << frameInterval;;
+    //qDebug() << currentData.pos.x << " " << currentData.pos.y << " " << previous.pos.x << " "
+             //<< previous.pos.y << " " << currentData.speed.x << " " << currentData.speed.y << " "
+             //<< previous.speed.x << " " << previous.speed.y << " " << frameInterval;;
     Mat_<float> measurement(2, 1);
 
-    qDebug() << "measurement: " << KF.measurementMatrix.type();
-    qDebug() << "processnoise: " << KF.processNoiseCov.type();
-    qDebug() << "measurementnoise: " << KF.measurementNoiseCov.type();
-    qDebug() << "errorcovpost: " << KF.errorCovPost.type();
+    //qDebug() << "measurement: " << KF.measurementMatrix.type();
+    //qDebug() << "processnoise: " << KF.processNoiseCov.type();
+    //qDebug() << "measurementnoise: " << KF.measurementNoiseCov.type();
+    //qDebug() << "errorcovpost: " << KF.errorCovPost.type();
 
     measurement(0) = currentData.pos.x;
     measurement(1) = currentData.pos.y;
@@ -84,7 +84,7 @@ void KalmanObject::processData(Player currentData) {
     //measurement(3) = (currentData.pos.y - previous.pos.y) / frameInterval;
     //measurement(4) = (currentData.speed.x - previous.speed.x) / frameInterval;
     //measurement(5) = (currentData.speed.y - previous.speed.y) / frameInterval;
-    qDebug() << "Masuk sini bos 1";
+    //qDebug() << "Masuk sini bos 1";
 
     Mat state = KF.predict();
     prediction.id = currentData.id;
@@ -98,10 +98,10 @@ void KalmanObject::processData(Player currentData) {
     prediction.acceleration.y = state.at<float>(5);
     prediction.transformedPos.x = currentData.transformedPos.x;
     prediction.transformedPos.x = currentData.transformedPos.y;
-    qDebug() << "Masuk sini bos 2";
+    //qDebug() << "Masuk sini bos 2";
 
     KF.correct(measurement);
-    qDebug() << "Masuk sini bos 3";
+    //qDebug() << "Masuk sini bos 3";
 
     previous.id = currentData.id;
     previous.camera = currentData.camera;
@@ -114,7 +114,7 @@ void KalmanObject::processData(Player currentData) {
     previous.acceleration.y = currentData.acceleration.y;
     previous.transformedPos.x = currentData.transformedPos.x;
     previous.transformedPos.x = currentData.transformedPos.y;
-    qDebug() << "selesai sini";
+    //qDebug() << "selesai sini";
 }
 
 std::string KalmanObject::getImageType(int number)

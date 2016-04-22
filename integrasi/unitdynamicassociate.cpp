@@ -17,10 +17,17 @@ void UnitDynamicAssociate::setParameters(QList<QPoint> trapeziumCoordinate, floa
     YUR = (float)trapeziumCoordinate[2].y();
     associationTh = associationThreshold;
     occlusionTh = occlusionThreshold;
-    if (YDL > YUL && YDR > YUR && XDR > XUR && XDL < XUR) {
-        yo = -((XDR - XDL) / (((-XDL + XUL) / (YDL - YUL)) + ((XDR - XUR) / (YDR - YUR)))) + ((YDL + YDR) / 2);
-    }
-    xo = ((((((YDL - yo) * (-XDL + XUL)) / (YDL - YUL)) + XDL) + ((-(((YDR - yo) * (XDR - XUR)) / (YDR - YUR)) + (XDR)))) / 2);
+    /*after reobservation of the real data I think single horizon point isn't suitable to the case, we need another horizon representation being 2 horizon points*/
+    //first horizon point
+    xo_1 = (((XDL)*((YUL-YDL)/(XUL-XDL)))-((XDR)*((YUR-YDR)/(XUR-XDR)))+(YDR-YDL))/(((YUL-YDL)/(XUL-XDL))-((YUR-YDR)/(XUR-XDR)));
+    yo_1 = (((YUL-YDL)/(XUL-XDL))*(xo_1-XDL))+YDL;
+    //second horizon point
+    xo_2 = (((XUL)*((YUR-YUL)/(XUR-XUL)))-((XDL)*((YDR-YDL)/(XDR-XDL)))+(YDL-YUL))/(((YUR-YUL)/(XUR-XUL))-((YDR-YDL)/(XDR-XDL)));
+    yo_2 = (((YDR-YDL)/(XDR-XDL))*(xo_2-XDL))+YUR;
+    /**
+      the most possible implementation of 2 horizon representation is on the occlussion handler,
+      but for the association handler more suitable use euclidan distance comparison
+    **/
 }
 void UnitDynamicAssociate::dataCameraAssociation(QList<Player> previousData, QList<Player> currentData, QList<Player> predictionData, int firstID) {
     current = currentData;
@@ -39,15 +46,15 @@ float UnitDynamicAssociate::threshold_coef(float y) {
     float threshold_k;
     float konst = (YDL + YDR) / 2;
     if (y != konst) {
-        threshold_k  = ((y - yo) / (konst - yo));
+        threshold_k  = ((y - yo_1) / (konst - yo_1));
     }
     return (threshold_k);
 }
 void UnitDynamicAssociate::find_threshold_x(float &x_kanan, float &x_kiri, float y, float x, float y_m) {
     float k = threshold_coef(y);
     float th = k * associationTh;
-    x_kanan = x + (th / 2) - (((x - xo) / (y - yo)) * (y_m - y));
-    x_kiri = x - (th / 2) - (((x - xo) / (y - yo)) * (y_m - y));
+    x_kanan = x + (th / 2) - (((x - xo_1) / (y - yo_1)) * (y_m - y));
+    x_kiri = x - (th / 2) - (((x - xo_1) / (y - yo_1)) * (y_m - y));
 }
 float UnitDynamicAssociate::find_threshold_y(float y) {
     float k = threshold_coef(y);
@@ -57,8 +64,8 @@ float UnitDynamicAssociate::find_threshold_y(float y) {
 void UnitDynamicAssociate::find_threshold_xocc(float &x_kanan, float &x_kiri, float y, float x, float y_m) {
     float k = threshold_coef(y);
     float th = k * occlusionTh;
-    x_kanan = x + (th / 2) - (((x - xo) / (y - yo)) * (y_m - y));
-    x_kiri = x - (th / 2) - (((x - xo) / (y - yo)) * (y_m - y));
+    x_kanan = x + (th / 2) - (((x - xo_1) / (y - yo_1)) * (y_m - y));
+    x_kiri = x - (th / 2) - (((x - xo_1) / (y - yo_1)) * (y_m - y));
 }
 float UnitDynamicAssociate::find_threshold_yocc(float y) {
     float k = threshold_coef(y);
@@ -72,44 +79,28 @@ void UnitDynamicAssociate::dataAssociating() {
     if (!(previous.isEmpty() && prediction.isEmpty())) {
         for (int i = 0; i < previous.size() && !current.isEmpty(); i++) {
             qDebug() << "iterasi previous data ke: " << i;
-            QString temp1 = "Current Data: ";
-            for (int a = 0; a < current.size(); a++)
-            {
-                temp1 += " ";
-                temp1 += QString::number(current.at(a).id);
-            }
-            qDebug() << temp1;
-
-            QString temp2 = "Previous Data: ";
-            for (int b = 0; b < previous.size(); b++)
-            {
-                temp2 += " ";
-                temp2 += QString::number(previous.at(b).id);
-            }
-            qDebug() << temp2;
-            QString temp3 = "Prediction Data: ";
-            for (int c = 0; c < prediction.size(); c++)
-            {
-                temp3 += " ";
-                temp3 += QString::number(prediction.at(c).id);
-            }
-            qDebug() << temp3;
-            int indexMatchedPrediction = -1;
-            //find matched prediction id
-            for (int j = 0; j < prediction.size(); j++) {
-                if (prediction.at(j).id == previous.at(i).id) {
-                    indexMatchedPrediction = j;
-                    break;
+            indexMatchedPrediction =-1;
+            if(!prediction.isEmpty()){
+                for (int j = 0; j < prediction.size(); j++) {
+                    if (prediction.at(j).id == previous.at(i).id) {
+                        indexMatchedPrediction = j;
+                        break;
+                    }
                 }
             }
             qDebug() << "indexMatchedPrediction: " << indexMatchedPrediction;
             if (current.isEmpty()) {
+                qDebug()<<"masuk current empty";
                 //set all previous data as potentially lost
-                potentially_Lost.append(i);
+                potentially_Lost.append(previous.at(i).id);
             } else {
+                qDebug()<<"masuk current not empty";
                 isPreviousObjectAssociated = false;
                 for (int j = 0; (j < current.size()) && !current.isEmpty(); j++) {
                     if (indexMatchedPrediction > 0) {
+                        qDebug()<<"PREDICTION AVAILABLE";
+                        sub_proc_varx = BOBOT_PREDICTIONS * prediction.at(indexMatchedPrediction).pos.x + (1 - BOBOT_PREDICTIONS) * previous.at(i).pos.x;
+                        sub_proc_vary = BOBOT_PREDICTIONS * prediction.at(indexMatchedPrediction).pos.y + (1 - BOBOT_PREDICTIONS) * previous.at(i).pos.y;
                         Euclid_x = BOBOT_PREDICTIONS * prediction.at(indexMatchedPrediction).pos.x + (1 - BOBOT_PREDICTIONS) * previous.at(i).pos.x - current.at(j).pos.x;
                         Euclid_y = abs(BOBOT_PREDICTIONS * prediction.at(indexMatchedPrediction).pos.y + (1 - BOBOT_PREDICTIONS) * previous.at(i).pos.y - current.at(j).pos.y);
                         find_threshold_x(th_xka, th_xki,
@@ -118,6 +109,9 @@ void UnitDynamicAssociate::dataAssociating() {
                                          current.at(j).pos.y);
                         th_y = find_threshold_y(BOBOT_PREDICTIONS * prediction.at(indexMatchedPrediction).pos.y + (1 - BOBOT_PREDICTIONS) * previous.at(i).pos.y);
                     } else {
+                        qDebug()<<"PREDICTION UNAVAILABLE";
+                        sub_proc_vary = previous.at(i).pos.y;
+                        sub_proc_varx = previous.at(i).pos.x;
                         Euclid_x = previous.at(i).pos.x - current.at(j).pos.x;
                         Euclid_y = abs(previous.at(i).pos.y - current.at(j).pos.y);
                         find_threshold_x(th_xka, th_xki,
@@ -126,8 +120,9 @@ void UnitDynamicAssociate::dataAssociating() {
                                          current.at(j).pos.y);
                         th_y = find_threshold_y(previous.at(i).pos.y);
                     }
-
-                    if ((Euclid_y < th_y) && ((Euclid_x <= 0 && Euclid_x >= th_xki) || (Euclid_x >= 0 && Euclid_x <= th_xka))) {
+                    Euclid_r = sqrt((((sub_proc_varx)-(current.at(j).pos.x))*((sub_proc_varx)-(current.at(j).pos.x)))+(((sub_proc_vary)-(current.at(j).pos.y))*((sub_proc_vary)-(current.at(j).pos.y))));
+                    if(Euclid_r < associationTh){
+                    /*if ((Euclid_y < th_y) && ((Euclid_x <= 0 && Euclid_x >= th_xki) || (Euclid_x >= 0 && Euclid_x <= th_xka))) {*/
                         //associated
                         qDebug() << "object associated" << " " << i << " " << j;
                         previous[i].pos = current.at(j).pos;
@@ -151,8 +146,11 @@ void UnitDynamicAssociate::dataAssociating() {
     }
 }
 
-void UnitDynamicAssociate::occlusionHandler() {
+void UnitDynamicAssociate::occlusionHandler(){
+    lostData.clear();
     if (previous.isEmpty() && prediction.isEmpty()) {
+        qDebug()<<"id wasn't yet being set";
+        previous.clear();
         previous.append(current);
     } else {
         qDebug() << "Masuk occlusion handler";
@@ -184,7 +182,7 @@ void UnitDynamicAssociate::occlusionHandler() {
                         Euclid_y = abs(current.at(i).pos.y - previous.at(indexMatchedPrevious).pos.y);
                         find_threshold_xocc(th_xka, th_xki, current.at(i).pos.y, current.at(i).pos.x, previous.at(indexMatchedPrevious).pos.y);
                         th_y = find_threshold_yocc(current.at(i).pos.y);
-                        if (Euclid_y < th_y && ((Euclid_x <= 0 && Euclid_x >= th_xki) || (Euclid_x >= 0 && Euclid_x <= th_xka))) {
+                        if ((Euclid_y < th_y) && ((Euclid_x <= 0 && Euclid_x >= th_xki) || (Euclid_x >= 0 && Euclid_x <= th_xka))) {
                             qDebug() << "object occluded: " << j << " " << i;
                             previous[indexMatchedPrevious].pos.x = current.at(i).pos.x;
                             previous[indexMatchedPrevious].pos.y = current.at(i).pos.y;
@@ -211,7 +209,6 @@ void UnitDynamicAssociate::occlusionHandler() {
                     previous.removeAt(indexMatchedPrevious);
                 }
             }
-
             lastID = h;
         }
     }
