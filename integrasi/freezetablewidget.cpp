@@ -43,16 +43,7 @@
 //! [constructor]
 FreezeTableWidget::FreezeTableWidget(QWidget* parent): QTableView(parent)
 {
-	this->horizontalHeader()->setDragEnabled(true);
-	this->horizontalHeader()->setAcceptDrops(true);
-	this->horizontalHeader()->setDragDropOverwriteMode(true);
-	this->horizontalHeader()->setSectionsMovable(true);
-	this->horizontalHeader()->setDragDropMode(QAbstractItemView::InternalMove);
-	this->verticalHeader()->setAcceptDrops(true);
-	this->verticalHeader()->setDragEnabled(true);
-	this->verticalHeader()->setDragDropOverwriteMode(true);
-	this->verticalHeader()->setSectionsMovable(true);
-	this->verticalHeader()->setDragDropMode(QAbstractItemView::InternalMove);
+
 }
 void FreezeTableWidget::Begin(QAbstractItemModel * model)
 {
@@ -61,8 +52,8 @@ void FreezeTableWidget::Begin(QAbstractItemModel * model)
 
 	init();
 				//connect the headers and scrollbars of both tableviews together
-	connect(horizontalHeader(),SIGNAL(sectionResized(int,int,int)), this,
-		SLOT(updateSectionWidth(int,int,int)));
+    //connect(horizontalHeader(),SIGNAL(sectionResized(int,int,int)), this,
+        //SLOT(updateSectionWidth(int,int,int)));
 	connect(verticalHeader(),SIGNAL(sectionResized(int,int,int)), this,
 		SLOT(updateSectionHeight(int,int,int)));
 

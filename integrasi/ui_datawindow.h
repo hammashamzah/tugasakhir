@@ -39,6 +39,7 @@ public:
     FreezeTableWidget *tableView_result;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout_2;
+    QPushButton *pushButton_reconstruct;
     QPushButton *pushButton_cut;
     QPushButton *pushButton_paste;
     QPushButton *pushButton_refresh;
@@ -69,7 +70,7 @@ public:
     {
         if (DataWindow->objectName().isEmpty())
             DataWindow->setObjectName(QStringLiteral("DataWindow"));
-        DataWindow->resize(780, 582);
+        DataWindow->resize(1051, 551);
         gridLayout = new QGridLayout(DataWindow);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         verticalLayout_2 = new QVBoxLayout();
@@ -91,6 +92,11 @@ public:
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        pushButton_reconstruct = new QPushButton(tab);
+        pushButton_reconstruct->setObjectName(QStringLiteral("pushButton_reconstruct"));
+
+        horizontalLayout_2->addWidget(pushButton_reconstruct);
+
         pushButton_cut = new QPushButton(tab);
         pushButton_cut->setObjectName(QStringLiteral("pushButton_cut"));
 
@@ -250,7 +256,7 @@ public:
 
         retranslateUi(DataWindow);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(DataWindow);
@@ -259,6 +265,7 @@ public:
     void retranslateUi(QWidget *DataWindow)
     {
         DataWindow->setWindowTitle(QApplication::translate("DataWindow", "Form", 0));
+        pushButton_reconstruct->setText(QApplication::translate("DataWindow", "Reconstruct Miss Data", 0));
         pushButton_cut->setText(QApplication::translate("DataWindow", "Cut", 0));
         pushButton_paste->setText(QApplication::translate("DataWindow", "Paste", 0));
         pushButton_refresh->setText(QApplication::translate("DataWindow", "Refresh", 0));
