@@ -46,6 +46,8 @@ public:
     QAction *actionField_Selection;
     QAction *actionTracking_View;
     QAction *actionData_View;
+    QAction *actionFirst_Image_1;
+    QAction *actionFirst_Image_2;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QHBoxLayout *horizontalLayout_3;
@@ -71,7 +73,7 @@ public:
     QPushButton *pushButton_play;
     QPushButton *pushButton_single_play;
     QPushButton *pushButton_send_id;
-    QPushButton *pushButton_initialize_object;
+    QPushButton *pushButton_initialize_background_model;
     QPushButton *pushButton_load_default_video;
     QHBoxLayout *horizontalLayout;
     QLabel *label_current_time;
@@ -112,6 +114,10 @@ public:
         actionTracking_View->setObjectName(QStringLiteral("actionTracking_View"));
         actionData_View = new QAction(MainWindow);
         actionData_View->setObjectName(QStringLiteral("actionData_View"));
+        actionFirst_Image_1 = new QAction(MainWindow);
+        actionFirst_Image_1->setObjectName(QStringLiteral("actionFirst_Image_1"));
+        actionFirst_Image_2 = new QAction(MainWindow);
+        actionFirst_Image_2->setObjectName(QStringLiteral("actionFirst_Image_2"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -194,7 +200,7 @@ public:
         groupBox->setMaximumSize(QSize(240, 16777215));
         layoutWidget = new QWidget(groupBox);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(0, 20, 201, 381));
+        layoutWidget->setGeometry(QRect(0, 20, 212, 381));
         verticalLayout_4 = new QVBoxLayout(layoutWidget);
         verticalLayout_4->setSpacing(6);
         verticalLayout_4->setContentsMargins(11, 11, 11, 11);
@@ -247,10 +253,10 @@ public:
 
         verticalLayout->addWidget(pushButton_send_id);
 
-        pushButton_initialize_object = new QPushButton(layoutWidget);
-        pushButton_initialize_object->setObjectName(QStringLiteral("pushButton_initialize_object"));
+        pushButton_initialize_background_model = new QPushButton(layoutWidget);
+        pushButton_initialize_background_model->setObjectName(QStringLiteral("pushButton_initialize_background_model"));
 
-        verticalLayout->addWidget(pushButton_initialize_object);
+        verticalLayout->addWidget(pushButton_initialize_background_model);
 
         pushButton_load_default_video = new QPushButton(layoutWidget);
         pushButton_load_default_video->setObjectName(QStringLiteral("pushButton_load_default_video"));
@@ -328,6 +334,8 @@ public:
         menuBar->addAction(menuAbout->menuAction());
         menuFile->addAction(actionVideo_1);
         menuFile->addAction(actionVideo_2);
+        menuFile->addAction(actionFirst_Image_1);
+        menuFile->addAction(actionFirst_Image_2);
         menuEdit->addAction(actionTuning_Background_Model);
         menuEdit->addAction(actionField_Selection);
         menuView->addAction(actionPer_Camera_Raw_View);
@@ -354,6 +362,8 @@ public:
         actionField_Selection->setText(QApplication::translate("MainWindow", "Field Selection", 0));
         actionTracking_View->setText(QApplication::translate("MainWindow", "Tracking View", 0));
         actionData_View->setText(QApplication::translate("MainWindow", "Data View", 0));
+        actionFirst_Image_1->setText(QApplication::translate("MainWindow", "First Image 1", 0));
+        actionFirst_Image_2->setText(QApplication::translate("MainWindow", "First Image 2", 0));
         label_stream_1->setText(QString());
         label_stream_2->setText(QString());
         label_game_visual->setText(QString());
@@ -365,7 +375,7 @@ public:
         pushButton_play->setText(QApplication::translate("MainWindow", "Play", 0));
         pushButton_single_play->setText(QApplication::translate("MainWindow", "Single Frame Play", 0));
         pushButton_send_id->setText(QApplication::translate("MainWindow", "Send ID", 0));
-        pushButton_initialize_object->setText(QApplication::translate("MainWindow", "Initialize Object", 0));
+        pushButton_initialize_background_model->setText(QApplication::translate("MainWindow", "Initialize Background Model", 0));
         pushButton_load_default_video->setText(QApplication::translate("MainWindow", "Load Default Video", 0));
         label_current_time->setText(QApplication::translate("MainWindow", "00:00", 0));
         label_max_time->setText(QApplication::translate("MainWindow", "00:00", 0));

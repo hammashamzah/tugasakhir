@@ -88,7 +88,7 @@ void UnitDynamicAssociate::dataAssociating() {
                     }
                 }
             }
-            qDebug() << "indexMatchedPrediction: " << indexMatchedPrediction;
+            //qDebug()() << "indexMatchedPrediction: " << indexMatchedPrediction;
             if (current.isEmpty()) {
                 qDebug()<<"masuk current empty";
                 //set all previous data as potentially lost
@@ -124,7 +124,7 @@ void UnitDynamicAssociate::dataAssociating() {
                     if(Euclid_r < associationTh){
                     /*if ((Euclid_y < th_y) && ((Euclid_x <= 0 && Euclid_x >= th_xki) || (Euclid_x >= 0 && Euclid_x <= th_xka))) {*/
                         //associated
-                        qDebug() << "object associated" << " " << i << " " << j;
+                        //qDebug()() << "object associated" << " " << i << " " << j;
                         previous[i].pos = current.at(j).pos;
                         previous[i].speed = current.at(j).speed;
                         previous[i].acceleration = current.at(j).acceleration;
@@ -134,12 +134,12 @@ void UnitDynamicAssociate::dataAssociating() {
                         j--;
                         isPreviousObjectAssociated = true;
                     } else {
-                        qDebug() << "tidak berasosiasi: " << i << " " << j;
+                        //qDebug()() << "tidak berasosiasi: " << i << " " << j;
                     }
                 }
             }
             if (!isPreviousObjectAssociated) {
-                qDebug() << "Object " << i << " with id " << previous.at(i).id << " is potentially lost";
+                //qDebug()() << "Object " << i << " with id " << previous.at(i).id << " is potentially lost";
                 potentially_Lost.append(i);
             }
         }
@@ -153,7 +153,7 @@ void UnitDynamicAssociate::occlusionHandler(){
         previous.clear();
         previous.append(current);
     } else {
-        qDebug() << "Masuk occlusion handler";
+        //qDebug()() << "Masuk occlusion handler";
         if (current.isEmpty()) {
             //destroy all of potentially lost
             for (int i = 0; i < potentially_Lost.size(); i++) {
@@ -182,8 +182,8 @@ void UnitDynamicAssociate::occlusionHandler(){
                         Euclid_y = abs(current.at(i).pos.y - previous.at(indexMatchedPrevious).pos.y);
                         find_threshold_xocc(th_xka, th_xki, current.at(i).pos.y, current.at(i).pos.x, previous.at(indexMatchedPrevious).pos.y);
                         th_y = find_threshold_yocc(current.at(i).pos.y);
-                        if ((Euclid_y < th_y) && ((Euclid_x <= 0 && Euclid_x >= th_xki) || (Euclid_x >= 0 && Euclid_x <= th_xka))) {
-                            qDebug() << "object occluded: " << j << " " << i;
+                        if (Euclid_y < th_y && ((Euclid_x <= 0 && Euclid_x >= th_xki) || (Euclid_x >= 0 && Euclid_x <= th_xka))) {
+                            //qDebug()() << "object occluded: " << j << " " << i;
                             previous[indexMatchedPrevious].pos.x = current.at(i).pos.x;
                             previous[indexMatchedPrevious].pos.y = current.at(i).pos.y;
                             previous[indexMatchedPrevious].framePosition = current.at(i).framePosition;

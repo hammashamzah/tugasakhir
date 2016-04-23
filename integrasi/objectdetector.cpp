@@ -5,8 +5,8 @@ ObjectDetector::ObjectDetector()
 	qRegisterMetaType<QVector<QImage> >("QVector<QImage>");
 	qRegisterMetaType<QList<Player> >("QList<Player>");
 
-    myStream_1 = new VideoProcessor();
-    myStream_2 = new VideoProcessor();
+	myStream_1 = new VideoProcessor();
+	myStream_2 = new VideoProcessor();
 	isSetFirstFrame[0] = false;
 	isSetFirstFrame[1] = false;
 	myTrackingInitialized = false;
@@ -77,6 +77,27 @@ void ObjectDetector::loadVideo(QString filename, int id) {
 	}
 }
 
+void ObjectDetector::updateBackgroundModelUsingImage(QString filename, int id) {
+	switch (id) {
+	case 1:
+		if (!filename.isEmpty()) {
+			if (!myStream_1->loadImageForBackgroundModel(filename.toLatin1().data())) {
+				QMessageBox msgBox;
+				msgBox.setText("The selected video could not be opened!");
+				msgBox.exec();
+			}
+		}
+		break;
+		if (!filename.isEmpty()) {
+			if (!myStream_1->loadImageForBackgroundModel(filename.toLatin1().data())) {
+				QMessageBox msgBox;
+				msgBox.setText("The selected video could not be opened!");
+				msgBox.exec();
+			}
+		}
+		break;
+	}
+}
 void ObjectDetector::updateValueParameter(QVector< QVector<int> > parameters) {
 	emit updateValueParameter_1(parameters.at(0));
 	emit updateValueParameter_2(parameters.at(1));
@@ -120,31 +141,31 @@ void ObjectDetector::playContinously() {
 	}
 }
 
-void ObjectDetector::stop(){
+void ObjectDetector::stop() {
 	if (!myStream_1->isStopped() || !myStream_2->isStopped()) {
 		myStream_1->Stop();
 		myStream_2->Stop();
 	}
 }
 
-void ObjectDetector::setCurrentFrame(int value){
-    myStream_1->setCurrentFrame(value);
-    myStream_2->setCurrentFrame(value);
+void ObjectDetector::setCurrentFrame(int value) {
+	myStream_1->setCurrentFrame(value);
+	myStream_2->setCurrentFrame(value);
 }
 
-int ObjectDetector::getNumberOfFrames(){
-    if(myStream_1->getNumberOfFrames() >= myStream_2->getNumberOfFrames()){
+int ObjectDetector::getNumberOfFrames() {
+	if (myStream_1->getNumberOfFrames() >= myStream_2->getNumberOfFrames()) {
 		return (int)myStream_2->getNumberOfFrames();
-	}else{
+	} else {
 		return (int)myStream_1->getNumberOfFrames();
 	}
 }
 
-int ObjectDetector::getFrameRate(){
+int ObjectDetector::getFrameRate() {
 	return (int)myStream_1->getFrameRate();
 }
 
-int ObjectDetector::getCurrentFrame(){
+int ObjectDetector::getCurrentFrame() {
 	return (int)myStream_1->getCurrentFrame();
 }
 
@@ -184,9 +205,9 @@ void ObjectDetector::updateObjectData_1(QList<Player> outputDataCam) {
 
 void ObjectDetector::updateObjectData_2(QList<Player> outputDataCam) {
 	allOutputDataCam[1] = outputDataCam;
-    for(int i = 0; i < allOutputDataCam[1].size(); i++){
-        allOutputDataCam[1][i].camera = 1;
-    }
+	for (int i = 0; i < allOutputDataCam[1].size(); i++) {
+		allOutputDataCam[1][i].camera = 1;
+	}
 	setData[1] = true;
 	if (setData[0] && setData[1]) {
 		emit sendObjectData(allOutputDataCam);

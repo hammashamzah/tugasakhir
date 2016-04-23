@@ -7,6 +7,8 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QPixmap>
+#include <QPainter>
 #include <QDebug>
 
 namespace Ui {  
@@ -20,6 +22,7 @@ class FieldSelectionDialog : public QDialog
 public slots:
     void processMouse(QPoint& pos);
     void processClick(QPoint& pos);
+    void processRightClick(QPoint& pos);
     void setFirstFrameImage(QVector<QImage>);
 public:
     explicit FieldSelectionDialog(QWidget *parent = 0);
