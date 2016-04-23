@@ -98,7 +98,7 @@ void FieldSelectionDialog::processMouse(QPoint &pos) {
             if (listOfClickCoordinates.at(1).size() > 0) {
                 QPointF titik[listOfClickCoordinates.at(1).size()];
                 for (int i = 0; i < listOfClickCoordinates.at(1).size(); i++) {
-                    titik[i] = QPointF(listOfClickCoordinates.at(1).at(i).x(), listOfClickCoordinates.at(0).at(i).y());
+                    titik[i] = QPointF(listOfClickCoordinates.at(1).at(i).x(), listOfClickCoordinates.at(1).at(i).y());
                 }
                 pixPaint.drawPolygon(titik, listOfClickCoordinates.at(1).size(), Qt::OddEvenFill);
             }

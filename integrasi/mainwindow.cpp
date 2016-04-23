@@ -261,7 +261,7 @@ void MainWindow::displayTransformedPosition(QVector<QList<Player> > transformedP
         }
     }
     ui->label_game_visual->setPixmap(pixmapField);
-	qDebug()()<< "displayed "<< playerDisplayed.at(0).at(1).pos.y ;
+    qDebug()<< "displayed "<< playerDisplayed.at(0).at(1).pos.y ;
 }
 
 void MainWindow::assignIdFromList(QPoint& pos)
@@ -354,7 +354,7 @@ void MainWindow::setValueParameter(QVector< QVector<int> > valueParameter) {
     myValueParameter = valueParameter;
     //////qDebug()() << "framerate: " << myObjectDetector->getFrameRate();
     if (isSetThresholds && isSetTrapezium) {
-        myDynamicAssociation->setParameters(myTrapeziumCoordinates, myValueParameter[0][5], myValueParameter[1][5], myValueParameter[0][4], myValueParameter[1][4], myObjectDetector->getFrameRate());
+        myDynamicAssociation->setParameters(myTrapeziumCoordinates, myValueParameter[0][5], myValueParameter[1][5], myValueParameter[0][4], myValueParameter[1][4], myValueParameter[0][6], myValueParameter[1][6], myObjectDetector->getFrameRate());
     }
 }
 
@@ -362,7 +362,7 @@ void MainWindow::setTrapeziumCoordinates(QVector<QList<QPoint> > trapeziumCoordi
     myTrapeziumCoordinates = trapeziumCoordinates;
     //////qDebug()() << "framerate: " << myObjectDetector->getFrameRate();
     if (isSetThresholds && isSetTrapezium) {
-        myDynamicAssociation->setParameters(myTrapeziumCoordinates, myValueParameter[0][5], myValueParameter[1][5], myValueParameter[0][4], myValueParameter[1][4], myObjectDetector->getFrameRate());
+        myDynamicAssociation->setParameters(myTrapeziumCoordinates, myValueParameter[0][5], myValueParameter[1][5], myValueParameter[0][4], myValueParameter[1][4], myValueParameter[0][6], myValueParameter[1][6], myObjectDetector->getFrameRate());
     }
 }
 
