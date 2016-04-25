@@ -46,7 +46,6 @@ private:
     QVector<QImage> frameCamera;
     QList<QPoint> clickCoordinates;
     QVector<QList<QPoint> > listOfClickCoordinates;
-    QVector<QList<QPoint> > listOfTrapeziumCoordinates;
     QVector<QList<QPoint> > listOfTransformationCoordinates;
     int numberOfMaskPoints[2];
     int numberOfTransformationPoints[2];
@@ -59,7 +58,6 @@ private:
 
 signals:
     void sendMaskCoordinates(QVector<QList<QPoint> >);
-    void sendTrapeziumCoordinates(QVector<QList<QPoint> >);
     void sendTransformationCoordinates(QVector<QList<QPoint> >);
     void sendImageSize(QList<QSize>);
 };

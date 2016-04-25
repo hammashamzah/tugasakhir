@@ -25,14 +25,17 @@ void CoordinateTransform::processTransformPosition(QVector<QList<Player> > data)
         for (int i = 0; i < playerImageCoordinate.at(cameraId).size() ; i++)
         {
             if (cameraId == 0) {
-                playerImageCoordinate[cameraId][i].transformedPos = transformCamera1ToGlobal(playerImageCoordinate[cameraId][i].pos, transform_mat1);
+                playerImageCoordinate[cameraId][i].pos = transformCamera1ToGlobal(playerImageCoordinate[cameraId][i].cameraPos, transform_mat1);
             }
             else {
-                playerImageCoordinate[cameraId][i].transformedPos = transformCamera2ToGlobal(playerImageCoordinate[cameraId][i].pos, transform_mat2);
+                playerImageCoordinate[cameraId][i].pos = transformCamera2ToGlobal(playerImageCoordinate[cameraId][i].cameraPos, transform_mat2);
             }
         }
     }
-    emit sendTransformedPosition(playerImageCoordinate);
+    unifiedPlayerImageCoordinate.clear();
+    unifiedPlayerImageCoordinate.append(playerImageCoordinate[0]);
+    unifiedPlayerImageCoordinate.append(playerImageCoordinate[1]);
+    emit sendTransformedPosition(unifiedPlayerImageCoordinate);
 }
 
 //slot untuk menyimpan informasi mat camera dari dialog ke variabel lokal
@@ -113,25 +116,17 @@ void CoordinateTransform::setTransformMatrix(QVector<QList<QPoint> > transformat
     transform_mat2 = lambda[1];
 }
 
-void CoordinateTransform::returnAssignedPlayer(QVector<QList<Player> > assigned_player)
+void CoordinateTransform::returnAssignedPlayer(QList<Player> assigned_player)
 {
     assignedPlayer.clear();
-    assignedPlayer.resize(2);
-    assignedPlayer[0] = assigned_player.at(0);
-    assignedPlayer[1] = assigned_player.at(1);
-    //qDebug() << "size sebelum dibersihkan: " << assignedPlayer[0].size()
-             //<< " " << assignedPlayer[1].size();
-    for (int cameraId = 0; cameraId < assignedPlayer.size(); cameraId++)
+    assignedPlayer = assigned_player;
+    for (int i = 0; i < assignedPlayer.size() && !assignedPlayer.isEmpty() ; i++)
     {
-        for (int i = 0; i < assignedPlayer.at(cameraId).size() && !assignedPlayer.at(cameraId).isEmpty() ; i++)
-        {
-            if ((assignedPlayer.at(cameraId).at(i).id == 0) && (!assignedPlayer.at(cameraId).at(i).isValid)) {
-                assignedPlayer[cameraId].removeAt(i);
-                i--;
-            }
+        if ((assignedPlayer.at(i).id == 0) && (!assignedPlayer.at(i).isValid)) {
+            assignedPlayer.removeAt(i);
+            i--;
         }
     }
-    //qDebug() << "size setelah dibersihkan: " << assignedPlayer.size() << " " << assignedPlayer[0].size()
-             //<< " " << assignedPlayer[1].size();
+    //qDebug() << "jumlah assigned player: " << assignedPlayer.size();
     emit sendPlayerIdAssigned(assignedPlayer);
 }

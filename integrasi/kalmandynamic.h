@@ -29,12 +29,10 @@ public:
     void setParameters(double frameRate);
     void setInitialData(QList<Player> initialData);
     void processDataCurrent(QList<Player>);
-    QList <Player> previousData;
     QList <Player> predictionData;
     int indexOfMatchingKalmanFilter;
 private:
     double interval;
-    QList <Player> currentData;
     QList <KalmanObject> kalmanProcessor;
 signals:
     void sendPrediction(QList<Player>);

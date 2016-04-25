@@ -40,10 +40,10 @@ void DataLogger::saveToFile(QString filename) {
 				       << dataLog.at(iter).at(historyIter).pos.y << " "
 				       << dataLog.at(iter).at(historyIter).speed.x << " "
 				       << dataLog.at(iter).at(historyIter).speed.y << " "
-				       << dataLog.at(iter).at(historyIter).transformedPos.x << " "
-				       << dataLog.at(iter).at(historyIter).transformedPos.y << " "
-				       << dataLog.at(iter).at(historyIter).transformedSpeed.x << " "
-				       << dataLog.at(iter).at(historyIter).transformedSpeed.y << " \n";
+                       << dataLog.at(iter).at(historyIter).acceleration.x << " "
+                       << dataLog.at(iter).at(historyIter).acceleration.y << " "
+                       << dataLog.at(iter).at(historyIter).cameraPos.x << " "
+                       << dataLog.at(iter).at(historyIter).cameraPos.y << " " " \n";
 			}
 		}
 	}
@@ -63,8 +63,8 @@ void DataLogger::loadFromFile(QString filename) {
 						line.section(" ",2,2).toInt(), //framePosition
 						Point2f(line.section(" ",4,4).toInt(),line.section(" ",5,5).toInt()), //pos
 						Point2f(line.section(" ",6,6).toInt(),line.section(" ",7,7).toInt()), //speed
-						Point2f(line.section(" ",8,8).toInt(),line.section(" ",9,9).toInt()), //transformedPos
-						Point2f(line.section(" ",10,10).toInt(),line.section(" ",11,11).toInt())); //transformedSpeed
+                        Point2f(line.section(" ",8,8).toInt(),line.section(" ",9,9).toInt()), //acceleration
+                        Point2f(line.section(" ",10, 10).toInt(), line.section(" ", 11,11).toInt())); //cameraPos
 			if(temp.id == currentId){
                 dataLog[currentId].append(temp);
 			}else{

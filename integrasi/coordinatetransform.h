@@ -28,18 +28,18 @@ public:
     Point2f transformCamera1ToGlobal(Point2f camera_coordinate, Mat transform_matrix);
     Point2f transformCamera2ToGlobal(Point2f camera_coordinate, Mat transform_matrix);
     QSize imageSize[2];
-    QVector<QList<Player> > assignedPlayer;
+    QList<Player> assignedPlayer;
+    QList<Player> unifiedPlayerImageCoordinate;
 
 signals:
-    void sendTransformedRawData(QList<Player>);
-    void sendTransformedPosition(QVector<QList<Player> >);
-    void sendPlayerIdAssigned(QVector<QList<Player> >);
+    void sendPlayerIdAssigned(QList<Player>);
+    void sendTransformedPosition(QList<Player>);
 
 public slots:
     void setTransformMatrix(QVector<QList<QPoint> > transformationCoordinates);
     void setImageSize(QList<QSize>);
     void processTransformPosition(QVector<QList<Player> >);
-    void returnAssignedPlayer(QVector<QList<Player> >);
+    void returnAssignedPlayer(QList<Player>);
 };
 
 #endif // COORDINATETRANSFORM_H

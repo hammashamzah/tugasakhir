@@ -24,12 +24,14 @@ class KalmanObject
 public:
     KalmanObject(Player currentData, float interval);
     ~KalmanObject();
-    void processData(Player currentData);
+    void predict();
+    void correct(Player currentData);
     std::string getImageType(int number);
     int id;
     Player prediction;
     Mat measurement;
     int counter;
+    int maxCounter;
     float frameInterval;
     KalmanFilter KF;
     Player previous;

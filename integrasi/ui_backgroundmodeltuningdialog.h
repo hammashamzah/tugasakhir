@@ -29,7 +29,7 @@ QT_BEGIN_NAMESPACE
 class Ui_BackgroundModelTuningDialog
 {
 public:
-    QVBoxLayout *verticalLayout_3;
+    QVBoxLayout *verticalLayout_4;
     QHBoxLayout *horizontalLayout;
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout;
@@ -53,21 +53,6 @@ public:
     QLabel *gaussian_1;
     QSlider *slider_gaussian_size_1;
     QLabel *label_13;
-    QLabel *label_23;
-    QHBoxLayout *horizontalLayout_11;
-    QLabel *occlusion_1;
-    QSlider *slider_occlusion_threshold_1;
-    QLabel *label_25;
-    QLabel *label_37;
-    QHBoxLayout *horizontalLayout_15;
-    QLabel *association_1;
-    QSlider *slider_association_threshold_1;
-    QLabel *label_36;
-    QLabel *label_26;
-    QHBoxLayout *horizontalLayout_12;
-    QLabel *transformed_1;
-    QSlider *slider_transformed_threshold_1;
-    QLabel *label_28;
     QGroupBox *groupBox_2;
     QVBoxLayout *verticalLayout_2;
     QLabel *label_82;
@@ -90,21 +75,18 @@ public:
     QLabel *gaussian_2;
     QSlider *slider_gaussian_size_2;
     QLabel *label_95;
-    QLabel *label_29;
-    QHBoxLayout *horizontalLayout_13;
-    QLabel *occlusion_2;
-    QSlider *slider_occlusion_threshold_2;
-    QLabel *label_31;
-    QLabel *label_38;
-    QHBoxLayout *horizontalLayout_16;
-    QLabel *association_2;
-    QSlider *slider_association_threshold_2;
-    QLabel *label_40;
-    QLabel *label_34;
-    QHBoxLayout *horizontalLayout_14;
-    QLabel *transformed_2;
-    QSlider *slider_transformed_threshold_2;
-    QLabel *label_33;
+    QGroupBox *groupBox_3;
+    QVBoxLayout *verticalLayout_3;
+    QLabel *label_37;
+    QHBoxLayout *horizontalLayout_15;
+    QLabel *association;
+    QSlider *slider_association_threshold;
+    QLabel *label_36;
+    QLabel *label_23;
+    QHBoxLayout *horizontalLayout_11;
+    QLabel *occlusion;
+    QSlider *slider_occlusion_threshold;
+    QLabel *label_25;
     QHBoxLayout *horizontalLayout_33;
     QLabel *label_91;
     QLabel *label_92;
@@ -120,9 +102,9 @@ public:
     {
         if (BackgroundModelTuningDialog->objectName().isEmpty())
             BackgroundModelTuningDialog->setObjectName(QStringLiteral("BackgroundModelTuningDialog"));
-        BackgroundModelTuningDialog->resize(626, 499);
-        verticalLayout_3 = new QVBoxLayout(BackgroundModelTuningDialog);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        BackgroundModelTuningDialog->resize(626, 483);
+        verticalLayout_4 = new QVBoxLayout(BackgroundModelTuningDialog);
+        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         groupBox = new QGroupBox(BackgroundModelTuningDialog);
@@ -281,114 +263,6 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_5);
 
-        label_23 = new QLabel(groupBox);
-        label_23->setObjectName(QStringLiteral("label_23"));
-        sizePolicy1.setHeightForWidth(label_23->sizePolicy().hasHeightForWidth());
-        label_23->setSizePolicy(sizePolicy1);
-        label_23->setMinimumSize(QSize(0, 10));
-
-        verticalLayout->addWidget(label_23);
-
-        horizontalLayout_11 = new QHBoxLayout();
-        horizontalLayout_11->setObjectName(QStringLiteral("horizontalLayout_11"));
-        occlusion_1 = new QLabel(groupBox);
-        occlusion_1->setObjectName(QStringLiteral("occlusion_1"));
-
-        horizontalLayout_11->addWidget(occlusion_1);
-
-        slider_occlusion_threshold_1 = new QSlider(groupBox);
-        slider_occlusion_threshold_1->setObjectName(QStringLiteral("slider_occlusion_threshold_1"));
-        sizePolicy1.setHeightForWidth(slider_occlusion_threshold_1->sizePolicy().hasHeightForWidth());
-        slider_occlusion_threshold_1->setSizePolicy(sizePolicy1);
-        slider_occlusion_threshold_1->setMinimum(0);
-        slider_occlusion_threshold_1->setMaximum(200);
-        slider_occlusion_threshold_1->setSliderPosition(0);
-        slider_occlusion_threshold_1->setOrientation(Qt::Horizontal);
-        slider_occlusion_threshold_1->setTickPosition(QSlider::TicksBelow);
-        slider_occlusion_threshold_1->setTickInterval(1);
-
-        horizontalLayout_11->addWidget(slider_occlusion_threshold_1);
-
-        label_25 = new QLabel(groupBox);
-        label_25->setObjectName(QStringLiteral("label_25"));
-
-        horizontalLayout_11->addWidget(label_25);
-
-
-        verticalLayout->addLayout(horizontalLayout_11);
-
-        label_37 = new QLabel(groupBox);
-        label_37->setObjectName(QStringLiteral("label_37"));
-        sizePolicy1.setHeightForWidth(label_37->sizePolicy().hasHeightForWidth());
-        label_37->setSizePolicy(sizePolicy1);
-        label_37->setMinimumSize(QSize(0, 10));
-
-        verticalLayout->addWidget(label_37);
-
-        horizontalLayout_15 = new QHBoxLayout();
-        horizontalLayout_15->setObjectName(QStringLiteral("horizontalLayout_15"));
-        association_1 = new QLabel(groupBox);
-        association_1->setObjectName(QStringLiteral("association_1"));
-
-        horizontalLayout_15->addWidget(association_1);
-
-        slider_association_threshold_1 = new QSlider(groupBox);
-        slider_association_threshold_1->setObjectName(QStringLiteral("slider_association_threshold_1"));
-        sizePolicy1.setHeightForWidth(slider_association_threshold_1->sizePolicy().hasHeightForWidth());
-        slider_association_threshold_1->setSizePolicy(sizePolicy1);
-        slider_association_threshold_1->setMinimum(0);
-        slider_association_threshold_1->setMaximum(100);
-        slider_association_threshold_1->setSliderPosition(0);
-        slider_association_threshold_1->setOrientation(Qt::Horizontal);
-        slider_association_threshold_1->setTickPosition(QSlider::TicksBelow);
-        slider_association_threshold_1->setTickInterval(1);
-
-        horizontalLayout_15->addWidget(slider_association_threshold_1);
-
-        label_36 = new QLabel(groupBox);
-        label_36->setObjectName(QStringLiteral("label_36"));
-
-        horizontalLayout_15->addWidget(label_36);
-
-
-        verticalLayout->addLayout(horizontalLayout_15);
-
-        label_26 = new QLabel(groupBox);
-        label_26->setObjectName(QStringLiteral("label_26"));
-        sizePolicy1.setHeightForWidth(label_26->sizePolicy().hasHeightForWidth());
-        label_26->setSizePolicy(sizePolicy1);
-        label_26->setMinimumSize(QSize(0, 10));
-
-        verticalLayout->addWidget(label_26);
-
-        horizontalLayout_12 = new QHBoxLayout();
-        horizontalLayout_12->setObjectName(QStringLiteral("horizontalLayout_12"));
-        transformed_1 = new QLabel(groupBox);
-        transformed_1->setObjectName(QStringLiteral("transformed_1"));
-
-        horizontalLayout_12->addWidget(transformed_1);
-
-        slider_transformed_threshold_1 = new QSlider(groupBox);
-        slider_transformed_threshold_1->setObjectName(QStringLiteral("slider_transformed_threshold_1"));
-        sizePolicy1.setHeightForWidth(slider_transformed_threshold_1->sizePolicy().hasHeightForWidth());
-        slider_transformed_threshold_1->setSizePolicy(sizePolicy1);
-        slider_transformed_threshold_1->setMinimum(0);
-        slider_transformed_threshold_1->setMaximum(15);
-        slider_transformed_threshold_1->setValue(0);
-        slider_transformed_threshold_1->setOrientation(Qt::Horizontal);
-        slider_transformed_threshold_1->setTickPosition(QSlider::TicksBelow);
-        slider_transformed_threshold_1->setTickInterval(1);
-
-        horizontalLayout_12->addWidget(slider_transformed_threshold_1);
-
-        label_28 = new QLabel(groupBox);
-        label_28->setObjectName(QStringLiteral("label_28"));
-
-        horizontalLayout_12->addWidget(label_28);
-
-
-        verticalLayout->addLayout(horizontalLayout_12);
-
 
         horizontalLayout->addWidget(groupBox);
 
@@ -541,119 +415,90 @@ public:
 
         verticalLayout_2->addLayout(horizontalLayout_38);
 
-        label_29 = new QLabel(groupBox_2);
-        label_29->setObjectName(QStringLiteral("label_29"));
-        sizePolicy1.setHeightForWidth(label_29->sizePolicy().hasHeightForWidth());
-        label_29->setSizePolicy(sizePolicy1);
-        label_29->setMinimumSize(QSize(0, 10));
-
-        verticalLayout_2->addWidget(label_29);
-
-        horizontalLayout_13 = new QHBoxLayout();
-        horizontalLayout_13->setObjectName(QStringLiteral("horizontalLayout_13"));
-        occlusion_2 = new QLabel(groupBox_2);
-        occlusion_2->setObjectName(QStringLiteral("occlusion_2"));
-
-        horizontalLayout_13->addWidget(occlusion_2);
-
-        slider_occlusion_threshold_2 = new QSlider(groupBox_2);
-        slider_occlusion_threshold_2->setObjectName(QStringLiteral("slider_occlusion_threshold_2"));
-        sizePolicy1.setHeightForWidth(slider_occlusion_threshold_2->sizePolicy().hasHeightForWidth());
-        slider_occlusion_threshold_2->setSizePolicy(sizePolicy1);
-        slider_occlusion_threshold_2->setMinimum(0);
-        slider_occlusion_threshold_2->setMaximum(200);
-        slider_occlusion_threshold_2->setSliderPosition(0);
-        slider_occlusion_threshold_2->setOrientation(Qt::Horizontal);
-        slider_occlusion_threshold_2->setTickPosition(QSlider::TicksBelow);
-        slider_occlusion_threshold_2->setTickInterval(1);
-
-        horizontalLayout_13->addWidget(slider_occlusion_threshold_2);
-
-        label_31 = new QLabel(groupBox_2);
-        label_31->setObjectName(QStringLiteral("label_31"));
-
-        horizontalLayout_13->addWidget(label_31);
-
-
-        verticalLayout_2->addLayout(horizontalLayout_13);
-
-        label_38 = new QLabel(groupBox_2);
-        label_38->setObjectName(QStringLiteral("label_38"));
-        sizePolicy1.setHeightForWidth(label_38->sizePolicy().hasHeightForWidth());
-        label_38->setSizePolicy(sizePolicy1);
-        label_38->setMinimumSize(QSize(0, 10));
-
-        verticalLayout_2->addWidget(label_38);
-
-        horizontalLayout_16 = new QHBoxLayout();
-        horizontalLayout_16->setObjectName(QStringLiteral("horizontalLayout_16"));
-        association_2 = new QLabel(groupBox_2);
-        association_2->setObjectName(QStringLiteral("association_2"));
-
-        horizontalLayout_16->addWidget(association_2);
-
-        slider_association_threshold_2 = new QSlider(groupBox_2);
-        slider_association_threshold_2->setObjectName(QStringLiteral("slider_association_threshold_2"));
-        sizePolicy1.setHeightForWidth(slider_association_threshold_2->sizePolicy().hasHeightForWidth());
-        slider_association_threshold_2->setSizePolicy(sizePolicy1);
-        slider_association_threshold_2->setMinimum(0);
-        slider_association_threshold_2->setMaximum(100);
-        slider_association_threshold_2->setSliderPosition(0);
-        slider_association_threshold_2->setOrientation(Qt::Horizontal);
-        slider_association_threshold_2->setTickPosition(QSlider::TicksBelow);
-        slider_association_threshold_2->setTickInterval(1);
-
-        horizontalLayout_16->addWidget(slider_association_threshold_2);
-
-        label_40 = new QLabel(groupBox_2);
-        label_40->setObjectName(QStringLiteral("label_40"));
-
-        horizontalLayout_16->addWidget(label_40);
-
-
-        verticalLayout_2->addLayout(horizontalLayout_16);
-
-        label_34 = new QLabel(groupBox_2);
-        label_34->setObjectName(QStringLiteral("label_34"));
-        sizePolicy1.setHeightForWidth(label_34->sizePolicy().hasHeightForWidth());
-        label_34->setSizePolicy(sizePolicy1);
-        label_34->setMinimumSize(QSize(0, 10));
-
-        verticalLayout_2->addWidget(label_34);
-
-        horizontalLayout_14 = new QHBoxLayout();
-        horizontalLayout_14->setObjectName(QStringLiteral("horizontalLayout_14"));
-        transformed_2 = new QLabel(groupBox_2);
-        transformed_2->setObjectName(QStringLiteral("transformed_2"));
-
-        horizontalLayout_14->addWidget(transformed_2);
-
-        slider_transformed_threshold_2 = new QSlider(groupBox_2);
-        slider_transformed_threshold_2->setObjectName(QStringLiteral("slider_transformed_threshold_2"));
-        sizePolicy1.setHeightForWidth(slider_transformed_threshold_2->sizePolicy().hasHeightForWidth());
-        slider_transformed_threshold_2->setSizePolicy(sizePolicy1);
-        slider_transformed_threshold_2->setMinimum(0);
-        slider_transformed_threshold_2->setMaximum(15);
-        slider_transformed_threshold_2->setValue(0);
-        slider_transformed_threshold_2->setOrientation(Qt::Horizontal);
-        slider_transformed_threshold_2->setTickPosition(QSlider::TicksBelow);
-        slider_transformed_threshold_2->setTickInterval(1);
-
-        horizontalLayout_14->addWidget(slider_transformed_threshold_2);
-
-        label_33 = new QLabel(groupBox_2);
-        label_33->setObjectName(QStringLiteral("label_33"));
-
-        horizontalLayout_14->addWidget(label_33);
-
-
-        verticalLayout_2->addLayout(horizontalLayout_14);
-
 
         horizontalLayout->addWidget(groupBox_2);
 
 
-        verticalLayout_3->addLayout(horizontalLayout);
+        verticalLayout_4->addLayout(horizontalLayout);
+
+        groupBox_3 = new QGroupBox(BackgroundModelTuningDialog);
+        groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
+        verticalLayout_3 = new QVBoxLayout(groupBox_3);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        label_37 = new QLabel(groupBox_3);
+        label_37->setObjectName(QStringLiteral("label_37"));
+        sizePolicy1.setHeightForWidth(label_37->sizePolicy().hasHeightForWidth());
+        label_37->setSizePolicy(sizePolicy1);
+        label_37->setMinimumSize(QSize(0, 10));
+
+        verticalLayout_3->addWidget(label_37);
+
+        horizontalLayout_15 = new QHBoxLayout();
+        horizontalLayout_15->setObjectName(QStringLiteral("horizontalLayout_15"));
+        association = new QLabel(groupBox_3);
+        association->setObjectName(QStringLiteral("association"));
+
+        horizontalLayout_15->addWidget(association);
+
+        slider_association_threshold = new QSlider(groupBox_3);
+        slider_association_threshold->setObjectName(QStringLiteral("slider_association_threshold"));
+        sizePolicy1.setHeightForWidth(slider_association_threshold->sizePolicy().hasHeightForWidth());
+        slider_association_threshold->setSizePolicy(sizePolicy1);
+        slider_association_threshold->setMinimum(0);
+        slider_association_threshold->setMaximum(1000);
+        slider_association_threshold->setSliderPosition(0);
+        slider_association_threshold->setOrientation(Qt::Horizontal);
+        slider_association_threshold->setTickPosition(QSlider::TicksBelow);
+        slider_association_threshold->setTickInterval(1);
+
+        horizontalLayout_15->addWidget(slider_association_threshold);
+
+        label_36 = new QLabel(groupBox_3);
+        label_36->setObjectName(QStringLiteral("label_36"));
+
+        horizontalLayout_15->addWidget(label_36);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_15);
+
+        label_23 = new QLabel(groupBox_3);
+        label_23->setObjectName(QStringLiteral("label_23"));
+        sizePolicy1.setHeightForWidth(label_23->sizePolicy().hasHeightForWidth());
+        label_23->setSizePolicy(sizePolicy1);
+        label_23->setMinimumSize(QSize(0, 10));
+
+        verticalLayout_3->addWidget(label_23);
+
+        horizontalLayout_11 = new QHBoxLayout();
+        horizontalLayout_11->setObjectName(QStringLiteral("horizontalLayout_11"));
+        occlusion = new QLabel(groupBox_3);
+        occlusion->setObjectName(QStringLiteral("occlusion"));
+
+        horizontalLayout_11->addWidget(occlusion);
+
+        slider_occlusion_threshold = new QSlider(groupBox_3);
+        slider_occlusion_threshold->setObjectName(QStringLiteral("slider_occlusion_threshold"));
+        sizePolicy1.setHeightForWidth(slider_occlusion_threshold->sizePolicy().hasHeightForWidth());
+        slider_occlusion_threshold->setSizePolicy(sizePolicy1);
+        slider_occlusion_threshold->setMinimum(0);
+        slider_occlusion_threshold->setMaximum(1000);
+        slider_occlusion_threshold->setSliderPosition(0);
+        slider_occlusion_threshold->setOrientation(Qt::Horizontal);
+        slider_occlusion_threshold->setTickPosition(QSlider::TicksBelow);
+        slider_occlusion_threshold->setTickInterval(1);
+
+        horizontalLayout_11->addWidget(slider_occlusion_threshold);
+
+        label_25 = new QLabel(groupBox_3);
+        label_25->setObjectName(QStringLiteral("label_25"));
+
+        horizontalLayout_11->addWidget(label_25);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_11);
+
+
+        verticalLayout_4->addWidget(groupBox_3);
 
         horizontalLayout_33 = new QHBoxLayout();
         horizontalLayout_33->setObjectName(QStringLiteral("horizontalLayout_33"));
@@ -673,7 +518,7 @@ public:
         horizontalLayout_33->addWidget(label_92);
 
 
-        verticalLayout_3->addLayout(horizontalLayout_33);
+        verticalLayout_4->addLayout(horizontalLayout_33);
 
         horizontalLayout_32 = new QHBoxLayout();
         horizontalLayout_32->setObjectName(QStringLiteral("horizontalLayout_32"));
@@ -693,7 +538,7 @@ public:
         horizontalLayout_32->addWidget(pushButton_save);
 
 
-        verticalLayout_3->addLayout(horizontalLayout_32);
+        verticalLayout_4->addLayout(horizontalLayout_32);
 
         horizontalLayout_34 = new QHBoxLayout();
         horizontalLayout_34->setObjectName(QStringLiteral("horizontalLayout_34"));
@@ -713,8 +558,10 @@ public:
         horizontalLayout_34->addWidget(buttonBox);
 
 
-        verticalLayout_3->addLayout(horizontalLayout_34);
+        verticalLayout_4->addLayout(horizontalLayout_34);
 
+        groupBox_2->raise();
+        groupBox_3->raise();
 
         retranslateUi(BackgroundModelTuningDialog);
 
@@ -737,15 +584,6 @@ public:
         label_14->setText(QApplication::translate("BackgroundModelTuningDialog", "Gaussian Blur Size of Filter", 0));
         gaussian_1->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
         label_13->setText(QApplication::translate("BackgroundModelTuningDialog", "15", 0));
-        label_23->setText(QApplication::translate("BackgroundModelTuningDialog", "Pixel Threshold of Occlusion", 0));
-        occlusion_1->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
-        label_25->setText(QApplication::translate("BackgroundModelTuningDialog", "200", 0));
-        label_37->setText(QApplication::translate("BackgroundModelTuningDialog", "Pixel Threshold of Association", 0));
-        association_1->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
-        label_36->setText(QApplication::translate("BackgroundModelTuningDialog", "100", 0));
-        label_26->setText(QApplication::translate("BackgroundModelTuningDialog", "Transformed Threshold of Occlusion", 0));
-        transformed_1->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
-        label_28->setText(QApplication::translate("BackgroundModelTuningDialog", "15", 0));
         groupBox_2->setTitle(QApplication::translate("BackgroundModelTuningDialog", "Parameter Tuning - Camera 2", 0));
         label_82->setText(QApplication::translate("BackgroundModelTuningDialog", "Blob Detector Min Area", 0));
         min_area_2->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
@@ -759,15 +597,13 @@ public:
         label_93->setText(QApplication::translate("BackgroundModelTuningDialog", "Gaussian Blur Size of Filter", 0));
         gaussian_2->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
         label_95->setText(QApplication::translate("BackgroundModelTuningDialog", "15", 0));
-        label_29->setText(QApplication::translate("BackgroundModelTuningDialog", "Pixel Threshold of Occlusion", 0));
-        occlusion_2->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
-        label_31->setText(QApplication::translate("BackgroundModelTuningDialog", "200", 0));
-        label_38->setText(QApplication::translate("BackgroundModelTuningDialog", "Pixel Threshold of Association", 0));
-        association_2->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
-        label_40->setText(QApplication::translate("BackgroundModelTuningDialog", "100", 0));
-        label_34->setText(QApplication::translate("BackgroundModelTuningDialog", "Transformed Threshold of Occlusion", 0));
-        transformed_2->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
-        label_33->setText(QApplication::translate("BackgroundModelTuningDialog", "15", 0));
+        groupBox_3->setTitle(QApplication::translate("BackgroundModelTuningDialog", "Global Parameter", 0));
+        label_37->setText(QApplication::translate("BackgroundModelTuningDialog", "Pixel Threshold of Association", 0));
+        association->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
+        label_36->setText(QApplication::translate("BackgroundModelTuningDialog", "1000", 0));
+        label_23->setText(QApplication::translate("BackgroundModelTuningDialog", "Pixel Threshold of Occlusion", 0));
+        occlusion->setText(QApplication::translate("BackgroundModelTuningDialog", "0", 0));
+        label_25->setText(QApplication::translate("BackgroundModelTuningDialog", "1000", 0));
         label_91->setText(QApplication::translate("BackgroundModelTuningDialog", "Status: ", 0));
         label_92->setText(QApplication::translate("BackgroundModelTuningDialog", "Unknown", 0));
         pushButton_load->setText(QApplication::translate("BackgroundModelTuningDialog", "Load Settings from File...", 0));

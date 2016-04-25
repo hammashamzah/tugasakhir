@@ -101,17 +101,6 @@ void ObjectDetector::updateBackgroundModelUsingImage(QString filename, int id) {
 void ObjectDetector::updateValueParameter(QVector< QVector<int> > parameters) {
 	emit updateValueParameter_1(parameters.at(0));
 	emit updateValueParameter_2(parameters.at(1));
-	if (!myTrackingInitialized) {
-		myAssociationThresholds.clear();
-		//pixel threshold 1
-		myAssociationThresholds.append(parameters[0][4]);
-		//pixel threshold 2
-		myAssociationThresholds.append(parameters[0][5]);
-		//transformed threshold 1
-		myAssociationThresholds.append(parameters[1][4]);
-		//transformed threshold 2
-		myAssociationThresholds.append(parameters[1][5]);
-	}
 }
 
 

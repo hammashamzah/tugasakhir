@@ -18,7 +18,6 @@ FieldSelectionDialog::FieldSelectionDialog(QWidget *parent) :
 
     frameCamera.resize(2);
     listOfClickCoordinates.resize(2);
-    listOfTrapeziumCoordinates.resize(2);
     listOfTransformationCoordinates.resize(2);
 }
 
@@ -46,7 +45,6 @@ void FieldSelectionDialog::on_cameraSelectCombo_currentIndexChanged(int index)
     switch (index) {
     case 0:
     case 2:
-    case 4:
         if (!frameCamera.at(0).isNull()) {
             ui->imageView->setAlignment(Qt::AlignCenter);
             ui->imageView->setPixmap(QPixmap::fromImage(frameCamera.at(0)));
@@ -54,7 +52,6 @@ void FieldSelectionDialog::on_cameraSelectCombo_currentIndexChanged(int index)
         break;
     case 1:
     case 3:
-    case 5:
         if (!frameCamera.at(1).isNull()) {
             ui->imageView->setAlignment(Qt::AlignCenter);
             ui->imageView->setPixmap(QPixmap::fromImage(frameCamera.at(1)));
@@ -65,9 +62,9 @@ void FieldSelectionDialog::on_cameraSelectCombo_currentIndexChanged(int index)
 
 void FieldSelectionDialog::processMouse(QPoint &pos) {
     QPixmap rawImage;
-    if (currentCameraIndex == 0 || currentCameraIndex == 2 || currentCameraIndex == 4) {
+    if (currentCameraIndex == 0 || currentCameraIndex == 2) {
         rawImage = QPixmap::fromImage(frameCamera.at(0));
-    } else if (currentCameraIndex == 1 || currentCameraIndex == 3 || currentCameraIndex == 5) {
+    } else if (currentCameraIndex == 1 || currentCameraIndex == 3) {
         rawImage = QPixmap::fromImage(frameCamera.at(1));
     }
     QPainter pixPaint(&rawImage);
@@ -105,26 +102,6 @@ void FieldSelectionDialog::processMouse(QPoint &pos) {
             break;
         }
         case 3: {
-            if (listOfTrapeziumCoordinates.at(0).size() > 0) {
-                QPointF titik[listOfTrapeziumCoordinates.at(0).size()];
-                for (int i = 0; i < listOfTrapeziumCoordinates.at(0).size(); i++) {
-                    titik[i] = QPointF(listOfTrapeziumCoordinates.at(0).at(i).x(), listOfTrapeziumCoordinates.at(0).at(i).y());
-                }
-                pixPaint.drawPolygon(titik, listOfTrapeziumCoordinates.at(0).size(), Qt::OddEvenFill);
-            }
-            break;
-        }
-        case 4: {
-            if (listOfTrapeziumCoordinates.at(1).size() > 0) {
-                QPointF titik[listOfTrapeziumCoordinates.at(1).size()];
-                for (int i = 0; i < listOfTrapeziumCoordinates.at(1).size(); i++) {
-                    titik[i] = QPointF(listOfTrapeziumCoordinates.at(1).at(i).x(), listOfTrapeziumCoordinates.at(1).at(i).y());
-                }
-                pixPaint.drawPolygon(titik, listOfTrapeziumCoordinates.at(1).size(), Qt::OddEvenFill);
-            }
-            break;
-        }
-        case 5: {
             if (listOfTransformationCoordinates.at(0).size() > 0) {
                 QPointF titik[listOfTransformationCoordinates.at(0).size()];
                 for (int i = 0; i < listOfTransformationCoordinates.at(0).size(); i++) {
@@ -134,7 +111,7 @@ void FieldSelectionDialog::processMouse(QPoint &pos) {
             }
             break;
         }
-        case 6: {
+        case 4: {
             if (listOfTransformationCoordinates.at(1).size() > 0) {
                 QPointF titik[listOfTransformationCoordinates.at(1).size()];
                 for (int i = 0; i < listOfTransformationCoordinates.at(1).size(); i++) {
@@ -168,16 +145,10 @@ void FieldSelectionDialog::processRightClick(QPoint &pos) {
             set[1] = true;
             break;
         case 3:
-            listOfTrapeziumCoordinates[0] = clickCoordinates;
-            break;
-        case 4:
-            listOfTrapeziumCoordinates[1] = clickCoordinates;
-            break;
-        case 5:
             listOfTransformationCoordinates[0] = clickCoordinates;
             set[2] = true;
             break;
-        case 6:
+        case 4:
             listOfTransformationCoordinates[1] = clickCoordinates;
             set[3] = true;
             break;
@@ -186,7 +157,6 @@ void FieldSelectionDialog::processRightClick(QPoint &pos) {
         if (set[0] && set[1] && set[2] && set[3]) {
 
             emit sendMaskCoordinates(listOfClickCoordinates);
-            emit sendTrapeziumCoordinates(listOfTrapeziumCoordinates);
             emit sendTransformationCoordinates(listOfTransformationCoordinates);
         }
     }
@@ -215,16 +185,10 @@ void FieldSelectionDialog::on_pushButton_apply_released()
         set[1] = true;
         break;
     case 3:
-        listOfTrapeziumCoordinates[0] = clickCoordinates;
-        break;
-    case 4:
-        listOfTrapeziumCoordinates[1] = clickCoordinates;
-        break;
-    case 5:
         listOfTransformationCoordinates[0] = clickCoordinates;
         set[2] = true;
         break;
-    case 6:
+    case 4:
         listOfTransformationCoordinates[1] = clickCoordinates;
         set[3] = true;
         break;
@@ -233,7 +197,6 @@ void FieldSelectionDialog::on_pushButton_apply_released()
     if (set[0] && set[1] && set[2] && set[3]) {
 
         emit sendMaskCoordinates(listOfClickCoordinates);
-        emit sendTrapeziumCoordinates(listOfTrapeziumCoordinates);
         emit sendTransformationCoordinates(listOfTransformationCoordinates);
     }
 
@@ -258,33 +221,20 @@ void FieldSelectionDialog::fileHandler(QString filename, int mode) {
                 listOfClickCoordinates[1].append(QPoint((lines.at(1)).section(" ", 2 * i, 2 * i).toInt(), (lines.at(1)).section(" ", 2 * i + 1, 2 * i + 1).toInt()));
             }
 
-            listOfTrapeziumCoordinates[0].clear();
-            numberOfMaskPoints[1] = lines.at(2).count(QLatin1Char(' ')) / 2;
-            for (int i = 0; i < (numberOfMaskPoints[1]); i++) {
-                listOfTrapeziumCoordinates[0].append(QPoint((lines.at(2)).section(" ", 2 * i, 2 * i).toInt(), (lines.at(2)).section(" ", 2 * i + 1, 2 * i + 1).toInt()));
-            }
-
-            listOfTrapeziumCoordinates[1].clear();
-            numberOfMaskPoints[1] = lines.at(3).count(QLatin1Char(' ')) / 2;
-            for (int i = 0; i < (numberOfMaskPoints[1]); i++) {
-                listOfTrapeziumCoordinates[1].append(QPoint((lines.at(3)).section(" ", 2 * i, 2 * i).toInt(), (lines.at(3)).section(" ", 2 * i + 1, 2 * i + 1).toInt()));
-            }
-
             listOfTransformationCoordinates[0].clear();
-            numberOfTransformationPoints[0] = lines.at(4).count(QLatin1Char(' ')) / 2;
+            numberOfTransformationPoints[0] = lines.at(2).count(QLatin1Char(' ')) / 2;
             for (int i = 0; i < (numberOfTransformationPoints[0]); i++) {
-                listOfTransformationCoordinates[0].append(QPoint((lines.at(4)).section(" ", 2 * i, 2 * i).toInt(), (lines.at(4)).section(" ", 2 * i + 1, 2 * i + 1).toInt()));
+                listOfTransformationCoordinates[0].append(QPoint((lines.at(2)).section(" ", 2 * i, 2 * i).toInt(), (lines.at(2)).section(" ", 2 * i + 1, 2 * i + 1).toInt()));
             }
 
             listOfTransformationCoordinates[1].clear();
-            numberOfTransformationPoints[1] = lines.at(5).count(QLatin1Char(' ')) / 2;
+            numberOfTransformationPoints[1] = lines.at(3).count(QLatin1Char(' ')) / 2;
             for (int i = 0; i < (numberOfTransformationPoints[1]); i++) {
-                listOfTransformationCoordinates[1].append(QPoint((lines.at(5)).section(" ", 2 * i, 2 * i).toInt(), (lines.at(5)).section(" ", 2 * i + 1, 2 * i + 1).toInt()));
+                listOfTransformationCoordinates[1].append(QPoint((lines.at(3)).section(" ", 2 * i, 2 * i).toInt(), (lines.at(3)).section(" ", 2 * i + 1, 2 * i + 1).toInt()));
             }
         }
         file.close();
         emit sendMaskCoordinates(listOfClickCoordinates);
-        emit sendTrapeziumCoordinates(listOfTrapeziumCoordinates);
         emit sendTransformationCoordinates(listOfTransformationCoordinates);
         break;
     case 2: //saving mode
@@ -296,14 +246,6 @@ void FieldSelectionDialog::fileHandler(QString filename, int mode) {
                     for (int j = 0; j < listOfClickCoordinates[i].size(); j++)
                     {
                         stream << listOfClickCoordinates[i][j].x() << " " << listOfClickCoordinates[i][j].y() << " ";
-                    }
-                    stream << "\n";
-                }
-                for (int i = 0; i < 2; i++)
-                {
-                    for (int j = 0; j < listOfTrapeziumCoordinates[i].size(); j++)
-                    {
-                        stream << listOfTrapeziumCoordinates[i][j].x() << " " << listOfTrapeziumCoordinates[i][j].y() << " ";
                     }
                     stream << "\n";
                 }

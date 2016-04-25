@@ -1,51 +1,64 @@
 #include "player.h"
 
-Player::Player(){
+Player::Player() {
 
 }
 
-Player::Player(int frame, int cameraId, Point2f position){
-	isValid = false;
+Player::Player(int frame, int cameraId, Point2f cameraPosition) {
+    isValid = false;
+    isOccluded = false;
+    isAssociated = false;
     id = 0;
     framePosition = frame;
     camera = cameraId;
-    pos = position;
-    speed = Point2f(0,0);
-    acceleration = Point2f(0,0);
-    transformedPos = Point2f(0,0);
-    transformedSpeed = Point2f(0,0);
+    cameraPos = cameraPosition;
+    pos = Point2f(0, 0);
+    speed = Point2f(0, 0);
+    acceleration = Point2f(0, 0);
 }
 
-Player::Player(int identity, int frame, int cameraId, Point2f position, Point2f inputSpeed, Point2f inputTransformedPos, Point2f inputTransformedSpeed)
+//untuk inisialisasi di datalogger
+Player::Player(int identity, int cameraId, int frame, Point2f inputPosition, Point2f inputSpeed, Point2f inputAcceleration, Point2f inputCameraPos)
 {
     isValid = true;
-	id = identity;
-    framePosition = frame;
+    isOccluded = false;
+    id = identity;
     camera = cameraId;
-    pos = position;
+    framePosition = frame;
+    pos = inputPosition;
     speed = inputSpeed;
-    acceleration = Point2f(0,0);
-    transformedPos = inputTransformedPos;
-    transformedSpeed = inputTransformedSpeed;
-
+    acceleration = inputAcceleration;
+    cameraPos = inputCameraPos;
 }
 
-Player::Player(int identity, int frame,int cameraId,Point2f position,Point2f inputSpeed,Point2f inputAcceleration){
+/*Player::Player(int identity, int frame,int cameraId,Point2f position,Point2f inputSpeed,Point2f inputAcceleration){
     isValid = true;
     id = identity;
     framePosition = frame;
-    camera = cameraId;
+    cameraPos = cameraId;
     pos = position;
     speed = inputSpeed;
     acceleration = inputAcceleration;
     transformedPos = Point2f(0,0);
     transformedSpeed = Point2f(0,0);
-}
+}*/
 
-Player::Player(Point2f position){
+/*Player::Player(Point2f position){
     isValid = false;
-    pos = position;
-    
+    cameraPos = position;
+
+}*/
+
+
+
+/*friend void swapPlayer(Player& first, Player& second) {
+
+
+}*/
+
+Player& Player::operator=(Player b) {
+    swap(*this, b);
+    return *this;
 }
 
 Player::~Player()

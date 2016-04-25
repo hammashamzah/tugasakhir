@@ -6,11 +6,13 @@ BackgroundModelTuningDialog::BackgroundModelTuningDialog(QWidget *parent) :
     ui(new Ui::BackgroundModelTuningDialog)
 {
     ui->setupUi(this);
-    parameters.resize(2);
-    parameters[0].resize(7);
-    parameters[1].resize(7);
+    parameters.resize(3);
+    parameters[0].resize(4);
+    parameters[1].resize(4);
+    parameters[2].resize(2);
     parameters[0].fill(0);
     parameters[1].fill(0);
+    parameters[2].fill(0);
 }
 
 BackgroundModelTuningDialog::~BackgroundModelTuningDialog()
@@ -81,51 +83,19 @@ void BackgroundModelTuningDialog::on_slider_gaussian_size_2_valueChanged(int val
 
 }
 
-void BackgroundModelTuningDialog::on_slider_occlusion_threshold_1_valueChanged(int value)
+void BackgroundModelTuningDialog::on_slider_occlusion_threshold_valueChanged(int value)
 {
-    parameters[0][4] = value;
-    ui->occlusion_1->setText(QString::number(value));
+    parameters[2][1] = value;
+    ui->occlusion->setText(QString::number(value));
     emit sendValueParameter(parameters);
 }
 
-void BackgroundModelTuningDialog::on_slider_occlusion_threshold_2_valueChanged(int value)
+void BackgroundModelTuningDialog::on_slider_association_threshold_valueChanged(int value)
 {
-    parameters[1][4] = value;
-    ui->occlusion_2->setText(QString::number(value));
+    parameters[2][0] = value;
+    ui->association->setText(QString::number(value));
     emit sendValueParameter(parameters);
 }
-
-void BackgroundModelTuningDialog::on_slider_association_threshold_1_valueChanged(int value)
-{
-    parameters[0][5] = value;
-    ui->association_1->setText(QString::number(value));
-    emit sendValueParameter(parameters);
-}
-
-void BackgroundModelTuningDialog::on_slider_association_threshold_2_valueChanged(int value)
-{
-    parameters[1][5] = value;
-    ui->association_2->setText(QString::number(value));
-    emit sendValueParameter(parameters);
-}
-
-void BackgroundModelTuningDialog::on_slider_transformed_threshold_1_valueChanged(int value)
-{
-    parameters[0][6] = value;
-    ui->transformed_1->setText(QString::number(value));
-    emit sendValueParameter(parameters);
-}
-
-
-
-void BackgroundModelTuningDialog::on_slider_transformed_threshold_2_valueChanged(int value)
-{
-    parameters[1][6] = value;
-    ui->transformed_2->setText(QString::number(value));
-    emit sendValueParameter(parameters);
-}
-
-
 
 void BackgroundModelTuningDialog::on_pushButton_load_released()
 {
@@ -136,9 +106,6 @@ void BackgroundModelTuningDialog::on_pushButton_load_released()
     emit sendValueParameter(parameters);
 }
 
-
-
-
 void BackgroundModelTuningDialog::on_pushButton_save_released()
 {
     QString filename = QFileDialog::getSaveFileName(this,
@@ -147,14 +114,19 @@ void BackgroundModelTuningDialog::on_pushButton_save_released()
     QFile file(filename);
     if (file.open(QIODevice::WriteOnly)) {
         QTextStream stream(&file);
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < 4; j++)
         {
             stream << parameters[0][j] << " ";
         }
         stream << "\n";
-        for (int j = 0; j < 6; j++)
+        for (int j = 0; j < 4; j++)
         {
             stream << parameters[1][j] << " ";
+        }
+        stream << "\n";
+        for(int j = 0; j < 2; j++)
+        {
+            stream << parameters[2][j] << " ";
         }
     }
 
@@ -174,17 +146,22 @@ void BackgroundModelTuningDialog::loadSetting(QString filename){
     if (file.open(QIODevice::ReadOnly)) {
         QStringList lines = QString(file.readAll()).split(QRegExp("[\r\n]"));
         parameters.clear();
-        parameters.resize(2);
-        parameters[0].resize(7);
-        parameters[1].resize(7);
-        for (int i = 0; i < 7; i++)
+        parameters.resize(3);
+        parameters[0].resize(4);
+        parameters[1].resize(4);
+        parameters[2].resize(2);
+        for (int i = 0; i < 4; i++)
         {
             parameters[0][i] = lines.at(0).section(" ", i, i).toInt();
         }
 
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 4; i++)
         {
             parameters[1][i] = lines.at(1).section(" ", i, i).toInt();
+        }
+
+        for(int i = 0; i < 2; i++){
+            parameters[2][i] = lines.at(2).section(" ", i, i).toInt();
         }
     }
 
@@ -192,14 +169,12 @@ void BackgroundModelTuningDialog::loadSetting(QString filename){
     ui->slider_max_area_1->setValue(parameters[0][1]);
     ui->slider_morp_element_size_1->setValue(parameters[0][2]);
     ui->slider_gaussian_size_1->setValue(parameters[0][3]);
-    ui->slider_occlusion_threshold_1->setValue(parameters[0][4]);
-    ui->slider_association_threshold_1->setValue(parameters[0][5]);
-    ui->slider_transformed_threshold_1->setValue(parameters[0][6]);
+
     ui->slider_min_area_2->setValue(parameters[1][0]);
     ui->slider_max_area_2->setValue(parameters[1][1]);
     ui->slider_morp_element_size_2->setValue(parameters[1][2]);
     ui->slider_gaussian_size_2->setValue(parameters[1][3]);
-    ui->slider_occlusion_threshold_2->setValue(parameters[1][4]);
-    ui->slider_association_threshold_2->setValue(parameters[1][5]);
-    ui->slider_transformed_threshold_2->setValue(parameters[1][6]);
+
+    ui->slider_association_threshold->setValue(parameters[2][0]);
+    ui->slider_occlusion_threshold->setValue(parameters[2][1]);
 }

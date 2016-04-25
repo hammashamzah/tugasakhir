@@ -56,13 +56,12 @@ public:
     bool isSetThresholds;
 
 public slots:
-    void displayTransformedPosition(QVector<QList<Player> >);
+    void displayProcessedData(QList<Player>);
     void initListPlayer();
     void setCameraViewFirstFrameImage(QVector<QImage>);
     void updateCameraViewFrameImage(QVector< QVector<QImage> > image);
     void setValueParameter(QVector< QVector<int> > valueParameter);
-    void setTrapeziumCoordinates(QVector<QList<QPoint> > trapeziumCoordinates);
-    void displayAssignedTransformedPosition(QVector<QList<Player> > assignedTransformedPosition);
+    void displayAssignedTransformedPosition(QList<Player> assignedTransformedPosition);
 
 private slots:
     //menu file edit dll
@@ -86,8 +85,6 @@ private slots:
 
 
     void on_listTeamB_itemClicked(QListWidgetItem *item);
-
-    void on_pushButton_initialize_object_released();
 
     void on_slider_global_frame_sliderPressed();
 
@@ -123,7 +120,8 @@ private:
     QString getFormattedTime(int timeInSeconds);
     int idToAssign;
     bool isIdAssigned[22];
-    QVector<QList<Player> > playerDisplayed;
+    QList<Player> playerDisplayed_scaling;
+    QList<Player> playerDisplayed;
     int assignedId;
     //hanya untuk debug
     QVector<QList<Player> > setRandomPlayer();   
@@ -134,7 +132,7 @@ private:
 
 
 signals:
-       void sendAllIdAssigned(QVector<QList<Player> >);
+       void sendAllIdAssigned(QList<Player>);
 };
 
 #endif // MAINWINDOW_H

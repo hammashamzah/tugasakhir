@@ -41,9 +41,6 @@ public slots:
 
     void on_slider_max_area_1_valueChanged(int value);
 
-    void on_slider_transformed_threshold_1_valueChanged(int value);
-
-    void on_slider_transformed_threshold_2_valueChanged(int value);
 private:
     void loadSetting(QString filename);
     Ui::BackgroundModelTuningDialog *ui;
@@ -53,10 +50,8 @@ signals:
 
 
 private slots:
-    void on_slider_occlusion_threshold_1_valueChanged(int value);
-    void on_slider_occlusion_threshold_2_valueChanged(int value);
-    void on_slider_association_threshold_1_valueChanged(int value);
-    void on_slider_association_threshold_2_valueChanged(int value);
+    void on_slider_occlusion_threshold_valueChanged(int value);
+    void on_slider_association_threshold_valueChanged(int value);
     void on_pushButton_load_default_setting_released();
 };
 
