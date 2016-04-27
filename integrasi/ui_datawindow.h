@@ -13,6 +13,8 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -21,8 +23,10 @@
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <openglheatmap.h>
 #include "freezetablewidget.h"
 
 QT_BEGIN_NAMESPACE
@@ -61,16 +65,28 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QPushButton *pushButton_playbackSingleFrame;
     QPushButton *pushButton_playbackStart;
-    QVBoxLayout *verticalLayout_6;
+    QVBoxLayout *verticalLayout_5;
+    QComboBox *comboBox;
     QGroupBox *groupBox_summaryTeamA;
+    QGridLayout *gridLayout_5;
+    QTableView *tableView_dataPlayerA;
     QGroupBox *groupBox_summaryTeamB;
+    QGridLayout *gridLayout_4;
+    QTableView *tableView_dataPlayerB;
     QWidget *tab_3;
+    QGridLayout *gridLayout_6;
+    OpenGLHeatMap *openGLWidget_heatMap;
+    QSlider *rotYSlider;
+    QSlider *rotXSlider;
+    QSlider *rotZSlider;
+    QWidget *tab_4;
+    QGraphicsView *graphicsView;
 
     void setupUi(QWidget *DataWindow)
     {
         if (DataWindow->objectName().isEmpty())
             DataWindow->setObjectName(QStringLiteral("DataWindow"));
-        DataWindow->resize(1051, 551);
+        DataWindow->resize(1051, 632);
         gridLayout = new QGridLayout(DataWindow);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         verticalLayout_2 = new QVBoxLayout();
@@ -221,24 +237,43 @@ public:
 
         horizontalLayout_4->addLayout(verticalLayout_4);
 
-        verticalLayout_6 = new QVBoxLayout();
-        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
+        verticalLayout_5 = new QVBoxLayout();
+        verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
+        comboBox = new QComboBox(tab_2);
+        comboBox->setObjectName(QStringLiteral("comboBox"));
+
+        verticalLayout_5->addWidget(comboBox);
+
         groupBox_summaryTeamA = new QGroupBox(tab_2);
         groupBox_summaryTeamA->setObjectName(QStringLiteral("groupBox_summaryTeamA"));
         groupBox_summaryTeamA->setMinimumSize(QSize(240, 240));
         groupBox_summaryTeamA->setMaximumSize(QSize(240, 16777215));
+        gridLayout_5 = new QGridLayout(groupBox_summaryTeamA);
+        gridLayout_5->setObjectName(QStringLiteral("gridLayout_5"));
+        tableView_dataPlayerA = new QTableView(groupBox_summaryTeamA);
+        tableView_dataPlayerA->setObjectName(QStringLiteral("tableView_dataPlayerA"));
 
-        verticalLayout_6->addWidget(groupBox_summaryTeamA);
+        gridLayout_5->addWidget(tableView_dataPlayerA, 0, 0, 1, 1);
+
+
+        verticalLayout_5->addWidget(groupBox_summaryTeamA);
 
         groupBox_summaryTeamB = new QGroupBox(tab_2);
         groupBox_summaryTeamB->setObjectName(QStringLiteral("groupBox_summaryTeamB"));
         groupBox_summaryTeamB->setMinimumSize(QSize(240, 240));
         groupBox_summaryTeamB->setMaximumSize(QSize(240, 16777215));
+        gridLayout_4 = new QGridLayout(groupBox_summaryTeamB);
+        gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
+        tableView_dataPlayerB = new QTableView(groupBox_summaryTeamB);
+        tableView_dataPlayerB->setObjectName(QStringLiteral("tableView_dataPlayerB"));
 
-        verticalLayout_6->addWidget(groupBox_summaryTeamB);
+        gridLayout_4->addWidget(tableView_dataPlayerB, 0, 0, 1, 1);
 
 
-        horizontalLayout_4->addLayout(verticalLayout_6);
+        verticalLayout_5->addWidget(groupBox_summaryTeamB);
+
+
+        horizontalLayout_4->addLayout(verticalLayout_5);
 
 
         gridLayout_3->addLayout(horizontalLayout_4, 0, 0, 1, 1);
@@ -246,7 +281,38 @@ public:
         tabWidget->addTab(tab_2, QString());
         tab_3 = new QWidget();
         tab_3->setObjectName(QStringLiteral("tab_3"));
+        gridLayout_6 = new QGridLayout(tab_3);
+        gridLayout_6->setObjectName(QStringLiteral("gridLayout_6"));
+        openGLWidget_heatMap = new OpenGLHeatMap(tab_3);
+        openGLWidget_heatMap->setObjectName(QStringLiteral("openGLWidget_heatMap"));
+
+        gridLayout_6->addWidget(openGLWidget_heatMap, 0, 0, 1, 1);
+
+        rotYSlider = new QSlider(tab_3);
+        rotYSlider->setObjectName(QStringLiteral("rotYSlider"));
+        rotYSlider->setOrientation(Qt::Horizontal);
+
+        gridLayout_6->addWidget(rotYSlider, 2, 0, 1, 1);
+
+        rotXSlider = new QSlider(tab_3);
+        rotXSlider->setObjectName(QStringLiteral("rotXSlider"));
+        rotXSlider->setOrientation(Qt::Horizontal);
+
+        gridLayout_6->addWidget(rotXSlider, 1, 0, 1, 1);
+
+        rotZSlider = new QSlider(tab_3);
+        rotZSlider->setObjectName(QStringLiteral("rotZSlider"));
+        rotZSlider->setOrientation(Qt::Horizontal);
+
+        gridLayout_6->addWidget(rotZSlider, 3, 0, 1, 1);
+
         tabWidget->addTab(tab_3, QString());
+        tab_4 = new QWidget();
+        tab_4->setObjectName(QStringLiteral("tab_4"));
+        graphicsView = new QGraphicsView(tab_4);
+        graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        graphicsView->setGeometry(QRect(40, 10, 581, 281));
+        tabWidget->addTab(tab_4, QString());
 
         verticalLayout_2->addWidget(tabWidget);
 
@@ -256,7 +322,7 @@ public:
 
         retranslateUi(DataWindow);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(DataWindow);
@@ -283,6 +349,7 @@ public:
         groupBox_summaryTeamB->setTitle(QApplication::translate("DataWindow", "Summary Team B", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("DataWindow", "Visual Log Data", 0));
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("DataWindow", "Game Summary", 0));
+        tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("DataWindow", "Page", 0));
     } // retranslateUi
 
 };

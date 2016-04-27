@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     unitdynamicassociate.cpp \
     datawindow.cpp \
     playervisual.cpp \
-    freezetablewidget.cpp
+    freezetablewidget.cpp \
+    openglheatmap.cpp
 
 HEADERS  += mainwindow.h \
     backgroundmodeltuningdialog.h \
@@ -58,7 +59,8 @@ HEADERS  += mainwindow.h \
     unitdynamicassociate.h \
     datawindow.h \
     playervisual.h \
-    freezetablewidget.h
+    freezetablewidget.h \
+    openglheatmap.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

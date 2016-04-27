@@ -12,10 +12,10 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I/usr/local/include/opencv -I../../../Qt5.5.1/5.5/gcc_64/include -I../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets -I../../../Qt5.5.1/5.5/gcc_64/include/QtGui -I../../../Qt5.5.1/5.5/gcc_64/include/QtCore -I. -I. -I../../../Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++
+INCPATH       = -I. -I/usr/local/include/opencv -I../../../Qt5.5.1/5.5/gcc_64/include -I../../../Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets -I../../../Qt5.5.1/5.5/gcc_64/include/QtGui -I../../../Qt5.5.1/5.5/gcc_64/include/QtCore -I. -I. -I../../../Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/aznan/Qt5.5.1/5.5/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = integrasi1.0.0
 DISTDIR = /home/aznan/GitHub/tugasakhir/integrasi/.tmp/integrasi1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/aznan/Qt5.5.1/5.5/gcc_64 -Wl,-rpath,/home/aznan/Qt5.5.1/5.5/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/usr/local/lib -lopencv_calib3d -lopencv_contrib -lopencv_core -lopencv_features2d -lopencv_flann -lopencv_gpu -lopencv_highgui -lopencv_imgproc -lopencv_legacy -lopencv_ml -lopencv_nonfree -lopencv_objdetect -lopencv_ocl -lopencv_photo -lopencv_stitching -lopencv_superres -lopencv_ts -lopencv_video -lopencv_videostab -L/home/aznan/Qt5.5.1/5.5/gcc_64/lib -lQt5Widgets -L/usr/lib64 -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/usr/local/lib -lopencv_calib3d -lopencv_contrib -lopencv_core -lopencv_features2d -lopencv_flann -lopencv_gpu -lopencv_highgui -lopencv_imgproc -lopencv_legacy -lopencv_ml -lopencv_nonfree -lopencv_objdetect -lopencv_ocl -lopencv_photo -lopencv_stitching -lopencv_superres -lopencv_ts -lopencv_video -lopencv_videostab -L/home/aznan/Qt5.5.1/5.5/gcc_64/lib -lQt5OpenGL -L/usr/lib64 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -69,7 +69,8 @@ SOURCES       = main.cpp \
 		unitdynamicassociate.cpp \
 		datawindow.cpp \
 		playervisual.cpp \
-		freezetablewidget.cpp moc_mainwindow.cpp \
+		freezetablewidget.cpp \
+		openglheatmap.cpp moc_mainwindow.cpp \
 		moc_backgroundmodeltuningdialog.cpp \
 		moc_cameraviewdialog.cpp \
 		moc_errorcalculationdialog.cpp \
@@ -86,7 +87,8 @@ SOURCES       = main.cpp \
 		moc_searchplayerdata.cpp \
 		moc_unitdynamicassociate.cpp \
 		moc_datawindow.cpp \
-		moc_freezetablewidget.cpp
+		moc_freezetablewidget.cpp \
+		moc_openglheatmap.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		backgroundmodeltuningdialog.o \
@@ -109,6 +111,7 @@ OBJECTS       = main.o \
 		datawindow.o \
 		playervisual.o \
 		freezetablewidget.o \
+		openglheatmap.o \
 		moc_mainwindow.o \
 		moc_backgroundmodeltuningdialog.o \
 		moc_cameraviewdialog.o \
@@ -126,7 +129,8 @@ OBJECTS       = main.o \
 		moc_searchplayerdata.o \
 		moc_unitdynamicassociate.o \
 		moc_datawindow.o \
-		moc_freezetablewidget.o
+		moc_freezetablewidget.o \
+		moc_openglheatmap.o
 DIST          = integrasi.pro.user \
 		../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.5.1/5.5/gcc_64/mkspecs/common/unix.conf \
@@ -283,7 +287,8 @@ DIST          = integrasi.pro.user \
 		unitdynamicassociate.h \
 		datawindow.h \
 		playervisual.h \
-		freezetablewidget.h main.cpp \
+		freezetablewidget.h \
+		openglheatmap.h main.cpp \
 		mainwindow.cpp \
 		backgroundmodeltuningdialog.cpp \
 		cameraviewdialog.cpp \
@@ -304,7 +309,8 @@ DIST          = integrasi.pro.user \
 		unitdynamicassociate.cpp \
 		datawindow.cpp \
 		playervisual.cpp \
-		freezetablewidget.cpp
+		freezetablewidget.cpp \
+		openglheatmap.cpp
 QMAKE_TARGET  = integrasi
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = integrasi
@@ -470,6 +476,7 @@ Makefile: integrasi.pro ../../../Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++/qmake.conf
 		../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/yacc.prf \
 		../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/lex.prf \
 		integrasi.pro \
+		/home/aznan/Qt5.5.1/5.5/gcc_64/lib/libQt5OpenGL.prl \
 		/home/aznan/Qt5.5.1/5.5/gcc_64/lib/libQt5Widgets.prl \
 		/home/aznan/Qt5.5.1/5.5/gcc_64/lib/libQt5Gui.prl \
 		/home/aznan/Qt5.5.1/5.5/gcc_64/lib/libQt5Core.prl
@@ -609,6 +616,7 @@ Makefile: integrasi.pro ../../../Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++/qmake.conf
 ../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/yacc.prf:
 ../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/lex.prf:
 integrasi.pro:
+/home/aznan/Qt5.5.1/5.5/gcc_64/lib/libQt5OpenGL.prl:
 /home/aznan/Qt5.5.1/5.5/gcc_64/lib/libQt5Widgets.prl:
 /home/aznan/Qt5.5.1/5.5/gcc_64/lib/libQt5Gui.prl:
 /home/aznan/Qt5.5.1/5.5/gcc_64/lib/libQt5Core.prl:
@@ -626,8 +634,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h backgroundmodeltuningdialog.h cameraviewdialog.h errorcalculationdialog.h fieldselectiondialog.h clickdisplay.h player.h coordinatetransform.h cvmatandqimage.h systemperformancedialog.h trackingviewdialog.h videoprocessor.h objectdetector.h datalogger.h dynamicassociation.h kalmandynamic.h kalmandynamictoplevel.h searchplayerdata.h unitdynamicassociate.h datawindow.h playervisual.h freezetablewidget.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp backgroundmodeltuningdialog.cpp cameraviewdialog.cpp errorcalculationdialog.cpp fieldselectiondialog.cpp clickdisplay.cpp player.cpp coordinatetransform.cpp cvmatandqimage.cpp systemperformancedialog.cpp trackingviewdialog.cpp videoprocessor.cpp objectdetector.cpp datalogger.cpp dynamicassociation.cpp kalmandynamic.cpp searchplayerdata.cpp unitdynamicassociate.cpp datawindow.cpp playervisual.cpp freezetablewidget.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h backgroundmodeltuningdialog.h cameraviewdialog.h errorcalculationdialog.h fieldselectiondialog.h clickdisplay.h player.h coordinatetransform.h cvmatandqimage.h systemperformancedialog.h trackingviewdialog.h videoprocessor.h objectdetector.h datalogger.h dynamicassociation.h kalmandynamic.h kalmandynamictoplevel.h searchplayerdata.h unitdynamicassociate.h datawindow.h playervisual.h freezetablewidget.h openglheatmap.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp backgroundmodeltuningdialog.cpp cameraviewdialog.cpp errorcalculationdialog.cpp fieldselectiondialog.cpp clickdisplay.cpp player.cpp coordinatetransform.cpp cvmatandqimage.cpp systemperformancedialog.cpp trackingviewdialog.cpp videoprocessor.cpp objectdetector.cpp datalogger.cpp dynamicassociation.cpp kalmandynamic.cpp searchplayerdata.cpp unitdynamicassociate.cpp datawindow.cpp playervisual.cpp freezetablewidget.cpp openglheatmap.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents mainwindow.ui backgroundmodeltuningdialog.ui cameraviewdialog.ui errorcalculationdialog.ui fieldselectiondialog.ui systemperformancedialog.ui trackingviewdialog.ui datawindow.ui $(DISTDIR)/
 
 
@@ -651,9 +659,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_backgroundmodeltuningdialog.cpp moc_cameraviewdialog.cpp moc_errorcalculationdialog.cpp moc_fieldselectiondialog.cpp moc_clickdisplay.cpp moc_coordinatetransform.cpp moc_systemperformancedialog.cpp moc_trackingviewdialog.cpp moc_videoprocessor.cpp moc_objectdetector.cpp moc_datalogger.cpp moc_dynamicassociation.cpp moc_kalmandynamic.cpp moc_searchplayerdata.cpp moc_unitdynamicassociate.cpp moc_datawindow.cpp moc_freezetablewidget.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_backgroundmodeltuningdialog.cpp moc_cameraviewdialog.cpp moc_errorcalculationdialog.cpp moc_fieldselectiondialog.cpp moc_clickdisplay.cpp moc_coordinatetransform.cpp moc_systemperformancedialog.cpp moc_trackingviewdialog.cpp moc_videoprocessor.cpp moc_objectdetector.cpp moc_datalogger.cpp moc_dynamicassociation.cpp moc_kalmandynamic.cpp moc_searchplayerdata.cpp moc_unitdynamicassociate.cpp moc_datawindow.cpp moc_freezetablewidget.cpp moc_openglheatmap.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_backgroundmodeltuningdialog.cpp moc_cameraviewdialog.cpp moc_errorcalculationdialog.cpp moc_fieldselectiondialog.cpp moc_clickdisplay.cpp moc_coordinatetransform.cpp moc_systemperformancedialog.cpp moc_trackingviewdialog.cpp moc_videoprocessor.cpp moc_objectdetector.cpp moc_datalogger.cpp moc_dynamicassociation.cpp moc_kalmandynamic.cpp moc_searchplayerdata.cpp moc_unitdynamicassociate.cpp moc_datawindow.cpp moc_freezetablewidget.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_backgroundmodeltuningdialog.cpp moc_cameraviewdialog.cpp moc_errorcalculationdialog.cpp moc_fieldselectiondialog.cpp moc_clickdisplay.cpp moc_coordinatetransform.cpp moc_systemperformancedialog.cpp moc_trackingviewdialog.cpp moc_videoprocessor.cpp moc_objectdetector.cpp moc_datalogger.cpp moc_dynamicassociation.cpp moc_kalmandynamic.cpp moc_searchplayerdata.cpp moc_unitdynamicassociate.cpp moc_datawindow.cpp moc_freezetablewidget.cpp moc_openglheatmap.cpp
 moc_mainwindow.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
@@ -827,6 +835,15 @@ moc_mainwindow.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		datawindow.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
 		datalogger.h \
+		freezetablewidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableView \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtableview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QScrollBar \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qscrollbar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableWidget \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtablewidget.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGraphicsScene \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgraphicsscene.h \
 		playervisual.h \
@@ -835,8 +852,10 @@ moc_mainwindow.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTimer \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasictimer.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/QStandardItemModel \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qstandarditemmodel.h \
 		mainwindow.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore mainwindow.h -o moc_mainwindow.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore mainwindow.h -o moc_mainwindow.cpp
 
 moc_backgroundmodeltuningdialog.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
@@ -950,7 +969,7 @@ moc_backgroundmodeltuningdialog.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidge
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QStringList \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTextStream \
 		backgroundmodeltuningdialog.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore backgroundmodeltuningdialog.h -o moc_backgroundmodeltuningdialog.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore backgroundmodeltuningdialog.h -o moc_backgroundmodeltuningdialog.cpp
 
 moc_cameraviewdialog.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
@@ -1063,7 +1082,7 @@ moc_cameraviewdialog.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog 
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTime \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatetime.h \
 		cameraviewdialog.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore cameraviewdialog.h -o moc_cameraviewdialog.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore cameraviewdialog.h -o moc_cameraviewdialog.cpp
 
 moc_errorcalculationdialog.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
@@ -1169,7 +1188,7 @@ moc_errorcalculationdialog.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QD
 		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
 		errorcalculationdialog.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore errorcalculationdialog.h -o moc_errorcalculationdialog.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore errorcalculationdialog.h -o moc_errorcalculationdialog.cpp
 
 moc_fieldselectiondialog.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
@@ -1283,7 +1302,7 @@ moc_fieldselectiondialog.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDia
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTextStream \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QDebug \
 		fieldselectiondialog.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore fieldselectiondialog.h -o moc_fieldselectiondialog.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore fieldselectiondialog.h -o moc_fieldselectiondialog.cpp
 
 moc_clickdisplay.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
@@ -1393,7 +1412,7 @@ moc_clickdisplay.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qframe.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/QMouseEvent \
 		clickdisplay.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore clickdisplay.h -o moc_clickdisplay.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore clickdisplay.h -o moc_clickdisplay.cpp
 
 moc_coordinatetransform.cpp: player.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
@@ -1468,7 +1487,7 @@ moc_coordinatetransform.cpp: player.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
 		coordinatetransform.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore coordinatetransform.h -o moc_coordinatetransform.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore coordinatetransform.h -o moc_coordinatetransform.cpp
 
 moc_systemperformancedialog.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
@@ -1574,7 +1593,7 @@ moc_systemperformancedialog.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/Q
 		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
 		systemperformancedialog.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore systemperformancedialog.h -o moc_systemperformancedialog.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore systemperformancedialog.h -o moc_systemperformancedialog.cpp
 
 moc_trackingviewdialog.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialog \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
@@ -1680,7 +1699,7 @@ moc_trackingviewdialog.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QDialo
 		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
 		trackingviewdialog.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore trackingviewdialog.h -o moc_trackingviewdialog.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore trackingviewdialog.h -o moc_trackingviewdialog.cpp
 
 moc_videoprocessor.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
@@ -1787,7 +1806,7 @@ moc_videoprocessor.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QVector \
 		player.h \
 		videoprocessor.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore videoprocessor.h -o moc_videoprocessor.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore videoprocessor.h -o moc_videoprocessor.cpp
 
 moc_objectdetector.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
@@ -1910,7 +1929,7 @@ moc_objectdetector.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QMutex \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QVector \
 		player.h \
 		objectdetector.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore objectdetector.h -o moc_objectdetector.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore objectdetector.h -o moc_objectdetector.cpp
 
 moc_datalogger.cpp: player.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QList \
@@ -2025,7 +2044,7 @@ moc_datalogger.cpp: player.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTextStream \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
 		datalogger.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore datalogger.h -o moc_datalogger.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore datalogger.h -o moc_datalogger.cpp
 
 moc_dynamicassociation.cpp: unitdynamicassociate.h \
 		searchplayerdata.h \
@@ -2102,7 +2121,7 @@ moc_dynamicassociation.cpp: unitdynamicassociate.h \
 		kalmandynamic.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QVector \
 		dynamicassociation.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore dynamicassociation.h -o moc_dynamicassociation.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore dynamicassociation.h -o moc_dynamicassociation.cpp
 
 moc_kalmandynamic.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QList \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
@@ -2163,7 +2182,7 @@ moc_kalmandynamic.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QList \
 		player.h \
 		searchplayerdata.h \
 		kalmandynamic.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore kalmandynamic.h -o moc_kalmandynamic.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore kalmandynamic.h -o moc_kalmandynamic.cpp
 
 moc_searchplayerdata.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
@@ -2221,7 +2240,7 @@ moc_searchplayerdata.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QList \
 		player.h \
 		searchplayerdata.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore searchplayerdata.h -o moc_searchplayerdata.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore searchplayerdata.h -o moc_searchplayerdata.cpp
 
 moc_unitdynamicassociate.cpp: searchplayerdata.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
@@ -2295,7 +2314,7 @@ moc_unitdynamicassociate.cpp: searchplayerdata.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
 		unitdynamicassociate.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore unitdynamicassociate.h -o moc_unitdynamicassociate.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore unitdynamicassociate.h -o moc_unitdynamicassociate.cpp
 
 moc_datawindow.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
@@ -2411,6 +2430,33 @@ moc_datawindow.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTextStream \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
+		freezetablewidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableView \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtableview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qframe.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvalidator.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregularexpression.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qicon.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qslider.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyle.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabbar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QScrollBar \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qscrollbar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableWidget \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtablewidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QDebug \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGraphicsScene \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgraphicsscene.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
@@ -2423,8 +2469,10 @@ moc_datawindow.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTimer \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasictimer.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/QStandardItemModel \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qstandarditemmodel.h \
 		datawindow.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore datawindow.h -o moc_datawindow.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore datawindow.h -o moc_datawindow.cpp
 
 moc_freezetablewidget.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableView \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtableview.h \
@@ -2546,8 +2594,120 @@ moc_freezetablewidget.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableV
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabbar.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QScrollBar \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qscrollbar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableWidget \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtablewidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QDebug \
 		freezetablewidget.h
-	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore freezetablewidget.h -o moc_freezetablewidget.cpp
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore freezetablewidget.h -o moc_freezetablewidget.cpp
+
+moc_openglheatmap.cpp: ../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		openglheatmap.h
+	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/home/aznan/Qt5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I/home/aznan/GitHub/tugasakhir/integrasi -I/usr/local/include/opencv -I/home/aznan/Qt5.5.1/5.5/gcc_64/include -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtOpenGL -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtWidgets -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtGui -I/home/aznan/Qt5.5.1/5.5/gcc_64/include/QtCore openglheatmap.h -o moc_openglheatmap.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -2791,7 +2951,238 @@ ui_systemperformancedialog.h: systemperformancedialog.ui
 ui_trackingviewdialog.h: trackingviewdialog.ui
 	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/uic trackingviewdialog.ui -o ui_trackingviewdialog.h
 
-ui_datawindow.h: datawindow.ui
+ui_datawindow.h: datawindow.ui \
+		freezetablewidget.h \
+		openglheatmap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableView \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtableview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qframe.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvalidator.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregularexpression.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qicon.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qslider.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyle.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabbar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QScrollBar \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qscrollbar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableWidget \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtablewidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QDebug \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h
 	/home/aznan/Qt5.5.1/5.5/gcc_64/bin/uic datawindow.ui -o ui_datawindow.h
 
 compiler_yacc_decl_make_all:
@@ -2978,6 +3369,15 @@ main.o: main.cpp mainwindow.h \
 		datawindow.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
 		datalogger.h \
+		freezetablewidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableView \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtableview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QScrollBar \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qscrollbar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableWidget \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtablewidget.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGraphicsScene \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgraphicsscene.h \
 		playervisual.h \
@@ -2986,6 +3386,8 @@ main.o: main.cpp mainwindow.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTimer \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasictimer.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/QStandardItemModel \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qstandarditemmodel.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QApplication \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qapplication.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreapplication.h \
@@ -3169,6 +3571,15 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		datawindow.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
 		datalogger.h \
+		freezetablewidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableView \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtableview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QScrollBar \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qscrollbar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableWidget \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtablewidget.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGraphicsScene \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgraphicsscene.h \
 		playervisual.h \
@@ -3177,6 +3588,8 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTimer \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasictimer.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/QStandardItemModel \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qstandarditemmodel.h \
 		ui_mainwindow.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QVariant \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QAction \
@@ -3199,8 +3612,6 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGroupBox \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgroupbox.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QListWidget \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QMenu \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qmenu.h \
@@ -5173,6 +5584,33 @@ datawindow.o: datawindow.cpp datawindow.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qdialog.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTextStream \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QObject \
+		freezetablewidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableView \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtableview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qframe.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvalidator.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregularexpression.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qicon.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qslider.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyle.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabbar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QScrollBar \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qscrollbar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableWidget \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtablewidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QDebug \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGraphicsScene \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgraphicsscene.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpen.h \
@@ -5185,11 +5623,12 @@ datawindow.o: datawindow.cpp datawindow.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QTimer \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtimer.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasictimer.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/QStandardItemModel \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qstandarditemmodel.h \
 		ui_datawindow.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QVariant \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QAction \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qaction.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qicon.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QApplication \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qapplication.h \
@@ -5200,36 +5639,26 @@ datawindow.o: datawindow.cpp datawindow.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qinputmethod.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QButtonGroup \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGraphicsView \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgraphicsview.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qscrollarea.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qframe.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QComboBox \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qcombobox.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGridLayout \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayout.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QGroupBox \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qgroupbox.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qitemselectionmodel.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvalidator.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregularexpression.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qslider.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qstyle.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabbar.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtabwidget.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QLabel \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qlabel.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QPushButton \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qpushbutton.h \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractbutton.h
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QSlider \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTabWidget \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QVBoxLayout \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QMessageBox \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qmessagebox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datawindow.o datawindow.cpp
 
 playervisual.o: playervisual.cpp playervisual.h \
@@ -5456,8 +5885,116 @@ freezetablewidget.o: freezetablewidget.cpp freezetablewidget.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QScrollBar \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qscrollbar.h \
 		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
-		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QTableWidget \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qtablewidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o freezetablewidget.o freezetablewidget.cpp
+
+openglheatmap.o: openglheatmap.cpp openglheatmap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfeatures.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qflags.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qwindowdefs_win.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstring.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qchar.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlist.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qregexp.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qisenum.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmargins.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpaintdevice.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qrect.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsize.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpalette.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qbrush.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qpair.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvector.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qmatrix.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpolygon.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qregion.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdatastream.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qline.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtransform.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpainterpath.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qimage.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixelformat.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qpixmap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qhash.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfont.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontmetrics.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qfontinfo.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qcursor.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qkeysequence.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qevent.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qmap.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qset.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurl.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qurlquery.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfile.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtCore/qfiledevice.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qvector2d.h \
+		../../../Qt5.5.1/5.5/gcc_64/include/QtGui/qtouchdevice.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o openglheatmap.o openglheatmap.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
@@ -5512,6 +6049,9 @@ moc_datawindow.o: moc_datawindow.cpp
 
 moc_freezetablewidget.o: moc_freezetablewidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_freezetablewidget.o moc_freezetablewidget.cpp
+
+moc_openglheatmap.o: moc_openglheatmap.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_openglheatmap.o moc_openglheatmap.cpp
 
 ####### Install
 

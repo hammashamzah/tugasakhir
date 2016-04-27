@@ -30,26 +30,12 @@ PlayerVisual::PlayerVisual()
 void PlayerVisual::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QRectF rec = boundingRect();
-    QBrush Brush(Qt::gray);
+    QBrush Brush;
 
-    //basic Collision detection
+    Brush.setColor(Qt::green);
 
-    if(scene()->collidingItems(this).isEmpty())
-    {
-        //no collision
-        Brush.setColor(Qt::green);
-    }
-    else
-    {
-        //collision!!!!
-        Brush.setColor(Qt::red);
-
-        //Set the position
-        DoCollision();
-    }
-
-    painter->fillRect(rec,Brush);
-    painter->drawRect(rec);
+    painter->setBrush(Brush);
+    painter->drawEllipse(QPoint(10,10),10, 10);
 
 }
 
@@ -65,34 +51,3 @@ void PlayerVisual::advance(int phase)
 
     setPos(mapToParent(0,-(speed)));
 }
-
-void PlayerVisual::DoCollision()
-{
-    //Get a new position
-
-    //Change the angle with a little randomness
-    if(((qrand() %1)))
-    {
-        setRotation(rotation() + (180 + (qrand() % 10)));
-    }
-    else
-    {
-        setRotation(rotation() + (180 + (qrand() % -10)));
-    }
-
-    //see if the new position is in bounds
-    QPointF newpoint = mapToParent(-(boundingRect().width()), -(boundingRect().width() + 2));
-
-    if(!scene()->sceneRect().contains((newpoint)))
-    {
-        //move it back in bounds
-        newpoint = mapToParent(0,0);
-    }
-    else
-    {
-        //set the new position
-        setPos(newpoint);
-    }
-
-}
-

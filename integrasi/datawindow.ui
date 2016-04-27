@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1051</width>
-    <height>551</height>
+    <height>632</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <item>
       <widget class="QTabWidget" name="tabWidget">
        <property name="currentIndex">
-        <number>0</number>
+        <number>3</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -226,7 +226,10 @@
             </layout>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_6">
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QComboBox" name="comboBox"/>
+             </item>
              <item>
               <widget class="QGroupBox" name="groupBox_summaryTeamA">
                <property name="minimumSize">
@@ -244,7 +247,11 @@
                <property name="title">
                 <string>Summary Team A</string>
                </property>
-               <zorder>groupBox_summaryTeamB</zorder>
+               <layout class="QGridLayout" name="gridLayout_5">
+                <item row="0" column="0">
+                 <widget class="QTableView" name="tableView_dataPlayerA"/>
+                </item>
+               </layout>
               </widget>
              </item>
              <item>
@@ -264,6 +271,11 @@
                <property name="title">
                 <string>Summary Team B</string>
                </property>
+               <layout class="QGridLayout" name="gridLayout_4">
+                <item row="0" column="0">
+                 <widget class="QTableView" name="tableView_dataPlayerB"/>
+                </item>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -276,6 +288,47 @@
         <attribute name="title">
          <string>Game Summary</string>
         </attribute>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <item row="0" column="0">
+          <widget class="OpenGLHeatMap" name="openGLWidget_heatMap"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QSlider" name="rotYSlider">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QSlider" name="rotXSlider">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QSlider" name="rotZSlider">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="tab_4">
+        <attribute name="title">
+         <string>Page</string>
+        </attribute>
+        <widget class="QGraphicsView" name="graphicsView">
+         <property name="geometry">
+          <rect>
+           <x>40</x>
+           <y>10</y>
+           <width>581</width>
+           <height>281</height>
+          </rect>
+         </property>
+        </widget>
        </widget>
       </widget>
      </item>
@@ -288,6 +341,11 @@
    <class>FreezeTableWidget</class>
    <extends>QTableView</extends>
    <header>freezetablewidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>OpenGLHeatMap</class>
+   <extends>QOpenGLWidget</extends>
+   <header location="global">openglheatmap.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

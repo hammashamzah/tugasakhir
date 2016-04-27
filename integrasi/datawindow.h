@@ -1,6 +1,6 @@
 #ifndef DATAWINDOW_H
 #define DATAWINDOW_H
-#define TOTAL_FRAME 40
+#define TOTAL_FRAME 500
 #include <QWidget>
 #include "datalogger.h"
 #include "freezetablewidget.h"
@@ -8,9 +8,13 @@
 #include "playervisual.h"
 #include <QTimer>
 #include <QStandardItemModel>
+#include <QGraphicsItem>
 #include <QStringList>
 #include <QDebug>
 #include "player.h"
+#include "openglheatmap.h"
+#include "playervisual.h"
+
 namespace Ui {
 	class DataWindow;
 }
@@ -36,6 +40,7 @@ private:
 	void getItemSelected();
 	int frameNumber;
 	QTimer *timer;
+    void initialScene();
 public slots:
 	void dataEntryFinished();
 	void addData(QList<Player> newData);

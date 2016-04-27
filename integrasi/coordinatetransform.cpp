@@ -12,27 +12,27 @@ CoordinateTransform::~CoordinateTransform()
  * input : QList dari player yang keluar (lost) dan masuk (found) untuk dua kamera
  * Output : QList dari player yang keluar (lost) dan masuk (found) untuk dua kamera
  *          dengan koordinat global lapangan*/
-
-
 void CoordinateTransform::processTransformPosition(QVector<QList<Player> > data)
 {
     QVector<QList<Player> > dataTransformed;
     dataTransformed.resize(2);
     playerImageCoordinate=data;
-    for(int cameraId=0; cameraId<playerImageCoordinate.size(); cameraId++)
+    for(int j=0; j<playerImageCoordinate.size(); j++)
     {
-        for(int i=0; i<playerImageCoordinate.at(cameraId).size() ; i++)
+        for(int i=0; i<playerImageCoordinate.at(j).size() ; i++)
         {
-            if(cameraId==0){
-                playerImageCoordinate[cameraId][i].transformedPos = transformCamera1ToGlobal(playerImageCoordinate[cameraId][i].pos, transform_mat1);
+            if(playerImageCoordinate.at(j).at(i).camera==0){
+                playerImageCoordinate[j][i].transformedPos = transformCamera1ToGlobal(playerImageCoordinate[j][i].pos, transform_mat1);
             }
             else{
-                playerImageCoordinate[cameraId][i].transformedPos = transformCamera2ToGlobal(playerImageCoordinate[cameraId][i].pos, transform_mat2);
+                playerImageCoordinate[j][i].transformedPos = transformCamera2ToGlobal(playerImageCoordinate[j][i].pos, transform_mat2);
             }
         }
     }
     emit sendTransformedPosition(playerImageCoordinate);
 }
+
+
 
 //slot untuk menyimpan informasi mat camera dari dialog ke variabel lokal
 void CoordinateTransform::setImageSize(QList<QSize> value)
@@ -130,3 +130,4 @@ void CoordinateTransform::returnAssignedPlayer(QVector<QList<Player> > assigned_
     }
     emit sendPlayerIdAssigned(playerImageCoordinate);
 }
+

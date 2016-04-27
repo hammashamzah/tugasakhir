@@ -15,6 +15,14 @@ ui(new Ui::DataWindow)
 	//connect signal and SLOT
 	connect(timer, SIGNAL(timeout()), this,SLOT(updatePosition()));
 
+    //connect(ui->openGLWidget_heatMap, SIGNAL(xRotationChanged(int)), ui->rotXSlider, SLOT(setValue(int)));
+    connect(ui->openGLWidget_heatMap, SIGNAL(yRotationChanged(int)), ui->rotYSlider, SLOT(setValue(int)));
+    connect(ui->openGLWidget_heatMap, SIGNAL(zRotationChanged(int)), ui->rotZSlider, SLOT(setValue(int)));
+    connect(ui->rotXSlider, SIGNAL(valueChanged(int)), ui->openGLWidget_heatMap, SLOT(setXRotation(int)));
+    connect(ui->openGLWidget_heatMap, SIGNAL(yRotationChanged(int)), ui->rotYSlider, SLOT(setValue(int)));
+    connect(ui->openGLWidget_heatMap, SIGNAL(zRotationChanged(int)), ui->rotZSlider, SLOT(setValue(int)));
+
+
 	//set configuration
 	ui->pushButton_load->setEnabled(false);
 	ui->pushButton_save->setEnabled(false);
@@ -43,6 +51,20 @@ DataWindow::~DataWindow()
 	QPainter painterField(&pixmapField);
 	QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
 	QBrush brush(Qt::white);
+    QFont fontId("Arial");
+    fontId.setPixelSize(20);
+    fontId.setBold(true);
+
+    QStandardItemModel *summaryModelA;
+    QStandardItemModel *summaryModelB;
+    summaryModelB = new QStandardItemModel;
+    summaryModelA = new QStandardItemModel;
+
+    QStringList tableLabels;
+    tableLabels<<"Pos"<<"Speed";
+
+    summaryModelA->setHorizontalHeaderLabels(tableLabels);
+    summaryModelB->setHorizontalHeaderLabels(tableLabels);
 
 	painterField.setRenderHint(QPainter::Antialiasing, true);
 	painterField.setPen(pen);
@@ -52,13 +74,26 @@ DataWindow::~DataWindow()
 		{
 			brush.setColor(Qt::red);
 			painterField.setBrush(brush);
-			painterField.drawRect( tempPlayersData.at(id).at(frameNumber).pos.x*pixmapField.width()/100, 
-									tempPlayersData.at(id).at(frameNumber).pos.y*pixmapField.height()/50, 10, 10);  //posisi x, y, dan ukuran elips
-			painterField.setFont(QFont ("Arial"));
-			painterField.drawText(QPoint(tempPlayersData.at(id).at(frameNumber).pos.x*pixmapField.width()/100,  
-				tempPlayersData.at(id).at(frameNumber).pos.y*pixmapField.height()/50), 
-										QString::number( tempPlayersData.at(id).at(frameNumber).id)); //posisi x, y, dan ukuran elips
+            painterField.drawEllipse (QPointF ((tempPlayersData.at(id).at(frameNumber).pos.x*pixmapField.width()/100), (tempPlayersData.at(id).at(frameNumber).pos.y*pixmapField.height()/50)), 10, 10);  //posisi x, y, dan ukuran elips
+            painterField.setFont(fontId);
+            painterField.drawText(QPointF(tempPlayersData.at(id).at(frameNumber).pos.x*pixmapField.width()/100+10,
+                tempPlayersData.at(id).at(frameNumber).pos.y*pixmapField.height()/50-10),
+                                        QString::number( tempPlayersData.at(id).at(frameNumber).id)); //posisi x, y, dan ukuran elips
+            if(id<11){
+
+                summaryModelA->setItem(id, 0, new QStandardItem(QString::number(tempPlayersData.at(id).at(frameNumber).pos.x)+", "+
+                                                                QString::number(tempPlayersData.at(id).at(frameNumber).pos.y)));
+                summaryModelA->setItem(id, 1, new QStandardItem(QString::number(tempPlayersData.at(id).at(frameNumber).speed.x)+", "+
+                                                                QString::number(tempPlayersData.at(id).at(frameNumber).speed.y)));
+            }
+            else if(id>=11 && id<22){
+                summaryModelB->setItem(id%11, 0, new QStandardItem(QString::number(tempPlayersData.at(id).at(frameNumber).pos.x)+", "+
+                                                                QString::number(tempPlayersData.at(id).at(frameNumber).pos.y)));
+                summaryModelB->setItem(id%11, 1, new QStandardItem(QString::number(tempPlayersData.at(id).at(frameNumber).speed.x)+", "+
+                                                                QString::number(tempPlayersData.at(id).at(frameNumber).speed.y)));           }
 		}
+        ui->tableView_dataPlayerA->setModel(summaryModelA);
+        ui->tableView_dataPlayerB->setModel(summaryModelB);
         ui->label_playbackVisual->setPixmap(pixmapField);
 		ui->label_playback_time->setText("Frame "+QString::number(frameNumber));
 	}
@@ -95,7 +130,7 @@ DataWindow::~DataWindow()
  		if (frame==0) labels.append("ID");
  		else labels.append("Frame"+QString::number(frame));
  	}
- 	qDebug()<<labels;
+
  	model->setHorizontalHeaderLabels(labels);
  	for (int id = 0; id < resultData.size(); ++id)
  	{
@@ -251,7 +286,7 @@ DataWindow::~DataWindow()
  */
  void DataWindow::on_pushButton_playbackStart_clicked()
  {
- 	timer->start(100);
+    timer->start(50);
  }
 
 /**
@@ -329,5 +364,11 @@ DataWindow::~DataWindow()
  	filename = QFileDialog::getSaveFileName(this, tr("Save Masking Coordinate File"), "maskingcoordinate.txt",
  		tr("Masking Coordinate File (*.txt)"));
  	myDataLogger.loadFromFile(filename);
+
+ }
+
+ void DataWindow::initialScene()
+ {
+
 
  }
