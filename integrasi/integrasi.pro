@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     searchplayerdata.cpp \
     unitdynamicassociate.cpp \
     datawindow.cpp \
-    kalmanobject.cpp
+    kalmanobject.cpp \
+    freezetablewidget.cpp
 
 HEADERS  += mainwindow.h \
     backgroundmodeltuningdialog.h \
@@ -55,7 +56,8 @@ HEADERS  += mainwindow.h \
     searchplayerdata.h \
     unitdynamicassociate.h \
     datawindow.h \
-    kalmanobject.h
+    kalmanobject.h \
+    freezetablewidget.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \

@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     myCoordinateTransform = new CoordinateTransform();
     myDynamicAssociation = new DynamicAssociation();
     myDVDialog = new DataWindow();
+    myDataLogger = new DataLogger();
 
     QObject::connect(myObjectDetector, SIGNAL(sendFirstFrameImage(QVector<QImage>)), myFSDialog, SLOT(setFirstFrameImage(QVector<QImage>)));
     QObject::connect(myObjectDetector, SIGNAL(sendFirstFrameImage(QVector<QImage>)), this, SLOT(setCameraViewFirstFrameImage(QVector<QImage>)));
@@ -222,7 +223,7 @@ void MainWindow::displayModifiedId()
 
 void MainWindow::displayProcessedData(QList<Player> transformedPosition)
 {
-
+    myDataLogger->add(transformedPosition);
     QPixmap pixmapField("lapangan.png");   //ukuran pixmap
     QPainter painterField(&pixmapField);
     QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
@@ -312,6 +313,7 @@ void MainWindow::setValueParameter(QVector< QVector<int> > valueParameter) {
 }
 
 void MainWindow::displayAssignedTransformedPosition(QList<Player> assignedTransformedPosition) {
+    myDataLogger->add(assignedTransformedPosition);
     playerDisplayed = assignedTransformedPosition;
     displayModifiedId();
 }

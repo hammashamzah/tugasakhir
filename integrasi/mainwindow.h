@@ -111,6 +111,7 @@ private:
     BackgroundModelTuningDialog *myBMTDialog;
     DynamicAssociation *myDynamicAssociation;
     DataWindow *myDVDialog;
+    DataLogger *myDataLogger;
     //initialize processor
     ObjectDetector *myObjectDetector;
     CoordinateTransform *myCoordinateTransform;

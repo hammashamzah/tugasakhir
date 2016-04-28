@@ -2,7 +2,7 @@
 
 DataLogger::DataLogger()
 {
-
+dataLog.clear();
 }
 
 DataLogger::~DataLogger(){
@@ -14,14 +14,27 @@ void DataLogger::add(QList<Player> newPlayer) {
 	//find maximum id of newPlayer;
 	for (int newPlayerIterator = 0; newPlayerIterator < newPlayer.size(); newPlayerIterator++)
 	{
-		if (newPlayer.at(newPlayerIterator).id > (dataLog.size() - 1)) {
-			//new id
+		//check mathed id of newplayer to datalog
+		int matchedId = -1;
+		for(int i = 0; i < dataLog.size(); i++){
+			if(newPlayer.at(newPlayerIterator).id == dataLog.at(i).at(0).id){
+                matchedId = dataLog.at(i).at(0).id;
+			}
+		}
+		if(matchedId == -1){
+			//new list on datalog
 			QList<Player> newHistory;
 			newHistory.append(newPlayer);
 			dataLog.append(newHistory);
+		}else{
+			dataLog[matchedId].append(newPlayer.at(newPlayerIterator));
+		}
+		if (newPlayer.at(newPlayerIterator).id > (dataLog.size() - 1)) {
+			//new id
+			
 		} else {
 			//append to last id
-            dataLog[newPlayer.at(newPlayerIterator).id].append(newPlayer.at(newPlayerIterator));
+            
 		}
 	}
 }

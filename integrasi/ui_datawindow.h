@@ -70,7 +70,7 @@ public:
     {
         if (DataWindow->objectName().isEmpty())
             DataWindow->setObjectName(QStringLiteral("DataWindow"));
-        DataWindow->resize(1051, 551);
+        DataWindow->resize(1051, 562);
         gridLayout = new QGridLayout(DataWindow);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         verticalLayout_2 = new QVBoxLayout();
