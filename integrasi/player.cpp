@@ -31,31 +31,6 @@ Player::Player(int identity, int cameraId, int frame, Point2f inputPosition, Poi
     cameraPos = inputCameraPos;
 }
 
-/*Player::Player(int identity, int frame,int cameraId,Point2f position,Point2f inputSpeed,Point2f inputAcceleration){
-    isValid = true;
-    id = identity;
-    framePosition = frame;
-    cameraPos = cameraId;
-    pos = position;
-    speed = inputSpeed;
-    acceleration = inputAcceleration;
-    transformedPos = Point2f(0,0);
-    transformedSpeed = Point2f(0,0);
-}*/
-
-/*Player::Player(Point2f position){
-    isValid = false;
-    cameraPos = position;
-
-}*/
-
-
-
-/*friend void swapPlayer(Player& first, Player& second) {
-
-
-}*/
-
 Player& Player::operator=(Player b) {
     swap(*this, b);
     return *this;

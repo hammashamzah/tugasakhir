@@ -10,7 +10,6 @@
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #include <QtCore/QList>
-#include <QtCore/QVector>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'dynamicassociation.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
@@ -21,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_DynamicAssociation_t {
-    QByteArrayData data[11];
-    char stringdata0[185];
+    QByteArrayData data[8];
+    char stringdata0[130];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,23 +31,19 @@ struct qt_meta_stringdata_DynamicAssociation_t {
 static const qt_meta_stringdata_DynamicAssociation_t qt_meta_stringdata_DynamicAssociation = {
     {
 QT_MOC_LITERAL(0, 0, 18), // "DynamicAssociation"
-QT_MOC_LITERAL(1, 19, 17), // "sendDataAggregate"
+QT_MOC_LITERAL(1, 19, 17), // "sendProcessedData"
 QT_MOC_LITERAL(2, 37, 0), // ""
-QT_MOC_LITERAL(3, 38, 23), // "QVector<QList<Player> >"
-QT_MOC_LITERAL(4, 62, 14), // "getCurrentData"
-QT_MOC_LITERAL(5, 77, 14), // "getNewDataCam1"
-QT_MOC_LITERAL(6, 92, 13), // "QList<Player>"
-QT_MOC_LITERAL(7, 106, 14), // "getNewDataCam2"
-QT_MOC_LITERAL(8, 121, 21), // "getAssociatedDataCam1"
-QT_MOC_LITERAL(9, 143, 21), // "getAssociatedDataCam2"
-QT_MOC_LITERAL(10, 165, 19) // "processAssignedData"
+QT_MOC_LITERAL(3, 38, 13), // "QList<Player>"
+QT_MOC_LITERAL(4, 52, 16), // "sendToDataWindow"
+QT_MOC_LITERAL(5, 69, 22), // "processTransformedData"
+QT_MOC_LITERAL(6, 92, 17), // "getAssociatedData"
+QT_MOC_LITERAL(7, 110, 19) // "processAssignedData"
 
     },
-    "DynamicAssociation\0sendDataAggregate\0"
-    "\0QVector<QList<Player> >\0getCurrentData\0"
-    "getNewDataCam1\0QList<Player>\0"
-    "getNewDataCam2\0getAssociatedDataCam1\0"
-    "getAssociatedDataCam2\0processAssignedData"
+    "DynamicAssociation\0sendProcessedData\0"
+    "\0QList<Player>\0sendToDataWindow\0"
+    "processTransformedData\0getAssociatedData\0"
+    "processAssignedData"
 };
 #undef QT_MOC_LITERAL
 
@@ -58,33 +53,29 @@ static const uint qt_meta_data_DynamicAssociation[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   49,    2, 0x06 /* Public */,
+       1,    1,   39,    2, 0x06 /* Public */,
+       4,    1,   42,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,   52,    2, 0x0a /* Public */,
-       5,    1,   55,    2, 0x0a /* Public */,
-       7,    1,   58,    2, 0x0a /* Public */,
-       8,    1,   61,    2, 0x0a /* Public */,
-       9,    1,   64,    2, 0x0a /* Public */,
-      10,    1,   67,    2, 0x0a /* Public */,
+       5,    1,   45,    2, 0x0a /* Public */,
+       6,    1,   48,    2, 0x0a /* Public */,
+       7,    1,   51,    2, 0x0a /* Public */,
 
  // signals: parameters
+    QMetaType::Void, 0x80000000 | 3,    2,
     QMetaType::Void, 0x80000000 | 3,    2,
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 3,    2,
-    QMetaType::Void, 0x80000000 | 6,    2,
-    QMetaType::Void, 0x80000000 | 6,    2,
-    QMetaType::Void, 0x80000000 | 6,    2,
-    QMetaType::Void, 0x80000000 | 6,    2,
+    QMetaType::Void, 0x80000000 | 3,    2,
     QMetaType::Void, 0x80000000 | 3,    2,
 
        0        // eod
@@ -96,22 +87,26 @@ void DynamicAssociation::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         DynamicAssociation *_t = static_cast<DynamicAssociation *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->sendDataAggregate((*reinterpret_cast< QVector<QList<Player> >(*)>(_a[1]))); break;
-        case 1: _t->getCurrentData((*reinterpret_cast< QVector<QList<Player> >(*)>(_a[1]))); break;
-        case 2: _t->getNewDataCam1((*reinterpret_cast< QList<Player>(*)>(_a[1]))); break;
-        case 3: _t->getNewDataCam2((*reinterpret_cast< QList<Player>(*)>(_a[1]))); break;
-        case 4: _t->getAssociatedDataCam1((*reinterpret_cast< QList<Player>(*)>(_a[1]))); break;
-        case 5: _t->getAssociatedDataCam2((*reinterpret_cast< QList<Player>(*)>(_a[1]))); break;
-        case 6: _t->processAssignedData((*reinterpret_cast< QVector<QList<Player> >(*)>(_a[1]))); break;
+        case 0: _t->sendProcessedData((*reinterpret_cast< QList<Player>(*)>(_a[1]))); break;
+        case 1: _t->sendToDataWindow((*reinterpret_cast< QList<Player>(*)>(_a[1]))); break;
+        case 2: _t->processTransformedData((*reinterpret_cast< QList<Player>(*)>(_a[1]))); break;
+        case 3: _t->getAssociatedData((*reinterpret_cast< QList<Player>(*)>(_a[1]))); break;
+        case 4: _t->processAssignedData((*reinterpret_cast< QList<Player>(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (DynamicAssociation::*_t)(QVector<QList<Player> > );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&DynamicAssociation::sendDataAggregate)) {
+            typedef void (DynamicAssociation::*_t)(QList<Player> );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&DynamicAssociation::sendProcessedData)) {
                 *result = 0;
+            }
+        }
+        {
+            typedef void (DynamicAssociation::*_t)(QList<Player> );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&DynamicAssociation::sendToDataWindow)) {
+                *result = 1;
             }
         }
     }
@@ -142,21 +137,28 @@ int DynamicAssociation::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 5)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 5;
     }
     return _id;
 }
 
 // SIGNAL 0
-void DynamicAssociation::sendDataAggregate(QVector<QList<Player> > _t1)
+void DynamicAssociation::sendProcessedData(QList<Player> _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void DynamicAssociation::sendToDataWindow(QList<Player> _t1)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

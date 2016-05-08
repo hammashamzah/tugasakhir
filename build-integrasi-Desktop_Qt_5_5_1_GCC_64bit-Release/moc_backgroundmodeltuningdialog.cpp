@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_BackgroundModelTuningDialog_t {
-    QByteArrayData data[22];
-    char stringdata0[755];
+    QByteArrayData data[18];
+    char stringdata0[565];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -45,13 +45,9 @@ QT_MOC_LITERAL(11, 309, 27), // "on_pushButton_load_released"
 QT_MOC_LITERAL(12, 337, 27), // "on_pushButton_save_released"
 QT_MOC_LITERAL(13, 365, 33), // "on_slider_min_area_1_valueCha..."
 QT_MOC_LITERAL(14, 399, 33), // "on_slider_max_area_1_valueCha..."
-QT_MOC_LITERAL(15, 433, 46), // "on_slider_transformed_thresho..."
-QT_MOC_LITERAL(16, 480, 46), // "on_slider_transformed_thresho..."
-QT_MOC_LITERAL(17, 527, 44), // "on_slider_occlusion_threshold..."
-QT_MOC_LITERAL(18, 572, 44), // "on_slider_occlusion_threshold..."
-QT_MOC_LITERAL(19, 617, 46), // "on_slider_association_thresho..."
-QT_MOC_LITERAL(20, 664, 46), // "on_slider_association_thresho..."
-QT_MOC_LITERAL(21, 711, 43) // "on_pushButton_load_default_se..."
+QT_MOC_LITERAL(15, 433, 42), // "on_slider_occlusion_threshold..."
+QT_MOC_LITERAL(16, 476, 44), // "on_slider_association_thresho..."
+QT_MOC_LITERAL(17, 521, 43) // "on_pushButton_load_default_se..."
 
     },
     "BackgroundModelTuningDialog\0"
@@ -66,12 +62,8 @@ QT_MOC_LITERAL(21, 711, 43) // "on_pushButton_load_default_se..."
     "on_pushButton_save_released\0"
     "on_slider_min_area_1_valueChanged\0"
     "on_slider_max_area_1_valueChanged\0"
-    "on_slider_transformed_threshold_1_valueChanged\0"
-    "on_slider_transformed_threshold_2_valueChanged\0"
-    "on_slider_occlusion_threshold_1_valueChanged\0"
-    "on_slider_occlusion_threshold_2_valueChanged\0"
-    "on_slider_association_threshold_1_valueChanged\0"
-    "on_slider_association_threshold_2_valueChanged\0"
+    "on_slider_occlusion_threshold_valueChanged\0"
+    "on_slider_association_threshold_valueChanged\0"
     "on_pushButton_load_default_setting_released"
 };
 #undef QT_MOC_LITERAL
@@ -82,7 +74,7 @@ static const uint qt_meta_data_BackgroundModelTuningDialog[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      18,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -90,26 +82,22 @@ static const uint qt_meta_data_BackgroundModelTuningDialog[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,  104,    2, 0x06 /* Public */,
+       1,    1,   84,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,  107,    2, 0x0a /* Public */,
-       6,    1,  110,    2, 0x0a /* Public */,
-       7,    1,  113,    2, 0x0a /* Public */,
-       8,    1,  116,    2, 0x0a /* Public */,
-       9,    1,  119,    2, 0x0a /* Public */,
-      10,    1,  122,    2, 0x0a /* Public */,
-      11,    0,  125,    2, 0x0a /* Public */,
-      12,    0,  126,    2, 0x0a /* Public */,
-      13,    1,  127,    2, 0x0a /* Public */,
-      14,    1,  130,    2, 0x0a /* Public */,
-      15,    1,  133,    2, 0x0a /* Public */,
-      16,    1,  136,    2, 0x0a /* Public */,
-      17,    1,  139,    2, 0x08 /* Private */,
-      18,    1,  142,    2, 0x08 /* Private */,
-      19,    1,  145,    2, 0x08 /* Private */,
-      20,    1,  148,    2, 0x08 /* Private */,
-      21,    0,  151,    2, 0x08 /* Private */,
+       4,    1,   87,    2, 0x0a /* Public */,
+       6,    1,   90,    2, 0x0a /* Public */,
+       7,    1,   93,    2, 0x0a /* Public */,
+       8,    1,   96,    2, 0x0a /* Public */,
+       9,    1,   99,    2, 0x0a /* Public */,
+      10,    1,  102,    2, 0x0a /* Public */,
+      11,    0,  105,    2, 0x0a /* Public */,
+      12,    0,  106,    2, 0x0a /* Public */,
+      13,    1,  107,    2, 0x0a /* Public */,
+      14,    1,  110,    2, 0x0a /* Public */,
+      15,    1,  113,    2, 0x08 /* Private */,
+      16,    1,  116,    2, 0x08 /* Private */,
+      17,    0,  119,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    2,
@@ -123,10 +111,6 @@ static const uint qt_meta_data_BackgroundModelTuningDialog[] = {
     QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,    5,
-    QMetaType::Void, QMetaType::Int,    5,
-    QMetaType::Void, QMetaType::Int,    5,
-    QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void, QMetaType::Int,    5,
     QMetaType::Void, QMetaType::Int,    5,
@@ -153,13 +137,9 @@ void BackgroundModelTuningDialog::qt_static_metacall(QObject *_o, QMetaObject::C
         case 8: _t->on_pushButton_save_released(); break;
         case 9: _t->on_slider_min_area_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 10: _t->on_slider_max_area_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 11: _t->on_slider_transformed_threshold_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 12: _t->on_slider_transformed_threshold_2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 13: _t->on_slider_occlusion_threshold_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 14: _t->on_slider_occlusion_threshold_2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 15: _t->on_slider_association_threshold_1_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 16: _t->on_slider_association_threshold_2_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 17: _t->on_pushButton_load_default_setting_released(); break;
+        case 11: _t->on_slider_occlusion_threshold_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 12: _t->on_slider_association_threshold_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 13: _t->on_pushButton_load_default_setting_released(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -210,13 +190,13 @@ int BackgroundModelTuningDialog::qt_metacall(QMetaObject::Call _c, int _id, void
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 18)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 18;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 18)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 18;
+        _id -= 14;
     }
     return _id;
 }

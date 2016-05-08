@@ -74,7 +74,7 @@ QImage VideoProcessor::getFirstFrame() {
 	setCurrentFrame(1);
 
 	qFirstImage = QtOcv::mat2Image_shared(firstFrame).rgbSwapped().copy();
-	////qDebug()("Aku siap");
+	//////qDebug()("Aku siap");
 	return qFirstImage;
 	//emit firstFrameImage(qFirstImage);
 }
@@ -162,9 +162,8 @@ void VideoProcessor::processSingleFrame()
 	//convert points to Player
 	outputData.clear();
 	for (int i = 0; i < points.size(); i++) {
-		outputData.append(Player((int)this->getCurrentFrame(), 0, Point2f(points[i].x, points[i].y)));
+        outputData.append(Player((int)this->getCurrentFrame(), 0, Point2f(points[i].x, points[i].y)));
 	}
-
 	emit sendCameraObjectData(outputData);
 	emit sendSingleCameraViewImage(allFrames);
 

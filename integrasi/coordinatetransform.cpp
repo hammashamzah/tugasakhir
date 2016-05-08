@@ -122,11 +122,10 @@ void CoordinateTransform::returnAssignedPlayer(QList<Player> assigned_player)
     assignedPlayer = assigned_player;
     for (int i = 0; i < assignedPlayer.size() && !assignedPlayer.isEmpty() ; i++)
     {
-        if ((assignedPlayer.at(i).id == 0) && (!assignedPlayer.at(i).isValid)) {
+        if ((assignedPlayer.at(i).id == 0) || (!assignedPlayer.at(i).isValid)) {
             assignedPlayer.removeAt(i);
             i--;
         }
     }
-    //qDebug() << "jumlah assigned player: " << assignedPlayer.size();
     emit sendPlayerIdAssigned(assignedPlayer);
 }

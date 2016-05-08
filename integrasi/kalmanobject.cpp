@@ -30,7 +30,7 @@ KalmanObject::KalmanObject(Player currentData, float interval)
     setIdentity(KF.processNoiseCov, Scalar::all(1e-1));
     setIdentity(KF.measurementNoiseCov, Scalar::all(5));
     setIdentity(KF.errorCovPost, Scalar::all(0.1));
-    ////qDebug() << "Kalman Filter initialized";
+    //////qDebug() << "Kalman Filter initialized";
 }
 
 KalmanObject::~KalmanObject()
@@ -51,7 +51,7 @@ void KalmanObject::predict() {
     prediction.speed.y = state.at<float>(3);
     prediction.acceleration.x = state.at<float>(4);
     prediction.acceleration.y = state.at<float>(5);
-    ////qDebug() << "Masuk sini bos 2";
+    //////qDebug() << "Masuk sini bos 2";
 }
 
 
