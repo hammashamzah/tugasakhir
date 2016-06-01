@@ -130,7 +130,7 @@ void MainWindow::on_actionFirst_Image_1_triggered() {
 
 void MainWindow::on_actionFirst_Image_2_triggered() {
     filename = QFileDialog::getOpenFileName(this,
-                                            tr("Open Background Model Image 1"), ".",
+                                            tr("Open Background Model Image 2"), ".",
                                             tr("Image Files (*.jpeg *.jpg *.png)"));
     myObjectDetector->updateBackgroundModelUsingImage(filename, 2);
 
@@ -138,8 +138,8 @@ void MainWindow::on_actionFirst_Image_2_triggered() {
 
 void MainWindow::on_pushButton_load_default_video_released()
 {
-    QString filename1 = QString("sebelah-kiri.mp4");
-    QString filename2 = QString("sebelah-kanan.mp4");
+    QString filename1 = QString("Bagian 5 - Kiri.mp4");
+    QString filename2 = QString("Bagian 5 - Kanan.mp4");
 
     myObjectDetector->loadVideo(filename1, 1);
     myObjectDetector->loadVideo(filename2, 2);
@@ -152,8 +152,8 @@ void MainWindow::on_pushButton_load_default_video_released()
 
 void MainWindow::on_pushButton_initialize_background_model_released()
 {
-    QString filename1 = QString("sebelah-kiri.jpg");
-    QString filename2 = QString("sebelah-kanan.jpg");
+    QString filename1 = QString("kiri-sama-edited.png");
+    QString filename2 = QString("kanan-sama-edited.png");
     myObjectDetector->updateBackgroundModelUsingImage(filename1, 1);
     myObjectDetector->updateBackgroundModelUsingImage(filename2, 2);
 }

@@ -88,8 +88,9 @@ void ObjectDetector::updateBackgroundModelUsingImage(QString filename, int id) {
 			}
 		}
 		break;
+    case 2:
 		if (!filename.isEmpty()) {
-			if (!myStream_1->loadImageForBackgroundModel(filename.toLatin1().data())) {
+            if (!myStream_2->loadImageForBackgroundModel(filename.toLatin1().data())) {
 				QMessageBox msgBox;
 				msgBox.setText("The selected video could not be opened!");
 				msgBox.exec();

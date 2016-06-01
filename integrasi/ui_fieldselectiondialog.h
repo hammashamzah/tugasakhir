@@ -125,8 +125,6 @@ public:
         cameraSelectCombo->insertItems(0, QStringList()
          << QApplication::translate("FieldSelectionDialog", "Camera 1", 0)
          << QApplication::translate("FieldSelectionDialog", "Camera 2", 0)
-         << QApplication::translate("FieldSelectionDialog", "Camera 1 Trapezium", 0)
-         << QApplication::translate("FieldSelectionDialog", "Camera 2 Trapezium", 0)
          << QApplication::translate("FieldSelectionDialog", "Camera 1 Transformation", 0)
          << QApplication::translate("FieldSelectionDialog", "Camera 2 Transformation", 0)
         );

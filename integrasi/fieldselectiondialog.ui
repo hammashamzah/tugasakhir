@@ -28,16 +28,6 @@
      </item>
      <item>
       <property name="text">
-       <string>Camera 1 Trapezium</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Camera 2 Trapezium</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
        <string>Camera 1 Transformation</string>
       </property>
      </item>

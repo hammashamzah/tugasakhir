@@ -108,7 +108,7 @@ void VideoProcessor::processSingleFrame()
 	//mask object
 	//maskImage(frame, maskedFrame);
 	mask = Mat::zeros(frame.size(), CV_8UC3);
-	if (isSetMask) {
+    if (isSetMask) {
 		const Point * ppt[1] = {maskPoint[0]};
 		int npt[] = {numberOfMaskPoints};
 		fillPoly(mask, ppt, npt, 1, Scalar(255, 255, 255), 8);
@@ -212,6 +212,7 @@ void VideoProcessor::getMaskCoordinate(QList<QPoint> maskPoints) {
 			maskPoint[0][i] = Point(point.x(), point.y());
 			i++;
 		}
+        qDebug() << "Mask is set";
 		isSetMask = true;
 	} else {
 		isSetMask = false;
