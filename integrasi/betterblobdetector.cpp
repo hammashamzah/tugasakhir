@@ -33,60 +33,7 @@ void BetterBlobDetector::findBlobs(const cv::Mat &image, const cv::Mat &binaryIm
 				continue;
 		}
 
-		if (params.filterByCircularity)
-		{
-			double area = moms.m00;
-			double perimeter = arcLength(Mat(contours[contourIdx]), true);
-			double ratio = 4 * CV_PI * area / (perimeter * perimeter);
-			if (ratio < params.minCircularity || ratio >= params.maxCircularity)
-				continue;
-		}
-
-		if (params.filterByInertia)
-		{
-			double denominator = sqrt(pow(2 * moms.mu11, 2) + pow(moms.mu20 - moms.mu02, 2));
-			const double eps = 1e-2;
-			double ratio;
-			if (denominator > eps)
-			{
-				double cosmin = (moms.mu20 - moms.mu02) / denominator;
-				double sinmin = 2 * moms.mu11 / denominator;
-				double cosmax = -cosmin;
-				double sinmax = -sinmin;
-
-				double imin = 0.5 * (moms.mu20 + moms.mu02) - 0.5 * (moms.mu20 - moms.mu02) * cosmin - moms.mu11 * sinmin;
-				double imax = 0.5 * (moms.mu20 + moms.mu02) - 0.5 * (moms.mu20 - moms.mu02) * cosmax - moms.mu11 * sinmax;
-				ratio = imin / imax;
-			}
-			else
-			{
-				ratio = 1;
-			}
-
-			if (ratio < params.minInertiaRatio || ratio >= params.maxInertiaRatio)
-				continue;
-
-			center.confidence = ratio * ratio;
-		}
-
-		if (params.filterByConvexity)
-		{
-			vector < Point > hull;
-			convexHull(Mat(contours[contourIdx]), hull);
-			double area = contourArea(Mat(contours[contourIdx]));
-			double hullArea = contourArea(Mat(hull));
-			double ratio = area / hullArea;
-			if (ratio < params.minConvexity || ratio >= params.maxConvexity)
-				continue;
-		}
-
 		center.location = Point2d(moms.m10 / moms.m00, moms.m01 / moms.m00);
-
-		if (params.filterByColor)
-		{
-			if (binaryImage.at<uchar> (cvRound(center.location.y), cvRound(center.location.x)) != params.blobColor)
-				continue;
-		}
 
 		//compute blob radius
 		{
@@ -107,24 +54,28 @@ void BetterBlobDetector::findBlobs(const cv::Mat &image, const cv::Mat &binaryIm
 
 static std::vector < std::vector<cv::Point> > _contours;
 
-const std::vector < std::vector<cv::Point> > BetterBlobDetector::getContours() {
+/*const std::vector < std::vector<cv::Point> > BetterBlobDetector::getContours() {
 	return _contours;
-}
+}*/
 
-void BetterBlobDetector::detectImpl(const cv::Mat& image, std::vector<cv::KeyPoint>& keypoints, const cv::Mat&) const
+void BetterBlobDetector::detectImpl(const cv::Mat& image, std::vector<cv::KeyPoint>& keypoints, std::vector < std::vector<cv::Point> > &contours, const cv::Mat&) const
 {
 	//TODO: support mask
-	_contours.clear();
+	contours.clear();
 
 	keypoints.clear();
 	Mat grayscaleImage;
+
+	//convert image to grayscale
+
 	if (image.channels() == 3)
 		cvtColor(image, grayscaleImage, CV_BGR2GRAY);
 	else
 		grayscaleImage = image;
 
+
 	vector < vector<Center> > centers;
-	vector < vector<cv::Point> >contours;
+	//process image with applying thresholding with several thresholds
 	for (double thresh = params.minThreshold; thresh < params.maxThreshold; thresh += params.thresholdStep)
 	{
 		Mat binarizedImage;
@@ -182,6 +133,6 @@ void BetterBlobDetector::detectImpl(const cv::Mat& image, std::vector<cv::KeyPoi
 		sumPoint *= (1. / normalizer);
 		KeyPoint kpt(sumPoint, (float)(centers[i][centers[i].size() / 2].radius));
 		keypoints.push_back(kpt);
-		_contours.push_back(contours[i]);
+		contours.push_back(contours[i]);
 	}
 }

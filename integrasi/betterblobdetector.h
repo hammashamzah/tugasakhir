@@ -13,13 +13,13 @@ class BetterBlobDetector : public cv::SimpleBlobDetector
 public:
 	BetterBlobDetector(const cv::SimpleBlobDetector::Params &parameters = cv::SimpleBlobDetector::Params());
 
-    const std::vector < std::vector<cv::Point> > getContours();
+    //const std::vector < std::vector<cv::Point> > getContours();
+    virtual void detectImpl( const cv::Mat& image, std::vector<cv::KeyPoint>& keypoints, std::vector < std::vector<cv::Point> > &contours ,const cv::Mat& mask=cv::Mat()) const;
 
 
 protected:
     virtual void findBlobs(const cv::Mat &image, const cv::Mat &binaryImage,
                            std::vector<Center> &centers, std::vector < std::vector<cv::Point> >&contours) const;
-    virtual void detectImpl( const cv::Mat& image, std::vector<cv::KeyPoint>& keypoints, const cv::Mat& mask=cv::Mat()) const;
 
 };
 

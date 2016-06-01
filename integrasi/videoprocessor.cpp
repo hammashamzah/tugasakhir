@@ -95,7 +95,7 @@ void VideoProcessor::processSingleFrame()
 	if (maxArea > 0) {
 		params.maxArea = maxArea;
 	}
-	SimpleBlobDetector blob_detector(params);
+	BetterBlobDetector blob_detector(params);
 	if (morphElementSize > 0) {
 		morphElement = getStructuringElement(2, Size(morphElementSize, morphElementSize));
 	}
@@ -108,7 +108,7 @@ void VideoProcessor::processSingleFrame()
 	//mask object
 	//maskImage(frame, maskedFrame);
 	mask = Mat::zeros(frame.size(), CV_8UC3);
-    if (isSetMask) {
+	if (isSetMask) {
 		const Point * ppt[1] = {maskPoint[0]};
 		int npt[] = {numberOfMaskPoints};
 		fillPoly(mask, ppt, npt, 1, Scalar(255, 255, 255), 8);
@@ -126,24 +126,24 @@ void VideoProcessor::processSingleFrame()
 	}
 	frame.copyTo(objectWithKeypointsFrame);
 
-	if (mode == 0) {
-		blob_detector.detect(bluredFrame, keypoints);
-		drawKeypoints(objectWithKeypointsFrame, keypoints, objectWithKeypointsFrame, Scalar(0, 0, 255), DrawMatchesFlags::DEFAULT);
-		KeyPoint::convert(keypoints, points);
-	} else if (mode == 1) {
-		findContours(bluredFrame, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE);
-		vector<Rect>boundRect(contours.size());
 
-		for (int i = 0; i < contours.size(); i++)
-		{
-			boundRect[i] = boundingRect(contours[i]);
-		}
+	std::vector < std::vector<cv::Point> > contours_detected;
 
-		for (int i = 0; i < contours.size(); i++)
-		{
-			rectangle(objectWithKeypointsFrame, boundRect[i].tl(), boundRect[i].br(), Scalar(255, 255, 255), 2, 8, 0) ;
-		}
+	blob_detector.detectImpl(bluredFrame, keypoints, contours_detected);
+//	contours_detected = blob_detector.getContours();
+	drawKeypoints(objectWithKeypointsFrame, keypoints, objectWithKeypointsFrame, Scalar(0, 0, 255), DrawMatchesFlags::DEFAULT);
+
+	vector<Rect> boundRect(contours_detected.size());
+
+	for (int i = 0; i < contours_detected.size(); i++) {
+		boundRect[i] = boundingRect(contours_detected[i]);
 	}
+
+	for (int i = 0; i < contours_detected.size(); i++) {
+		rectangle(objectWithKeypointsFrame, boundRect[i].tl(), boundRect[i].br(), Scalar(255, 255, 255), 2, 8, 0);
+	}
+
+	KeyPoint::convert(keypoints, points);
 
 	qRawFrame = QtOcv::mat2Image_shared(frame).copy().rgbSwapped();
 	qMaskedFrame = QtOcv::mat2Image_shared(maskedFrame).copy().rgbSwapped();
@@ -162,7 +162,7 @@ void VideoProcessor::processSingleFrame()
 	//convert points to Player
 	outputData.clear();
 	for (int i = 0; i < points.size(); i++) {
-        outputData.append(Player((int)this->getCurrentFrame(), 0, Point2f(points[i].x, points[i].y)));
+		outputData.append(Player((int)this->getCurrentFrame(), 0, Point2f(points[i].x, points[i].y)));
 	}
 	emit sendCameraObjectData(outputData);
 	emit sendSingleCameraViewImage(allFrames);
@@ -212,7 +212,7 @@ void VideoProcessor::getMaskCoordinate(QList<QPoint> maskPoints) {
 			maskPoint[0][i] = Point(point.x(), point.y());
 			i++;
 		}
-        qDebug() << "Mask is set";
+		qDebug() << "Mask is set";
 		isSetMask = true;
 	} else {
 		isSetMask = false;
