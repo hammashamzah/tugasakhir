@@ -20,8 +20,8 @@ ObjectDetector::ObjectDetector()
 
 	firstFrameImage.resize(2);
 	cameraViewImage.resize(2);
-	cameraViewImage[0].resize(6);
-	cameraViewImage[1].resize(6);
+	cameraViewImage[0].resize(7);
+	cameraViewImage[1].resize(7);
 	QObject::connect(this, SIGNAL(updateValueParameter_1(QVector<int>)), myStream_1, SLOT(setValueParameter(QVector<int>)));
 	QObject::connect(this, SIGNAL(updateValueParameter_2(QVector<int>)), myStream_2, SLOT(setValueParameter(QVector<int>)));
 	QObject::connect(this, SIGNAL(setMaskCoordinate_1(QList<QPoint>)), myStream_1, SLOT(getMaskCoordinate(QList<QPoint>)));
@@ -116,8 +116,8 @@ void ObjectDetector::msleep(int ms) {
 }
 
 void ObjectDetector::playSingleFrame() {
-	myStream_1->processSingleFrame();
-	myStream_2->processSingleFrame();
+	myStream_1->processSingleFrame(0);
+	myStream_2->processSingleFrame(0);
 	emit sendCameraViewImage(cameraViewImage);
 }
 

@@ -26,11 +26,10 @@ QT_BEGIN_NAMESPACE
 class Ui_CameraViewDialog
 {
 public:
-    QVBoxLayout *verticalLayout_11;
+    QVBoxLayout *verticalLayout_7;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
-    QVBoxLayout *verticalLayout_26;
-    QVBoxLayout *verticalLayout_25;
+    QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout;
     QLabel *label_7;
@@ -46,6 +45,14 @@ public:
     QVBoxLayout *verticalLayout_6;
     QLabel *label_11;
     QLabel *masked_2;
+    QHBoxLayout *horizontalLayout_9;
+    QVBoxLayout *verticalLayout_18;
+    QVBoxLayout *verticalLayout_26;
+    QLabel *label_41;
+    QLabel *bmodel_1;
+    QVBoxLayout *verticalLayout_27;
+    QLabel *label_42;
+    QLabel *bmodel_2;
     QHBoxLayout *horizontalLayout_4;
     QVBoxLayout *verticalLayout_8;
     QVBoxLayout *verticalLayout_13;
@@ -83,19 +90,17 @@ public:
     {
         if (CameraViewDialog->objectName().isEmpty())
             CameraViewDialog->setObjectName(QStringLiteral("CameraViewDialog"));
-        CameraViewDialog->resize(1015, 942);
-        verticalLayout_11 = new QVBoxLayout(CameraViewDialog);
-        verticalLayout_11->setObjectName(QStringLiteral("verticalLayout_11"));
+        CameraViewDialog->resize(1272, 798);
+        verticalLayout_7 = new QVBoxLayout(CameraViewDialog);
+        verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
         scrollArea = new QScrollArea(CameraViewDialog);
         scrollArea->setObjectName(QStringLiteral("scrollArea"));
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, -180, 1314, 3102));
-        verticalLayout_26 = new QVBoxLayout(scrollAreaWidgetContents);
-        verticalLayout_26->setObjectName(QStringLiteral("verticalLayout_26"));
-        verticalLayout_25 = new QVBoxLayout();
-        verticalLayout_25->setObjectName(QStringLiteral("verticalLayout_25"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, -779, 1307, 3591));
+        verticalLayout_3 = new QVBoxLayout(scrollAreaWidgetContents);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         verticalLayout = new QVBoxLayout();
@@ -142,7 +147,7 @@ public:
         horizontalLayout->addLayout(verticalLayout_2);
 
 
-        verticalLayout_25->addLayout(horizontalLayout);
+        verticalLayout_3->addLayout(horizontalLayout);
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
@@ -192,7 +197,57 @@ public:
         horizontalLayout_2->addLayout(verticalLayout_6);
 
 
-        verticalLayout_25->addLayout(horizontalLayout_2);
+        verticalLayout_3->addLayout(horizontalLayout_2);
+
+        horizontalLayout_9 = new QHBoxLayout();
+        horizontalLayout_9->setObjectName(QStringLiteral("horizontalLayout_9"));
+        verticalLayout_18 = new QVBoxLayout();
+        verticalLayout_18->setObjectName(QStringLiteral("verticalLayout_18"));
+        verticalLayout_26 = new QVBoxLayout();
+        verticalLayout_26->setObjectName(QStringLiteral("verticalLayout_26"));
+        label_41 = new QLabel(scrollAreaWidgetContents);
+        label_41->setObjectName(QStringLiteral("label_41"));
+        sizePolicy.setHeightForWidth(label_41->sizePolicy().hasHeightForWidth());
+        label_41->setSizePolicy(sizePolicy);
+        label_41->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_26->addWidget(label_41);
+
+        bmodel_1 = new QLabel(scrollAreaWidgetContents);
+        bmodel_1->setObjectName(QStringLiteral("bmodel_1"));
+        bmodel_1->setMinimumSize(QSize(640, 480));
+        bmodel_1->setStyleSheet(QStringLiteral("Background-color: #000;"));
+
+        verticalLayout_26->addWidget(bmodel_1);
+
+
+        verticalLayout_18->addLayout(verticalLayout_26);
+
+
+        horizontalLayout_9->addLayout(verticalLayout_18);
+
+        verticalLayout_27 = new QVBoxLayout();
+        verticalLayout_27->setObjectName(QStringLiteral("verticalLayout_27"));
+        label_42 = new QLabel(scrollAreaWidgetContents);
+        label_42->setObjectName(QStringLiteral("label_42"));
+        sizePolicy.setHeightForWidth(label_42->sizePolicy().hasHeightForWidth());
+        label_42->setSizePolicy(sizePolicy);
+        label_42->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_27->addWidget(label_42);
+
+        bmodel_2 = new QLabel(scrollAreaWidgetContents);
+        bmodel_2->setObjectName(QStringLiteral("bmodel_2"));
+        bmodel_2->setMinimumSize(QSize(640, 480));
+        bmodel_2->setStyleSheet(QStringLiteral("Background-color: #000;"));
+
+        verticalLayout_27->addWidget(bmodel_2);
+
+
+        horizontalLayout_9->addLayout(verticalLayout_27);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_9);
 
         horizontalLayout_4 = new QHBoxLayout();
         horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
@@ -242,7 +297,7 @@ public:
         horizontalLayout_4->addLayout(verticalLayout_14);
 
 
-        verticalLayout_25->addLayout(horizontalLayout_4);
+        verticalLayout_3->addLayout(horizontalLayout_4);
 
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
@@ -292,7 +347,7 @@ public:
         horizontalLayout_5->addLayout(verticalLayout_17);
 
 
-        verticalLayout_25->addLayout(horizontalLayout_5);
+        verticalLayout_3->addLayout(horizontalLayout_5);
 
         horizontalLayout_6 = new QHBoxLayout();
         horizontalLayout_6->setObjectName(QStringLiteral("horizontalLayout_6"));
@@ -342,7 +397,7 @@ public:
         horizontalLayout_6->addLayout(verticalLayout_20);
 
 
-        verticalLayout_25->addLayout(horizontalLayout_6);
+        verticalLayout_3->addLayout(horizontalLayout_6);
 
         horizontalLayout_7 = new QHBoxLayout();
         horizontalLayout_7->setObjectName(QStringLiteral("horizontalLayout_7"));
@@ -392,14 +447,11 @@ public:
         horizontalLayout_7->addLayout(verticalLayout_23);
 
 
-        verticalLayout_25->addLayout(horizontalLayout_7);
-
-
-        verticalLayout_26->addLayout(verticalLayout_25);
+        verticalLayout_3->addLayout(horizontalLayout_7);
 
         scrollArea->setWidget(scrollAreaWidgetContents);
 
-        verticalLayout_11->addWidget(scrollArea);
+        verticalLayout_7->addWidget(scrollArea);
 
 
         retranslateUi(CameraViewDialog);
@@ -418,6 +470,10 @@ public:
         masked_1->setText(QString());
         label_11->setText(QApplication::translate("CameraViewDialog", "Masked Frame 2", 0));
         masked_2->setText(QString());
+        label_41->setText(QApplication::translate("CameraViewDialog", "Background Model 1", 0));
+        bmodel_1->setText(QString());
+        label_42->setText(QApplication::translate("CameraViewDialog", "Background Model 2", 0));
+        bmodel_2->setText(QString());
         label_19->setText(QApplication::translate("CameraViewDialog", "Object Frame 1", 0));
         object_1->setText(QString());
         label_21->setText(QApplication::translate("CameraViewDialog", "Object Frame 2", 0));

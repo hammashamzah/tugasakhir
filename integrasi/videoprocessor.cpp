@@ -16,7 +16,7 @@ VideoProcessor::VideoProcessor(QObject *parent): QThread(parent)
 	gaussianSize = 3;
 	isSetMask = false;
 	mode = 0;
-	allFrames.resize(6);
+	allFrames.resize(7);
 
 }
 //destructor
@@ -46,22 +46,12 @@ bool VideoProcessor::loadVideo(String filename) {
 }
 
 bool VideoProcessor::loadImageForBackgroundModel(String filename) {
-	Mat image = imread(filename, CV_LOAD_IMAGE_COLOR);
+	image = imread(filename, CV_LOAD_IMAGE_COLOR);
 
 	if (!image.data) {
 		return false;
 	} else {
-		//mask image first
-		if (isSetMask) {
-			const Point * ppt[1] = {maskPoint[0]};
-			int npt[] = {numberOfMaskPoints};
-			fillPoly(mask, ppt, npt, 1, Scalar(255, 255, 255), 8);
-			image.copyTo(maskedFrame, mask);
-		} else {
-			maskedFrame = image;
-		}
-		//update background model as reference
-		pMOG2->operator()(maskedFrame, objectFrame);
+		processSingleFrame(1);
 		return true;
 	}
 }
@@ -80,7 +70,7 @@ QImage VideoProcessor::getFirstFrame() {
 }
 
 
-void VideoProcessor::processSingleFrame()
+void VideoProcessor::processSingleFrame(int mode)
 {
 	//set parameters based on tuning from background model tuning window
 	params.filterByArea = true;
@@ -99,10 +89,13 @@ void VideoProcessor::processSingleFrame()
 	if (morphElementSize > 0) {
 		morphElement = getStructuringElement(2, Size(morphElementSize, morphElementSize));
 	}
-
-	if (!capture->read(frame))
-	{
-		stop = true;
+	if (mode == 0) {
+		if (!capture->read(frame))
+		{
+			stop = true;
+		}
+	} else if (mode == 1) {
+		image.copyTo(frame);
 	}
 
 	//mask object
@@ -117,36 +110,67 @@ void VideoProcessor::processSingleFrame()
 		maskedFrame = frame;
 	}
 	//update the background model
-	pMOG2->operator()(maskedFrame, objectFrame);
-	if (morphElementSize > 0) {
-		morphologyEx(objectFrame, openedFrame, 2, morphElement);
-	}
+    pMOG2->operator()(maskedFrame, objectFrame, 0.001);
+	pMOG2->getBackgroundImage(backgroundFrame);
 	if (gaussianSize > 0) {
-		GaussianBlur(openedFrame, bluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
-	}
-	frame.copyTo(objectWithKeypointsFrame);
+        GaussianBlur(objectFrame, bluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
+    }else{
+        objectFrame.copyTo(bluredFrame);
+    }
 
+	if (morphElementSize > 0) {
+		morphologyEx(bluredFrame, openedFrame, 2, morphElement);
+    }else{
+        bluredFrame.copyTo(openedFrame);
+    }
+
+	frame.copyTo(objectWithKeypointsFrame);
 
 	std::vector < std::vector<cv::Point> > contours_detected;
 
-	blob_detector.detectImpl(bluredFrame, keypoints, contours_detected);
+	blob_detector.detectImpl(openedFrame, keypoints, contours_detected);
 //	contours_detected = blob_detector.getContours();
 	drawKeypoints(objectWithKeypointsFrame, keypoints, objectWithKeypointsFrame, Scalar(0, 0, 255), DrawMatchesFlags::DEFAULT);
 
 	vector<Rect> boundRect(contours_detected.size());
+
+	//calculate contour area then using k-means clustering to cluster it into two labels; noise and real object
+	int dataLabel;
+	Mat centers;
+	Mat contour_area(contours_detected.size(), 1, CV_32FC1), labels;
+	/*for(int i = 0; i < contours_detected.size(); i++){
+		contour_area.at<float>(i,1) = contourArea(contours_detected.at(i));
+	}
+	if(contours_detected.size() > 2){
+	    kmeans(contour_area, 2, labels, TermCriteria(TermCriteria::EPS+TermCriteria::COUNT, 10, 1.0), 3, KMEANS_RANDOM_CENTERS, centers);
+	    if(centers.at<float>(0,0) < centers.at<float>(1,0)){
+	        dataLabel = 1;
+	        //qDebug() << "center 1: " << centers.at<float>(0,0) << " center 2: " << centers.at<float>(1,0);
+	    }else{
+	        dataLabel = 0;
+	        //qDebug() << "center 1: " << centers.at<float>(1,0) << " center 2: " << centers.at<float>(0,0);
+	    }
+	}*/
 
 	for (int i = 0; i < contours_detected.size(); i++) {
 		boundRect[i] = boundingRect(contours_detected[i]);
 	}
 
 	for (int i = 0; i < contours_detected.size(); i++) {
-		rectangle(objectWithKeypointsFrame, boundRect[i].tl(), boundRect[i].br(), Scalar(255, 255, 255), 2, 8, 0);
+		//if(contour_area.at<float>(i,1) > 10){
+		//if(labels.at<int>(i,0) == dataLabel){
+        rectangle(objectWithKeypointsFrame, boundRect[i].tl(), boundRect[i].br(), Scalar(255, 255, 255), 2);
+		//   }else{
+		//       rectangle(objectWithKeypointsFrame, boundRect[i].tl(), boundRect[i].br(), Scalar(0, 0, 0));
+		//   }
+		//}
 	}
 
 	KeyPoint::convert(keypoints, points);
 
 	qRawFrame = QtOcv::mat2Image_shared(frame).copy().rgbSwapped();
 	qMaskedFrame = QtOcv::mat2Image_shared(maskedFrame).copy().rgbSwapped();
+	qBackgroundFrame = QtOcv::mat2Image_shared(backgroundFrame).copy().rgbSwapped();
 	qObjectFrame = QtOcv::mat2Image_shared(objectFrame).copy().rgbSwapped();
 	qOpenedFrame = QtOcv::mat2Image_shared(openedFrame).copy().rgbSwapped();
 	qBluredFrame = QtOcv::mat2Image_shared(bluredFrame).copy().rgbSwapped();
@@ -158,6 +182,7 @@ void VideoProcessor::processSingleFrame()
 	allFrames[3] = qOpenedFrame;
 	allFrames[4] = qBluredFrame;
 	allFrames[5] = qObjectWithKeypointsFrame;
+	allFrames[6] = qBackgroundFrame;
 
 	//convert points to Player
 	outputData.clear();
@@ -172,7 +197,7 @@ void VideoProcessor::processSingleFrame()
 void VideoProcessor::run() {
 	int delay = (1000 / frameRate);
 	while (!stop) {
-		processSingleFrame();
+		processSingleFrame(0);
 		this->msleep(delay);
 	}
 }
@@ -212,7 +237,6 @@ void VideoProcessor::getMaskCoordinate(QList<QPoint> maskPoints) {
 			maskPoint[0][i] = Point(point.x(), point.y());
 			i++;
 		}
-		qDebug() << "Mask is set";
 		isSetMask = true;
 	} else {
 		isSetMask = false;

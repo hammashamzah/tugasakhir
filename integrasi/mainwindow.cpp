@@ -152,8 +152,8 @@ void MainWindow::on_pushButton_load_default_video_released()
 
 void MainWindow::on_pushButton_initialize_background_model_released()
 {
-    QString filename1 = QString("kiri-sama-edited.png");
-    QString filename2 = QString("kanan-sama-edited.png");
+    QString filename1 = QString("sebelah-kiri-edited.png");
+    QString filename2 = QString("sebelah-kanan-edited.png");
     myObjectDetector->updateBackgroundModelUsingImage(filename1, 1);
     myObjectDetector->updateBackgroundModelUsingImage(filename2, 2);
 }

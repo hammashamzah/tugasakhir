@@ -29,8 +29,8 @@ private:
 	QWaitCondition condition;
 	int frameRate;
 	VideoCapture *capture;
-	Mat frame, objectFrame, mask, maskedFrame, openedFrame, bluredFrame, objectWithKeypointsFrame;
-	QImage qRawFrame, qMaskedFrame, qObjectFrame, qOpenedFrame, qBluredFrame, qObjectWithKeypointsFrame;
+	Mat frame, objectFrame, mask, backgroundFrame, maskedFrame, openedFrame, bluredFrame, objectWithKeypointsFrame, image;
+	QImage qRawFrame, qMaskedFrame, qBackgroundFrame, qObjectFrame, qOpenedFrame, qBluredFrame, qObjectWithKeypointsFrame;
 	BetterBlobDetector::Params params;
 	Ptr<BackgroundSubtractor> pMOG2;
 	vector<vector<Point> > contours;
@@ -80,7 +80,7 @@ public:
 	double getCurrentFrame();
 	double getNumberOfFrames();
 	QImage getFirstFrame();
-	void processSingleFrame();
+	void processSingleFrame(int mode);
 
 private:
 	void convertMatToQImage(Mat frame, QImage result);
