@@ -36,7 +36,7 @@ private:
     gpu::MOG2_GPU pMOG2_g;
     gpu::GpuMat gpuMaskedFrame;
     gpu::GpuMat gpuObjectFrame;
-    gpu::GpuMat gpuBackgroundFrame;
+    gpu::GpuMat gpuBackgroundFrame, gpuOpenedFrame, gpuBluredFrame;
 
 	BetterBlobDetector::Params params;
 	Ptr<BackgroundSubtractor> pMOG2;
@@ -95,6 +95,7 @@ private:
 	Point maskPoint[1][10];
 	int numberOfMaskPoints;
 	bool isSetMask;
+
 };
 
 #endif // VIDEOPROCESSOR_H

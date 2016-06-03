@@ -76,6 +76,8 @@ QImage VideoProcessor::getFirstFrame() {
 
 void VideoProcessor::processSingleFrame(int mode)
 {
+
+
 	//set parameters based on tuning from background model tuning window
 	params.filterByArea = true;
 	params.filterByInertia = false;
@@ -89,8 +91,9 @@ void VideoProcessor::processSingleFrame(int mode)
 	if (maxArea > 0) {
 		params.maxArea = maxArea;
 	}
+
 	BetterBlobDetector blob_detector(params);
-	if (morphElementSize > 0) {
+    if (morphElementSize > 0) {
 		morphElement = getStructuringElement(2, Size(morphElementSize, morphElementSize));
 	}
 	if (mode == 0) {
@@ -101,9 +104,7 @@ void VideoProcessor::processSingleFrame(int mode)
 	} else if (mode == 1) {
 		image.copyTo(frame);
 	}
-
 	//mask object
-	//maskImage(frame, maskedFrame);
 	mask = Mat::zeros(frame.size(), CV_8UC3);
 	if (isSetMask) {
 		const Point * ppt[1] = {maskPoint[0]};
@@ -120,20 +121,21 @@ void VideoProcessor::processSingleFrame(int mode)
     //pMOG2->operator()(maskedFrame, objectFrame, 0);
     //pMOG2->getBackgroundImage(backgroundFrame);
 
-    gpuObjectFrame.download(objectFrame);
-    gpuBackgroundFrame.download(backgroundFrame);
 	if (gaussianSize > 0) {
-		GaussianBlur(objectFrame, bluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
+        gpu::GaussianBlur(gpuObjectFrame, gpuBluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
 	} else {
 		objectFrame.copyTo(bluredFrame);
 	}
 
 	if (morphElementSize > 0) {
-		morphologyEx(bluredFrame, openedFrame, 2, morphElement);
+        gpu::morphologyEx(gpuBluredFrame, gpuOpenedFrame, 2, morphElement);
 	} else {
 		bluredFrame.copyTo(openedFrame);
 	}
-
+    gpuObjectFrame.download(objectFrame);
+    gpuBackgroundFrame.download(backgroundFrame);
+    gpuOpenedFrame.download(openedFrame);
+    gpuBluredFrame.download(bluredFrame);
 	frame.copyTo(objectWithKeypointsFrame);
 
 	std::vector < std::vector<cv::Point> > contours_detected;
@@ -178,13 +180,13 @@ void VideoProcessor::processSingleFrame(int mode)
 
 	KeyPoint::convert(keypoints, points);
 
-	qRawFrame = QtOcv::mat2Image_shared(frame).copy().rgbSwapped();
-	qMaskedFrame = QtOcv::mat2Image_shared(maskedFrame).copy().rgbSwapped();
-	qBackgroundFrame = QtOcv::mat2Image_shared(backgroundFrame).copy().rgbSwapped();
-	qObjectFrame = QtOcv::mat2Image_shared(objectFrame).copy().rgbSwapped();
-	qOpenedFrame = QtOcv::mat2Image_shared(openedFrame).copy().rgbSwapped();
-	qBluredFrame = QtOcv::mat2Image_shared(bluredFrame).copy().rgbSwapped();
-	qObjectWithKeypointsFrame = QtOcv::mat2Image_shared(objectWithKeypointsFrame).copy().rgbSwapped();
+	qRawFrame = QtOcv::mat2Image_shared(frame).rgbSwapped();
+	qMaskedFrame = QtOcv::mat2Image_shared(maskedFrame).rgbSwapped();
+	qBackgroundFrame = QtOcv::mat2Image_shared(backgroundFrame).rgbSwapped();
+	qObjectFrame = QtOcv::mat2Image_shared(objectFrame).rgbSwapped();
+	qOpenedFrame = QtOcv::mat2Image_shared(openedFrame).rgbSwapped();
+	qBluredFrame = QtOcv::mat2Image_shared(bluredFrame).rgbSwapped();
+	qObjectWithKeypointsFrame = QtOcv::mat2Image_shared(objectWithKeypointsFrame).rgbSwapped();
 	//emit raw image
 	allFrames[0] = qRawFrame;
 	allFrames[1] = qMaskedFrame;
@@ -199,6 +201,8 @@ void VideoProcessor::processSingleFrame(int mode)
 	for (int i = 0; i < points.size(); i++) {
 		outputData.append(Player((int)this->getCurrentFrame(), 0, Point2f(points[i].x, points[i].y)));
 	}
+
+
 	emit sendCameraObjectData(outputData);
 	emit sendSingleCameraViewImage(allFrames);
 

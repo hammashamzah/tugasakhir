@@ -138,8 +138,8 @@ void MainWindow::on_actionFirst_Image_2_triggered() {
 
 void MainWindow::on_pushButton_load_default_video_released()
 {
-    QString filename1 = QString("Bagian 5 - Kiri.mp4");
-    QString filename2 = QString("Bagian 5 - Kanan.mp4");
+    QString filename1 = QString("Bagian 1 - Kiri.mp4");
+    QString filename2 = QString("Bagian 1 - Kanan.mp4");
 
     myObjectDetector->loadVideo(filename1, 1);
     myObjectDetector->loadVideo(filename2, 2);
@@ -152,8 +152,8 @@ void MainWindow::on_pushButton_load_default_video_released()
 
 void MainWindow::on_pushButton_initialize_background_model_released()
 {
-    QString filename1 = QString("sebelah-kiri-edited.png");
-    QString filename2 = QString("sebelah-kanan-edited.png");
+    QString filename1 = QString("Bagian 1 - Kiri.jpg");
+    QString filename2 = QString("Bagian 1 - Kanan.jpg");
     myObjectDetector->updateBackgroundModelUsingImage(filename1, 1);
     myObjectDetector->updateBackgroundModelUsingImage(filename2, 2);
 }

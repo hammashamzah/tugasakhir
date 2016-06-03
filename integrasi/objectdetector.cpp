@@ -123,7 +123,8 @@ void ObjectDetector::playSingleFrame() {
 
 void ObjectDetector::playContinously() {
 	if (myStream_1->isStopped() && myStream_2->isStopped()) {
-		myStream_1->Play();
+        myTimer.start();
+        myStream_1->Play();
 		myStream_2->Play();
 	} else {
 		myStream_1->Stop();

@@ -15,6 +15,7 @@
 #include <cvmatandqimage.h>
 #include <videoprocessor.h>
 #include <iostream>
+#include <QElapsedTimer>
 #include <player.h>
 #include <QDebug>
 
@@ -34,6 +35,7 @@ private:
     QVector<QList<Player> > allOutputDataCam;
     bool setData[2];
     bool setImage[2];
+    QElapsedTimer myTimer;
 public:
     ObjectDetector();
     ~ObjectDetector();
@@ -64,6 +66,7 @@ public:
     QVector<QImage> firstFrameImage;
     QVector< QVector<QImage> > cameraViewImage;
     bool isSetFirstFrame[2];
+
 signals:
     void sendFirstFrameImage(QVector<QImage>);
     void updateValueParameter_1(QVector<int>);
