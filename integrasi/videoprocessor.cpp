@@ -5,11 +5,15 @@ using namespace cv;
 
 VideoProcessor::VideoProcessor(QObject *parent): QThread(parent)
 {
-	qRegisterMetaType<QVector<QImage> >("QVector<QImage>");
-	qRegisterMetaType<QList<Player> >("QList<Player>");
+    qRegisterMetaType<QVector<QImage> >("QVector<QImage>");
+    qRegisterMetaType<QList<Player> >("QList<Player>");
 
 	stop = true;
-	pMOG2 = new BackgroundSubtractorMOG2();
+    //pMOG2 = new BackgroundSubtractorMOG2();
+	
+    pMOG2_g.history = 3000; //300;
+    pMOG2_g.varThreshold = 64; //128; //64; //32;//;
+    pMOG2_g.bShadowDetection = true;
 	minArea = 0;
 	maxArea = 200;
 	morphElementSize = 3;
@@ -107,22 +111,28 @@ void VideoProcessor::processSingleFrame(int mode)
 		fillPoly(mask, ppt, npt, 1, Scalar(255, 255, 255), 8);
 		frame.copyTo(maskedFrame, mask);
 	} else {
-		maskedFrame = frame;
+		frame.copyTo(maskedFrame);
 	}
 	//update the background model
-    pMOG2->operator()(maskedFrame, objectFrame, 0.001);
-	pMOG2->getBackgroundImage(backgroundFrame);
+    gpuMaskedFrame.upload(maskedFrame);
+    pMOG2_g.operator()(gpuMaskedFrame, gpuObjectFrame, 0.001);
+    pMOG2_g.getBackgroundImage(gpuBackgroundFrame);
+    //pMOG2->operator()(maskedFrame, objectFrame, 0);
+    //pMOG2->getBackgroundImage(backgroundFrame);
+
+    gpuObjectFrame.download(objectFrame);
+    gpuBackgroundFrame.download(backgroundFrame);
 	if (gaussianSize > 0) {
-        GaussianBlur(objectFrame, bluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
-    }else{
-        objectFrame.copyTo(bluredFrame);
-    }
+		GaussianBlur(objectFrame, bluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
+	} else {
+		objectFrame.copyTo(bluredFrame);
+	}
 
 	if (morphElementSize > 0) {
 		morphologyEx(bluredFrame, openedFrame, 2, morphElement);
-    }else{
-        bluredFrame.copyTo(openedFrame);
-    }
+	} else {
+		bluredFrame.copyTo(openedFrame);
+	}
 
 	frame.copyTo(objectWithKeypointsFrame);
 
@@ -159,7 +169,7 @@ void VideoProcessor::processSingleFrame(int mode)
 	for (int i = 0; i < contours_detected.size(); i++) {
 		//if(contour_area.at<float>(i,1) > 10){
 		//if(labels.at<int>(i,0) == dataLabel){
-        rectangle(objectWithKeypointsFrame, boundRect[i].tl(), boundRect[i].br(), Scalar(255, 255, 255), 2);
+		rectangle(objectWithKeypointsFrame, boundRect[i].tl(), boundRect[i].br(), Scalar(255, 255, 255), 2);
 		//   }else{
 		//       rectangle(objectWithKeypointsFrame, boundRect[i].tl(), boundRect[i].br(), Scalar(0, 0, 0));
 		//   }

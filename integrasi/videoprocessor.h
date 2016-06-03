@@ -11,6 +11,7 @@
 #include <opencv2/video/background_segm.hpp>
 #include <opencv2/video/video.hpp>
 #include <opencv2/features2d/features2d.hpp>
+#include <opencv2/gpu/gpu.hpp>
 #include <cvmatandqimage.h>
 #include <iostream>
 #include <QDebug>
@@ -31,6 +32,12 @@ private:
 	VideoCapture *capture;
 	Mat frame, objectFrame, mask, backgroundFrame, maskedFrame, openedFrame, bluredFrame, objectWithKeypointsFrame, image;
 	QImage qRawFrame, qMaskedFrame, qBackgroundFrame, qObjectFrame, qOpenedFrame, qBluredFrame, qObjectWithKeypointsFrame;
+
+    gpu::MOG2_GPU pMOG2_g;
+    gpu::GpuMat gpuMaskedFrame;
+    gpu::GpuMat gpuObjectFrame;
+    gpu::GpuMat gpuBackgroundFrame;
+
 	BetterBlobDetector::Params params;
 	Ptr<BackgroundSubtractor> pMOG2;
 	vector<vector<Point> > contours;
