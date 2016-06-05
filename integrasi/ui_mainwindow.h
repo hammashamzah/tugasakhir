@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
@@ -24,9 +25,10 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QSlider>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QSplitter>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 #include <clickdisplay.h>
@@ -48,33 +50,46 @@ public:
     QAction *actionData_View;
     QAction *actionFirst_Image_1;
     QAction *actionFirst_Image_2;
+    QAction *actionDistortion_Correction;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
-    QHBoxLayout *horizontalLayout_3;
-    QVBoxLayout *verticalLayout_3;
+    QVBoxLayout *verticalLayout_4;
+    QHBoxLayout *horizontalLayout_4;
+    QVBoxLayout *verticalLayout_7;
     QHBoxLayout *horizontalLayout_5;
     ClickDisplay *label_stream_1;
     ClickDisplay *label_stream_2;
-    QHBoxLayout *horizontalLayout_2;
+    QFrame *line_2;
+    QHBoxLayout *horizontalLayout_3;
+    QVBoxLayout *verticalLayout_5;
+    QLabel *label_2;
     QListWidget *listTeamA;
+    QVBoxLayout *verticalLayout_6;
+    QHBoxLayout *horizontalLayout_2;
     ClickDisplay *label_game_visual;
+    QVBoxLayout *verticalLayout_3;
+    QLabel *label;
     QListWidget *listTeamB;
+    QFrame *line;
     QVBoxLayout *verticalLayout_2;
     QSplitter *splitter;
     QGroupBox *groupBox;
-    QWidget *layoutWidget;
-    QVBoxLayout *verticalLayout_4;
-    QGridLayout *gridLayout_2;
-    QLabel *idLabel;
-    QLabel *playerNameLabel;
-    QLabel *playerSpeedLabel;
-    QLabel *positionLabel;
     QVBoxLayout *verticalLayout;
+    QGridLayout *gridLayout_2;
+    QLabel *stautusSetVideoFile;
+    QLabel *statusSetParamter;
+    QLabel *statusCalibration;
+    QLabel *statusSetMask;
+    QTextBrowser *logActivity;
+    QSpacerItem *verticalSpacer;
     QPushButton *pushButton_play;
-    QPushButton *pushButton_single_play;
-    QPushButton *pushButton_send_id;
     QPushButton *pushButton_initialize_background_model;
     QPushButton *pushButton_load_default_video;
+    QPushButton *pushButton_single_play;
+    QPushButton *pushButton_send_id;
+    QFrame *line_3;
+    QLabel *logo;
+    QFrame *line_4;
     QHBoxLayout *horizontalLayout;
     QLabel *label_current_time;
     QSlider *slider_global_frame;
@@ -85,14 +100,14 @@ public:
     QMenu *menuView;
     QMenu *menuPerformance;
     QMenu *menuAbout;
-    QToolBar *mainToolBar;
     QStatusBar *statusBar;
+    QButtonGroup *buttonGroup;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1198, 677);
+        MainWindow->resize(1198, 683);
         MainWindow->setAutoFillBackground(false);
         actionVideo_1 = new QAction(MainWindow);
         actionVideo_1->setObjectName(QStringLiteral("actionVideo_1"));
@@ -118,20 +133,25 @@ public:
         actionFirst_Image_1->setObjectName(QStringLiteral("actionFirst_Image_1"));
         actionFirst_Image_2 = new QAction(MainWindow);
         actionFirst_Image_2->setObjectName(QStringLiteral("actionFirst_Image_2"));
+        actionDistortion_Correction = new QAction(MainWindow);
+        actionDistortion_Correction->setObjectName(QStringLiteral("actionDistortion_Correction"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        horizontalLayout_3 = new QHBoxLayout();
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
-        verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        verticalLayout_7 = new QVBoxLayout();
+        verticalLayout_7->setSpacing(6);
+        verticalLayout_7->setObjectName(QStringLiteral("verticalLayout_7"));
         horizontalLayout_5 = new QHBoxLayout();
-        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setSpacing(0);
         horizontalLayout_5->setObjectName(QStringLiteral("horizontalLayout_5"));
         label_stream_1 = new ClickDisplay(centralWidget);
         label_stream_1->setObjectName(QStringLiteral("label_stream_1"));
@@ -156,35 +176,95 @@ public:
         horizontalLayout_5->addWidget(label_stream_2);
 
 
-        verticalLayout_3->addLayout(horizontalLayout_5);
+        verticalLayout_7->addLayout(horizontalLayout_5);
 
+        line_2 = new QFrame(centralWidget);
+        line_2->setObjectName(QStringLiteral("line_2"));
+        line_2->setFrameShape(QFrame::HLine);
+        line_2->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout_7->addWidget(line_2);
+
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        verticalLayout_5 = new QVBoxLayout();
+        verticalLayout_5->setSpacing(6);
+        verticalLayout_5->setObjectName(QStringLiteral("verticalLayout_5"));
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setMaximumSize(QSize(250, 16777215));
+
+        verticalLayout_5->addWidget(label_2);
+
+        listTeamA = new QListWidget(centralWidget);
+        listTeamA->setObjectName(QStringLiteral("listTeamA"));
+        listTeamA->setMaximumSize(QSize(250, 16777215));
+        listTeamA->setStyleSheet(QLatin1String("background-color: rgb(0, 0, 0);\n"
+"font: 75 14pt \"Tlwg Typist\";\n"
+"color: rgb(255, 255, 255);"));
+
+        verticalLayout_5->addWidget(listTeamA);
+
+
+        horizontalLayout_3->addLayout(verticalLayout_5);
+
+        verticalLayout_6 = new QVBoxLayout();
+        verticalLayout_6->setSpacing(6);
+        verticalLayout_6->setObjectName(QStringLiteral("verticalLayout_6"));
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        listTeamA = new QListWidget(centralWidget);
-        listTeamA->setObjectName(QStringLiteral("listTeamA"));
 
-        horizontalLayout_2->addWidget(listTeamA);
+        verticalLayout_6->addLayout(horizontalLayout_2);
 
         label_game_visual = new ClickDisplay(centralWidget);
         label_game_visual->setObjectName(QStringLiteral("label_game_visual"));
         label_game_visual->setMinimumSize(QSize(320, 240));
         label_game_visual->setMaximumSize(QSize(480, 320));
-        label_game_visual->setStyleSheet(QStringLiteral("Background-color: #000;"));
-        label_game_visual->setScaledContents(true);
+        label_game_visual->setStyleSheet(QStringLiteral(""));
+        label_game_visual->setScaledContents(false);
+        label_game_visual->setAlignment(Qt::AlignCenter);
 
-        horizontalLayout_2->addWidget(label_game_visual);
+        verticalLayout_6->addWidget(label_game_visual);
+
+
+        horizontalLayout_3->addLayout(verticalLayout_6);
+
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setMaximumSize(QSize(250, 16777215));
+        label->setAlignment(Qt::AlignCenter);
+
+        verticalLayout_3->addWidget(label);
 
         listTeamB = new QListWidget(centralWidget);
         listTeamB->setObjectName(QStringLiteral("listTeamB"));
+        listTeamB->setMaximumSize(QSize(250, 16777215));
+        listTeamB->setStyleSheet(QLatin1String("background-color: rgb(0, 0, 0);\n"
+"font: 75 14pt \"Tlwg Typist\";\n"
+"color: rgb(255, 255, 255);"));
 
-        horizontalLayout_2->addWidget(listTeamB);
-
-
-        verticalLayout_3->addLayout(horizontalLayout_2);
+        verticalLayout_3->addWidget(listTeamB);
 
 
         horizontalLayout_3->addLayout(verticalLayout_3);
+
+
+        verticalLayout_7->addLayout(horizontalLayout_3);
+
+
+        horizontalLayout_4->addLayout(verticalLayout_7);
+
+        line = new QFrame(centralWidget);
+        line->setObjectName(QStringLiteral("line"));
+        line->setFrameShape(QFrame::VLine);
+        line->setFrameShadow(QFrame::Sunken);
+
+        horizontalLayout_4->addWidget(line);
 
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
@@ -198,83 +278,121 @@ public:
         groupBox->setSizePolicy(sizePolicy);
         groupBox->setMinimumSize(QSize(200, 0));
         groupBox->setMaximumSize(QSize(240, 16777215));
-        layoutWidget = new QWidget(groupBox);
-        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(0, 20, 212, 381));
-        verticalLayout_4 = new QVBoxLayout(layoutWidget);
-        verticalLayout_4->setSpacing(6);
-        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_4->setObjectName(QStringLiteral("verticalLayout_4"));
-        verticalLayout_4->setContentsMargins(0, 0, 0, 0);
+        verticalLayout = new QVBoxLayout(groupBox);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         gridLayout_2 = new QGridLayout();
         gridLayout_2->setSpacing(6);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
-        idLabel = new QLabel(layoutWidget);
-        idLabel->setObjectName(QStringLiteral("idLabel"));
+        stautusSetVideoFile = new QLabel(groupBox);
+        stautusSetVideoFile->setObjectName(QStringLiteral("stautusSetVideoFile"));
         QFont font;
         font.setPointSize(9);
-        idLabel->setFont(font);
+        stautusSetVideoFile->setFont(font);
+        stautusSetVideoFile->setScaledContents(true);
 
-        gridLayout_2->addWidget(idLabel, 0, 0, 1, 1);
+        gridLayout_2->addWidget(stautusSetVideoFile, 0, 0, 1, 1);
 
-        playerNameLabel = new QLabel(layoutWidget);
-        playerNameLabel->setObjectName(QStringLiteral("playerNameLabel"));
+        statusSetParamter = new QLabel(groupBox);
+        statusSetParamter->setObjectName(QStringLiteral("statusSetParamter"));
 
-        gridLayout_2->addWidget(playerNameLabel, 1, 0, 1, 1);
+        gridLayout_2->addWidget(statusSetParamter, 1, 0, 1, 1);
 
-        playerSpeedLabel = new QLabel(layoutWidget);
-        playerSpeedLabel->setObjectName(QStringLiteral("playerSpeedLabel"));
+        statusCalibration = new QLabel(groupBox);
+        statusCalibration->setObjectName(QStringLiteral("statusCalibration"));
 
-        gridLayout_2->addWidget(playerSpeedLabel, 2, 0, 1, 1);
+        gridLayout_2->addWidget(statusCalibration, 3, 0, 1, 1);
 
-        positionLabel = new QLabel(layoutWidget);
-        positionLabel->setObjectName(QStringLiteral("positionLabel"));
+        statusSetMask = new QLabel(groupBox);
+        statusSetMask->setObjectName(QStringLiteral("statusSetMask"));
 
-        gridLayout_2->addWidget(positionLabel, 3, 0, 1, 1);
+        gridLayout_2->addWidget(statusSetMask, 2, 0, 1, 1);
 
 
-        verticalLayout_4->addLayout(gridLayout_2);
+        verticalLayout->addLayout(gridLayout_2);
 
-        verticalLayout = new QVBoxLayout();
-        verticalLayout->setSpacing(6);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        pushButton_play = new QPushButton(layoutWidget);
+        logActivity = new QTextBrowser(groupBox);
+        logActivity->setObjectName(QStringLiteral("logActivity"));
+        logActivity->setMinimumSize(QSize(0, 100));
+        logActivity->setStyleSheet(QLatin1String("background-color: rgb(0, 0, 0);\n"
+"font: 75 10pt \"Tlwg Typo\";\n"
+"color: rgb(255, 255, 255);"));
+        logActivity->setLineWidth(0);
+
+        verticalLayout->addWidget(logActivity);
+
+        verticalSpacer = new QSpacerItem(20, 365, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout->addItem(verticalSpacer);
+
+        pushButton_play = new QPushButton(groupBox);
+        buttonGroup = new QButtonGroup(MainWindow);
+        buttonGroup->setObjectName(QStringLiteral("buttonGroup"));
+        buttonGroup->addButton(pushButton_play);
         pushButton_play->setObjectName(QStringLiteral("pushButton_play"));
+        pushButton_play->setMaximumSize(QSize(200, 16777215));
 
         verticalLayout->addWidget(pushButton_play);
 
-        pushButton_single_play = new QPushButton(layoutWidget);
-        pushButton_single_play->setObjectName(QStringLiteral("pushButton_single_play"));
-
-        verticalLayout->addWidget(pushButton_single_play);
-
-        pushButton_send_id = new QPushButton(layoutWidget);
-        pushButton_send_id->setObjectName(QStringLiteral("pushButton_send_id"));
-
-        verticalLayout->addWidget(pushButton_send_id);
-
-        pushButton_initialize_background_model = new QPushButton(layoutWidget);
+        pushButton_initialize_background_model = new QPushButton(groupBox);
+        buttonGroup->addButton(pushButton_initialize_background_model);
         pushButton_initialize_background_model->setObjectName(QStringLiteral("pushButton_initialize_background_model"));
+        pushButton_initialize_background_model->setMaximumSize(QSize(200, 16777215));
 
         verticalLayout->addWidget(pushButton_initialize_background_model);
 
-        pushButton_load_default_video = new QPushButton(layoutWidget);
+        pushButton_load_default_video = new QPushButton(groupBox);
+        buttonGroup->addButton(pushButton_load_default_video);
         pushButton_load_default_video->setObjectName(QStringLiteral("pushButton_load_default_video"));
+        pushButton_load_default_video->setMaximumSize(QSize(200, 16777215));
 
         verticalLayout->addWidget(pushButton_load_default_video);
 
+        pushButton_single_play = new QPushButton(groupBox);
+        buttonGroup->addButton(pushButton_single_play);
+        pushButton_single_play->setObjectName(QStringLiteral("pushButton_single_play"));
+        pushButton_single_play->setMaximumSize(QSize(200, 16777215));
 
-        verticalLayout_4->addLayout(verticalLayout);
+        verticalLayout->addWidget(pushButton_single_play);
+
+        pushButton_send_id = new QPushButton(groupBox);
+        buttonGroup->addButton(pushButton_send_id);
+        pushButton_send_id->setObjectName(QStringLiteral("pushButton_send_id"));
+        pushButton_send_id->setMaximumSize(QSize(200, 16777215));
+
+        verticalLayout->addWidget(pushButton_send_id);
+
+        line_3 = new QFrame(groupBox);
+        line_3->setObjectName(QStringLiteral("line_3"));
+        line_3->setFrameShape(QFrame::HLine);
+        line_3->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout->addWidget(line_3);
+
+        logo = new QLabel(groupBox);
+        logo->setObjectName(QStringLiteral("logo"));
+        logo->setMaximumSize(QSize(200, 75));
+        logo->setScaledContents(true);
+
+        verticalLayout->addWidget(logo);
 
         splitter->addWidget(groupBox);
 
         verticalLayout_2->addWidget(splitter);
 
 
-        horizontalLayout_3->addLayout(verticalLayout_2);
+        horizontalLayout_4->addLayout(verticalLayout_2);
 
 
-        gridLayout->addLayout(horizontalLayout_3, 0, 0, 1, 1);
+        verticalLayout_4->addLayout(horizontalLayout_4);
+
+        line_4 = new QFrame(centralWidget);
+        line_4->setObjectName(QStringLiteral("line_4"));
+        line_4->setFrameShape(QFrame::HLine);
+        line_4->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout_4->addWidget(line_4);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
@@ -303,12 +421,15 @@ public:
         horizontalLayout->addWidget(label_max_time);
 
 
-        gridLayout->addLayout(horizontalLayout, 1, 0, 1, 1);
+        verticalLayout_4->addLayout(horizontalLayout);
+
+
+        gridLayout->addLayout(verticalLayout_4, 0, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1198, 25));
+        menuBar->setGeometry(QRect(0, 0, 1198, 17));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuEdit = new QMenu(menuBar);
@@ -320,9 +441,6 @@ public:
         menuAbout = new QMenu(menuBar);
         menuAbout->setObjectName(QStringLiteral("menuAbout"));
         MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
@@ -338,6 +456,7 @@ public:
         menuFile->addAction(actionFirst_Image_2);
         menuEdit->addAction(actionTuning_Background_Model);
         menuEdit->addAction(actionField_Selection);
+        menuEdit->addAction(actionDistortion_Correction);
         menuView->addAction(actionPer_Camera_Raw_View);
         menuView->addAction(actionTracking_View);
         menuView->addAction(actionData_View);
@@ -364,19 +483,23 @@ public:
         actionData_View->setText(QApplication::translate("MainWindow", "Data View", 0));
         actionFirst_Image_1->setText(QApplication::translate("MainWindow", "First Image 1", 0));
         actionFirst_Image_2->setText(QApplication::translate("MainWindow", "First Image 2", 0));
+        actionDistortion_Correction->setText(QApplication::translate("MainWindow", "Distortion Correction", 0));
         label_stream_1->setText(QString());
         label_stream_2->setText(QString());
+        label_2->setText(QApplication::translate("MainWindow", "Team A", 0));
         label_game_visual->setText(QString());
-        groupBox->setTitle(QApplication::translate("MainWindow", "Player Performance", 0));
-        idLabel->setText(QApplication::translate("MainWindow", "ID", 0));
-        playerNameLabel->setText(QApplication::translate("MainWindow", "Player Name", 0));
-        playerSpeedLabel->setText(QApplication::translate("MainWindow", "Player Speed", 0));
-        positionLabel->setText(QApplication::translate("MainWindow", "Position", 0));
+        label->setText(QApplication::translate("MainWindow", "Team B", 0));
+        groupBox->setTitle(QApplication::translate("MainWindow", "Status", 0));
+        stautusSetVideoFile->setText(QApplication::translate("MainWindow", "Set Video File", 0));
+        statusSetParamter->setText(QApplication::translate("MainWindow", "Set Object Detection Parameter", 0));
+        statusCalibration->setText(QApplication::translate("MainWindow", "Calibration", 0));
+        statusSetMask->setText(QApplication::translate("MainWindow", "Set Masking Field", 0));
         pushButton_play->setText(QApplication::translate("MainWindow", "Play", 0));
-        pushButton_single_play->setText(QApplication::translate("MainWindow", "Single Frame Play", 0));
-        pushButton_send_id->setText(QApplication::translate("MainWindow", "Send ID", 0));
         pushButton_initialize_background_model->setText(QApplication::translate("MainWindow", "Initialize Background Model", 0));
         pushButton_load_default_video->setText(QApplication::translate("MainWindow", "Load Default Video", 0));
+        pushButton_single_play->setText(QApplication::translate("MainWindow", "Single Frame Play", 0));
+        pushButton_send_id->setText(QApplication::translate("MainWindow", "Send ID", 0));
+        logo->setText(QApplication::translate("MainWindow", "logo", 0));
         label_current_time->setText(QApplication::translate("MainWindow", "00:00", 0));
         label_max_time->setText(QApplication::translate("MainWindow", "00:00", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));

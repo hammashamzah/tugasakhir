@@ -13,18 +13,73 @@ CoordinateTransform::~CoordinateTransform()
  * Output : QList dari player yang keluar (lost) dan masuk (found) untuk dua kamera
  *          dengan koordinat global lapangan*/
 
+void CoordinateTransform::setDistotionCoefficient(double value)
+{
+    distCoeff = value;
+}
 
 void CoordinateTransform::processTransformPosition(QVector<QList<Player> > data)
 {
     QVector<QList<Player> > dataTransformed;
-    dataTransformed.resize(2);
-    playerImageCoordinate.clear();
+    //create intrinsic parameter of camera
+    Mat_<double> camMat(3,3);
+    camMat<<640,0,640,0,360,360,0,0,1;
+
+    cv::vector<Point2f> pointdst;
+    pointdst.resize(2);
+
+    //distortion coefficient 
+    cv::vector<double> distCoeffArray;
+    distCoeffArray.resize(4);
+    distCoeffArray[0]=distCoeff;
+
     playerImageCoordinate = data;
+    int playerNumber = 100;
+    Mat_<Point2f> distortedPoints(1,playerNumber);
+    cv::vector<Point2f> correctedPoints;
+    correctedPoints.resize(playerNumber);
+
+    //distortion correction
+    //create array of point of all player
+    int j=0;
+    for (int cameraId = 0; cameraId < playerImageCoordinate.size(); ++cameraId)
+    {
+        for (int i = 0; i < playerImageCoordinate.at(cameraId).size() ; i++)
+        {
+            distortedPoints(j) = data.at(cameraId).at(i).cameraPos;
+            j++;
+        }
+    }
+
+    //create array of undistorted point
+    undistortPoints(distortedPoints, correctedPoints, camMat, distCoeffArray);
+
+
+    j=0;
+    for (int cameraId = 0; cameraId < playerImageCoordinate.size(); ++cameraId)
+    {
+        for (int i = 0; i < playerImageCoordinate.at(cameraId).size() ; i++)
+        {
+            playerImageCoordinate[cameraId][i].cameraPos.x = correctedPoints.at(j).x*640+640;
+            playerImageCoordinate[cameraId][i].cameraPos.y = correctedPoints.at(j).y*360+360;
+            qDebug()<<playerImageCoordinate[cameraId][i].cameraPos.x<<playerImageCoordinate[cameraId][i].cameraPos.y;
+            j++;
+        }
+    }
+
     for (int cameraId = 0; cameraId < playerImageCoordinate.size(); cameraId++)
     {
         for (int i = 0; i < playerImageCoordinate.at(cameraId).size() ; i++)
         {
-            if (cameraId == 0) {
+            // qDebug()<<distCoeff;
+            // r_square = pow((data[cameraId][i].cameraPos.x-640),2)+pow((data[cameraId][i].cameraPos.y-360),2);
+
+
+            // playerImageCoordinate[cameraId][i].cameraPos.y = (data[cameraId][i].cameraPos.y)/(1+distCoeff*r_square);
+            // playerImageCoordinate[cameraId][i].cameraPos.x = (data[cameraId][i].cameraPos.x)/(1+distCoeff*r_square);
+            // qDebug()<<playerImageCoordinate[cameraId][i].cameraPos.x<<data[cameraId][i].cameraPos.x;
+            if (cameraId == 0){
+
                 playerImageCoordinate[cameraId][i].pos = transformCamera1ToGlobal(playerImageCoordinate[cameraId][i].cameraPos, transform_mat1);
             }
             else {

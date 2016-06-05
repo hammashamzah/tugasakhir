@@ -15,8 +15,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     myCoordinateTransform = new CoordinateTransform();
     myDynamicAssociation = new DynamicAssociation();
     myDVDialog = new DataWindow();
+    myDistortionCorrection = new DistortionCorrectionDialog();
+
 
     QObject::connect(myObjectDetector, SIGNAL(sendFirstFrameImage(QVector<QImage>)), myFSDialog, SLOT(setFirstFrameImage(QVector<QImage>)));
+    QObject::connect(myObjectDetector, SIGNAL(sendFirstFrameImage(QVector<QImage>)), myDistortionCorrection, SLOT(setFirstFrameImage(QVector<QImage>)));
     QObject::connect(myObjectDetector, SIGNAL(sendFirstFrameImage(QVector<QImage>)), this, SLOT(setCameraViewFirstFrameImage(QVector<QImage>)));
     QObject::connect(myFSDialog, SIGNAL(sendMaskCoordinates(QVector< QList<QPoint> >)), myObjectDetector, SLOT(setMaskCoordinate(QVector< QList<QPoint> >)));
     QObject::connect(myObjectDetector, SIGNAL(sendCameraViewImage(QVector< QVector<QImage> >)), myCVDialog, SLOT(updateCameraViewImage(QVector< QVector<QImage> >)));
@@ -41,17 +44,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(myDynamicAssociation, SIGNAL(sendToDataWindow(QList<Player>)), myDVDialog, SLOT(processData(QList<Player>)));
     QObject::connect(myDynamicAssociation, SIGNAL(sendToDataWindowAssociated(QList<Player>)), myDVDialog, SLOT(processDataAssociated(QList<Player>)));
 
+    QObject::connect(myDistortionCorrection, SIGNAL(sendDistortionCoeffisient(double)), myCoordinateTransform, SLOT(setDistotionCoefficient(double)));
+
 
     ui->slider_global_frame->setEnabled(false);
     videoLoaded[0] = false;
     videoLoaded[1] = false;
-    //click event
 
-    QPixmap pixmapField("lapangan.png");
-    ui->label_game_visual->setPixmap(pixmapField);
+    soccerField = QImage("lapanganFix.png");
+    logoLV = QImage("LiberoVision.png");
+    playerIconTeamA = QImage("playerA.png");
+    playerIconTeamA.scaled(QSize(20, 20), Qt::KeepAspectRatio, Qt::FastTransformation);
+    playerIconTeamB = QImage("playerB.png");
+    ui->label_game_visual->setPixmap(QPixmap::fromImage(soccerField).scaled(ui->label_game_visual->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+    ui->logo->setPixmap(QPixmap::fromImage(logoLV));
 
     initListPlayer();
     assignedId = 0;
+    this->setWindowTitle("Libero Vision");
 }
 
 MainWindow::~MainWindow() {
@@ -102,8 +112,8 @@ void MainWindow::on_actionVideo_1_triggered()
     if (videoLoaded[0] && videoLoaded[1]) {
         ui->slider_global_frame->setEnabled(true);
         ui->slider_global_frame->setMaximum(myObjectDetector->getNumberOfFrames() / (int)myObjectDetector->getFrameRate());
+        ui->stautusSetVideoFile->text().append(" done");
     }
-
 
 }
 
@@ -161,6 +171,7 @@ void MainWindow::on_pushButton_initialize_background_model_released()
 void MainWindow::on_pushButton_send_id_clicked()
 {
     emit sendAllIdAssigned(playerDisplayed);
+    ui->logActivity->append("sending id . . .");
 }
 
 void MainWindow::on_pushButton_play_released()
@@ -195,6 +206,12 @@ void MainWindow::on_slider_global_frame_sliderReleased()
     myObjectDetector->playContinously();
 }
 
+void MainWindow::on_actionDistortion_Correction_triggered()
+{
+    myDistortionCorrection->show();
+}
+
+
 void MainWindow::on_slider_global_frame_valueChanged(int value)
 {
     myObjectDetector->setCurrentFrame(value);
@@ -204,7 +221,7 @@ void MainWindow::on_slider_global_frame_valueChanged(int value)
 
 void MainWindow::displayModifiedId()
 {
-    QPixmap pixmapField("lapangan.png");   //ukuran pixmap
+    QPixmap pixmapField(QPixmap::fromImage(soccerField).scaled(ui->label_game_visual->size(), Qt::KeepAspectRatio, Qt::FastTransformation));   //ukuran pixmap
     QPainter painterField(&pixmapField);
     QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
     QBrush brush(Qt::white);
@@ -216,18 +233,18 @@ void MainWindow::displayModifiedId()
         brush.setColor(Qt::red);
         painterField.setBrush(brush);
 
-        painterField.drawRect( playerDisplayed_scaling.at(i).pos.x, playerDisplayed_scaling.at(i).pos.y, RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
+        painterField.drawEllipse(playerDisplayed_scaling.at(i).pos.x, playerDisplayed_scaling.at(i).pos.y, 10, 10);  //posisi x, y, dan ukuran elips
         painterField.setFont(QFont ("Arial"));
 
         painterField.drawText(QPoint(playerDisplayed_scaling.at(i).pos.x, playerDisplayed_scaling.at(i).pos.y), QString::number(playerDisplayed_scaling.at(i).id)); //posisi x, y, dan ukuran elips
     }
-    ui->label_game_visual->setPixmap(pixmapField);
+    ui->label_game_visual->setPixmap(pixmapField.scaled(ui->label_game_visual->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
 }
 
 void MainWindow::displayProcessedData(QList<Player> transformedPosition)
 {
     //myDataLogger->add(transformedPosition);
-    QPixmap pixmapField("lapangan.png");   //ukuran pixmap
+    QPixmap pixmapField(QPixmap::fromImage(soccerField).scaled(ui->label_game_visual->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
     QPainter painterField(&pixmapField);
     QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
     QBrush brush(Qt::white);
@@ -243,12 +260,13 @@ void MainWindow::displayProcessedData(QList<Player> transformedPosition)
         playerDisplayed_scaling[i].pos.y = (transformedPosition.at(i).pos.y * pixmapField.height() / GLOBAL_FIELD_WIDTH);
         brush.setColor(Qt::red);
         painterField.setBrush(brush);
-        painterField.drawRect(playerDisplayed_scaling[i].pos.x, playerDisplayed_scaling[i].pos.y, RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
-        painterField.setFont(QFont ("Arial"));
+//        painterField.drawImage(playerDisplayed_scaling[i].pos.x, playerDisplayed_scaling[i].pos.y, playerIconTeamB.scaled(QSize(15, 15), Qt::KeepAspectRatio, Qt::FastTransformation));
+        painterField.drawEllipse(playerDisplayed_scaling[i].pos.x, playerDisplayed_scaling[i].pos.y, RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
+        painterField.setFont(QFont ("Arial",10));
         painterField.drawText(QPoint(playerDisplayed_scaling.at(i).pos.x, playerDisplayed_scaling.at(i).pos.y), QString::number(playerDisplayed_scaling.at(i).id)); //posisi x, y, dan ukuran elips
     }
 
-    ui->label_game_visual->setPixmap(pixmapField);
+    ui->label_game_visual->setPixmap(pixmapField.scaled(ui->label_game_visual->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
 }
 
 void MainWindow::assignIdFromList(QPoint & pos)
@@ -256,8 +274,8 @@ void MainWindow::assignIdFromList(QPoint & pos)
     //int JUMLAH_PLAYER = 22;
     for (int i = 0; i < playerDisplayed_scaling.size(); i++)
     {
-        if ((pos.x() >= playerDisplayed_scaling.at(i).pos.x && pos.x() <= playerDisplayed_scaling.at(i).pos.x + 10)
-                && (pos.y() >= playerDisplayed_scaling.at(i).pos.y && pos.y() <= playerDisplayed_scaling.at(i).pos.y + 10)) {
+        if ((pos.x() >= (playerDisplayed_scaling.at(i).pos.x -10) && pos.x() <= (playerDisplayed_scaling.at(i).pos.x + 10))
+                && (pos.y() >= (playerDisplayed_scaling.at(i).pos.y-10) && pos.y() <= (playerDisplayed_scaling.at(i).pos.y + 10))) {
             playerDisplayed[i].id = idToAssign;
             playerDisplayed_scaling[i].id = idToAssign;
             playerDisplayed[i].isValid = true;
@@ -319,5 +337,6 @@ void MainWindow::displayAssignedTransformedPosition(QList<Player> assignedTransf
     playerDisplayed = assignedTransformedPosition;
     displayModifiedId();
 }
+
 
 

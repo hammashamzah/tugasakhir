@@ -36,6 +36,7 @@
 #include "cameraviewdialog.h"
 #include "dynamicassociation.h"
 #include "datawindow.h"
+#include "distortioncorrectiondialog.h"
 
 using namespace cv;
 using namespace std;
@@ -54,6 +55,10 @@ public:
 
     bool isSetTrapezium;
     bool isSetThresholds;
+    QImage soccerField;
+    QImage logoLV;
+    QImage playerIconTeamA;
+    QImage playerIconTeamB;
 
 public slots:
     void displayProcessedData(QList<Player>);
@@ -100,6 +105,8 @@ private slots:
     void on_actionFirst_Image_1_triggered();
     void on_actionFirst_Image_2_triggered();
 
+    void on_actionDistortion_Correction_triggered();
+
 private:
     Ui::MainWindow *ui;
     //initialize windows
@@ -111,6 +118,7 @@ private:
     BackgroundModelTuningDialog *myBMTDialog;
     DynamicAssociation *myDynamicAssociation;
     DataWindow *myDVDialog;
+    DistortionCorrectionDialog *myDistortionCorrection;
     //initialize processor
     ObjectDetector *myObjectDetector;
     CoordinateTransform *myCoordinateTransform;

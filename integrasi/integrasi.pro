@@ -36,7 +36,9 @@ SOURCES += main.cpp\
     datawindow.cpp \
     kalmanobject.cpp \
     freezetablewidget.cpp \
-    betterblobdetector.cpp
+    betterblobdetector.cpp \
+    statisticgenerator.cpp \
+    distortioncorrectiondialog.cpp
 
 HEADERS  += mainwindow.h \
     backgroundmodeltuningdialog.h \
@@ -59,7 +61,9 @@ HEADERS  += mainwindow.h \
     datawindow.h \
     kalmanobject.h \
     freezetablewidget.h \
-    betterblobdetector.h
+    betterblobdetector.h \
+    statisticgenerator.h \
+    distortioncorrectiondialog.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \
@@ -68,7 +72,8 @@ FORMS    += mainwindow.ui \
     fieldselectiondialog.ui \
     systemperformancedialog.ui \
     trackingviewdialog.ui \
-    datawindow.ui
+    datawindow.ui \
+    distortioncorrectiondialog.ui
 
 DISTFILES += \
     integrasi.pro.user
