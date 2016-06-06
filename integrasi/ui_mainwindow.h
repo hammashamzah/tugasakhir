@@ -223,7 +223,7 @@ public:
         label_game_visual->setMinimumSize(QSize(320, 240));
         label_game_visual->setMaximumSize(QSize(480, 320));
         label_game_visual->setStyleSheet(QStringLiteral(""));
-        label_game_visual->setScaledContents(false);
+        label_game_visual->setScaledContents(true);
         label_game_visual->setAlignment(Qt::AlignCenter);
 
         verticalLayout_6->addWidget(label_game_visual);

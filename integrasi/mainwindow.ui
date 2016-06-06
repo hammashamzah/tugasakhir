@@ -145,7 +145,7 @@ color: rgb(255, 255, 255);</string>
                  <string/>
                 </property>
                 <property name="scaledContents">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
