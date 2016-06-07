@@ -2,7 +2,8 @@
 
 CoordinateTransform::CoordinateTransform()
 {
-
+    distCoeff.append(0);
+    distCoeff.append(0);
 }
 CoordinateTransform::~CoordinateTransform()
 {
@@ -13,9 +14,10 @@ CoordinateTransform::~CoordinateTransform()
  * Output : QList dari player yang keluar (lost) dan masuk (found) untuk dua kamera
  *          dengan koordinat global lapangan*/
 
-void CoordinateTransform::setDistotionCoefficient(double value)
+void CoordinateTransform::setDistortionCoefficient(QList<double> value)
 {
-    distCoeff = value;
+    distCoeff[0] = value[0];
+    distCoeff[1] = value[1];
 }
 
 void CoordinateTransform::processTransformPosition(QVector<QList<Player> > data)
@@ -31,7 +33,6 @@ void CoordinateTransform::processTransformPosition(QVector<QList<Player> > data)
     //distortion coefficient 
     cv::vector<double> distCoeffArray;
     distCoeffArray.resize(4);
-    distCoeffArray[0]=distCoeff;
 
     playerImageCoordinate = data;
     int playerNumber = 100;
@@ -51,6 +52,7 @@ void CoordinateTransform::processTransformPosition(QVector<QList<Player> > data)
         }
     }
 
+    distCoeffArray[0]=distCoeff[0];
     //create array of undistorted point
     undistortPoints(distortedPoints, correctedPoints, camMat, distCoeffArray);
 

@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     QObject::connect(myDynamicAssociation, SIGNAL(sendToDataWindow(QList<Player>)), myDVDialog, SLOT(processData(QList<Player>)));
     QObject::connect(myDynamicAssociation, SIGNAL(sendToDataWindowAssociated(QList<Player>)), myDVDialog, SLOT(processDataAssociated(QList<Player>)));
 
-    QObject::connect(myDistortionCorrection, SIGNAL(sendDistortionCoeffisient(double)), myCoordinateTransform, SLOT(setDistotionCoefficient(double)));
+    QObject::connect(myDistortionCorrection, SIGNAL(sendDistortionCoeffisient(QList<double>)), myCoordinateTransform, SLOT(setDistortionCoefficient(QList<double>)));
 
 
     ui->slider_global_frame->setEnabled(false);
@@ -230,9 +230,16 @@ void MainWindow::displayModifiedId()
     painterField.setPen(pen);
     for (int i = 0; i < playerDisplayed_scaling.size(); i++)
     {
-        brush.setColor(Qt::red);
-        painterField.setBrush(brush);
-
+        if(playerDisplayed_scaling[i].id<=10){
+            brush.setColor(Qt::red);
+            painterField.setBrush(brush);
+        }else if(playerDisplayed_scaling[i].id>=11 && playerDisplayed_scaling[i].id<=21){
+            brush.setColor(Qt::blue);
+            painterField.setBrush(brush);
+        }else{
+            brush.setColor(Qt::yellow);
+            painterField.setBrush(brush);
+        }
         painterField.drawEllipse(playerDisplayed_scaling.at(i).pos.x, playerDisplayed_scaling.at(i).pos.y, RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
         painterField.setFont(QFont ("Arial",30));
 
@@ -258,8 +265,16 @@ void MainWindow::displayProcessedData(QList<Player> transformedPosition)
     {
         playerDisplayed_scaling[i].pos.x = ((transformedPosition.at(i).pos.x * (pixmapField.width()-(FIELD_MARGIN_KIRI+FIELD_MARGIN_KANAN)) / GLOBAL_FIELD_LENGTH) + FIELD_MARGIN_KIRI);
         playerDisplayed_scaling[i].pos.y = ((transformedPosition.at(i).pos.y * (pixmapField.height()-(FIELD_MARGIN_ATAS+FIELD_MARGIN_BAWAH)) / GLOBAL_FIELD_WIDTH)+ FIELD_MARGIN_ATAS);
-        brush.setColor(Qt::red);
-        painterField.setBrush(brush);
+        if(playerDisplayed_scaling[i].id<=10){
+            brush.setColor(Qt::red);
+            painterField.setBrush(brush);
+        }else if(playerDisplayed_scaling[i].id>=11 && playerDisplayed_scaling[i].id<=21){
+            brush.setColor(Qt::blue);
+            painterField.setBrush(brush);
+        }else{
+            brush.setColor(Qt::yellow);
+            painterField.setBrush(brush);
+        }
         painterField.drawEllipse(playerDisplayed_scaling[i].pos.x, playerDisplayed_scaling[i].pos.y, RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
         painterField.setFont(QFont ("Arial",30));
         painterField.drawText(QPoint(playerDisplayed_scaling.at(i).pos.x, playerDisplayed_scaling.at(i).pos.y), QString::number(playerDisplayed_scaling.at(i).id)); //posisi x, y, dan ukuran elips

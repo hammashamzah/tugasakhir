@@ -37,7 +37,7 @@ private slots:
     void on_comboBox_camera_activated(int index);
 
 signals:
-    void sendDistortionCoeffisient(double);
+    void sendDistortionCoeffisient(QList<double>);
     void sendUndistortedImage(QImage);
 
 

@@ -9,6 +9,7 @@
 #include "distortioncorrectiondialog.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
+#include <QtCore/QList>
 #include <QtCore/QVector>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'distortioncorrectiondialog.h' doesn't include <QObject>."
@@ -20,8 +21,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_DistortionCorrectionDialog_t {
-    QByteArrayData data[14];
-    char stringdata0[260];
+    QByteArrayData data[15];
+    char stringdata0[274];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,21 +34,22 @@ static const qt_meta_stringdata_DistortionCorrectionDialog_t qt_meta_stringdata_
 QT_MOC_LITERAL(0, 0, 26), // "DistortionCorrectionDialog"
 QT_MOC_LITERAL(1, 27, 25), // "sendDistortionCoeffisient"
 QT_MOC_LITERAL(2, 53, 0), // ""
-QT_MOC_LITERAL(3, 54, 20), // "sendUndistortedImage"
-QT_MOC_LITERAL(4, 75, 39), // "on_doubleSpinBox_koefisien_va..."
-QT_MOC_LITERAL(5, 115, 4), // "arg1"
-QT_MOC_LITERAL(6, 120, 30), // "on_verticalSlider_valueChanged"
-QT_MOC_LITERAL(7, 151, 5), // "value"
-QT_MOC_LITERAL(8, 157, 21), // "on_buttonBox_accepted"
-QT_MOC_LITERAL(9, 179, 18), // "setFirstFrameImage"
-QT_MOC_LITERAL(10, 198, 15), // "QVector<QImage>"
-QT_MOC_LITERAL(11, 214, 10), // "firstFrame"
-QT_MOC_LITERAL(12, 225, 28), // "on_comboBox_camera_activated"
-QT_MOC_LITERAL(13, 254, 5) // "index"
+QT_MOC_LITERAL(3, 54, 13), // "QList<double>"
+QT_MOC_LITERAL(4, 68, 20), // "sendUndistortedImage"
+QT_MOC_LITERAL(5, 89, 39), // "on_doubleSpinBox_koefisien_va..."
+QT_MOC_LITERAL(6, 129, 4), // "arg1"
+QT_MOC_LITERAL(7, 134, 30), // "on_verticalSlider_valueChanged"
+QT_MOC_LITERAL(8, 165, 5), // "value"
+QT_MOC_LITERAL(9, 171, 21), // "on_buttonBox_accepted"
+QT_MOC_LITERAL(10, 193, 18), // "setFirstFrameImage"
+QT_MOC_LITERAL(11, 212, 15), // "QVector<QImage>"
+QT_MOC_LITERAL(12, 228, 10), // "firstFrame"
+QT_MOC_LITERAL(13, 239, 28), // "on_comboBox_camera_activated"
+QT_MOC_LITERAL(14, 268, 5) // "index"
 
     },
     "DistortionCorrectionDialog\0"
-    "sendDistortionCoeffisient\0\0"
+    "sendDistortionCoeffisient\0\0QList<double>\0"
     "sendUndistortedImage\0"
     "on_doubleSpinBox_koefisien_valueChanged\0"
     "arg1\0on_verticalSlider_valueChanged\0"
@@ -73,25 +75,25 @@ static const uint qt_meta_data_DistortionCorrectionDialog[] = {
 
  // signals: name, argc, parameters, tag, flags
        1,    1,   49,    2, 0x06 /* Public */,
-       3,    1,   52,    2, 0x06 /* Public */,
+       4,    1,   52,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,   55,    2, 0x08 /* Private */,
-       6,    1,   58,    2, 0x08 /* Private */,
-       8,    0,   61,    2, 0x08 /* Private */,
-       9,    1,   62,    2, 0x08 /* Private */,
-      12,    1,   65,    2, 0x08 /* Private */,
+       5,    1,   55,    2, 0x08 /* Private */,
+       7,    1,   58,    2, 0x08 /* Private */,
+       9,    0,   61,    2, 0x08 /* Private */,
+      10,    1,   62,    2, 0x08 /* Private */,
+      13,    1,   65,    2, 0x08 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::Double,    2,
+    QMetaType::Void, 0x80000000 | 3,    2,
     QMetaType::Void, QMetaType::QImage,    2,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Double,    5,
-    QMetaType::Void, QMetaType::Int,    7,
+    QMetaType::Void, QMetaType::Double,    6,
+    QMetaType::Void, QMetaType::Int,    8,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 10,   11,
-    QMetaType::Void, QMetaType::Int,   13,
+    QMetaType::Void, 0x80000000 | 11,   12,
+    QMetaType::Void, QMetaType::Int,   14,
 
        0        // eod
 };
@@ -102,7 +104,7 @@ void DistortionCorrectionDialog::qt_static_metacall(QObject *_o, QMetaObject::Ca
         DistortionCorrectionDialog *_t = static_cast<DistortionCorrectionDialog *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->sendDistortionCoeffisient((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 0: _t->sendDistortionCoeffisient((*reinterpret_cast< QList<double>(*)>(_a[1]))); break;
         case 1: _t->sendUndistortedImage((*reinterpret_cast< QImage(*)>(_a[1]))); break;
         case 2: _t->on_doubleSpinBox_koefisien_valueChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 3: _t->on_verticalSlider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
@@ -114,6 +116,13 @@ void DistortionCorrectionDialog::qt_static_metacall(QObject *_o, QMetaObject::Ca
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 0:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QList<double> >(); break;
+            }
+            break;
         case 5:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
@@ -126,7 +135,7 @@ void DistortionCorrectionDialog::qt_static_metacall(QObject *_o, QMetaObject::Ca
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (DistortionCorrectionDialog::*_t)(double );
+            typedef void (DistortionCorrectionDialog::*_t)(QList<double> );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&DistortionCorrectionDialog::sendDistortionCoeffisient)) {
                 *result = 0;
             }
@@ -177,7 +186,7 @@ int DistortionCorrectionDialog::qt_metacall(QMetaObject::Call _c, int _id, void 
 }
 
 // SIGNAL 0
-void DistortionCorrectionDialog::sendDistortionCoeffisient(double _t1)
+void DistortionCorrectionDialog::sendDistortionCoeffisient(QList<double> _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
