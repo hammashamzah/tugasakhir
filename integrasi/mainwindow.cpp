@@ -56,7 +56,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     playerIconTeamA = QImage("playerA.png");
     playerIconTeamA.scaled(QSize(20, 20), Qt::KeepAspectRatio, Qt::FastTransformation);
     playerIconTeamB = QImage("playerB.png");
-    ui->label_game_visual->setPixmap(QPixmap::fromImage(soccerField).scaled(ui->label_game_visual->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+    ui->label_game_visual->setPixmap(QPixmap::fromImage(soccerField));
     ui->logo->setPixmap(QPixmap::fromImage(logoLV));
 
     initListPlayer();
@@ -221,7 +221,7 @@ void MainWindow::on_slider_global_frame_valueChanged(int value)
 
 void MainWindow::displayModifiedId()
 {
-    QPixmap pixmapField(QPixmap::fromImage(soccerField).scaled(ui->label_game_visual->size(), Qt::KeepAspectRatio, Qt::FastTransformation));   //ukuran pixmap
+    QPixmap pixmapField(QPixmap::fromImage(soccerField));   //ukuran pixmap
     QPainter painterField(&pixmapField);
     QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
     QBrush brush(Qt::white);
@@ -233,18 +233,18 @@ void MainWindow::displayModifiedId()
         brush.setColor(Qt::red);
         painterField.setBrush(brush);
 
-        painterField.drawEllipse(playerDisplayed_scaling.at(i).pos.x, playerDisplayed_scaling.at(i).pos.y, 10, 10);  //posisi x, y, dan ukuran elips
-        painterField.setFont(QFont ("Arial"));
+        painterField.drawEllipse(playerDisplayed_scaling.at(i).pos.x, playerDisplayed_scaling.at(i).pos.y, RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
+        painterField.setFont(QFont ("Arial",30));
 
         painterField.drawText(QPoint(playerDisplayed_scaling.at(i).pos.x, playerDisplayed_scaling.at(i).pos.y), QString::number(playerDisplayed_scaling.at(i).id)); //posisi x, y, dan ukuran elips
     }
-    ui->label_game_visual->setPixmap(pixmapField.scaled(ui->label_game_visual->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+    ui->label_game_visual->setPixmap(pixmapField);
 }
 
 void MainWindow::displayProcessedData(QList<Player> transformedPosition)
 {
     //myDataLogger->add(transformedPosition);
-    QPixmap pixmapField(QPixmap::fromImage(soccerField).scaled(ui->label_game_visual->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+    QPixmap pixmapField(QPixmap::fromImage(soccerField));
     QPainter painterField(&pixmapField);
     QPen pen(Qt::black, 1);        //warna dan tebal garis lingkaran
     QBrush brush(Qt::white);
@@ -256,17 +256,16 @@ void MainWindow::displayProcessedData(QList<Player> transformedPosition)
     painterField.setPen(pen);
     for (int i = 0; i < transformedPosition.size(); i++)
     {
-        playerDisplayed_scaling[i].pos.x = (transformedPosition.at(i).pos.x * pixmapField.width() / GLOBAL_FIELD_LENGTH);
-        playerDisplayed_scaling[i].pos.y = (transformedPosition.at(i).pos.y * pixmapField.height() / GLOBAL_FIELD_WIDTH);
+        playerDisplayed_scaling[i].pos.x = ((transformedPosition.at(i).pos.x * (pixmapField.width()-(FIELD_MARGIN_KIRI+FIELD_MARGIN_KANAN)) / GLOBAL_FIELD_LENGTH) + FIELD_MARGIN_KIRI);
+        playerDisplayed_scaling[i].pos.y = ((transformedPosition.at(i).pos.y * (pixmapField.height()-(FIELD_MARGIN_ATAS+FIELD_MARGIN_BAWAH)) / GLOBAL_FIELD_WIDTH)+ FIELD_MARGIN_ATAS);
         brush.setColor(Qt::red);
         painterField.setBrush(brush);
-//        painterField.drawImage(playerDisplayed_scaling[i].pos.x, playerDisplayed_scaling[i].pos.y, playerIconTeamB.scaled(QSize(15, 15), Qt::KeepAspectRatio, Qt::FastTransformation));
         painterField.drawEllipse(playerDisplayed_scaling[i].pos.x, playerDisplayed_scaling[i].pos.y, RECT_PLAYER_SIZE, RECT_PLAYER_SIZE);  //posisi x, y, dan ukuran elips
-        painterField.setFont(QFont ("Arial",10));
+        painterField.setFont(QFont ("Arial",30));
         painterField.drawText(QPoint(playerDisplayed_scaling.at(i).pos.x, playerDisplayed_scaling.at(i).pos.y), QString::number(playerDisplayed_scaling.at(i).id)); //posisi x, y, dan ukuran elips
     }
 
-    ui->label_game_visual->setPixmap(pixmapField.scaled(ui->label_game_visual->size(), Qt::KeepAspectRatio, Qt::FastTransformation));
+    ui->label_game_visual->setPixmap(pixmapField);
 }
 
 void MainWindow::assignIdFromList(QPoint & pos)
@@ -274,8 +273,8 @@ void MainWindow::assignIdFromList(QPoint & pos)
     //int JUMLAH_PLAYER = 22;
     for (int i = 0; i < playerDisplayed_scaling.size(); i++)
     {
-        if ((pos.x() >= (playerDisplayed_scaling.at(i).pos.x -10) && pos.x() <= (playerDisplayed_scaling.at(i).pos.x + 10))
-                && (pos.y() >= (playerDisplayed_scaling.at(i).pos.y-10) && pos.y() <= (playerDisplayed_scaling.at(i).pos.y + 10))) {
+        if ((pos.x() >= (playerDisplayed_scaling.at(i).pos.x - RECT_PLAYER_SIZE) && pos.x() <= (playerDisplayed_scaling.at(i).pos.x + RECT_PLAYER_SIZE))
+                && (pos.y() >= (playerDisplayed_scaling.at(i).pos.y- RECT_PLAYER_SIZE) && pos.y() <= (playerDisplayed_scaling.at(i).pos.y + RECT_PLAYER_SIZE))) {
             playerDisplayed[i].id = idToAssign;
             playerDisplayed_scaling[i].id = idToAssign;
             playerDisplayed[i].isValid = true;

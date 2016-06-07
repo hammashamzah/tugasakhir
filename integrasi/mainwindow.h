@@ -1,8 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#define RECT_PLAYER_SIZE 10
-#define GLOBAL_FIELD_LENGTH 100
-#define GLOBAL_FIELD_WIDTH 50
+#define RECT_PLAYER_SIZE 30
+#define GLOBAL_FIELD_LENGTH 105 //didapat dari pengukuran manual
+#define GLOBAL_FIELD_WIDTH 68
+#define FIELD_MARGIN_ATAS 32
+#define FIELD_MARGIN_BAWAH 28
+#define FIELD_MARGIN_KIRI 30
+#define FIELD_MARGIN_KANAN 26
+
 
 //std part
 #include <iostream>
