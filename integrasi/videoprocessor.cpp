@@ -121,26 +121,33 @@ void VideoProcessor::processSingleFrame(int mode)
     //pMOG2->operator()(maskedFrame, objectFrame, 0);
     //pMOG2->getBackgroundImage(backgroundFrame);
 
-	if (gaussianSize > 0) {
-        gpu::GaussianBlur(gpuObjectFrame, gpuBluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
-	} else {
-		objectFrame.copyTo(bluredFrame);
-	}
+
 
 	if (morphElementSize > 0) {
-        gpu::morphologyEx(gpuBluredFrame, gpuOpenedFrame, 2, morphElement);
+        gpu::morphologyEx(gpuObjectFrame, gpuOpenedFrame, 2, morphElement);
 	} else {
 		bluredFrame.copyTo(openedFrame);
 	}
+
+    if (gaussianSize > 0) {
+        gpu::GaussianBlur(gpuOpenedFrame, gpuBluredFrame, Size(gaussianSize, gaussianSize), 0, 0, BORDER_DEFAULT);
+    } else {
+        objectFrame.copyTo(bluredFrame);
+    }
+
+    gpu::threshold(gpuBluredFrame, gpuThresholdedFrame, 10, 255, 0);
+
+
     gpuObjectFrame.download(objectFrame);
     gpuBackgroundFrame.download(backgroundFrame);
     gpuOpenedFrame.download(openedFrame);
     gpuBluredFrame.download(bluredFrame);
+    gpuThresholdedFrame.download(thresholdedFrame);
 	frame.copyTo(objectWithKeypointsFrame);
 
 	std::vector < std::vector<cv::Point> > contours_detected;
 
-	blob_detector.detectImpl(openedFrame, keypoints, contours_detected);
+    blob_detector.detectImpl(thresholdedFrame, keypoints, contours_detected);
 //	contours_detected = blob_detector.getContours();
 	drawKeypoints(objectWithKeypointsFrame, keypoints, objectWithKeypointsFrame, Scalar(0, 0, 255), DrawMatchesFlags::DEFAULT);
 

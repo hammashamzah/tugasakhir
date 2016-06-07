@@ -30,13 +30,13 @@ private:
 	QWaitCondition condition;
 	int frameRate;
 	VideoCapture *capture;
-	Mat frame, objectFrame, mask, backgroundFrame, maskedFrame, openedFrame, bluredFrame, objectWithKeypointsFrame, image;
+    Mat frame, objectFrame, mask, backgroundFrame, maskedFrame, openedFrame, bluredFrame, objectWithKeypointsFrame,thresholdedFrame, image;
 	QImage qRawFrame, qMaskedFrame, qBackgroundFrame, qObjectFrame, qOpenedFrame, qBluredFrame, qObjectWithKeypointsFrame;
 
     gpu::MOG2_GPU pMOG2_g;
     gpu::GpuMat gpuMaskedFrame;
     gpu::GpuMat gpuObjectFrame;
-    gpu::GpuMat gpuBackgroundFrame, gpuOpenedFrame, gpuBluredFrame;
+    gpu::GpuMat gpuBackgroundFrame, gpuOpenedFrame, gpuBluredFrame, gpuThresholdedFrame;
 
 	BetterBlobDetector::Params params;
 	Ptr<BackgroundSubtractor> pMOG2;
