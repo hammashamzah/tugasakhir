@@ -30,6 +30,7 @@ public:
     QSize imageSize[2];
     QList<Player> assignedPlayer;
     QList<Player> unifiedPlayerImageCoordinate;
+    QList<double> distCoeff;
 
 signals:
     void sendPlayerIdAssigned(QList<Player>);
@@ -40,6 +41,7 @@ public slots:
     void setImageSize(QList<QSize>);
     void processTransformPosition(QVector<QList<Player> >);
     void returnAssignedPlayer(QList<Player>);
+    void setDistortionCoefficient(QVector<double> value);
 };
 
 #endif // COORDINATETRANSFORM_H

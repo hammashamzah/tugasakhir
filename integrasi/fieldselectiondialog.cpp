@@ -17,6 +17,12 @@ FieldSelectionDialog::FieldSelectionDialog(QWidget *parent) :
     }
 
     frameCamera.resize(2);
+    arg_1 = 0;
+    arg_2 = 0;
+    koef_1 = 0;
+    koef_2 = 0;
+    orde_1 = 0;
+    orde_2 = 0;
     listOfClickCoordinates.resize(2);
     listOfTransformationCoordinates.resize(2);
 }
@@ -30,6 +36,9 @@ void FieldSelectionDialog::setFirstFrameImage(QVector<QImage> img) {
     ui->imageView->setAlignment(Qt::AlignCenter);
     frameCamera[0] = img.at(0);
     frameCamera[1] = img.at(1);
+    originalFrameCamera.resize(2);
+    originalFrameCamera[0] = frameCamera.at(0);
+    originalFrameCamera[1] = frameCamera.at(1);
     imageSize.clear();
     imageSize.append(frameCamera[0].size());
     imageSize.append(frameCamera[1].size());
@@ -49,6 +58,9 @@ void FieldSelectionDialog::on_cameraSelectCombo_currentIndexChanged(int index)
             ui->imageView->setAlignment(Qt::AlignCenter);
             ui->imageView->setPixmap(QPixmap::fromImage(frameCamera.at(0)));
         }
+
+        ui->spinBox_orde->setValue(orde_1);
+        ui->doubleSpinBox_koef->setValue(arg_1);
         break;
     case 1:
     case 3:
@@ -56,6 +68,8 @@ void FieldSelectionDialog::on_cameraSelectCombo_currentIndexChanged(int index)
             ui->imageView->setAlignment(Qt::AlignCenter);
             ui->imageView->setPixmap(QPixmap::fromImage(frameCamera.at(1)));
         }
+        ui->spinBox_orde->setValue(orde_2);
+        ui->doubleSpinBox_koef->setValue(arg_2);
         break;
     }
 }
@@ -71,7 +85,7 @@ void FieldSelectionDialog::processMouse(QPoint &pos) {
     pixPaint.drawEllipse(pos.x() - 5, pos.y() - 5, 10, 10);
     pixPaint.setRenderHint(QPainter::Antialiasing, true);
     pixPaint.setPen(QPen(Qt::black, 1, Qt::SolidLine, Qt::RoundCap, Qt::MiterJoin));
-    pixPaint.setBrush(QBrush(Qt::blue, Qt::BDiagPattern));
+    //pixPaint.setBrush(QBrush(Qt::blue, Qt::BDiagPattern));
     if (entryMode == 1) {
         QPointF titik[clickCoordinates.size() + 1];
         for (int i = 0; i < clickCoordinates.size(); i++) {
@@ -287,4 +301,66 @@ void FieldSelectionDialog::on_pushButton_save_file_released()
     filename = QFileDialog::getSaveFileName(this, tr("Save Masking Coordinate File"), "maskingcoordinate.txt",
                                             tr("Masking Coordinate File (*.txt)"));
     fileHandler(filename, 2);
+}
+
+void FieldSelectionDialog::on_doubleSpinBox_koef_valueChanged(double arg1)
+{
+
+    cv::Mat undistorted;
+    cv::Mat_<double> camMat(3, 3);
+    camMat << 640, 0, 640, 0, 360, 360, 0, 0, 1;
+    cv::Mat ori;
+
+    if(currentCameraIndex == 0 || currentCameraIndex == 2){
+        arg_1 = arg1;
+        koef_1 = (double)arg1 * (double)pow(10, (-1) * orde_1) * (-1);
+        ori = QtOcv::image2Mat(originalFrameCamera[0]);
+    }else if(currentCameraIndex == 1 || currentCameraIndex == 3){
+        arg_2 = arg1;
+        koef_2 = (double)arg1 * (double)pow(10, (-1) * orde_1) * (-1);
+        ori = QtOcv::image2Mat(originalFrameCamera[1]);
+    }
+    cv::vector<double> koef;
+    koef.resize(4);
+    if(currentCameraIndex == 0 || currentCameraIndex == 2){
+        koef[0] = koef_1;
+    }else if(currentCameraIndex == 1 || currentCameraIndex == 3){
+        koef[0] = koef_2;
+    }
+    cv::undistort(ori, undistorted, camMat, koef);
+    QImage output = QtOcv::mat2Image(undistorted);
+
+    if((currentCameraIndex+1)%2 == 0){
+        frameCamera[1] = output;
+        ui->imageView->setPixmap(QPixmap::fromImage(frameCamera.at(1)));
+    }else{
+        frameCamera[0] = output;
+        ui->imageView->setPixmap(QPixmap::fromImage(frameCamera.at(0)));
+    }
+
+}
+
+void FieldSelectionDialog::on_horizontalSlider_valueChanged(int value)
+{
+    ui->doubleSpinBox_koef->setValue(value);
+}
+
+void FieldSelectionDialog::on_pushButton_ok_pressed()
+{
+    distortionCoefficient.clear();
+    distortionCoefficient.resize(4);
+    distortionCoefficient[0] = koef_1;
+    distortionCoefficient[1] = koef_2;
+
+    emit sendDistortionCoeffisient(distortionCoefficient);
+    this->close();
+}
+
+void FieldSelectionDialog::on_spinBox_orde_valueChanged(int arg1)
+{
+    if(currentCameraIndex == 0 || currentCameraIndex == 2){
+        orde_1 = arg1;
+    }else if(currentCameraIndex == 1 || currentCameraIndex == 3){
+        orde_2 = arg1;
+    }
 }

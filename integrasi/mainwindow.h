@@ -1,8 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#define RECT_PLAYER_SIZE 10
-#define GLOBAL_FIELD_LENGTH 100
-#define GLOBAL_FIELD_WIDTH 50
+#define RECT_PLAYER_SIZE 30
+#define GLOBAL_FIELD_LENGTH 105 //didapat dari pengukuran manual
+#define GLOBAL_FIELD_WIDTH 68
+#define FIELD_MARGIN_ATAS 32
+#define FIELD_MARGIN_BAWAH 28
+#define FIELD_MARGIN_KIRI 30
+#define FIELD_MARGIN_KANAN 26
+
 
 //std part
 #include <iostream>
@@ -54,6 +59,10 @@ public:
 
     bool isSetTrapezium;
     bool isSetThresholds;
+    QImage soccerField;
+    QImage logoLV;
+    QImage playerIconTeamA;
+    QImage playerIconTeamB;
 
 public slots:
     void displayProcessedData(QList<Player>);
@@ -99,6 +108,7 @@ private slots:
     void on_pushButton_initialize_background_model_released();
     void on_actionFirst_Image_1_triggered();
     void on_actionFirst_Image_2_triggered();
+    void selectIdFromImage(QPoint&);
 
 private:
     Ui::MainWindow *ui;
@@ -120,6 +130,7 @@ private:
     QString getFormattedTime(int timeInSeconds);
     int idToAssign;
     bool isIdAssigned[22];
+    int selectedId;
     QList<Player> playerDisplayed_scaling;
     QList<Player> playerDisplayed;
     int assignedId;

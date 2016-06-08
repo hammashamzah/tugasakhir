@@ -15,9 +15,12 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QDialog>
+#include <QtWidgets/QDoubleSpinBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSlider>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QVBoxLayout>
 #include <clickdisplay.h>
 
@@ -37,6 +40,10 @@ public:
     QPushButton *pushButton_load_file;
     QPushButton *pushButton_load_default_file;
     QPushButton *pushButton_save_file;
+    QHBoxLayout *horizontalLayout_3;
+    QDoubleSpinBox *doubleSpinBox_koef;
+    QSpinBox *spinBox_orde;
+    QSlider *horizontalSlider;
 
     void setupUi(QDialog *FieldSelectionDialog)
     {
@@ -111,6 +118,27 @@ public:
 
 
         verticalLayout->addLayout(horizontalLayout_2);
+
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        doubleSpinBox_koef = new QDoubleSpinBox(FieldSelectionDialog);
+        doubleSpinBox_koef->setObjectName(QStringLiteral("doubleSpinBox_koef"));
+
+        horizontalLayout_3->addWidget(doubleSpinBox_koef);
+
+        spinBox_orde = new QSpinBox(FieldSelectionDialog);
+        spinBox_orde->setObjectName(QStringLiteral("spinBox_orde"));
+
+        horizontalLayout_3->addWidget(spinBox_orde);
+
+        horizontalSlider = new QSlider(FieldSelectionDialog);
+        horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
+        horizontalSlider->setOrientation(Qt::Horizontal);
+
+        horizontalLayout_3->addWidget(horizontalSlider);
+
+
+        verticalLayout->addLayout(horizontalLayout_3);
 
 
         retranslateUi(FieldSelectionDialog);

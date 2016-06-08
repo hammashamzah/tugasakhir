@@ -206,7 +206,7 @@ void VideoProcessor::processSingleFrame(int mode)
 	//convert points to Player
 	outputData.clear();
 	for (int i = 0; i < points.size(); i++) {
-		outputData.append(Player((int)this->getCurrentFrame(), 0, Point2f(points[i].x, points[i].y)));
+        outputData.append(Player((int)this->getCurrentFrame(), 0, Point2f((boundRect[i].br().x + boundRect[i].tl().x) /2 , boundRect[i].br().y)));
 	}
 
 

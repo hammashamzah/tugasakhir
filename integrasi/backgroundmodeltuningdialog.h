@@ -53,6 +53,8 @@ private slots:
     void on_slider_occlusion_threshold_valueChanged(int value);
     void on_slider_association_threshold_valueChanged(int value);
     void on_pushButton_load_default_setting_released();
+    void on_buttonBox_accepted();
+    void on_buttonBox_rejected();
 };
 
 #endif // BACKGROUNDMODELTUNINGDIALOG_H

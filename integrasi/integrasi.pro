@@ -18,14 +18,11 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     backgroundmodeltuningdialog.cpp \
     cameraviewdialog.cpp \
-    errorcalculationdialog.cpp \
     fieldselectiondialog.cpp \
     clickdisplay.cpp \
     player.cpp \
     coordinatetransform.cpp \
     cvmatandqimage.cpp \
-    systemperformancedialog.cpp \
-    trackingviewdialog.cpp \
     videoprocessor.cpp \
     objectdetector.cpp \
     datalogger.cpp \
@@ -36,19 +33,17 @@ SOURCES += main.cpp\
     datawindow.cpp \
     kalmanobject.cpp \
     freezetablewidget.cpp \
-    betterblobdetector.cpp
+    betterblobdetector.cpp \
+    statisticgenerator.cpp
 
 HEADERS  += mainwindow.h \
     backgroundmodeltuningdialog.h \
     cameraviewdialog.h \
-    errorcalculationdialog.h \
     fieldselectiondialog.h \
     clickdisplay.h \
     player.h \
     coordinatetransform.h \
     cvmatandqimage.h \
-    systemperformancedialog.h \
-    trackingviewdialog.h \
     videoprocessor.h \
     objectdetector.h \
     datalogger.h \
@@ -59,16 +54,14 @@ HEADERS  += mainwindow.h \
     datawindow.h \
     kalmanobject.h \
     freezetablewidget.h \
-    betterblobdetector.h
+    betterblobdetector.h \
+    statisticgenerator.h
 
 FORMS    += mainwindow.ui \
     backgroundmodeltuningdialog.ui \
     cameraviewdialog.ui \
-    errorcalculationdialog.ui \
     fieldselectiondialog.ui \
-    systemperformancedialog.ui \
-    trackingviewdialog.ui \
-    datawindow.ui
+    datawindow.ui \
 
 DISTFILES += \
     integrasi.pro.user

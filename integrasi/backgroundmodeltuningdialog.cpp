@@ -178,3 +178,15 @@ void BackgroundModelTuningDialog::loadSetting(QString filename){
     ui->slider_association_threshold->setValue(parameters[2][0]);
     ui->slider_occlusion_threshold->setValue(parameters[2][1]);
 }
+
+void BackgroundModelTuningDialog::on_buttonBox_accepted()
+{
+    emit sendValueParameter(parameters);
+    this->close();
+}
+
+
+void BackgroundModelTuningDialog::on_buttonBox_rejected()
+{
+    this->close();
+}
